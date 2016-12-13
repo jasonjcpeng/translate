@@ -1,0 +1,5 @@
+//----------------------------
+export const INIT_CONTAINER_APP_DID_MOUNT = 'INIT_CONTAINER_APP_DID_MOUNT';
+export const INIT_CONTAINER_APP_ROUTE_DID_MOUNT = 'INIT_CONTAINER_APP_ROUTE_DID_MOUNT';
+//----------------------------
+export const APP_CONTENT_ROUTE_TO_APP_ROUTE = 'APP_CONTENT_ROUTE_TO_APP_ROUTE';
