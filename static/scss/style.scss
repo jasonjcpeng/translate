@@ -1,0 +1,14 @@
+@import './constants/constants';
+body {
+  padding: 0px;
+  margin: 0px;
+  font-family: $font;
+  font-weight: 600;
+  li{
+    list-style: none;
+  }
+}
+@import './skin/skin-1';
+@import './components/side-bar';
+
+

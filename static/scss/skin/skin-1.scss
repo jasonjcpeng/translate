@@ -1,0 +1,48 @@
+.skin-1{
+  .side-bar{
+    background-color:#2f4050;
+    .side-bar-title{
+      background-color:rgb(35,54,69);
+      .side-bar-title-skin{
+        position: relative;
+        div:nth-child(1){
+          position: absolute;
+          transform: rotate(70deg)rotateX(20deg) rotateY(60deg);
+          left:-60px;
+          top:-70px;
+          height: 90px;
+          width: 90px;
+          background-color: rgb(39,57,74);
+        }
+        div:nth-child(2){
+          position: absolute;
+          transform: rotate(-70deg)rotateX(20deg) rotateY(60deg);
+          top:-65px;
+          left:25px;
+          height: 90px;
+          width: 90px;
+          background-color: rgb(38,56,73);
+        }
+        div:nth-child(3){
+          position: absolute;
+          transform: rotate(-100deg)rotateX(20deg) rotateY(60deg);
+          top:-65px;
+          left:97px;
+          height: 90px;
+          width: 90px;
+          background-color: rgb(39,55,74);
+        }
+        div:nth-child(4){
+          position: absolute;
+          top:-6px;
+          left:91px;
+          width:0;
+          height:0;
+          border-top:15px solid transparent;
+          border-bottom:110px solid transparent;
+          border-right:104px solid rgb(38,57,73);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,79 @@
+@font-face {
+  font-family: base;
+  src: url("./font/opensans.ttf"); }
+body {
+  padding: 0px;
+  margin: 0px;
+  font-family: base;
+  font-weight: 600; }
+  body li {
+    list-style: none; }
+
+.skin-1 .side-bar {
+  background-color: #2f4050; }
+  .skin-1 .side-bar .side-bar-title {
+    background-color: #233645; }
+    .skin-1 .side-bar .side-bar-title .side-bar-title-skin {
+      position: relative; }
+      .skin-1 .side-bar .side-bar-title .side-bar-title-skin div:nth-child(1) {
+        position: absolute;
+        transform: rotate(70deg) rotateX(20deg) rotateY(60deg);
+        left: -60px;
+        top: -70px;
+        height: 90px;
+        width: 90px;
+        background-color: #27394a; }
+      .skin-1 .side-bar .side-bar-title .side-bar-title-skin div:nth-child(2) {
+        position: absolute;
+        transform: rotate(-70deg) rotateX(20deg) rotateY(60deg);
+        top: -65px;
+        left: 25px;
+        height: 90px;
+        width: 90px;
+        background-color: #263849; }
+      .skin-1 .side-bar .side-bar-title .side-bar-title-skin div:nth-child(3) {
+        position: absolute;
+        transform: rotate(-100deg) rotateX(20deg) rotateY(60deg);
+        top: -65px;
+        left: 97px;
+        height: 90px;
+        width: 90px;
+        background-color: #27374a; }
+      .skin-1 .side-bar .side-bar-title .side-bar-title-skin div:nth-child(4) {
+        position: absolute;
+        top: -6px;
+        left: 91px;
+        width: 0;
+        height: 0;
+        border-top: 15px solid transparent;
+        border-bottom: 110px solid transparent;
+        border-right: 104px solid #263949; }
+
+.side-bar {
+  float: left;
+  width: 220px; }
+  .side-bar .side-bar-title {
+    height: 89px;
+    padding: 33px 25px; }
+    .side-bar .side-bar-title .side-bar-title-head-img {
+      width: 64px;
+      height: 64px; }
+      .side-bar .side-bar-title .side-bar-title-head-img img {
+        border-radius: 50px;
+        width: 64px;
+        height: 64px; }
+    .side-bar .side-bar-title .side-bar-title-name {
+      margin-top: 5px;
+      color: #DFE4ED;
+      font-size: 13px; }
+    .side-bar .side-bar-title .side-bar-title-power span {
+      font-weight: 100;
+      font-size: 13px;
+      color: #8095a8; }
+    .side-bar .side-bar-title .side-bar-title-power i {
+      font-size: 12px;
+      color: #8095a8; }
+  .side-bar li {
+    cursor: pointer; }
+
+/*# sourceMappingURL=style.css.map */
