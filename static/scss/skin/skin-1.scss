@@ -6,33 +6,37 @@
       .side-bar-title-skin{
         position: relative;
         div:nth-child(1){
+          animation: fadeIn 5s infinite;
           position: absolute;
           transform: rotate(70deg)rotateX(20deg) rotateY(60deg);
           left:-60px;
           top:-70px;
           height: 90px;
           width: 90px;
-          background-color: rgb(39,57,74);
+          background-color: rgb(39, 61, 74);
         }
         div:nth-child(2){
           position: absolute;
+          animation: fadeIn 2s infinite;
           transform: rotate(-70deg)rotateX(20deg) rotateY(60deg);
           top:-65px;
           left:25px;
           height: 90px;
           width: 90px;
-          background-color: rgb(38,56,73);
+          background-color: rgb(38, 57, 73);
         }
         div:nth-child(3){
           position: absolute;
+          animation: fadeIn 3s infinite;
           transform: rotate(-100deg)rotateX(20deg) rotateY(60deg);
           top:-65px;
           left:97px;
           height: 90px;
           width: 90px;
-          background-color: rgb(39,55,74);
+          background-color: rgb(39, 61, 74);
         }
         div:nth-child(4){
+          animation: fadeIn 4s infinite;
           position: absolute;
           top:-6px;
           left:91px;
@@ -42,6 +46,31 @@
           border-bottom:110px solid transparent;
           border-right:104px solid rgb(38,57,73);
         }
+      }
+    }
+    .side-bar-menu {
+      ul {
+        li {
+          .side-bar-menu-pop {
+            color: #fff;
+            background-color: orange;
+          }
+        }
+        li:hover {
+          background-color: rgb(35, 54, 69);
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .container {
+    .header {
+      background-color: #F5F5F5;
+      border-bottom: solid 1px #eee;
+      .menu-toggle-button {
+        background-color: #1ab394;
+        color: #FFF;
       }
     }
   }

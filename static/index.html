@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
     <link rel="stylesheet" href="./style.css">
     <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
@@ -10,7 +14,7 @@
     <div id="root">
         <div class="skin-1">
             <section class="side-bar">
-                <div class="side-bar-title">
+                <div class="side-bar-title animation-fadeIn">
                     <div class="side-bar-title-skin">
                         <div></div>
                         <div></div>
@@ -20,16 +24,16 @@
                     </div>
                     <div class="side-bar-title-head-img"><img src="./img/profile_small.jpg"></div>
                     <div class="side-bar-title-name">Beaut-zihan</div>
-                    <div class="side-bar-title-power"><span>超级管理员</span><i class="fa fa-caret-down"></i></div>
+                    <div class="side-bar-title-power">超级管理员<i class="fa fa-caret-down"></i></div>
                 </div>
-                <div class="menu">
+                <div class="side-bar-menu animation-fadeIn">
                     <ul>
-                        <li><span class="fa fa-home"></span>主页</li>
-                        <li>布局</li>
-                        <li>统计图表</li>
-                        <li>信箱</li>
-                        <li>表单</li>
-                        <li>页面</li>
+                        <li><i class="fa fa-home"></i>主页<div class="side-bar-menu-pop">16</div><i class="side-bar-menu-arr fa fa-angle-left"></i></li>
+                        <li><i class="fa fa-columns"></i>布局</li>
+                        <li><i class="fa fa-bar-chart"></i>统计图表<div class="side-bar-menu-pop">16</div></li>
+                        <li><i class="fa fa-envelope"></i>信箱 <div class="side-bar-menu-pop">16</div></li>
+                        <li><i class="fa fa-edit"></i>表单</li>
+                        <li><i class="fa fa-desktop"></i>页面</li>
                     </ul>
                 </div>
             </section>

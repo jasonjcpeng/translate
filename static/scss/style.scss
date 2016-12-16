@@ -1,5 +1,6 @@
 @import './constants/constants';
 body {
+  height: 100%;
   padding: 0px;
   margin: 0px;
   font-family: $font;
@@ -7,8 +8,22 @@ body {
   li{
     list-style: none;
   }
+  .container{
+    display: block;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    margin-left: 220px;
+  }
+}
+.animation-fadeIn{
+  animation: fadeIn 1s;
+}
+.animation-fadeOut{
+  animation: fadeOut 1s;
 }
 @import './skin/skin-1';
 @import './components/side-bar';
-
+@import './components/header';
 

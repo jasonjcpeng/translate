@@ -1,0 +1,19 @@
+.header {
+  position: fixed;
+  min-height: 60px;
+  width: 100%;
+  .menu-toggle-button {
+    font-family: Helvetica;
+    cursor: pointer;
+    display: block;
+    border-radius: 3px;
+    transform: rotate(90deg);
+    margin-left: 20px;
+    margin-top: 10px;
+    height: 40px;
+    width: 30px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 14px;
+  }
+}
