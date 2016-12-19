@@ -5,7 +5,9 @@
   "scripts": {
     "dist": "webpack",
     "start": "webpack-dev-server",
-    "sass":"sass --watch ./static/scss/style.scss:./static/style.css"
+    "sass": "sass --watch ./static/scss/style.scss:./static/style.css",
+    "serve": "browser-sync start --server --files \"./static/style.css, ./static/*.html\"",
+    "dev": "parallelshell \"npm run serve\" \"npm run sass\""
   },
   "license": "ISC",
   "dependencies": {
@@ -28,11 +30,13 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.9.0",
+    "browser-sync": "^2.18.5",
     "cross-env": "^1.0.8",
     "css-loader": "^0.23.1",
     "expect": "^1.20.1",
     "node-libs-browser": "^1.0.0",
     "node-sass": "^3.8.0",
+    "parallelshell": "^2.0.0",
     "react-transform-hmr": "^1.0.4",
     "sass": "^0.5.0",
     "sass-loader": "^4.0.0",

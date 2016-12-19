@@ -20,9 +20,6 @@ body {
   body li {
     list-style: none; }
   body .container {
-    display: block;
-    position: fixed;
-    width: 100%;
     height: 100%;
     z-index: 1000;
     margin-left: 220px; }
@@ -82,18 +79,48 @@ body {
   .skin-1 .side-bar .side-bar-menu ul li:hover {
     background-color: #233645;
     color: #fff; }
-.skin-1 .container .header {
-  background-color: #F5F5F5;
-  border-bottom: solid 1px #eee; }
-  .skin-1 .container .header .menu-toggle-button {
-    background-color: #1ab394;
-    color: #FFF; }
+.skin-1 .container {
+  color: #999; }
+  .skin-1 .container .header {
+    background-color: #F5F5F5;
+    border-bottom: solid 1px #eee; }
+    .skin-1 .container .header .menu-toggle-button {
+      background-color: #1ab394;
+      color: #FFF; }
+    .skin-1 .container .header .menu-toggle-button:active {
+      background-color: #2f4050; }
+  .skin-1 .container .title-menu {
+    border-bottom: solid 2px #2f4050; }
+    .skin-1 .container .title-menu .title-menu-button {
+      border-right: solid 1px #eee;
+      background-color: #fff; }
+    .skin-1 .container .title-menu .title-menu-button-forward {
+      border-left: solid 1px #eee; }
+    .skin-1 .container .title-menu .title-menu-container {
+      border-right: solid 1px #eee;
+      background-color: #fff; }
+      .skin-1 .container .title-menu .title-menu-container ul li {
+        border-right: solid 1px #eee; }
+      .skin-1 .container .title-menu .title-menu-container ul li:hover {
+        background-color: #F5F5F5; }
+      .skin-1 .container .title-menu .title-menu-container ul .active {
+        background-color: #2f4050; }
+        .skin-1 .container .title-menu .title-menu-container ul .active i:hover {
+          cursor: pointer;
+          color: #eee; }
+      .skin-1 .container .title-menu .title-menu-container ul .active:hover {
+        background-color: #2f4050; }
+        .skin-1 .container .title-menu .title-menu-container ul .active:hover i:hover {
+          cursor: pointer;
+          color: #eee; }
+    .skin-1 .container .title-menu .title-menu-button:hover {
+      background-color: #F5F5F5; }
 
 .side-bar {
-  height: 100%;
   position: fixed;
   width: 220px;
-  height: 100%; }
+  height: 1000%;
+  z-index: 1; }
   .side-bar .side-bar-title {
     height: 89px;
     padding: 33px 25px; }
@@ -143,21 +170,69 @@ body {
     font-size: 10px; }
 
 .header {
-  position: fixed;
+  display: block;
   min-height: 60px;
   width: 100%; }
+  .header div {
+    cursor: pointer; }
   .header .menu-toggle-button {
+    position: relative;
+    top: 10px;
     font-family: Helvetica;
-    cursor: pointer;
-    display: block;
     border-radius: 3px;
-    transform: rotate(90deg);
     margin-left: 20px;
-    margin-top: 10px;
-    height: 40px;
-    width: 30px;
+    height: 28px;
+    width: 38px;
     text-align: center;
-    line-height: 40px;
+    line-height: 28px;
     font-size: 14px; }
+
+.title-menu {
+  width: 100%;
+  height: 42px;
+  font-size: 14px;
+  font-weight: 100; }
+  .title-menu .title-menu-button {
+    z-index: 1000;
+    position: relative;
+    cursor: pointer;
+    float: left;
+    height: 41px;
+    line-height: 41px;
+    border: solid 1px #fff;
+    text-align: center;
+    width: 40px;
+    margin-bottom: 1px; }
+  .title-menu .title-menu-button-forward {
+    float: right; }
+  .title-menu .title-menu-button-exit {
+    float: right;
+    width: 60px; }
+  .title-menu .title-menu-button-close {
+    float: right;
+    width: 80px; }
+  .title-menu .title-menu-container {
+    z-index: 0;
+    width: 1000px;
+    position: fixed;
+    height: 41px;
+    line-height: 41px;
+    border: solid 1px #fff;
+    text-align: center;
+    margin-bottom: 1px; }
+    .title-menu .title-menu-container ul {
+      margin: 0;
+      padding: 0; }
+      .title-menu .title-menu-container ul li {
+        float: left;
+        cursor: pointer;
+        display: block;
+        padding: 0px 20px;
+        border-right: solid 1px #fff; }
+        .title-menu .title-menu-container ul li i {
+          padding: 0px 2px; }
+        .title-menu .title-menu-container ul li i:hover {
+          cursor: pointer;
+          color: #c00; }
 
 /*# sourceMappingURL=style.css.map */

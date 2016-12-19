@@ -1,0 +1,58 @@
+.title-menu {
+  width: 100%;
+  height: 42px;
+  font-size: 14px;
+  font-weight: 100;
+  .title-menu-button {
+    z-index: 1000;
+    position: relative;
+    cursor: pointer;
+    float: left;
+    height: 41px;
+    line-height: 41px;
+    border: solid 1px #fff;
+    text-align: center;
+    width: 40px;
+    margin-bottom: 1px;
+  }
+  .title-menu-button-forward {
+    float: right;
+  }
+  .title-menu-button-exit {
+    float: right;
+    width: 60px;
+  }
+  .title-menu-button-close {
+    float: right;
+    width: 80px;
+  }
+  .title-menu-container {
+    z-index: 0;
+    width: 1000px;
+    position: fixed;
+    height: 41px;
+    line-height: 41px;
+    border: solid 1px #fff;
+    text-align: center;
+    margin-bottom: 1px;
+    ul{
+      margin: 0;
+      padding: 0;
+      li{
+        float: left;
+        cursor: pointer;
+        display: block;
+        padding: 0px 20px;
+        border-right: solid 1px #fff;
+        i{
+          padding: 0px 2px;
+        }
+        i:hover{
+          cursor: pointer;
+          color: #c00;
+        }
+      }
+
+    }
+  }
+}

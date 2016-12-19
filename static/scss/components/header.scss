@@ -1,19 +1,20 @@
 .header {
-  position: fixed;
+  display: block;
   min-height: 60px;
   width: 100%;
-  .menu-toggle-button {
-    font-family: Helvetica;
+  div{
     cursor: pointer;
-    display: block;
+  }
+  .menu-toggle-button {
+    position: relative;
+    top:10px;
+    font-family: Helvetica;
     border-radius: 3px;
-    transform: rotate(90deg);
     margin-left: 20px;
-    margin-top: 10px;
-    height: 40px;
-    width: 30px;
+    height: 28px;
+    width: 38px;
     text-align: center;
-    line-height: 40px;
+    line-height: 28px;
     font-size: 14px;
   }
 }

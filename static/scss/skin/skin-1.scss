@@ -65,12 +65,55 @@
   }
 
   .container {
+    color: #999;
     .header {
       background-color: #F5F5F5;
       border-bottom: solid 1px #eee;
       .menu-toggle-button {
         background-color: #1ab394;
         color: #FFF;
+      }
+      .menu-toggle-button:active{
+        background-color: #2f4050;
+      }
+    }
+    .title-menu {
+      border-bottom: solid 2px #2f4050;
+      .title-menu-button{
+        border-right: solid 1px #eee;
+        background-color: #fff;
+      }
+      .title-menu-button-forward {
+        border-left: solid 1px #eee;
+      }
+      .title-menu-container{
+        border-right: solid 1px #eee;
+        background-color: #fff;
+        ul{
+          li{
+            border-right: solid 1px #eee;
+          }
+          li:hover{
+            background-color: #F5F5F5;
+          }
+          .active{
+            background-color: #2f4050;
+            i:hover{
+              cursor: pointer;
+              color: #eee;
+            }
+          }
+          .active:hover{
+            background-color: #2f4050;
+            i:hover{
+              cursor: pointer;
+              color: #eee;
+            }
+          }
+        }
+      }
+      .title-menu-button:hover{
+        background-color: #F5F5F5;
       }
     }
   }
