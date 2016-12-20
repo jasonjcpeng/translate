@@ -12,6 +12,7 @@
   to {
     opacity: 0; } }
 body {
+  overflow-y: hidden;
   height: 100%;
   padding: 0px;
   margin: 0px;
@@ -21,8 +22,7 @@ body {
     list-style: none; }
   body .container {
     height: 100%;
-    z-index: 1000;
-    margin-left: 220px; }
+    z-index: 1000; }
 
 .animation-fadeIn {
   animation: fadeIn 1s; }
@@ -30,90 +30,109 @@ body {
 .animation-fadeOut {
   animation: fadeOut 1s; }
 
-.skin-1 .side-bar {
-  background-color: #2f4050; }
-  .skin-1 .side-bar .side-bar-title {
-    background-color: #233645; }
-    .skin-1 .side-bar .side-bar-title .side-bar-title-skin {
-      position: relative; }
-      .skin-1 .side-bar .side-bar-title .side-bar-title-skin div:nth-child(1) {
-        animation: fadeIn 5s infinite;
-        position: absolute;
-        transform: rotate(70deg) rotateX(20deg) rotateY(60deg);
-        left: -60px;
-        top: -70px;
-        height: 90px;
-        width: 90px;
-        background-color: #273d4a; }
-      .skin-1 .side-bar .side-bar-title .side-bar-title-skin div:nth-child(2) {
-        position: absolute;
-        animation: fadeIn 2s infinite;
-        transform: rotate(-70deg) rotateX(20deg) rotateY(60deg);
-        top: -65px;
-        left: 25px;
-        height: 90px;
-        width: 90px;
-        background-color: #263949; }
-      .skin-1 .side-bar .side-bar-title .side-bar-title-skin div:nth-child(3) {
-        position: absolute;
-        animation: fadeIn 3s infinite;
-        transform: rotate(-100deg) rotateX(20deg) rotateY(60deg);
-        top: -65px;
-        left: 97px;
-        height: 90px;
-        width: 90px;
-        background-color: #273d4a; }
-      .skin-1 .side-bar .side-bar-title .side-bar-title-skin div:nth-child(4) {
-        animation: fadeIn 4s infinite;
-        position: absolute;
-        top: -6px;
-        left: 91px;
-        width: 0;
-        height: 0;
-        border-top: 15px solid transparent;
-        border-bottom: 110px solid transparent;
-        border-right: 104px solid #263949; }
-  .skin-1 .side-bar .side-bar-menu ul li .side-bar-menu-pop {
-    color: #fff;
-    background-color: orange; }
-  .skin-1 .side-bar .side-bar-menu ul li:hover {
-    background-color: #233645;
-    color: #fff; }
-.skin-1 .container {
-  color: #999; }
-  .skin-1 .container .header {
-    background-color: #F5F5F5;
-    border-bottom: solid 1px #eee; }
-    .skin-1 .container .header .menu-toggle-button {
-      background-color: #1ab394;
-      color: #FFF; }
-    .skin-1 .container .header .menu-toggle-button:active {
-      background-color: #2f4050; }
-  .skin-1 .container .title-menu {
-    border-bottom: solid 2px #2f4050; }
-    .skin-1 .container .title-menu .title-menu-button {
-      border-right: solid 1px #eee;
-      background-color: #fff; }
-    .skin-1 .container .title-menu .title-menu-button-forward {
-      border-left: solid 1px #eee; }
-    .skin-1 .container .title-menu .title-menu-container {
-      border-right: solid 1px #eee;
-      background-color: #fff; }
-      .skin-1 .container .title-menu .title-menu-container ul li {
-        border-right: solid 1px #eee; }
-      .skin-1 .container .title-menu .title-menu-container ul li:hover {
+.skin-1 {
+  height: 100%; }
+  .skin-1 .side-bar {
+    background-color: #2f4050; }
+    .skin-1 .side-bar .side-bar-title {
+      background-color: #233645; }
+      .skin-1 .side-bar .side-bar-title .side-bar-title-skin {
+        position: relative; }
+        .skin-1 .side-bar .side-bar-title .side-bar-title-skin div:nth-child(1) {
+          animation: fadeIn 5s infinite;
+          position: absolute;
+          transform: rotate(70deg) rotateX(20deg) rotateY(60deg);
+          left: -60px;
+          top: -70px;
+          height: 90px;
+          width: 90px;
+          background-color: #273d4a; }
+        .skin-1 .side-bar .side-bar-title .side-bar-title-skin div:nth-child(2) {
+          position: absolute;
+          animation: fadeIn 2s infinite;
+          transform: rotate(-70deg) rotateX(20deg) rotateY(60deg);
+          top: -65px;
+          left: 25px;
+          height: 90px;
+          width: 90px;
+          background-color: #263949; }
+        .skin-1 .side-bar .side-bar-title .side-bar-title-skin div:nth-child(3) {
+          position: absolute;
+          animation: fadeIn 3s infinite;
+          transform: rotate(-100deg) rotateX(20deg) rotateY(60deg);
+          top: -65px;
+          left: 97px;
+          height: 90px;
+          width: 90px;
+          background-color: #273d4a; }
+        .skin-1 .side-bar .side-bar-title .side-bar-title-skin div:nth-child(4) {
+          animation: fadeIn 4s infinite;
+          position: absolute;
+          top: -6px;
+          left: 91px;
+          width: 0;
+          height: 0;
+          border-top: 15px solid transparent;
+          border-bottom: 110px solid transparent;
+          border-right: 104px solid #263949; }
+    .skin-1 .side-bar .side-bar-menu ul li .side-bar-menu-pop {
+      color: #fff;
+      background-color: orange; }
+    .skin-1 .side-bar .side-bar-menu ul li:hover {
+      background-color: #233645;
+      color: #fff; }
+    .skin-1 .side-bar .side-bar-menu ul .active {
+      background-color: #233645;
+      color: #fff; }
+  .skin-1 .side-bar-toggle {
+    background-color: #2f4050; }
+    .skin-1 .side-bar-toggle .side-bar-toggle-menu ul li {
+      color: #a7b1c2; }
+    .skin-1 .side-bar-toggle .side-bar-toggle-menu ul li:hover {
+      background-color: #293846;
+      color: #fff; }
+    .skin-1 .side-bar-toggle .side-bar-toggle-menu ul li:active {
+      background-color: #293846;
+      color: #fff; }
+    .skin-1 .side-bar-toggle .side-bar-toggle-menu ul .active {
+      background-color: #293846; }
+  .skin-1 .container {
+    color: #999; }
+    .skin-1 .container .header {
+      background-color: #F5F5F5;
+      border-bottom: solid 1px #eee; }
+      .skin-1 .container .header .menu-toggle-button {
+        background-color: #1ab394;
+        color: #FFF; }
+      .skin-1 .container .header .menu-toggle-button:active {
+        background-color: #2f4050; }
+    .skin-1 .container .title-menu {
+      border-bottom: solid 2px #2f4050; }
+      .skin-1 .container .title-menu .title-menu-button {
+        border-right: solid 1px #eee;
+        background-color: #fff; }
+      .skin-1 .container .title-menu .title-menu-button-forward {
+        border-left: solid 1px #eee; }
+      .skin-1 .container .title-menu .title-menu-container {
+        border-right: solid 1px #eee;
+        background-color: #fff; }
+        .skin-1 .container .title-menu .title-menu-container ul li {
+          border-right: solid 1px #eee; }
+        .skin-1 .container .title-menu .title-menu-container ul li:hover {
+          background-color: #F5F5F5; }
+        .skin-1 .container .title-menu .title-menu-container ul .active {
+          background-color: #2f4050; }
+          .skin-1 .container .title-menu .title-menu-container ul .active i:hover {
+            cursor: pointer;
+            color: #eee; }
+        .skin-1 .container .title-menu .title-menu-container ul .active:hover {
+          background-color: #2f4050; }
+          .skin-1 .container .title-menu .title-menu-container ul .active:hover i:hover {
+            cursor: pointer;
+            color: #eee; }
+      .skin-1 .container .title-menu .title-menu-button:hover {
         background-color: #F5F5F5; }
-      .skin-1 .container .title-menu .title-menu-container ul .active {
-        background-color: #2f4050; }
-        .skin-1 .container .title-menu .title-menu-container ul .active i:hover {
-          cursor: pointer;
-          color: #eee; }
-      .skin-1 .container .title-menu .title-menu-container ul .active:hover {
-        background-color: #2f4050; }
-        .skin-1 .container .title-menu .title-menu-container ul .active:hover i:hover {
-          cursor: pointer;
-          color: #eee; }
-    .skin-1 .container .title-menu .title-menu-button:hover {
+    .skin-1 .container .content {
       background-color: #F5F5F5; }
 
 .side-bar {
@@ -159,19 +178,35 @@ body {
       .side-bar .side-bar-menu ul li .side-bar-menu-arr {
         float: right;
         margin-right: 20px; }
+      .side-bar .side-bar-menu ul li ul li {
+        padding: 6px 0px 6px 28px; }
   .side-bar .side-bar-menu .side-bar-menu-pop {
     position: relative;
     left: 20px;
     display: inline-block;
     border-radius: 3px;
     text-align: center;
-    width: 30px;
-    height: 17px;
+    width: 28px;
+    height: 14px;
     font-size: 10px; }
 
+.side-bar-toggle {
+  position: fixed;
+  width: 70px;
+  height: 1000%;
+  z-index: 1; }
+  .side-bar-toggle .side-bar-toggle-menu ul {
+    margin: 0px;
+    padding: 0px; }
+    .side-bar-toggle .side-bar-toggle-menu ul li {
+      cursor: pointer;
+      font-weight: 600;
+      text-align: center;
+      padding: 18px 0px;
+      margin: auto auto; }
+
 .header {
-  display: block;
-  min-height: 60px;
+  height: 50px;
   width: 100%; }
   .header div {
     cursor: pointer; }
@@ -213,7 +248,7 @@ body {
     width: 80px; }
   .title-menu .title-menu-container {
     z-index: 0;
-    width: 1000px;
+    width: 10000px;
     position: fixed;
     height: 41px;
     line-height: 41px;
@@ -234,5 +269,9 @@ body {
         .title-menu .title-menu-container ul li i:hover {
           cursor: pointer;
           color: #c00; }
+
+.content {
+  overflow-y: scroll;
+  width: 100%; }
 
 /*# sourceMappingURL=style.css.map */

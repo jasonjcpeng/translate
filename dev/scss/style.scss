@@ -1,6 +1,33 @@
+@import './constants/constants';
+
 body {
+  overflow-y: hidden;
+  height: 100%;
   padding: 0px;
   margin: 0px;
+  font-family: $font;
+  font-weight: 600;
+  li {
+    list-style: none;
+  }
+  .container {
+    height: 100%;
+    z-index: 1000;
+  }
 }
-@import './constants/constants';
+
+.animation-fadeIn {
+  animation: fadeIn 1s;
+}
+
+.animation-fadeOut {
+  animation: fadeOut 1s;
+}
+
+@import './skin/skin-1';
+@import './components/side-bar';
+@import './components/header';
+@import './components/title-menu';
+@import './components/content';
+
 

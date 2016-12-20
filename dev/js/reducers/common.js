@@ -1,5 +1,5 @@
 import update from 'react-addons-update';
-import * as Constants from '../action/constants';
+import * as Constants from '../action/CONSTANTS';
 
 const initState = {
 };

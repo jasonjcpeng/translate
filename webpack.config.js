@@ -17,7 +17,7 @@ module.exports = {
         },
         inline: true,
         contentBase: './dist',
-        port: 3000
+        port: 3003
     },
     devtool: 'cheap-module-eval-source-map',
     entry: './dev/js/index.js',
@@ -29,12 +29,16 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.scss/,
+                test: /\.scss$/,
                 loader: 'style-loader!css-loader!sass-loader'
             },
             {
-                test: /\.css/,
+                test: /\.css$/,
                 loader: 'style-loader!css-loader!sass-loader'
+            },
+            {
+                test:/\.(ttf|jpg|gif|png)$/,
+                loader:'file-loader'
             }
         ]
     },

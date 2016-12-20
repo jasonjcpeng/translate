@@ -1,2 +1,2 @@
-import * as Constants from './constants';
+import * as Constants from './CONSTANTS';
 import {hashHistory, browserHistory} from 'react-router';

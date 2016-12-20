@@ -7,7 +7,8 @@
     "start": "webpack-dev-server",
     "sass": "sass --watch ./static/scss/style.scss:./static/style.css",
     "serve": "browser-sync start --server --files \"./static/style.css, ./static/*.html\"",
-    "dev": "parallelshell \"npm run serve\" \"npm run sass\""
+    "dev": "parallelshell \"npm run serve\" \"npm run sass\"",
+    "all": "parallelshell \"npm run serve\" \"npm run sass\" \"npm run start\""
   },
   "license": "ISC",
   "dependencies": {
@@ -34,6 +35,7 @@
     "cross-env": "^1.0.8",
     "css-loader": "^0.23.1",
     "expect": "^1.20.1",
+    "file-loader": "^0.9.0",
     "node-libs-browser": "^1.0.0",
     "node-sass": "^3.8.0",
     "parallelshell": "^2.0.0",
