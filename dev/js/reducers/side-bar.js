@@ -7,7 +7,7 @@ const initState = {
         power:'',
         imgUrl:''
     },
-    userMenu:[{icon:'',item_1:'',item_2:''}]
+    menu: [{icon: '', item_1: '', item_2: ''}],
 }
 export default function (state=initState,action) {
     switch (action.type){

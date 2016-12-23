@@ -1,16 +1,48 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import * as ActionCreators from '../action/side-bar';
 
 class SideBar extends Component{
-    createMenuItem(){
-        return this.props.sideBar.userMenu.map((v,k)=>{
-            if(v.item_2){
-                return (<li key={'userMenu-item_1-'+k}><i className={'fa '+v.icon}></i>{v.item_1.content}<i className="side-bar-menu-arr fa fa-angle-left"></i></li>);
-            }else{
-                return (<li key={'userMenu-item_1-'+k}><i className={'fa '+v.icon}></i>{v.item_1.content}</li>);
+    createItemIcon(item) {
+        if(item.icon){
+            return (<i className={'fa '+item.icon}></i> );
+        }
+    }
+
+    createItemArr(menu,code) {
+        let newMenu = menu.filter((val)=>{
+            if(val.parentCode===code){
+                return val;
             }
         });
+        if(newMenu.length!==0){
+            return (<i className="side-bar-menu-arr fa fa-angle-right"></i>  );
+        }
+
+    }
+
+    createNormalMenuItem(menu, parentCode) {
+        return (<ul>
+            {
+                menu.map((v,k)=>{
+                    if(parentCode===v.parentCode){
+                        let newParentCode = v.code;
+                        let newMenu = menu.filter((val,key)=>{
+                            if(val!==v){
+                                return val;
+                            }
+                        });
+                        return (<li key={parentCode+'_'+v.id}>{this.createItemIcon(v)}
+                            {v.menuName}
+                            {this.createItemArr(menu,v.code)}
+                            {this.createNormalMenuItem(newMenu,newParentCode)}
+                        </li>);
+                    }
+                })
+            }
+        </ul> );
     }
 
     renderNormal(){
@@ -28,9 +60,7 @@ class SideBar extends Component{
                 <div className="side-bar-title-power">{this.props.sideBar.userInfo.power}<i className="fa fa-caret-down"></i></div>
             </div>
             <div className="side-bar-menu animation-fadeIn">
-                <ul>
-                    {this.createMenuItem()}
-                </ul>
+                {this.createNormalMenuItem(this.props.sideBar.menu, '0')}
             </div>
         </div>);
     }
@@ -47,7 +77,7 @@ function state(state) {
 }
 
 function action(dispatch) {
-    return bindActionCreators({},dispatch);
+    return bindActionCreators(ActionCreators, dispatch);
 }
 
 export default connect(state,action)(SideBar);

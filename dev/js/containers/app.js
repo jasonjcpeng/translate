@@ -9,13 +9,23 @@ class App extends React.Component{
         this.props.AppDidMount();
     }
 
-    render(){
+    renderInit(){
         return (<div className="skin-1"><SideBar></SideBar></div>);
+    }
+
+    render(){
+        if(this.props.getReady){
+            return this.renderInit();
+        }else{
+            return (<div>Loading!</div>);
+        }
     }
 }
 
 function state(state){
-    return ({});
+    return ({
+        getReady:state.common.getReady
+    });
 }
 
 function action(dispatch){
