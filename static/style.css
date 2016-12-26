@@ -1,16 +1,19 @@
 @font-face {
   font-family: base;
   src: url("./font/opensans.ttf"); }
+
 @-webkit-keyframes fadeIn {
   from {
     opacity: 0; }
   to {
     opacity: 1; } }
+
 @-webkit-keyframes fadeOut {
   from {
     opacity: 1; }
   to {
     opacity: 0; } }
+
 body {
   overflow-y: hidden;
   height: 100%;
@@ -273,5 +276,3 @@ body {
 .content {
   overflow-y: scroll;
   width: 100%; }
-
-/*# sourceMappingURL=style.css.map */

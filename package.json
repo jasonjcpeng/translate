@@ -5,7 +5,7 @@
   "scripts": {
     "dist": "webpack",
     "start": "webpack-dev-server",
-    "sass": "sass --watch ./static/scss/style.scss:./static/style.css",
+    "sass": "node-sass ./static/scss/style.scss  ./static/style.css -w",
     "serve": "browser-sync start --server --files \"./static/style.css, ./static/*.html\"",
     "dev": "parallelshell \"npm run serve\" \"npm run sass\"",
     "all": "parallelshell \"npm run serve\" \"npm run sass\" \"npm run start\""
@@ -41,7 +41,6 @@
     "node-sass": "^3.8.0",
     "parallelshell": "^2.0.0",
     "react-transform-hmr": "^1.0.4",
-    "sass": "^0.5.0",
     "sass-loader": "^4.0.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1",
