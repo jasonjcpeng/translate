@@ -2,8 +2,9 @@
   position: fixed;
   width: 220px;
   height: 1000%;
-  z-index: 1;
   .side-bar-title{
+    position: relative;
+    z-index: 10;
     height: 89px;
     padding: 33px 25px;
     .side-bar-title-head-img{
@@ -34,6 +35,8 @@
     }
   }
   .side-bar-menu {
+    z-index: 1;
+    position: relative;
     ul {
       margin-top: 15px;
       padding: 0px;

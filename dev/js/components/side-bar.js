@@ -5,26 +5,38 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import * as ActionCreators from '../action/side-bar';
 
 class SideBar extends Component{
+    componentDidMount() {
+        const windowHeight = window.innerHeight;
+        const menuHeight = this.refs.menu.offsetHeight;
+    }
+
     createItemIcon(item) {
         if(item.icon){
             return (<i className={'fa '+item.icon}></i> );
         }
     }
 
-    createItemArr(menu,code) {
+    createItemActive(id) {
+        let active = this.props.sideBar.activeMenuId.includes(id);
+        return active?'active':'';
+    }
+
+    isHasChild(menu,code) {
         let newMenu = menu.filter((val)=>{
             if(val.parentCode===code){
                 return val;
             }
         });
         if(newMenu.length!==0){
-            return (<i className="side-bar-menu-arr fa fa-angle-right"></i>  );
+            return true;
+        }else{
+            return false;
         }
 
     }
 
-    createNormalMenuItem(menu, parentCode) {
-        return (<ul>
+    createAllNormalMenuItem(menu, parentCode) {
+        return (<ul >
             {
                 menu.map((v,k)=>{
                     if(parentCode===v.parentCode){
@@ -45,7 +57,44 @@ class SideBar extends Component{
         </ul> );
     }
 
+    createNormalMenuItem(menu, parentCode) {
+        return (<ul >
+            {
+                menu.map((v, k)=> {
+                    if (parentCode === v.parentCode) {
+                        let that = this;
+                        let newParentCode = v.code;
+                        let newMenu = menu.filter((val, key)=> {
+                            if (val !== v) {
+                                return val;
+                            }
+                        });
+                        let isHasChild = this.isHasChild(menu,v.code);
+                        return (<li className={this.createItemActive(v.id)} onClick={e=> {
+                            this.props.meunItemToggle(v.parentCode, v.id,isHasChild);
+                            e.stopPropagation();
+                        }} key={v.id}>{this.createItemIcon(v)}
+                            {v.menuName}
+                            {isHasChild?(<i className="side-bar-menu-arr fa fa-angle-left"></i>):''}
+                            {
+                                function(){
+                                    if(that.createItemActive(v.id)&&isHasChild){
+                                       return that.createNormalMenuItem(newMenu,newParentCode);
+                                    }
+                                }()
+                            }
+                        </li>);
+                    }
+                })
+            }
+        </ul>);
+    }
+
+
     renderNormal(){
+        let MenuScroll = {
+            top: this.props.sideBar.menuScrollY + 'px'
+        }
         return (<div className="side-bar">
             <div className="side-bar-title animation-fadeIn">
                 <div className="side-bar-title-skin">
@@ -59,7 +108,13 @@ class SideBar extends Component{
                 <div className="side-bar-title-name">{this.props.sideBar.userInfo.name}</div>
                 <div className="side-bar-title-power">{this.props.sideBar.userInfo.power}<i className="fa fa-caret-down"></i></div>
             </div>
-            <div className="side-bar-menu animation-fadeIn">
+            <div ref="menu" className="side-bar-menu animation-fadeIn" style={MenuScroll} onWheel={e=> {
+                let top = this.props.sideBar.menuScrollY - e.deltaY / 5;
+                let menuHeight = this.refs.menu.offsetHeight;
+                if (top <= 0 && menuHeight + top + 200 >= window.innerHeight) {
+                    this.props.menuScroll(top);
+                }
+            }}>
                 {this.createNormalMenuItem(this.props.sideBar.menu, '0')}
             </div>
         </div>);
