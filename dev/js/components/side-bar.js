@@ -16,8 +16,8 @@ class SideBar extends Component{
         }
     }
 
-    createItemActive(id) {
-        let active = this.props.sideBar.activeMenuId.includes(id);
+    createItemActive(v) {
+        let active = this.props.sideBar.activeMenu.includes(v);
         return active?'active':'';
     }
 
@@ -70,15 +70,15 @@ class SideBar extends Component{
                             }
                         });
                         let isHasChild = this.isHasChild(menu,v.code);
-                        return (<li className={this.createItemActive(v.id)} onClick={e=> {
-                            this.props.meunItemToggle(v.parentCode, v.id,isHasChild);
+                        return (<li className={this.createItemActive(v)} onClick={e=> {
+                            this.props.meunItemToggle(v,isHasChild);
                             e.stopPropagation();
                         }} key={v.id}>{this.createItemIcon(v)}
                             {v.menuName}
-                            {isHasChild?(<i className="side-bar-menu-arr fa fa-angle-left"></i>):''}
+                            {isHasChild?(<i className={this.createItemActive(v)?'side-bar-menu-arr fa fa-angle-down':'side-bar-menu-arr fa fa-angle-left'}></i>):''}
                             {
                                 function(){
-                                    if(that.createItemActive(v.id)&&isHasChild){
+                                    if(that.createItemActive(v)&&isHasChild){
                                        return that.createNormalMenuItem(newMenu,newParentCode);
                                     }
                                 }()

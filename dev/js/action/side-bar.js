@@ -6,10 +6,9 @@ export const menuScroll = e=>{
         payload:e
     }
 }
-export const meunItemToggle = (parentCode,e,isHasChild)=>{
+export const meunItemToggle = (e,isHasChild)=>{
     return {
         type:Constants.SIDE_BAR_MENU_ITEM_TOGGLE,
-        parentCode:parentCode,
         isHasChild:isHasChild,
         payload:e
     }
