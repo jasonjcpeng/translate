@@ -19,3 +19,24 @@ $font:base;
     opacity: 0;
   }
 }
+
+@-webkit-keyframes toggleOut {
+  from {
+    margin-bottom: 100px;
+  }
+  to{
+    margin-bottom: 0px;
+  }
+}
+
+.transition{
+  animation: toggleOut 2s;
+}
+
+.animation-fadeIn {
+  animation: fadeIn 1s;
+}
+
+.animation-fadeOut {
+  animation: fadeOut 1s;
+}

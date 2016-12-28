@@ -2,6 +2,10 @@
   position: fixed;
   width: 220px;
   height: 1000%;
+
+
+
+
   .side-bar-title{
     position: relative;
     z-index: 10;
@@ -11,7 +15,6 @@
       width: 64px;
       height: 64px;
       img{
-        animation: fadeIn 1s;
         border-radius: 50px;
         width: 64px;
         height: 64px;
@@ -44,7 +47,6 @@
         padding: 14px 0px 14px 25px;
         color: #a7b1c2;
         font-size: 13px;
-        animation: fadeIn 1s;
         cursor: pointer;
         .fa {
           margin-right: 10px;

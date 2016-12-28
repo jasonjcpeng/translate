@@ -70,7 +70,7 @@ export const AppDidMount = ()=>{
                     "createtime": "2016-01-11T00:00:00",
                     "updatetime": "2016-05-16T14:01:36"
                 }, {
-                    "icon":"fa-home",
+                    "icon":"fa-columns",
                     "id": 56,
                     "code": "12",
                     "parentCode": "0",
@@ -101,7 +101,7 @@ export const AppDidMount = ()=>{
                     "createtime": "2016-05-16T14:04:16",
                     "updatetime": "2016-05-18T15:13:07"
                 }, {
-                    "icon":"fa-home",
+                    "icon":"fa-bar-chart",
                     "id": 66,
                     "code": "13",
                     "parentCode": "0",
@@ -122,7 +122,7 @@ export const AppDidMount = ()=>{
                     "createtime": "2016-05-27T16:43:10",
                     "updatetime": "2016-05-27T16:43:10"
                 }, {
-                    "icon":"fa-home",
+                    "icon":"fa-desktop",
                     "id": 82,
                     "code": "15",
                     "parentCode": "0",
