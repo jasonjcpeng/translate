@@ -4,10 +4,6 @@ import {connect} from 'react-redux';
 import * as ActionCreators from '../action/side-bar';
 
 class SideBar extends Component{
-    componentDidMount() {
-        const windowHeight = window.innerHeight;
-        const menuHeight = this.refs.menu.offsetHeight;
-    }
 
     createItemIcon(item) {
         if(item.icon){
@@ -18,6 +14,22 @@ class SideBar extends Component{
     createItemActive(v) {
         let active = this.props.sideBar.activeMenu.includes(v);
         return active?'active':'';
+    }
+
+    //这个生成动画的方法很蠢，但暂时没有别的办法了
+    createToggleAnimationLv(v) {
+        let menu = this.props.sideBar.menu;
+        if(this.props.sideBar.activeMenu.includes(v)){
+            let ChildMenu = menu.filter((val)=> {
+                if (val.parentCode == v.code) {
+                    return val;
+                }
+            });
+            return ChildMenu.length;
+        }else{
+            return '';
+        }
+
     }
 
     isHasChild(menu,code) {
@@ -48,7 +60,9 @@ class SideBar extends Component{
                                 }
                             });
                             let isHasChild = this.isHasChild(menu, v.code);
-                            return (<li className={'toggleOut '+this.createItemActive(v)} onClick={e=> {
+                            return (
+                                <li className={'toggleOutLv_' + this.createToggleAnimationLv(v) + ' ' + this.createItemActive(v)}
+                                    onClick={e=> {
                                 this.props.meunItemToggle(v, isHasChild);
                                 e.stopPropagation();
                             }} key={v.id}>{this.createItemIcon(v)}
@@ -76,9 +90,8 @@ class SideBar extends Component{
             top: this.props.sideBar.menuScrollY + 'px'
         }
         return (
-            <div className="side-bar animation-fadeIn">
-
-                <div className="side-bar-title ">
+            <div className="side-bar">
+                <div className="side-bar-title animation-fadeIn">
                     <div className="side-bar-title-skin ">
                         <div></div>
                         <div></div>
@@ -112,7 +125,7 @@ class SideBar extends Component{
 
 function state(state) {
     return ({
-        sideBar:state.sideBar
+        sideBar:state.sideBar,
     });
 }
 

@@ -1,4 +1,12 @@
 import * as Constants from './CONSTANTS';
+
+export const screenHeightListenner = (height,width)=>{
+    return ({
+        type:Constants.APP_SCREEN_HEIGHT_LISTENNER,
+        height:height,
+        width:width
+    });
+}
 export const AppDidMount = ()=>{
     return dispatch=>{
         let e = {
@@ -166,6 +174,46 @@ export const AppDidMount = ()=>{
                     "id": 88,
                     "code": "1501",
                     "parentCode": "15",
+                    "url": "/PersonalOrders/",
+                    "menuName": "个人订单",
+                    "menuSort": 0,
+                    "isEnable": true,
+                    "createtime": "2016-09-27T15:13:57",
+                    "updatetime": "2016-09-27T15:13:57"
+                },{
+                    "id": 89,
+                    "code": "1501",
+                    "parentCode": "11",
+                    "url": "/PersonalOrders/",
+                    "menuName": "个人订单",
+                    "menuSort": 0,
+                    "isEnable": true,
+                    "createtime": "2016-09-27T15:13:57",
+                    "updatetime": "2016-09-27T15:13:57"
+                },{
+                    "id": 889,
+                    "code": "1501",
+                    "parentCode": "11",
+                    "url": "/PersonalOrders/",
+                    "menuName": "个人订单",
+                    "menuSort": 0,
+                    "isEnable": true,
+                    "createtime": "2016-09-27T15:13:57",
+                    "updatetime": "2016-09-27T15:13:57"
+                },{
+                    "id": 8899,
+                    "code": "1501",
+                    "parentCode": "11",
+                    "url": "/PersonalOrders/",
+                    "menuName": "个人订单",
+                    "menuSort": 0,
+                    "isEnable": true,
+                    "createtime": "2016-09-27T15:13:57",
+                    "updatetime": "2016-09-27T15:13:57"
+                },{
+                    "id": 88999,
+                    "code": "1501",
+                    "parentCode": "11",
                     "url": "/PersonalOrders/",
                     "menuName": "个人订单",
                     "menuSort": 0,

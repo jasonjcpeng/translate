@@ -10,7 +10,6 @@ const initState = {
     menu: [{icon: '', item_1: '', item_2: ''}],
     menuScrollY: 0,
     activeMenu: [],
-    open:0
 }
 export default function (state = initState, action) {
     switch (action.type) {
@@ -26,12 +25,12 @@ export default function (state = initState, action) {
         case Constants.SIDE_BAR_MENU_ITEM_TOGGLE:
             let length = state.activeMenu.length;
             if (length === 0) {
-                return update(state, {activeMenu: {$set: [action.payload]},open:{$set:1}});
+                return update(state, {activeMenu: {$set: [action.payload]}});
             } else {
                 for (let i = 0; i < length; i++) {
                     if (state.activeMenu[i].parentCode === action.payload.parentCode) {
                         if(state.activeMenu[i].id===action.payload.id){
-                            return update(state, {activeMenu: {$splice: [[i, length]]},open:{$set:0}});
+                            return update(state, {activeMenu: {$splice: [[i, length]]}});
                             break;
                         }else{
                             return update(state, {activeMenu: {$splice: [[i, length, action.payload]]}});
