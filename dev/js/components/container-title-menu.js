@@ -4,13 +4,63 @@ import {connect} from 'react-redux';
 import * as ActionCreators from '../action/side-bar';
 
 class ContainerTittleMenu extends Component {
+    getContainerTittleMenuLeft(){
+        switch (this.props.toggleStatus){
+            case 'full':
+                return '260px';
+                break;
+            case 'mini':
+                return '110px';
+                break;
+            case 'none':
+                return '40px';
+                break;
+        }
+    }
+
+    getContainerTittleMenuLeftAnimation(){
+        switch (this.props.lastToggleStatus){
+            case 'full':
+                switch (this.props.toggleStatus){
+                    case 'mini':
+                        return 'container-title-menu-full-to-mini';
+                        break;
+                    case 'none':
+                        return '';
+                        break;
+                }
+                break;
+            case 'mini':
+                switch (this.props.toggleStatus){
+                    case 'full':
+                        return 'container-title-menu-mini-to-full';
+                        break;
+                    case 'none':
+                        return '';
+                        break;
+                }
+                break;
+            case 'none':
+                switch (this.props.toggleStatus){
+                    case 'full':
+                        return '';
+                        break;
+                    case 'mini':
+                        return '';
+                        break;
+                }
+                break;
+        }
+    }
+
     render(){
-        this.isCreateScrollBar = this.props.toggleStatus ==='full'?true:false;
+        this.isCreateScrollBar = this.props.defaultToggleStatus ==='full'?true:false;
+        let left = this.getContainerTittleMenuLeft();
         if (this.isCreateScrollBar) {
             return (
                 <div className="title-menu">
                     <div className="title-menu-button"><i className="fa fa-backward"></i></div>
-                    <div className="title-menu-container" style={{left: '260px'}}>
+                    <div className={"title-menu-container "+this.getContainerTittleMenuLeftAnimation()} style={{left:left}}>
                         <ul>
                             <li>首页 <i className="fa fa-times-circle"></i></li>
                             <li>百度云库 <i className="fa fa-times-circle"></i></li>
@@ -33,7 +83,9 @@ class ContainerTittleMenu extends Component {
 
 function state(state) {
     return ({
-        toggleStatus:state.common.toggleStatus
+        defaultToggleStatus:state.common.defaultToggleStatus,
+        toggleStatus:state.common.toggleStatus,
+        lastToggleStatus:state.common.lastToggleStatus
     });
 }
 

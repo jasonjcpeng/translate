@@ -5,6 +5,41 @@ import * as ActionCreators from '../action/side-bar';
 
 class SideBar extends Component{
 
+    getToggleAnimation(){
+        switch (this.props.lastToggleStatus){
+            case 'full':
+                switch (this.props.toggleStatus){
+                    case 'mini':
+                        return 'side-bar-full-to-mini';
+                        break;
+                    case 'none':
+                        return '';
+                        break;
+                }
+                break;
+            case 'mini':
+                switch (this.props.toggleStatus){
+                    case 'full':
+                        return 'side-bar-mini-to-full';
+                        break;
+                    case 'none':
+                        return '';
+                        break;
+                }
+                break;
+            case 'none':
+                switch (this.props.toggleStatus){
+                    case 'full':
+                        return '';
+                        break;
+                    case 'mini':
+                        return '';
+                        break;
+                }
+                break;
+        }
+    }
+
     createItemIcon(item) {
         if(item.icon){
             return (<i className={'fa '+item.icon}></i> );
@@ -90,7 +125,7 @@ class SideBar extends Component{
             top: this.props.sideBar.menuScrollY + 'px'
         }
         return (
-            <div className="side-bar">
+            <div className={"side-bar "+this.getToggleAnimation()}>
                 <div className="side-bar-title animation-fadeIn">
                     <div className="side-bar-title-skin ">
                         <div></div>
@@ -99,9 +134,9 @@ class SideBar extends Component{
                         <div></div>
                         <div></div>
                     </div>
-                    <div className="side-bar-title-head-img"><img src={this.props.sideBar.userInfo.imgUrl}/></div>
-                    <div className="side-bar-title-name">{this.props.sideBar.userInfo.name}</div>
-                    <div className="side-bar-title-power">{this.props.sideBar.userInfo.power}<i
+                    <div className="side-bar-title-head-img animation-fadeIn"><img src={this.props.sideBar.userInfo.imgUrl}/></div>
+                    <div className="side-bar-title-name animation-fadeIn">{this.props.sideBar.userInfo.name}</div>
+                    <div className="side-bar-title-power animation-fadeIn">{this.props.sideBar.userInfo.power}<i
                         className="fa fa-caret-down"></i></div>
                 </div>
                 <div ref="menu" className="side-bar-menu animation-fadeIn" style={MenuScroll} onWheel={e=> {
@@ -118,14 +153,42 @@ class SideBar extends Component{
         );
     }
 
+    renderMini(){
+        return (<div className={"side-bar-toggle "+this.getToggleAnimation()}>
+            <div className="side-bar-toggle-menu animation-fadeIn">
+                <ul>
+                    <li><i className="fa fa-home"></i></li>
+                    <li><i className="fa fa-columns"></i></li>
+                    <li><i className="fa fa-bar-chart"></i></li>
+                    <li><i className="fa fa-envelope"></i></li>
+                    <li><i className="fa fa-edit"></i></li>
+                    <li><i className="fa fa-desktop"></i></li>
+                </ul>
+            </div>
+        </div>)
+    }
+
     render(){
-        return this.renderNormal();
+        switch (this.props.toggleStatus){
+            case 'full':
+                return this.renderNormal();
+                break;
+            case 'mini':
+                return this.renderMini();
+                break;
+            case 'none':
+                return (<div></div>);
+                break;
+        }
+        return (<div className="side-bar"></div>);
     }
 }
 
 function state(state) {
     return ({
         sideBar:state.sideBar,
+        toggleStatus:state.common.toggleStatus,
+        lastToggleStatus:state.common.lastToggleStatus
     });
 }
 

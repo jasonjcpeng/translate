@@ -1,0 +1,139 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to{
+    opacity: 0;
+  }
+}
+
+@keyframes toggleOut_1 {
+  from {
+    height: 0;
+  }
+  to{
+    height:61px;
+  }
+}
+@keyframes toggleOut_2 {
+  from {
+    height: 0;
+  }
+  to{
+    height:91px;
+  }
+}
+@keyframes toggleOut_3 {
+  from {
+    height: 0;
+  }
+  to{
+    height:121px;
+  }
+}
+@keyframes toggleOut_4 {
+  from {
+    height: 0;
+  }
+  to{
+    height:151px;
+  }
+}
+@keyframes toggleOut_5 {
+  from {
+    height: 0;
+  }
+  to{
+    height:181px;
+  }
+}
+@keyframes toggleOut_6 {
+  from {
+    height: 0;
+  }
+  to{
+    height:211px;
+  }
+}
+@keyframes toggleOut_7 {
+  from {
+    height: 0;
+  }
+  to{
+    height:241px;
+  }
+}
+@keyframes toggleOut_8 {
+  from {
+    height: 0;
+  }
+  to{
+    height:271px;
+  }
+}
+
+
+@keyframes animation-container-margin-full-to-mini {
+  from{
+    margin-left: 220px;
+  }
+  to{
+    margin-left: 70px;
+  }
+}
+
+@keyframes animation-container-title-menu-full-to-mini {
+  from{
+    left: 260px;
+  }
+  to{
+    left: 110px;
+  }
+}
+
+@keyframes animation-side-bar-full-to-mini {
+  from{
+    width: 220px;
+  }
+  to{
+    width: 70px;
+  }
+}
+
+
+
+
+@keyframes animation-container-margin-mini-to-full {
+  from{
+    margin-left: 70px;
+  }
+  to{
+    margin-left: 220px;
+  }
+}
+
+@keyframes animation-container-title-menu-mini-to-full {
+  from{
+    left: 110px;
+  }
+  to{
+    left: 260px;
+  }
+}
+
+@keyframes animation-side-bar-mini-to-full {
+  from{
+    width: 70px;
+  }
+  to{
+    width: 220px;
+  }
+}

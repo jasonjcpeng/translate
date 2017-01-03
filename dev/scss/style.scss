@@ -1,4 +1,6 @@
 @import './constants/constants';
+@import './constants/keyframes';
+@import './constants/animation';
 
 body {
   overflow-y: hidden;
@@ -12,10 +14,10 @@ body {
   }
 
   .container {
-    margin-left: 220px;
     height: 100%;
     z-index: 1000;
   }
+
 }
 
 

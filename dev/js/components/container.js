@@ -6,15 +6,76 @@ import ContainerHeader from './container-header';
 import * as ActionCreators from '../action/side-bar';
 
 class Container extends Component {
-    render() {
+
+    getContainerMargin() {
+        switch (this.props.toggleStatus) {
+            case 'full':
+                return '220px';
+                break;
+            case 'mini':
+                return '70px';
+                break;
+            case 'none':
+                return '0px';
+                break;
+        }
+    }
+
+    getContainerToggleAnimation() {
+        switch (this.props.lastToggleStatus) {
+            case 'full':
+                switch (this.props.toggleStatus) {
+                    case 'mini':
+                        return 'container-margin-full-to-mini';
+                        break;
+                    case 'none':
+                        return '';
+                        break;
+                }
+                break;
+            case 'mini':
+                switch (this.props.toggleStatus) {
+                    case 'full':
+                        return 'container-margin-mini-to-full';
+                        break;
+                    case 'none':
+                        return '';
+                        break;
+                }
+                break;
+            case 'none':
+                switch (this.props.toggleStatus) {
+                    case 'full':
+                        return '';
+                        break;
+                    case 'mini':
+                        return '';
+                        break;
+                }
+                break;
+        }
+    }
+
+    renderNormal() {
         this.isCreateScrollBar = this.props.toggleStatus === 'full'?true:false;
         let contentHeight = this.props.windowHeight - 93+(this.isCreateScrollBar?0:42);
-        return (<div className="container">
+        let containerMargin = this.getContainerMargin();
+        return (
+            <div style={{marginLeft: containerMargin}} className={'container ' + this.getContainerToggleAnimation()}>
             <ContainerHeader/>
             <ContainerTittleMenu/>
             <section className="content" style={{height: contentHeight}}>
             </section>
         </div>);
+    }
+
+    render() {
+        if (this.props.defaultToggleStatus) {
+            return  this.renderNormal();
+        } else {
+            return (<div className="container"></div>);
+        }
+
     }
 }
 
@@ -22,7 +83,9 @@ function state(state) {
     return ({
         windowHeight: state.common.windowHeight,
         windowWidth: state.common.windowWidth,
-        toggleStatus:state.common.toggleStatus
+        defaultToggleStatus: state.common.defaultToggleStatus,
+        toggleStatus: state.common.toggleStatus,
+        lastToggleStatus: state.common.lastToggleStatus
     });
 }
 

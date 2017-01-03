@@ -58,6 +58,17 @@ export const AppDidMount = ()=>{
                     "createtime": "2016-01-11T00:00:00",
                     "updatetime": "2016-01-20T16:18:32"
                 },{
+                    "id": 1134,
+                    "code": "11020101",
+                    "parentCode": "110201",
+                    "url": "/Users/",
+                    "menuName": "小明君",
+                    "menuSort": 0,
+                    "isEnable": true,
+                    "createtime": "2016-01-11T00:00:00",
+                    "updatetime": "2016-01-20T16:18:32"
+                },
+                    {
                     "id": 4,
                     "code": "1103",
                     "parentCode": "11",
