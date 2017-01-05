@@ -1,3 +1,10 @@
+.animation-fadeIn {
+  animation: fadeIn 1.5s;
+}
+
+.animation-fadeOut {
+  animation: fadeOut 1.5s;
+}
 
 .toggleOutLv_1{
   animation: toggleOut_1 0.5s;
@@ -24,13 +31,6 @@
   animation: toggleOut_8 0.5s;
 }
 
-.animation-fadeIn {
-  animation: fadeIn 1s;
-}
-
-.animation-fadeOut {
-  animation: fadeOut 1s;
-}
 
 .container-margin-full-to-mini{
   animation: animation-container-margin-full-to-mini 0.5s;
@@ -52,4 +52,20 @@
 }
 .side-bar-mini-to-full{
   animation: animation-side-bar-mini-to-full 0.5s;
+}
+
+.container-margin-none-to-full{
+  animation: animation-container-margin-none-to-full 0.5s;
+}
+
+.side-bar-none-to-full{
+  animation: animation-side-bar-none-to-full 0.5s;
+}
+
+.container-margin-full-to-none{
+  animation: animation-container-margin-full-to-none 0.5s;
+}
+
+.side-bar-full-to-none{
+  animation: animation-side-bar-full-to-none 0.5s;
 }

@@ -29,7 +29,7 @@ class Container extends Component {
                         return 'container-margin-full-to-mini';
                         break;
                     case 'none':
-                        return '';
+                        return 'container-margin-full-to-none';
                         break;
                 }
                 break;
@@ -46,7 +46,7 @@ class Container extends Component {
             case 'none':
                 switch (this.props.toggleStatus) {
                     case 'full':
-                        return '';
+                        return 'container-margin-none-to-full';
                         break;
                     case 'mini':
                         return '';

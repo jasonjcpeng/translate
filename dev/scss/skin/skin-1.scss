@@ -76,20 +76,17 @@
         li {
           color: #a7b1c2;
         }
-        li:hover {
-          background-color: #293846;
-          color: #fff;
-        }
-        li:active {
-          background-color: #293846;
-          color: #fff;
-        }
         .active {
           background-color: #293846;
+          color: #fff;
         }
       }
     }
   }
+  .side-bar-toggle:hover{
+    background-color: #293846;
+  }
+
 
   .container {
     color: #999;

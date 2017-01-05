@@ -137,3 +137,41 @@
     width: 220px;
   }
 }
+
+@keyframes animation-container-margin-none-to-full {
+  from{
+    margin-left: 0px;
+  }
+  to{
+    margin-left: 220px;
+  }
+}
+
+
+@keyframes animation-side-bar-none-to-full {
+  from{
+    width: 0px;
+  }
+  to{
+    width: 220px;
+  }
+}
+
+@keyframes animation-container-margin-full-to-none {
+  from{
+    margin-left: 220px;
+  }
+  to{
+    margin-left: 0px;
+  }
+}
+
+
+@keyframes animation-side-bar-full-to-none {
+  from{
+    width: 220px;
+  }
+  to{
+    width: 0px;
+  }
+}

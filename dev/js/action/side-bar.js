@@ -13,3 +13,11 @@ export const meunItemToggle = (e,isHasChild)=>{
         payload:e
     }
 }
+
+export const miniMenuToggle = (defaultToggleStatus,toggleStatus)=>{
+    return ({
+        type:Constants.CONTAINER_HEADER_TOGGLE,
+        defaultToggleStatus:defaultToggleStatus,
+        toggleStatus:toggleStatus
+    });
+}

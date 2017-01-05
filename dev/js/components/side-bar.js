@@ -13,7 +13,7 @@ class SideBar extends Component{
                         return 'side-bar-full-to-mini';
                         break;
                     case 'none':
-                        return '';
+                        return 'side-bar-full-to-none';
                         break;
                 }
                 break;
@@ -30,7 +30,7 @@ class SideBar extends Component{
             case 'none':
                 switch (this.props.toggleStatus){
                     case 'full':
-                        return '';
+                        return 'side-bar-none-to-full';
                         break;
                     case 'mini':
                         return '';
@@ -126,7 +126,8 @@ class SideBar extends Component{
         }
         return (
             <div className={"side-bar "+this.getToggleAnimation()}>
-                <div className="side-bar-title animation-fadeIn">
+
+                <div  className="side-bar-title animation-fadeIn">
                     <div className="side-bar-title-skin ">
                         <div></div>
                         <div></div>
@@ -136,10 +137,9 @@ class SideBar extends Component{
                     </div>
                     <div className="side-bar-title-head-img animation-fadeIn"><img src={this.props.sideBar.userInfo.imgUrl}/></div>
                     <div className="side-bar-title-name animation-fadeIn">{this.props.sideBar.userInfo.name}</div>
-                    <div className="side-bar-title-power animation-fadeIn">{this.props.sideBar.userInfo.power}<i
-                        className="fa fa-caret-down"></i></div>
-                </div>
-                <div ref="menu" className="side-bar-menu animation-fadeIn" style={MenuScroll} onWheel={e=> {
+                    <div className="side-bar-title-power animation-fadeIn">{this.props.sideBar.userInfo.power}<i className="fa fa-caret-down"></i></div>
+                    </div>
+                <div ref="menu" className="side-bar-menu" style={MenuScroll} onWheel={e=> {
                     let top = this.props.sideBar.menuScrollY - e.deltaY / 5;
                     let menuHeight = this.refs.menu.offsetHeight;
                     if (top <= 0 && menuHeight + top + 200 >= window.innerHeight) {
@@ -153,16 +153,21 @@ class SideBar extends Component{
         );
     }
 
+
+    createMiniItemList(){
+        return (this.props.sideBar.menu.map(v=>{
+            if(v.parentCode==='0'){
+                return (<li className={this.createItemActive(v)} key={v.id}>{this.createItemIcon(v)}</li> );
+            }
+        }));
+    }
+
     renderMini(){
-        return (<div className={"side-bar-toggle "+this.getToggleAnimation()}>
-            <div className="side-bar-toggle-menu animation-fadeIn">
-                <ul>
-                    <li><i className="fa fa-home"></i></li>
-                    <li><i className="fa fa-columns"></i></li>
-                    <li><i className="fa fa-bar-chart"></i></li>
-                    <li><i className="fa fa-envelope"></i></li>
-                    <li><i className="fa fa-edit"></i></li>
-                    <li><i className="fa fa-desktop"></i></li>
+        return (
+            <div onClick={e=>{this.props.miniMenuToggle(this.props.defaultToggleStatus,'mini')}} className={"side-bar-toggle "+this.getToggleAnimation()}>
+            <div className="side-bar-toggle-menu">
+                <ul className="animation-fadeIn">
+                    {this.createMiniItemList()}
                 </ul>
             </div>
         </div>)
@@ -177,16 +182,17 @@ class SideBar extends Component{
                 return this.renderMini();
                 break;
             case 'none':
-                return (<div></div>);
+                return (<div style={{width:'0px'}} className={"side-bar "+this.getToggleAnimation()}></div>);
                 break;
         }
-        return (<div className="side-bar"></div>);
+        return (<div className={"side-bar"}></div>);
     }
 }
 
 function state(state) {
     return ({
         sideBar:state.sideBar,
+        defaultToggleStatus: state.common.defaultToggleStatus,
         toggleStatus:state.common.toggleStatus,
         lastToggleStatus:state.common.lastToggleStatus
     });
