@@ -92,10 +92,10 @@
 
 @keyframes animation-container-title-menu-full-to-mini {
   from{
-    left: 260px;
+    margin-left: 150px;
   }
   to{
-    left: 110px;
+    margin-left: 0px;
   }
 }
 
@@ -122,10 +122,10 @@
 
 @keyframes animation-container-title-menu-mini-to-full {
   from{
-    left: 110px;
+    margin-left: -150px;
   }
   to{
-    left: 260px;
+    margin-left: 0px;
   }
 }
 

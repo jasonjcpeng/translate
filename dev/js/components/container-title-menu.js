@@ -4,13 +4,14 @@ import {connect} from 'react-redux';
 import * as ActionCreators from '../action/container-tittle-menu';
 
 class ContainerTittleMenu extends Component {
+
     getContainerTittleMenuLeft(){
         switch (this.props.toggleStatus){
             case 'full':
-                return 260;
+                return 260 - this.props.menuScrollX;
                 break;
             case 'mini':
-                return 110;
+                return 110- this.props.menuScrollX;
                 break;
         }
     }
@@ -50,34 +51,26 @@ class ContainerTittleMenu extends Component {
         }
     }
 
+    createScrollMenuItem(){
+        return this.props.activeContent.map(v=>{
+            return <li className={v.active?'active':''} key={v.obj.id}>{v.obj.menuName}<i className="fa fa-times-circle"></i></li>
+        });
+    }
+
     createTitleScrollBar(){
-        let defaultLeft = this.getContainerTittleMenuLeft();
+        let defaultLeft = this.props.menuScrollX;
         return(
             <div className="title-menu">
                 <div className="title-menu-button"><i className="fa fa-backward"></i></div>
                 <div onWheel={e=>{
-                    let v = e.deltaY;
-                    this.props.scroll(v);
+                    let left = this.props.menuScrollX + e.deltaY / 4;
+                    if(left+100/4>0){
+                        this.props.scroll(left);
                     }
-                } className={"title-menu-container "+this.getContainerTittleMenuLeftAnimation()} style={{left:defaultLeft+'px'}}>
+                }
+                } className={"title-menu-container "+this.getContainerTittleMenuLeftAnimation()} style={{left:this.getContainerTittleMenuLeft()+'px'}}>
                     <ul className="animation-fadeIn">
-                        <li>首页 <i className="fa fa-times-circle"></i></li>
-                        <li>百度云库 <i className="fa fa-times-circle"></i></li>
-                        <li className="active">图表<i className="fa fa-times-circle"></i></li>
-                        <li>图表<i className="fa fa-times-circle"></i></li>
-                        <li>图表<i className="fa fa-times-circle"></i></li>
-                        <li>图表<i className="fa fa-times-circle"></i></li>
-                        <li>图表<i className="fa fa-times-circle"></i></li>
-                        <li>图表<i className="fa fa-times-circle"></i></li>
-                        <li>图表<i className="fa fa-times-circle"></i></li>
-                        <li>图表<i className="fa fa-times-circle"></i></li>
-                        <li>图表<i className="fa fa-times-circle"></i></li>
-                        <li>图表<i className="fa fa-times-circle"></i></li>
-                        <li>图表<i className="fa fa-times-circle"></i></li>
-                        <li>图表<i className="fa fa-times-circle"></i></li>
-                        <li>图表<i className="fa fa-times-circle"></i></li>
-                        <li>图表<i className="fa fa-times-circle"></i></li>
-                        <li>图表<i className="fa fa-times-circle"></i></li>
+                        {this.createScrollMenuItem()}
                     </ul>
                 </div>
                 <div className="title-menu-button title-menu-button-exit"><i className="fa fa-sign-out"></i>退出</div>
@@ -100,6 +93,8 @@ class ContainerTittleMenu extends Component {
 
 function state(state) {
     return ({
+        activeContent:state.containerTitleMenu.activeContent,
+        menuScrollX: state.containerTitleMenu.menuScrollX,
         defaultToggleStatus:state.common.defaultToggleStatus,
         toggleStatus:state.common.toggleStatus,
         lastToggleStatus:state.common.lastToggleStatus

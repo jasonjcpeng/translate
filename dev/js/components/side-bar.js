@@ -119,13 +119,29 @@ class SideBar extends Component{
         );
     }
 
+    upScroll(e){
+        if(this.refs.menu.clientHeight>(this.props.windowHeight-155)&&this.refs.menu.clientHeight+this.props.sideBar.menuScrollY>(this.props.windowHeight-160)){
+            this.props.menuScroll(this.props.sideBar.menuScrollY+e);
+        }
+    }
+    downScroll(e){
 
+        if(this.props.sideBar.menuScrollY<0){
+            this.props.menuScroll(this.props.sideBar.menuScrollY+e);
+        }
+    }
     renderNormal(){
         let MenuScroll = {
-            top: this.props.sideBar.menuScrollY + 'px'
+            top: this.props.sideBar.menuScrollY  + 'px'
         }
         return (
-            <div className={"side-bar "+this.getToggleAnimation()}>
+            <div className={"side-bar "+this.getToggleAnimation()} onWheel={e=> {
+                if(e.deltaY<0){
+                    this.upScroll(e.deltaY/5);
+                }else if(e.deltaY>0){
+                    this.downScroll(e.deltaY/5);
+                }
+            }}>
 
                 <div  className="side-bar-title animation-fadeIn">
                     <div className="side-bar-title-skin ">
@@ -139,13 +155,7 @@ class SideBar extends Component{
                     <div className="side-bar-title-name animation-fadeIn">{this.props.sideBar.userInfo.name}</div>
                     <div className="side-bar-title-power animation-fadeIn">{this.props.sideBar.userInfo.power}<i className="fa fa-caret-down"></i></div>
                     </div>
-                <div ref="menu" className="side-bar-menu" style={MenuScroll} onWheel={e=> {
-                    let top = this.props.sideBar.menuScrollY - e.deltaY / 5;
-                    let menuHeight = this.refs.menu.offsetHeight;
-                    if (top <= 0 && menuHeight + top + 200 >= window.innerHeight) {
-                        this.props.menuScroll(top);
-                    }
-                }}>
+                <div ref="menu" className="side-bar-menu" style={MenuScroll} >
                     {this.createNormalMenuItem(this.props.sideBar.menu, '0')}
                 </div>
 
@@ -194,7 +204,8 @@ function state(state) {
         sideBar:state.sideBar,
         defaultToggleStatus: state.common.defaultToggleStatus,
         toggleStatus:state.common.toggleStatus,
-        lastToggleStatus:state.common.lastToggleStatus
+        lastToggleStatus:state.common.lastToggleStatus,
+        windowHeight:state.common.windowHeight
     });
 }
 

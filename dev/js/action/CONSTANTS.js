@@ -6,3 +6,6 @@ export const SIDE_BAR_MENU_ITEM_TOGGLE = 'SIDE_BAR_MENU_ITEM_TOGGLE';
 export const SIDE_BAR_MENU_SCROLL = 'SIDE_BAR_MENU_SCROLL';
 //----------------------------container
 export const CONTAINER_HEADER_TOGGLE = 'CONTAINER_HEADER_TOGGLE';
+//----------------------------container-tittle-menu
+export const CONTAINER_TITTLE_MENU_SET_DEFAULT_SCROLL_X = 'CONTAINER_TITTLE_MENU_SET_DEFAULT_SCROLL_X';
+export const CONTAINER_TITTLE_MENU_SCROLL = 'CONTAINER_TITTLE_MENU_SCROLL';
