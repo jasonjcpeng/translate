@@ -3,14 +3,15 @@ import * as Constants from '../action/CONSTANTS';
 
 const initState = {
     menuScrollX:0,
-    activeContent:[]
+    activeContent:[],
+    sideBarCheck:true,
+    limit:0,
+    cursor:0,
+    contentWidth:0
 }
 
 export default function (state=initState,action) {
     switch (action.type){
-        case Constants.CONTAINER_TITTLE_MENU_SET_DEFAULT_SCROLL_X:
-            return update(state,{menuScrollX:{$set:action.payload}});
-            break;
         case Constants.CONTAINER_TITTLE_MENU_SCROLL:
             return update(state,{menuScrollX:{$set:action.payload}});
             break;
@@ -36,13 +37,38 @@ export default function (state=initState,action) {
                     }else{
                         return [];
                     }
-                }}});
+                }},sideBarCheck:{$set:true}});
                 if(Push){
                     return update(newState,{activeContent:{$push:[{obj:action.payload,active:true}]}});
                 }else{
                     return newState;
                 }
             }
+            break;
+        case Constants.CONTAINER_TITTLE_MENU_SET_LIMIT_AND_CURSOR:
+            if(state.sideBarCheck){
+                return update(state,{sideBarCheck:{$set:false},limit:{$set:action.limit},cursor:{$set:action.cursor},menuScrollX:{$set:action.cursor}});
+            }else{
+                return update(state,{limit:{$set:action.limit},cursor:{$set:action.cursor}});
+            }
+            break;
+        case Constants.CONTAINER_TITTLE_MENU_SELECT_ACTIVE_CONTENT:
+            return update(state,{activeContent:{$apply:function(arr){
+                return arr.map(function(v){
+                    if(v.obj.id === action.payload.obj.id){
+                        return ({
+                            obj:v.obj,
+                            active:true
+                        });
+                    }else{
+                        return ({
+                            obj:v.obj,
+                            active:false
+                        });
+                    }
+
+                });
+            }}});
             break;
     }
     return state;

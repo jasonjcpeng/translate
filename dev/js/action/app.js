@@ -62,7 +62,7 @@ export const AppDidMount = ()=>{
                     "code": "11020101",
                     "parentCode": "110201",
                     "url": "/Users/",
-                    "menuName": "小明君",
+                    "menuName": "小明君啊啊啊啊",
                     "menuSort": 0,
                     "isEnable": true,
                     "createtime": "2016-01-11T00:00:00",

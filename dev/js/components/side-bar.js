@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import * as ActionCreators from '../action/side-bar';
 
 class SideBar extends Component{
-
     getToggleAnimation(){
         switch (this.props.lastToggleStatus){
             case 'full':
@@ -120,12 +119,11 @@ class SideBar extends Component{
     }
 
     upScroll(e){
-        if(this.refs.menu.clientHeight>(this.props.windowHeight-155)&&this.refs.menu.clientHeight+this.props.sideBar.menuScrollY>(this.props.windowHeight-160)){
+        if(this.refs.menu.clientHeight>(this.props.windowHeight-155)&&this.refs.menu.clientHeight+this.props.sideBar.menuScrollY>(this.props.windowHeight-180)){
             this.props.menuScroll(this.props.sideBar.menuScrollY+e);
         }
     }
     downScroll(e){
-
         if(this.props.sideBar.menuScrollY<0){
             this.props.menuScroll(this.props.sideBar.menuScrollY+e);
         }
@@ -141,7 +139,7 @@ class SideBar extends Component{
                 }else if(e.deltaY>0){
                     this.downScroll(e.deltaY/5);
                 }
-            }}>
+            }}  >
 
                 <div  className="side-bar-title animation-fadeIn">
                     <div className="side-bar-title-skin ">

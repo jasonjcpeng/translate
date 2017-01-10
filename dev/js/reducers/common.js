@@ -70,6 +70,14 @@ export default function (state=initState,action) {
                 return update(newState,{toggleStatus:{$set:'full'},defaultToggleStatus:{$set:'full'}});
             }
             break;
+        case Constants.SIDE_BAR_MENU_ITEM_TOGGLE:
+            if(!action.isHasChild){
+                return update(state,{nowOnContentTarget:{$set:action.payload}});
+            }
+            break;
+        case Constants.CONTAINER_TITTLE_MENU_SELECT_ACTIVE_CONTENT:
+            return update(state,{nowOnContentTarget:{$set:action.payload}});
+            break;
 
     }
     return state;
