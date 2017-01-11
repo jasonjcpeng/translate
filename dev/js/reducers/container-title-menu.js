@@ -25,12 +25,14 @@ export default function (state=initState,action) {
                                 Push = false;
                                 return {
                                     obj:v.obj,
-                                    active:true
+                                    active:true,
+                                    status:v.status
                                 }
                             }else{
                                 return {
                                     obj:v.obj,
-                                    active:false
+                                    active:false,
+                                    status:v.status
                                 }
                             }
                         })
@@ -39,7 +41,7 @@ export default function (state=initState,action) {
                     }
                 }},sideBarCheck:{$set:true}});
                 if(Push){
-                    return update(newState,{activeContent:{$push:[{obj:action.payload,active:true}]}});
+                    return update(newState,{activeContent:{$push:[{obj:action.payload,active:true,status:{}}]}});
                 }else{
                     return newState;
                 }
@@ -58,17 +60,22 @@ export default function (state=initState,action) {
                     if(v.obj.id === action.payload.obj.id){
                         return ({
                             obj:v.obj,
-                            active:true
+                            active:true,
+                            status:v.status
                         });
                     }else{
                         return ({
                             obj:v.obj,
-                            active:false
+                            active:false,
+                            status:v.status
                         });
                     }
 
                 });
-            }}});
+            }},sideBarCheck:{$set:true}});
+            break;
+        case Constants.CONTAINER_TITTLE_MENU_DELETE_ACTIVE_CONTENT:
+            return update(state,{activeContent:{$splice:[[action.key,1]]}});
             break;
     }
     return state;

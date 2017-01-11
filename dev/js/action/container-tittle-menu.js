@@ -23,3 +23,10 @@ export const selectActiveContent= e =>{
         payload:e
     });
 }
+
+export const deleteActiveContent = k=>{
+    return ({
+        type:Constants.CONTAINER_TITTLE_MENU_DELETE_ACTIVE_CONTENT,
+        key:k
+    });
+}

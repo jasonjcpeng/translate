@@ -83,7 +83,10 @@ class ContainerTittleMenu extends Component {
             return <li onClick={()=>{
                 this.props.selectActiveContent(v);
                 }} ref={'item_' + k} className={v.active ? 'active' : ''} key={v.obj.id}>{v.obj.menuName}<i
-                className="fa fa-times-circle"></i></li>
+                className="fa fa-times-circle" onClick={(e)=> {
+                this.deleteActiveContent(v, k);
+                e.stopPropagation();
+            }}></i></li>
         });
     }
 
@@ -100,11 +103,73 @@ class ContainerTittleMenu extends Component {
 
     }
 
+    deleteActiveContent(v, k) {
+        this.props.deleteActiveContent(k);
+        let result = null;
+        if (v.active) {
+            if (k > 1 && k + 1 === this.props.activeContent.length) {
+                result = this.props.activeContent[k - 1];
+            } else if (k === 0 && this.props.activeContent.length > 1) {
+                result = this.props.activeContent[k + 1];
+            }
+            result ? this.props.selectActiveContent(result) : '';
+        }
+    }
+
+    selectForBack() {
+        let result = null;
+        if (this.props.activeContent.length > 1) {
+            this.props.activeContent.forEach((v, k)=> {
+                if (v.active) {
+                    result = this.props.activeContent[k - 1];
+                }
+            });
+        }
+        return result;
+    }
+
+    selectForWard() {
+        let result = null;
+        if (this.props.activeContent.length > 0) {
+            this.props.activeContent.forEach((v, k)=> {
+                if (v.active) {
+                    result = this.props.activeContent[k + 1];
+                }
+            });
+        }
+        return result;
+    }
+
+
     createTitleScrollBar(){
+        let touch = 0;
         return(
             <div ref="titleMenu" className="title-menu">
-                <div className="title-menu-button"><i className="fa fa-backward"></i></div>
-                <div onWheel={e=>{
+                <div onClick={()=> {
+                    let e = this.selectForBack();
+                    if (e) {
+                        this.props.selectActiveContent(e);
+                    }
+                }} className="title-menu-button"><i className="fa fa-backward"></i></div>
+                <div
+                    onTouchMove={e=> {
+                        if (touch === 0) {
+                            touch = e.changedTouches[0].pageX;
+                        } else {
+                            let move = e.changedTouches[0].pageX - touch;
+                            touch = e.changedTouches[0].pageX;
+                            if (move < 0) {
+                                this.leftScroll(-move*2);
+                            } else if (move > 0) {
+                                this.rightScroll(-move*2);
+                            }
+                        }
+                    }}
+                    onTouchEnd={e=> {
+                        touch = 0;
+                    }}
+
+                    onWheel={e=> {
                     if (e.deltaY < 0) {
                         this.rightScroll(e.deltaY / 4);
                     } else if (e.deltaY > 0) {
@@ -119,7 +184,12 @@ class ContainerTittleMenu extends Component {
                 <div className="title-menu-button title-menu-button-exit"><i className="fa fa-sign-out"></i>退出</div>
                 <div className="title-menu-button title-menu-button-close">关闭操作 <i className="fa fa-caret-down"></i>
                 </div>
-                <div className="title-menu-button title-menu-button-forward"><i className="fa fa-forward"></i></div>
+                <div onClick={()=> {
+                    let e = this.selectForWard();
+                    if (e) {
+                        this.props.selectActiveContent(e);
+                    }
+                }} className="title-menu-button title-menu-button-forward"><i className="fa fa-forward"></i></div>
             </div>
         );
     }

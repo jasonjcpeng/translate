@@ -132,8 +132,26 @@ class SideBar extends Component{
         let MenuScroll = {
             top: this.props.sideBar.menuScrollY  + 'px'
         }
+        let touch = 0;
         return (
-            <div className={"side-bar "+this.getToggleAnimation()} onWheel={e=> {
+            <div className={"side-bar " + this.getToggleAnimation()} onTouchMove={e=> {
+                if (touch === 0) {
+                    touch = e.changedTouches[0].pageY;
+                } else {
+                    let move = e.changedTouches[0].pageY - touch;
+                    touch = e.changedTouches[0].pageY;
+                    if (move < 0) {
+                        this.upScroll(move*2);
+                    } else if (move > 0) {
+                        this.downScroll(move*2);
+                    }
+                }
+            }}
+                 onTouchEnd={e=> {
+                     touch = 0;
+                 }}
+
+                 onWheel={e=> {
                 if(e.deltaY<0){
                     this.upScroll(e.deltaY/5);
                 }else if(e.deltaY>0){
