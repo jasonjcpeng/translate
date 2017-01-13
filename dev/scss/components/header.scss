@@ -1,4 +1,6 @@
 .header {
+  position: relative;
+  z-index: 1000;
   height: 50px;
   width: 100%;
   user-select:none;
@@ -6,15 +8,29 @@
     cursor: pointer;
   }
   .menu-toggle-button {
-    position: relative;
-    top:10px;
+    float: left;
     font-family: Helvetica;
-    border-radius: 3px;
-    margin-left: 20px;
-    height: 28px;
-    width: 38px;
+    height: 50px;
+    width: 50px;
     text-align: center;
-    line-height: 28px;
+    line-height: 50px;
     font-size: 14px;
+  }
+  .header-exit{
+     float: right;
+     line-height: 50px;
+     text-align: center;
+     width: 50px;
+   }
+  .header-exit:hover{
+  }
+  .header-logo{
+    float: left;
+    width: 170px;
+    height: 50px;
+    img{
+      width: 100%;
+      height: 100%;
+    }
   }
 }

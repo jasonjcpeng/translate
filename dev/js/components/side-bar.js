@@ -119,7 +119,7 @@ class SideBar extends Component{
     }
 
     upScroll(e){
-        if(this.refs.menu.clientHeight>(this.props.windowHeight-155)&&this.refs.menu.clientHeight+this.props.sideBar.menuScrollY>(this.props.windowHeight-180)){
+        if(this.refs.menu.clientHeight>(this.props.windowHeight-205)&&this.refs.menu.clientHeight+this.props.sideBar.menuScrollY>(this.props.windowHeight-230)){
             this.props.menuScroll(this.props.sideBar.menuScrollY+e);
         }
     }
@@ -159,8 +159,8 @@ class SideBar extends Component{
                 }
             }}  >
 
-                <div  className="side-bar-title animation-fadeIn">
-                    <div className="side-bar-title-skin ">
+                <div  className="side-bar-title">
+                    <div className="side-bar-title-skin animation-fadeIn">
                         <div></div>
                         <div></div>
                         <div></div>

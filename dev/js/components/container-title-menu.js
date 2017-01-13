@@ -23,7 +23,7 @@ class ContainerTittleMenu extends Component {
             });
             let left = 0;
             if ((this.refs.titleMenu.clientWidth) / 2 < cursor) {
-                left = (cursor - ((this.refs.titleMenu.clientWidth - 228) / 2))-((cursor - ((this.refs.titleMenu.clientWidth - 228) / 2))%25);
+                left = (cursor - ((this.refs.titleMenu.clientWidth - 166) / 2))-((cursor - ((this.refs.titleMenu.clientWidth - 166) / 2))%25);
             }
             this.props.setLimitAndCursor(limit, left);
         }
@@ -36,7 +36,7 @@ class ContainerTittleMenu extends Component {
                 return 260 - this.props.menuScrollX;
                 break;
             case 'mini':
-                return 110- this.props.menuScrollX;
+                return 90- this.props.menuScrollX;
                 break;
         }
     }
@@ -91,7 +91,7 @@ class ContainerTittleMenu extends Component {
     }
 
     leftScroll(e) {
-        if ((this.refs.titleMenu.clientWidth - 228) < this.props.limit && this.props.limit - this.props.menuScrollX > (this.refs.titleMenu.clientWidth - 228) / 3) {
+        if ((this.refs.titleMenu.clientWidth - 166) < this.props.limit && this.props.limit - this.props.menuScrollX > (this.refs.titleMenu.clientWidth - 166) / 3) {
             this.props.scroll(this.props.menuScrollX + e);
         }
     }
@@ -107,9 +107,9 @@ class ContainerTittleMenu extends Component {
         this.props.deleteActiveContent(k);
         let result = null;
         if (v.active) {
-            if (k > 1 && k + 1 === this.props.activeContent.length) {
+            if (k > 0 && k + 1 === this.props.activeContent.length) {
                 result = this.props.activeContent[k - 1];
-            } else if (k === 0 && this.props.activeContent.length > 1) {
+            } else if (this.props.activeContent.length > 0) {
                 result = this.props.activeContent[k + 1];
             }
             result ? this.props.selectActiveContent(result) : '';
@@ -140,6 +140,18 @@ class ContainerTittleMenu extends Component {
         return result;
     }
 
+    createDropMenu(){
+        if(this.props.closeOptionToggle){
+            return (<ul className="title-menu-drop-down animation-fadeIn">
+                <li className="top" onClick={()=>{this.props.forkActiveItem()}}>定位当前选项卡</li>
+                <li onClick={()=>{this.props.closeOtherItem()}}>关闭其他选项卡</li>
+                <li onClick={()=>{this.props.closeAllItem()}}>关闭全部选项卡</li>
+            </ul>);
+        }else{
+            return '';
+        }
+
+    }
 
     createTitleScrollBar(){
         let touch = 0;
@@ -181,8 +193,10 @@ class ContainerTittleMenu extends Component {
                         {this.createScrollMenuItem()}
                     </ul>
                 </div>
-                <div className="title-menu-button title-menu-button-exit"><i className="fa fa-sign-out"></i>退出</div>
-                <div className="title-menu-button title-menu-button-close">关闭操作 <i className="fa fa-caret-down"></i>
+                <div className={'title-menu-button title-menu-button-close '+(this.props.closeOptionToggle?'active':'') } onClick={()=>{
+                    this.props.closeOption();
+                }}><i className="fa fa-caret-down"></i>
+                    {this.createDropMenu()}
                 </div>
                 <div onClick={()=> {
                     let e = this.selectForWard();
@@ -206,6 +220,7 @@ class ContainerTittleMenu extends Component {
 
 function state(state) {
     return ({
+        closeOptionToggle:state.containerTitleMenu.closeOptionToggle,
         limit: state.containerTitleMenu.limit,
         cursor: state.containerTitleMenu.cursor,
         activeContent:state.containerTitleMenu.activeContent,

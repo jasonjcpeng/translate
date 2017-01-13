@@ -1,30 +1,5 @@
-$main-color: #3399cc;
-$border-color:#eee;
-$content-background-color:#F5F5F5;
 .skin-1{
   height: 100%;
-  .header {
-    background-color: #fff;
-    .menu-toggle-button {
-      background-color: $main-color;
-      color: #fff;
-    }
-    .menu-toggle-button:active{
-      color: $main-color;
-      background-color: #fff;
-    }
-
-    .header-exit{
-      color: $main-color;
-    }
-    .header-exit:hover{
-      color: #c00;
-    }
-    .header-exit:active{
-      color: red;
-    }
-
-  }
   .side-bar{
     background-color:#2f4050;
     .side-bar-title{
@@ -32,6 +7,7 @@ $content-background-color:#F5F5F5;
       .side-bar-title-skin{
         position: relative;
         div:nth-child(1){
+          z-index: 0;
           animation: fadeIn 7s infinite;
           position: absolute;
           transform: rotate(70deg)rotateX(20deg) rotateY(60deg);
@@ -99,7 +75,7 @@ $content-background-color:#F5F5F5;
     .side-bar-toggle-menu {
       ul {
         li {
-          color: $content-background-color;
+          color: #a7b1c2;
         }
         .active {
           background-color: #293846;
@@ -114,72 +90,78 @@ $content-background-color:#F5F5F5;
 
 
   .container {
-    color: $main-color;
+    color: #999;
+    .header {
+      background-color: #F5F5F5;
+      border-bottom: solid 1px #eee;
+      .menu-toggle-button {
+        background-color: #1ab394;
+        color: #FFF;
+      }
+      .menu-toggle-button:active{
+        background-color: #2f4050;
+      }
+    }
     .title-menu {
-      border-top: solid 2px $border-color;
-      border-bottom: solid 3px $border-color;
+      border-bottom: solid 2px #2f4050;
       .title-menu-button{
-        border-right: solid 1px $border-color;
+        border-right: solid 1px #eee;
         background-color: #fff;
       }
       .title-menu-button-forward {
-        border-left: solid 1px $border-color;
+        border-left: solid 1px #eee;
       }
       .title-menu-container{
-        $title-menu-font-color:#fff;
-        border-right: solid 1px $border-color;
+        border-right: solid 1px #eee;
         background-color: #fff;
         ul{
           li{
-            border-right: solid 1px $border-color;
+            border-right: solid 1px #eee;
           }
           li:hover{
-            background-color: $content-background-color;
+            background-color: #F5F5F5;
           }
           .active{
+            background-color: #2f4050;
             i:hover{
               cursor: pointer;
-              color: #c00;
+              color: #eee;
             }
           }
           .active:hover{
+            background-color: #2f4050;
             i:hover{
               cursor: pointer;
-              color: #c00;
+              color: #eee;
             }
           }
         }
       }
       .title-menu-button:hover{
-        background-color: $content-background-color;
+        background-color: #F5F5F5;
       }
       .title-menu-button:active{
-        color:#fff;
-        background-color: $main-color;
+        background-color: #2f4050;
       }
       .title-menu-drop-down{
         background-color: #fff;
         border: solid 2px #eee;
         .top{
-          border-bottom:solid 3px $border-color;
-        }
-        li{
-          color: $main-color;
+          border-bottom:solid 3px #eee;
         }
         li:hover{
-          color: #2f4050;
+          color: #000;
         }
       }
       .active{
-        height: 37px;
-        border-bottom: solid 5px $main-color;
+        background-color: #2f4050;
       }
       .active:hover{
-        background-color: $content-background-color;
+        background-color: #2f4050;
       }
     }
     .content {
-      background-color: $content-background-color;
+      background-color: #F5F5F5;
     }
 
   }

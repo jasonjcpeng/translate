@@ -30,3 +30,24 @@ export const deleteActiveContent = k=>{
         key:k
     });
 }
+export const closeOption = ()=>{
+    return({
+        type:Constants.CONTAINER_TITTLE_MENU_CLOSE_OPTION,
+    });
+}
+
+export const closeAllItem = ()=>{
+    return({
+        type:Constants.CONTAINER_TITTLE_MENU_CLOSE_ALL_ITEM,
+    });
+}
+export const closeOtherItem = ()=>{
+    return({
+        type:Constants.CONTAINER_TITTLE_MENU_CLOSE_OTHER_ITEM,
+    });
+}
+export const forkActiveItem = ()=>{
+    return({
+        type:Constants.CONTAINER_TITTLE_MENU_FORK_ACTIVE_ITEM,
+    });
+}

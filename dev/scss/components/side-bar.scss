@@ -3,7 +3,7 @@
   width: 220px;
   height: 1000%;
   user-select:none;
-  z-index: 1000;
+  z-index: 999;
   .side-bar-title{
     position: relative;
     z-index: 10;
@@ -77,7 +77,7 @@
 
 .side-bar-toggle{
   position: fixed;
-  width: 70px;
+  width: 50px;
   height: 1000%;
   z-index: 1;
   .side-bar-toggle-menu{

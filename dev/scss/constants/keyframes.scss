@@ -86,13 +86,13 @@
     margin-left: 220px;
   }
   to{
-    margin-left: 70px;
+    margin-left: 50px;
   }
 }
 
 @keyframes animation-container-title-menu-full-to-mini {
   from{
-    margin-left: 150px;
+    margin-left: 170px;
   }
   to{
     margin-left: 0px;
@@ -104,7 +104,7 @@
     width: 220px;
   }
   to{
-    width: 70px;
+    width: 50px;
   }
 }
 
@@ -113,7 +113,7 @@
 
 @keyframes animation-container-margin-mini-to-full {
   from{
-    margin-left: 70px;
+    margin-left: 50px;
   }
   to{
     margin-left: 220px;
@@ -122,7 +122,7 @@
 
 @keyframes animation-container-title-menu-mini-to-full {
   from{
-    margin-left: -150px;
+    margin-left: -170px;
   }
   to{
     margin-left: 0px;
@@ -131,7 +131,7 @@
 
 @keyframes animation-side-bar-mini-to-full {
   from{
-    width: 70px;
+    width: 50px;
   }
   to{
     width: 220px;

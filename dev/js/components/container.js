@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import ContainerTittleMenu from './container-title-menu';
-import ContainerHeader from './container-header';
 import * as ActionCreators from '../action/side-bar';
 
 class Container extends Component {
@@ -13,7 +12,7 @@ class Container extends Component {
                 return '220px';
                 break;
             case 'mini':
-                return '70px';
+                return '50px';
                 break;
             case 'none':
                 return '0px';
@@ -62,7 +61,6 @@ class Container extends Component {
         let containerMargin = this.getContainerMargin();
         return (
             <div style={{marginLeft: containerMargin}} className={'container ' + this.getContainerToggleAnimation()}>
-            <ContainerHeader/>
             <ContainerTittleMenu/>
             <section className="content" style={{height: contentHeight}}>
             </section>

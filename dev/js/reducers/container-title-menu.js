@@ -7,7 +7,8 @@ const initState = {
     sideBarCheck:true,
     limit:0,
     cursor:0,
-    contentWidth:0
+    contentWidth:0,
+    closeOptionToggle:false
 }
 
 export default function (state=initState,action) {
@@ -76,6 +77,24 @@ export default function (state=initState,action) {
             break;
         case Constants.CONTAINER_TITTLE_MENU_DELETE_ACTIVE_CONTENT:
             return update(state,{activeContent:{$splice:[[action.key,1]]}});
+            break;
+        case Constants.CONTAINER_TITTLE_MENU_CLOSE_OPTION:
+            return update(state,{closeOptionToggle:{$set:!state.closeOptionToggle}});
+            break;
+        case Constants.CONTAINER_TITTLE_MENU_FORK_ACTIVE_ITEM:
+            return update(state,{sideBarCheck:{$set:true}});
+            break;
+        case Constants.CONTAINER_TITTLE_MENU_CLOSE_ALL_ITEM:
+            return update(state,{activeContent:{$set:[]}});
+            break;
+        case Constants.CONTAINER_TITTLE_MENU_CLOSE_OTHER_ITEM:
+            return update(state,{activeContent:{$apply:function(arr){
+                return arr.filter(function(v){
+                    if(v.active){
+                        return v;
+                    }
+                });
+            }}});
             break;
     }
     return state;
