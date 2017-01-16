@@ -3,11 +3,11 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as ActionCreators from '../action/app';
 import SideBar from '../components/side-bar';
-import ContainerHeader from '../components/container-header';
+import Header from '../components/header';
 import Container from '../components/container';
 
 class App extends React.Component{
-    componentDidMount(){
+    componentWillMount(){
         this.props.AppDidMount();
     }
 
@@ -24,7 +24,7 @@ class App extends React.Component{
                 this.props.screenHeightListenner(windowHeight,windowWidth);
             }
         },100);
-        return (<div className="skin-1"><ContainerHeader/><SideBar/><Container/></div>);
+        return (<div className="skin-1"><Header/><SideBar/><Container/></div>);
     }
 
     render(){

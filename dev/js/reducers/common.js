@@ -8,7 +8,8 @@ const initState = {
     nowOnContentTarget: null,
     toggleStatus:'',
     defaultToggleStatus:'',
-    lastToggleStatus:''
+    lastToggleStatus:'',
+    isFullScreen:false
 };
 
 export default function (state=initState,action) {
@@ -16,7 +17,7 @@ export default function (state=initState,action) {
         case Constants.INIT_CONTAINER_APP_DID_MOUNT:
             return update(state,{getReady:{$set:true}});
             break;
-        case Constants.CONTAINER_HEADER_TOGGLE:
+        case Constants.HEADER_TOGGLE:
             let newStatus = update(state,{lastToggleStatus:{$set:action.toggleStatus}});
             switch (action.defaultToggleStatus){
                 case 'full':
@@ -82,6 +83,9 @@ export default function (state=initState,action) {
             if(action.key===0){
                 return update(state,{nowOnContentTarget:{$set:null}});
             }
+            break;
+        case Constants.APP_FULL_SCREEN:
+            return update(state,{isFullScreen:{$set:!state.isFullScreen}});
             break;
     }
     return state;

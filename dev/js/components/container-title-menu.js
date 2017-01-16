@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as ActionCreators from '../action/container-tittle-menu';
+import {fullScreen,exitFullScreen,IsPC} from '../config/tools';
 
 class ContainerTittleMenu extends Component {
     //计算滚动限制，以及游标位置
@@ -22,8 +23,8 @@ class ContainerTittleMenu extends Component {
                 }
             });
             let left = 0;
-            if ((this.refs.titleMenu.clientWidth) / 2 < cursor) {
-                left = (cursor - ((this.refs.titleMenu.clientWidth - 166) / 2))-((cursor - ((this.refs.titleMenu.clientWidth - 166) / 2))%25);
+            if ((this.refs.titleMenu.clientWidth)-150 < cursor) {
+                left = (cursor - ((this.refs.titleMenu.clientWidth - 166)-150))-((cursor - ((this.refs.titleMenu.clientWidth - 166)-150))%25);
             }
             this.props.setLimitAndCursor(limit, left);
         }
@@ -152,6 +153,42 @@ class ContainerTittleMenu extends Component {
         }
 
     }
+    createFullOrMinIcon(){
+        if(this.props.isFullScreen){
+            return 'fa fa-window-restore';
+        }else{
+            return 'fa fa-window-maximize';
+        }
+    }
+
+    createCloseOptionAndFullScreenToggle(){
+        if(IsPC()){
+            return (<div>
+                <div className={'title-menu-button title-menu-button-full '+(this.props.isFullScreen?'active':'')} onClick={()=>{
+                    this.createCloseOptionAndFullScreenToggle();
+                    if(!this.props.isFullScreen){
+                        fullScreen(document.documentElement);
+                    }else{
+                        exitFullScreen();
+                    }
+                    this.props.toggleFullScreen();
+                }}><i className={this.createFullOrMinIcon()}></i>
+                </div>
+                <div className={'title-menu-button title-menu-button-full '+(this.props.closeOptionToggle?'active':'') } onClick={()=>{
+                    this.props.closeOption();
+                }}><i className="fa fa-caret-down"></i>
+                    {this.createDropMenu()}
+                </div>
+            </div>);
+        }else{
+            return (<div className={'title-menu-button title-menu-button-mobile '+(this.props.closeOptionToggle?'active':'') } onClick={()=>{
+                this.props.closeOption();
+            }}><i className="fa fa-caret-down"></i>
+                {this.createDropMenu()}
+            </div>
+            );
+        }
+    }
 
     createTitleScrollBar(){
         let touch = 0;
@@ -193,11 +230,7 @@ class ContainerTittleMenu extends Component {
                         {this.createScrollMenuItem()}
                     </ul>
                 </div>
-                <div className={'title-menu-button title-menu-button-close '+(this.props.closeOptionToggle?'active':'') } onClick={()=>{
-                    this.props.closeOption();
-                }}><i className="fa fa-caret-down"></i>
-                    {this.createDropMenu()}
-                </div>
+                {this.createCloseOptionAndFullScreenToggle()}
                 <div onClick={()=> {
                     let e = this.selectForWard();
                     if (e) {
@@ -228,6 +261,7 @@ function state(state) {
         defaultToggleStatus:state.common.defaultToggleStatus,
         toggleStatus:state.common.toggleStatus,
         lastToggleStatus: state.common.lastToggleStatus,
+        isFullScreen:state.common.isFullScreen
     });
 }
 

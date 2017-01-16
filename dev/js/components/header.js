@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import * as ActionCreators from '../action/container-header';
+import * as ActionCreators from '../action/header';
 
 
-class ContainerHeader extends Component{
+
+class Header extends Component{
     render(){
         return (
             <header className="header">
@@ -30,4 +31,4 @@ function action(dispatch) {
 }
 
 
-export default connect(state,action)(ContainerHeader);
+export default connect(state,action)(Header);

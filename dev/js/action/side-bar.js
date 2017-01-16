@@ -16,7 +16,7 @@ export const meunItemToggle = (e,isHasChild)=>{
 
 export const miniMenuToggle = (defaultToggleStatus,toggleStatus)=>{
     return ({
-        type:Constants.CONTAINER_HEADER_TOGGLE,
+        type:Constants.HEADER_TOGGLE,
         defaultToggleStatus:defaultToggleStatus,
         toggleStatus:toggleStatus
     });

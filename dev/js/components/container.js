@@ -5,7 +5,6 @@ import ContainerTittleMenu from './container-title-menu';
 import * as ActionCreators from '../action/side-bar';
 
 class Container extends Component {
-
     getContainerMargin() {
         switch (this.props.toggleStatus) {
             case 'full':
@@ -21,6 +20,7 @@ class Container extends Component {
     }
 
     getContainerToggleAnimation() {
+
         switch (this.props.lastToggleStatus) {
             case 'full':
                 switch (this.props.toggleStatus) {
@@ -60,7 +60,7 @@ class Container extends Component {
         let contentHeight = this.props.windowHeight - 93+(this.isCreateScrollBar?0:42);
         let containerMargin = this.getContainerMargin();
         return (
-            <div style={{marginLeft: containerMargin}} className={'container ' + this.getContainerToggleAnimation()}>
+            <div  style={{marginLeft: containerMargin}} className={'container ' + this.getContainerToggleAnimation()}>
             <ContainerTittleMenu/>
             <section className="content" style={{height: contentHeight}}>
             </section>
@@ -68,12 +68,7 @@ class Container extends Component {
     }
 
     render() {
-        if (this.props.defaultToggleStatus) {
             return  this.renderNormal();
-        } else {
-            return (<div className="container"></div>);
-        }
-
     }
 }
 

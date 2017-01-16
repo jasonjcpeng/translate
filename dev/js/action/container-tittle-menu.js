@@ -51,3 +51,9 @@ export const forkActiveItem = ()=>{
         type:Constants.CONTAINER_TITTLE_MENU_FORK_ACTIVE_ITEM,
     });
 }
+
+export const toggleFullScreen = ()=>{
+    return({
+        type:Constants.APP_FULL_SCREEN
+    });
+}

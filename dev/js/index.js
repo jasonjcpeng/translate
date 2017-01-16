@@ -11,6 +11,8 @@ import '../scss/style.scss';
 
 const store = configCreateStore(allReducers);/* 利用中间件附加trunk（异步解决方案）的store生成器*/
 
+
 ReactDOM.render(<Provider store={store}>
     <App></App>
 </Provider>,document.getElementById('root'));
+

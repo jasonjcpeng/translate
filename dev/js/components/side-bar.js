@@ -46,14 +46,23 @@ class SideBar extends Component{
     }
 
     createItemActive(v) {
-        let active = this.props.sideBar.activeMenu.includes(v);
-        return active?'active':'';
+        let active = this.props.sideBar.activeMenu.filter(val=>{
+            if(v===val){
+                return val;
+            }
+        });
+        return active.length>0?'active':'';
     }
 
     //这个生成动画的方法很蠢，但暂时没有别的办法了
     createToggleAnimationLv(v) {
         let menu = this.props.sideBar.menu;
-        if(this.props.sideBar.activeMenu.includes(v)){
+        let isActive = this.props.sideBar.activeMenu.filter(val=>{
+            if(v===val){
+                return val;
+            }
+        });
+        if(isActive.length>0){
             let ChildMenu = menu.filter((val)=> {
                 if (val.parentCode == v.code) {
                     return val;
