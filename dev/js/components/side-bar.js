@@ -202,6 +202,7 @@ class SideBar extends Component{
             <div onClick={e=>{this.props.miniMenuToggle(this.props.defaultToggleStatus,'mini')}} className={"side-bar-toggle "+this.getToggleAnimation()}>
             <div className="side-bar-toggle-menu">
                 <ul className="animation-fadeIn">
+                    <li></li>
                     {this.createMiniItemList()}
                 </ul>
             </div>

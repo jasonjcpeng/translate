@@ -24,23 +24,26 @@ export default function (state = initState, action) {
             break;
         case Constants.SIDE_BAR_MENU_ITEM_TOGGLE:
             let length = state.activeMenu.length;
-            if (length === 0) {
-                return update(state, {activeMenu: {$set: [action.payload]}});
-            } else {
-                for (let i = 0; i < length; i++) {
-                    if (state.activeMenu[i].parentCode === action.payload.parentCode) {
-                        if(state.activeMenu[i].id===action.payload.id){
-                            return update(state, {activeMenu: {$splice: [[i, length]]}});
-                            break;
-                        }else{
-                            return update(state, {activeMenu: {$splice: [[i, length, action.payload]]}});
-                            break;
+            if(!isNaN(action.payload.id)){
+                if (length === 0) {
+                    return update(state, {activeMenu: {$set: [action.payload]}});
+                } else {
+                    for (let i = 0; i < length; i++) {
+                        if (state.activeMenu[i].parentCode === action.payload.parentCode) {
+                            if(state.activeMenu[i].id===action.payload.id){
+                                return update(state, {activeMenu: {$splice: [[i, length]]}});
+                                break;
+                            }else{
+                                return update(state, {activeMenu: {$splice: [[i, length, action.payload]]}});
+                                break;
+                            }
                         }
                     }
+                    return update(state, {activeMenu: {$push: [action.payload]}});
+                    break;
                 }
-                return update(state, {activeMenu: {$push: [action.payload]}});
-                break;
             }
+
             break;
     }
     return state;

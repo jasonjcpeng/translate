@@ -1,13 +1,18 @@
 $main-color: #3399cc;
+$second-main-color:#fff;
+$side-bar-menu-color:#ebebec;
+$side-bar-menu-font-color:#000;
 $border-color:#eee;
+$font-color:#F5F5F5;
 $content-background-color:#F5F5F5;
+$alert-color:#c00;
 .skin-1{
   height: 100%;
   .header {
-    background-color: #fff;
+    background-color: $second-main-color;
     .menu-toggle-button {
       background-color: $main-color;
-      color: #fff;
+      color: $font-color;
     }
     .menu-toggle-button:active{
       color: $main-color;
@@ -18,7 +23,7 @@ $content-background-color:#F5F5F5;
       color: $main-color;
     }
     .header-exit:hover{
-      color: #c00;
+      color: $alert-color;
     }
     .header-exit:active{
       color: red;
@@ -26,9 +31,11 @@ $content-background-color:#F5F5F5;
 
   }
   .side-bar{
-    background-color:#2f4050;
+    width: 218px;
+    border-right: solid 2px $border-color;
+    background-color: $side-bar-menu-color;
     .side-bar-title{
-      background-color:rgb(35,54,69);
+      background-color: $main-color;
       .side-bar-title-skin{
         position: relative;
         div:nth-child(1){
@@ -39,7 +46,7 @@ $content-background-color:#F5F5F5;
           top:-70px;
           height: 90px;
           width: 90px;
-          background-color: rgb(39, 61, 74);
+          background-color: #3399c8;
         }
         div:nth-child(2){
           position: absolute;
@@ -49,7 +56,7 @@ $content-background-color:#F5F5F5;
           left:25px;
           height: 90px;
           width: 90px;
-          background-color: rgb(38, 57, 73);
+          background-color: #3399ca;
         }
         div:nth-child(3){
           position: absolute;
@@ -59,57 +66,85 @@ $content-background-color:#F5F5F5;
           left:97px;
           height: 90px;
           width: 90px;
-          background-color: rgb(39, 61, 74);
+          background-color: #3399d0;
         }
         div:nth-child(4){
           animation: fadeIn 10s infinite;
           position: absolute;
           top:-6px;
-          left:91px;
+          left:89px;
           width:0;
           height:0;
           border-top:15px solid transparent;
           border-bottom:110px solid transparent;
-          border-right:104px solid rgb(38,57,73);
+          border-right:104px solid #3399d4;
+        }
+      }
+
+      .side-bar-title-name{
+        color: $font-color;
+      }
+      .side-bar-title-power{
+        color: $font-color;
+        i{
+          color: $font-color;
         }
       }
     }
     .side-bar-menu {
       ul {
         li {
+          color: $main-color;
+          ul{
+            li{
+              color: $main-color;
+            }
+            .active{
+              border-right: 0px;
+            }
+          }
           .side-bar-menu-pop {
-            color: #fff;
             background-color: orange;
           }
         }
         li:hover {
-          background-color: rgb(35, 54, 69);
-          color: #fff;
+          color: $side-bar-menu-font-color;
         }
         .active{
-          background-color: rgb(35,54,69);
-          color: #fff;
+          border-right: solid 5px $main-color;
+          background-color: $side-bar-menu-color;
+          color: $side-bar-menu-font-color;
         }
       }
     }
   }
 
   .side-bar-toggle {
-    background-color: #2f4050;
+    background-color: $side-bar-menu-color;
     .side-bar-toggle-menu {
       ul {
         li {
-          color: $content-background-color;
+          color: $main-color;
         }
         .active {
-          background-color: #293846;
-          color: #fff;
+          background-color: $main-color;
+          color: $font-color;
         }
       }
     }
   }
   .side-bar-toggle:hover{
-    background-color: #293846;
+    background-color: $main-color;
+    ul {
+      li {
+        color: $font-color;
+      }
+      .active {
+        background-color: $second-main-color;
+        color: $main-color;
+      }
+    }
+
   }
 
 
@@ -120,15 +155,14 @@ $content-background-color:#F5F5F5;
       border-bottom: solid 3px $border-color;
       .title-menu-button{
         border-right: solid 1px $border-color;
-        background-color: #fff;
+        background-color: $second-main-color;
       }
       .title-menu-button-forward {
         border-left: solid 1px $border-color;
       }
       .title-menu-container{
-        $title-menu-font-color:#fff;
         border-right: solid 1px $border-color;
-        background-color: #fff;
+        background-color: $second-main-color;
         ul{
           li{
             border-right: solid 1px $border-color;
@@ -139,13 +173,13 @@ $content-background-color:#F5F5F5;
           .active{
             i:hover{
               cursor: pointer;
-              color: #c00;
+              color: $alert-color;
             }
           }
           .active:hover{
             i:hover{
               cursor: pointer;
-              color: #c00;
+              color: $alert-color;
             }
           }
         }
@@ -154,12 +188,12 @@ $content-background-color:#F5F5F5;
         background-color: $content-background-color;
       }
       .title-menu-button:active{
-        color:#fff;
+        color:$font-color;
         background-color: $main-color;
       }
       .title-menu-drop-down{
-        background-color: #fff;
-        border: solid 2px #eee;
+        background-color: $second-main-color;
+        border: solid 2px $border-color;
         .top{
           border-bottom:solid 3px $border-color;
         }
@@ -167,7 +201,7 @@ $content-background-color:#F5F5F5;
           color: $main-color;
         }
         li:hover{
-          color: #2f4050;
+          color: $border-color;
         }
       }
       .active{
