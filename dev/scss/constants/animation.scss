@@ -69,3 +69,8 @@
 .side-bar-full-to-none{
   animation: animation-side-bar-full-to-none 0.5s;
 }
+
+.animation-flipInY {
+  animation: flipInY 0.5s;
+  backface-visibility: visible !important;
+}

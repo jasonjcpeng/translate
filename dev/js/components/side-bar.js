@@ -168,7 +168,7 @@ class SideBar extends Component{
                 }
             }}  >
 
-                <div  className="side-bar-title">
+                <div className="side-bar-title ">
                     <div className="side-bar-title-skin animation-fadeIn">
                         <div></div>
                         <div></div>
@@ -189,20 +189,26 @@ class SideBar extends Component{
     }
 
 
+    createMiniMenuItem() {
+    }
+
     createMiniItemList(){
+        this.hoverMenu = [];
         return (this.props.sideBar.menu.map(v=>{
             if(v.parentCode==='0'){
-                return (<li className={this.createItemActive(v)} key={v.id}>{this.createItemIcon(v)}</li> );
+                return (<li key={v.id} onMouseEnter={()=> {
+                }}
+                 >{this.createItemIcon(v)}</li>);
             }
         }));
     }
 
     renderMini(){
         return (
-            <div onClick={e=>{this.props.miniMenuToggle(this.props.defaultToggleStatus,'mini')}} className={"side-bar-toggle "+this.getToggleAnimation()}>
+            <div className={"side-bar-toggle " + this.getToggleAnimation()}>
             <div className="side-bar-toggle-menu">
                 <ul className="animation-fadeIn">
-                    <li></li>
+                    {this.props.defaultToggleStatus === 'full' ? <li className="slice"></li> : ''}
                     {this.createMiniItemList()}
                 </ul>
             </div>

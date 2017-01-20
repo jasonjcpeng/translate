@@ -77,17 +77,32 @@
   height: 1000%;
   z-index: 1;
   .side-bar-toggle-menu{
+    .mini-item{
+      position: relative;
+      background-color: red;
+      left:50px;
+      width: 50px;
+      height: 50px;
+    }
     ul {
       margin: 0px;
       padding: 0px;
+      .slice{
+        background-color: rgba(0,0,0,0) !important;
+      }
+      .slice:hover{
+        background-color: rgba(0,0,0,0) !important;
+      }
       li {
+        height: 50px;
+        line-height: 50px;
         cursor: pointer;
         font-weight: 600;
         text-align: center;
-        padding: 18px 0px;
         margin: auto auto;
       }
     }
+
   }
 }
 

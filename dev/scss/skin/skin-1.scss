@@ -1,7 +1,7 @@
 $main-color: #3399cc;
 $second-main-color:#fff;
 $side-bar-menu-color:#ebebec;
-$side-bar-menu-font-color:#000;
+$side-bar-menu-font-color: #2b78a3;
 $border-color:#eee;
 $font-color:#F5F5F5;
 $content-background-color:#F5F5F5;
@@ -95,9 +95,11 @@ $alert-color:#c00;
       ul {
         li {
           color: $main-color;
+          border-bottom: solid 1px #e1e1e2;
           ul{
             li{
               color: $main-color;
+              border:0px;
             }
             .active{
               border-right: 0px;
@@ -126,25 +128,16 @@ $alert-color:#c00;
         li {
           color: $main-color;
         }
+        li:hover {
+          background-color: $main-color;
+          color: $font-color;
+        }
         .active {
           background-color: $main-color;
           color: $font-color;
         }
       }
     }
-  }
-  .side-bar-toggle:hover{
-    background-color: $main-color;
-    ul {
-      li {
-        color: $font-color;
-      }
-      .active {
-        background-color: $second-main-color;
-        color: $main-color;
-      }
-    }
-
   }
 
 
