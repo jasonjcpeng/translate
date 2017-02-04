@@ -3,11 +3,11 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as ActionCreators from '../action/side-bar';
 
-class SideBar extends Component{
-    getToggleAnimation(){
-        switch (this.props.lastToggleStatus){
+class SideBar extends Component {
+    getToggleAnimation() {
+        switch (this.props.lastToggleStatus) {
             case 'full':
-                switch (this.props.toggleStatus){
+                switch (this.props.toggleStatus) {
                     case 'mini':
                         return 'side-bar-full-to-mini';
                         break;
@@ -17,7 +17,7 @@ class SideBar extends Component{
                 }
                 break;
             case 'mini':
-                switch (this.props.toggleStatus){
+                switch (this.props.toggleStatus) {
                     case 'full':
                         return 'side-bar-mini-to-full';
                         break;
@@ -27,7 +27,7 @@ class SideBar extends Component{
                 }
                 break;
             case 'none':
-                switch (this.props.toggleStatus){
+                switch (this.props.toggleStatus) {
                     case 'full':
                         return 'side-bar-none-to-full';
                         break;
@@ -40,50 +40,54 @@ class SideBar extends Component{
     }
 
     createItemIcon(item) {
-        if(item.icon){
+        if (item.icon) {
             return (<i className={'fa '+item.icon}></i> );
         }
     }
 
     createItemActive(v) {
-        let active = this.props.sideBar.activeMenu.filter(val=>{
-            if(v===val){
+        let active = this.props.sideBar.activeMenu.filter(val=> {
+            if (v === val) {
                 return val;
             }
         });
-        return active.length>0?'active':'';
+        return active.length > 0 ? 'active' : '';
     }
 
     //这个生成动画的方法很蠢，但暂时没有别的办法了
     createToggleAnimationLv(v) {
         let menu = this.props.sideBar.menu;
-        let isActive = this.props.sideBar.activeMenu.filter(val=>{
-            if(v===val){
+        let isActive = this.props.sideBar.activeMenu.filter(val=> {
+            if (v === val) {
                 return val;
             }
         });
-        if(isActive.length>0){
+        if (isActive.length > 0) {
             let ChildMenu = menu.filter((val)=> {
                 if (val.parentCode == v.code) {
                     return val;
                 }
             });
             return ChildMenu.length;
-        }else{
+        } else {
             return '';
         }
 
     }
-
-    isHasChild(menu,code) {
-        let newMenu = menu.filter((val)=>{
-            if(val.parentCode===code){
+    /*判断是否含有子菜单项
+    * menu:[] 当前总菜单
+    * code:int 这个层级菜单的code即下个菜单的parentCode
+    * return:boolean true有子菜单 false无
+    * */
+    isHasChild(menu, code) {
+        let newMenu = menu.filter((val)=> {
+            if (val.parentCode === code) {
                 return val;
             }
         });
-        if(newMenu.length!==0){
+        if (newMenu.length !== 0) {
             return true;
-        }else{
+        } else {
             return false;
         }
 
@@ -109,17 +113,17 @@ class SideBar extends Component{
                                 this.props.meunItemToggle(v, isHasChild);
                                 e.stopPropagation();
                             }} key={v.id}>{this.createItemIcon(v)}
-                                {v.menuName}
-                                {isHasChild ? (
-                                    <i className={this.createItemActive(v) ? 'side-bar-menu-arr fa fa-angle-down' : 'side-bar-menu-arr fa fa-angle-left'}></i>) : ''}
-                                {
-                                    function () {
-                                        if (that.createItemActive(v) && isHasChild) {
-                                            return that.createNormalMenuItem(newMenu, newParentCode);
-                                        }
-                                    }()
-                                }
-                            </li>);
+                                    {v.menuName}
+                                    {isHasChild ? (
+                                        <i className={this.createItemActive(v) ? 'side-bar-menu-arr fa fa-angle-down' : 'side-bar-menu-arr fa fa-angle-left'}></i>) : ''}
+                                    {
+                                        function () {
+                                            if (that.createItemActive(v) && isHasChild) {
+                                                return that.createNormalMenuItem(newMenu, newParentCode);
+                                            }
+                                        }()
+                                    }
+                                </li>);
                         }
                     })
                 }
@@ -127,19 +131,21 @@ class SideBar extends Component{
         );
     }
 
-    upScroll(e){
-        if(this.refs.menu.clientHeight>(this.props.windowHeight-205)&&this.refs.menu.clientHeight+this.props.sideBar.menuScrollY>(this.props.windowHeight-230)){
-            this.props.menuScroll(this.props.sideBar.menuScrollY+e);
+    upScroll(e) {
+        if (this.refs.menu.clientHeight > (this.props.windowHeight - 205) && this.refs.menu.clientHeight + this.props.sideBar.menuScrollY > (this.props.windowHeight - 230)) {
+            this.props.menuScroll(this.props.sideBar.menuScrollY + e);
         }
     }
-    downScroll(e){
-        if(this.props.sideBar.menuScrollY<0){
-            this.props.menuScroll(this.props.sideBar.menuScrollY+e);
+
+    downScroll(e) {
+        if (this.props.sideBar.menuScrollY < 0) {
+            this.props.menuScroll(this.props.sideBar.menuScrollY + e);
         }
     }
-    renderNormal(){
+
+    renderNormal() {
         let MenuScroll = {
-            top: this.props.sideBar.menuScrollY  + 'px'
+            top: this.props.sideBar.menuScrollY + 'px'
         }
         let touch = 0;
         return (
@@ -166,7 +172,7 @@ class SideBar extends Component{
                 }else if(e.deltaY>0){
                     this.downScroll(e.deltaY/5);
                 }
-            }}  >
+            }}>
 
                 <div className="side-bar-title ">
                     <div className="side-bar-title-skin animation-fadeIn">
@@ -176,11 +182,13 @@ class SideBar extends Component{
                         <div></div>
                         <div></div>
                     </div>
-                    <div className="side-bar-title-head-img animation-fadeIn"><img src={this.props.sideBar.userInfo.imgUrl}/></div>
+                    <div className="side-bar-title-head-img animation-fadeIn"><img
+                        src={this.props.sideBar.userInfo.imgUrl}/></div>
                     <div className="side-bar-title-name animation-fadeIn">{this.props.sideBar.userInfo.name}</div>
-                    <div className="side-bar-title-power animation-fadeIn">{this.props.sideBar.userInfo.power}<i className="fa fa-caret-down"></i></div>
-                    </div>
-                <div ref="menu" className="side-bar-menu" style={MenuScroll} >
+                    <div className="side-bar-title-power animation-fadeIn">{this.props.sideBar.userInfo.power}<i
+                        className="fa fa-caret-down"></i></div>
+                </div>
+                <div ref="menu" className="side-bar-menu" style={MenuScroll}>
                     {this.createNormalMenuItem(this.props.sideBar.menu, '0')}
                 </div>
 
@@ -188,35 +196,81 @@ class SideBar extends Component{
         );
     }
 
+    /*递归Mini状态下的菜单内容
+    * hoverMenu:[] 现激活（递归剩余）菜单
+    * val:{} 当前菜单项
+    * return:render
+    * */
+    createMiniToggleMenuItem(hoverMenu,val) {
+        let that = this;
+        let newMenu = [];
+        let style={};
 
-    createMiniMenuItem() {
+        return hoverMenu.map(v=> {
+            if(v.id===val.id){
+                newMenu = hoverMenu.filter((filterVal, key)=> {
+                    if (filterVal !== v) {
+                        return filterVal;
+                    }
+                });
+                if(val.parentCode==0){
+                    style={
+                        left:'50px'
+                    }
+                }
+                return (<div key={val.code+'_'+v.id} style={style} className="side-bar-toggle-menu-mini-item">
+                    <ul>
+                        {function(){
+                            return that.props.sideBar.menu.map(menu=>{
+                                let isHasChild = that.isHasChild(that.props.sideBar.menu,menu.code);
+                                if(menu.parentCode===v.code){
+                                    return (<li className='animation-flipInY' key={menu.parentCode+'_'+menu.id}
+                                                onMouseEnter={()=>{if(isHasChild){that.props.miniMenuItemHover(menu);}}}
+                                                onClick={(e)=>{
+                                                that.props.meunItemToggle(menu, isHasChild);
+                                                 e.stopPropagation();
+                                                }}
+                                        >{menu.menuName}
+                                        {isHasChild ? (
+                                            <i className={'side-bar-mini-arr fa fa-angle-right'}></i>) : ''}
+                                        {that.createMiniToggleMenuItem(newMenu,menu)}
+                                    </li> );
+                                }
+                            });
+                        }()}
+                    </ul>
+                </div> );
+            }
+        });
     }
 
-    createMiniItemList(){
-        this.hoverMenu = [];
-        return (this.props.sideBar.menu.map(v=>{
-            if(v.parentCode==='0'){
+    createMiniItemList() {
+        return (this.props.sideBar.menu.map(v=> {
+            if (v.parentCode === '0') {
                 return (<li key={v.id} onMouseEnter={()=> {
+                this.props.miniMenuItemHover(v);
+                }} onMouseLeave={()=>{
+                this.props.miniMenuItemHover('');
                 }}
-                 >{this.createItemIcon(v)}</li>);
+                >{this.createItemIcon(v)}{this.createMiniToggleMenuItem(this.props.sideBar.miniHoverMenu,v)}</li>);
             }
         }));
     }
 
-    renderMini(){
+    renderMini() {
         return (
             <div className={"side-bar-toggle " + this.getToggleAnimation()}>
-            <div className="side-bar-toggle-menu">
-                <ul className="animation-fadeIn">
-                    {this.props.defaultToggleStatus === 'full' ? <li className="slice"></li> : ''}
-                    {this.createMiniItemList()}
-                </ul>
-            </div>
-        </div>)
+                <div className="side-bar-toggle-menu">
+                    <ul className="animation-fadeIn">
+                        {this.props.defaultToggleStatus === 'full' ? <li className="slice"></li> : ''}
+                        {this.createMiniItemList()}
+                    </ul>
+                </div>
+            </div>)
     }
 
-    render(){
-        switch (this.props.toggleStatus){
+    render() {
+        switch (this.props.toggleStatus) {
             case 'full':
                 return this.renderNormal();
                 break;
@@ -233,11 +287,11 @@ class SideBar extends Component{
 
 function state(state) {
     return ({
-        sideBar:state.sideBar,
+        sideBar: state.sideBar,
         defaultToggleStatus: state.common.defaultToggleStatus,
-        toggleStatus:state.common.toggleStatus,
-        lastToggleStatus:state.common.lastToggleStatus,
-        windowHeight:state.common.windowHeight
+        toggleStatus: state.common.toggleStatus,
+        lastToggleStatus: state.common.lastToggleStatus,
+        windowHeight: state.common.windowHeight
     });
 }
 
@@ -245,4 +299,4 @@ function action(dispatch) {
     return bindActionCreators(ActionCreators, dispatch);
 }
 
-export default connect(state,action)(SideBar);
+export default connect(state, action)(SideBar);

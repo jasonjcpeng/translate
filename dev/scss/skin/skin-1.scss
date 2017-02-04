@@ -137,6 +137,14 @@ $alert-color:#c00;
           color: $font-color;
         }
       }
+      .side-bar-toggle-menu-mini-item{
+        background-color: $second-main-color;
+        ul{
+          li{
+            border-bottom: solid 1px $border-color;
+          }
+        }
+      }
     }
   }
 
@@ -194,7 +202,7 @@ $alert-color:#c00;
           color: $main-color;
         }
         li:hover{
-          color: $border-color;
+          background-color: $border-color;
         }
       }
       .active{

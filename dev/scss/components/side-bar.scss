@@ -77,13 +77,6 @@
   height: 1000%;
   z-index: 1;
   .side-bar-toggle-menu{
-    .mini-item{
-      position: relative;
-      background-color: red;
-      left:50px;
-      width: 50px;
-      height: 50px;
-    }
     ul {
       margin: 0px;
       padding: 0px;
@@ -100,6 +93,22 @@
         font-weight: 600;
         text-align: center;
         margin: auto auto;
+
+      }
+    }
+    .side-bar-toggle-menu-mini-item{
+      width: 150px;
+      position: relative;
+      bottom:50px;
+      left: 150px;
+      ul{
+        li{
+          .side-bar-mini-arr{
+            position: absolute;
+            line-height: 50px;
+            right:10px;
+          }
+        }
       }
     }
 

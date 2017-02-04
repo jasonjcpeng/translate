@@ -5,6 +5,7 @@ export const APP_FULL_SCREEN = 'APP_FULL_SCREEN';
 //----------------------------sidebar
 export const SIDE_BAR_MENU_ITEM_TOGGLE = 'SIDE_BAR_MENU_ITEM_TOGGLE';
 export const SIDE_BAR_MENU_SCROLL = 'SIDE_BAR_MENU_SCROLL';
+export const SIDE_BAR_MINI_MENU_HOVER_MENU = 'SIDE_BAR_MINI_MENU_HOVER_MENU';
 //----------------------------container
 export const HEADER_TOGGLE = 'HEADER_TOGGLE';
 //----------------------------container-tittle-menu

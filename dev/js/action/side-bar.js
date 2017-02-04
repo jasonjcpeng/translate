@@ -21,3 +21,10 @@ export const miniMenuToggle = (defaultToggleStatus,toggleStatus)=>{
         toggleStatus:toggleStatus
     });
 }
+
+export const miniMenuItemHover = (v)=>{
+    return ({
+        type:Constants.SIDE_BAR_MINI_MENU_HOVER_MENU,
+        payload:v
+    });
+}

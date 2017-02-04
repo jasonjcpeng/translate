@@ -10,6 +10,7 @@ const initState = {
     menu: [{icon: '', item_1: '', item_2: ''}],
     menuScrollY: 0,
     activeMenu: [],
+    miniHoverMenu:[]
 }
 export default function (state = initState, action) {
     switch (action.type) {
@@ -43,7 +44,29 @@ export default function (state = initState, action) {
                     break;
                 }
             }
-
+            break;
+        case Constants.SIDE_BAR_MINI_MENU_HOVER_MENU:
+            if(action.payload===''){
+                return update(state,{miniHoverMenu:{$set:[]}});
+            }else{
+                let isPush = true;
+                state.miniHoverMenu.map(v=>{
+                    if(v.parentCode===action.payload.parentCode){
+                        isPush = false;
+                    }
+                });
+                if(isPush){
+                    return update(state,{miniHoverMenu:{$push:[action.payload]}});
+                }else{
+                    let length = state.miniHoverMenu.length;
+                    for (let i = 0; i < length; i++) {
+                        if (state.miniHoverMenu[i].parentCode === action.payload.parentCode) {
+                                return update(state, {miniHoverMenu: {$splice: [[i, length, action.payload]]}});
+                                break;
+                            }
+                        }
+                }
+            }
             break;
     }
     return state;
