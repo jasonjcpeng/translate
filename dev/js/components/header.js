@@ -13,9 +13,7 @@ class Header extends Component{
                     this.props.toggle(this.props.defaultToggleStatus,this.props.toggleStatus);
                 }}><i className="fa fa-bars"></i></div>
                 <div className="header-exit"><i className="fa fa-power-off"></i></div>
-                <div onClick={()=>{
-                    this.props.selectActiveContent();
-                }} className="header-logo"><img src="./img/zongyi.png" alt="logo"/></div>
+                <div className="header-logo"><img src="./img/zongyi.png" alt="logo"/></div>
             </header>
         );
     }

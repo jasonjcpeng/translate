@@ -37,6 +37,7 @@ class SideBar extends Component {
                 }
                 break;
         }
+        return '';
     }
 
     createItemIcon(item) {
@@ -175,23 +176,31 @@ class SideBar extends Component {
             }}>
 
                 <div className="side-bar-title ">
-                    <div className="side-bar-title-skin animation-fadeIn">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                    </div>
                     <div className="side-bar-title-head-img animation-fadeIn"><img
                         src={this.props.sideBar.userInfo.imgUrl}/></div>
-                    <div className="side-bar-title-name animation-fadeIn">{this.props.sideBar.userInfo.name}</div>
-                    <div className="side-bar-title-power animation-fadeIn">{this.props.sideBar.userInfo.power}<i
-                        className="fa fa-caret-down"></i></div>
+                    <div onClick={()=> {
+                        this.props.selectSettingMenu();
+                    }} className="side-bar-title-name animation-fadeIn">{this.props.sideBar.userInfo.name}</div>
+                    <div onClick={()=> {
+                        this.props.selectSettingMenu();
+                    }} className="side-bar-title-power animation-fadeIn">{this.props.sideBar.userInfo.power} <i
+                        className="fa fa-cog"></i></div>
+                    <ul className="bg-bubbles">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
                 </div>
                 <div ref="menu" className="side-bar-menu" style={MenuScroll}>
                     {this.createNormalMenuItem(this.props.sideBar.menu, '0')}
                 </div>
-
             </div>
         );
     }
@@ -262,7 +271,8 @@ class SideBar extends Component {
             <div className={"side-bar-toggle " + this.getToggleAnimation()}>
                 <div className="side-bar-toggle-menu">
                     <ul className="animation-fadeIn">
-                        {this.props.defaultToggleStatus === 'full' ? <li className="slice"></li> : ''}
+                        <li className="head-li"><img className="head-img animation-fadeIn"
+                                 src={this.props.sideBar.userInfo.imgUrl}/></li>
                         {this.createMiniItemList()}
                     </ul>
                 </div>

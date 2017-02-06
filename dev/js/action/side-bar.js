@@ -28,3 +28,23 @@ export const miniMenuItemHover = (v)=>{
         payload:v
     });
 }
+
+export const selectSettingMenu= () =>{
+    let e = {
+        "icon": "fa-home",
+        "id": 'setting',
+        "code": "",
+        "parentCode": "",
+        "url": "",
+        "menuName": "设置",
+        "menuSort": 0,
+        "isEnable": true,
+        "createtime": "",
+        "updatetime": ""
+    };
+    return ({
+        type:Constants.SIDE_BAR_MENU_ITEM_TOGGLE,
+        isHasChild:false,
+        payload:e
+    });
+}

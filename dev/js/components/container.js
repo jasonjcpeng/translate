@@ -53,6 +53,7 @@ class Container extends Component {
                 }
                 break;
         }
+        return '';
     }
 
     renderNormal() {
