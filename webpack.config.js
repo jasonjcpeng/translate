@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     //不打包的基本库，可以做CDN加速
@@ -39,14 +40,24 @@ module.exports = {
             {
                 test:/\.(ttf|jpg|gif|png)$/,
                 loader:'file-loader?name=src/[name].[ext]'
+            },
+            {
+                test: /\.json$/,
+                loader: 'json-loader'
             }
         ]
     },
     output: {
         path: 'dist',
-        filename: 'js/bundle.min.js'
+        filename: 'js/[chunkHash:32].js'
     },
     plugins: [
+        new HtmlWebpackPlugin({
+            title: 'My App',
+            template: 'dev/index.html',
+            filename: 'index.html',
+            inject: 'body'
+        }),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.ProvidePlugin({
             React: 'react'

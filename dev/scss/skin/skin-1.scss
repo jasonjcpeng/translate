@@ -70,7 +70,11 @@ $alert-color:#c00;
         }
 
         li:nth-child(1) {
-          left: 10%
+          left: 10%;
+          -webkit-animation-delay: 700ms;
+          animation-delay: 700ms;
+          -webkit-animation-duration: 19s;
+          animation-duration: 19s;
         }
 
         li:nth-child(2) {
@@ -86,19 +90,27 @@ $alert-color:#c00;
         li:nth-child(3) {
           left: 25%;
           -webkit-animation-delay: 400ms;
-          animation-delay: 400ms
+          animation-delay: 400ms;
+          -webkit-animation-duration: 14s;
+          animation-duration: 14s;
         }
 
         li:nth-child(4) {
           left: 40%;
           width: 60px;
           height: 60px;
+          -webkit-animation-delay: 5s;
+          animation-delay: 5s;
           -webkit-animation-duration: 10s;
           animation-duration: 10s;
           background-color: rgba(255, 255, 255, .25)
         }
 
         li:nth-child(5) {
+          -webkit-animation-delay: 1200ms;
+          animation-delay: 1200ms;
+          -webkit-animation-duration: 18s;
+          animation-duration: 18s;
           left: 70%
         }
 
@@ -108,6 +120,8 @@ $alert-color:#c00;
           height: 120px;
           -webkit-animation-delay: 3s;
           animation-delay: 3s;
+          -webkit-animation-duration: 17s;
+          animation-duration: 17s;
           background-color: rgba(255, 255, 255, .2)
         }
 

@@ -234,7 +234,7 @@ class SideBar extends Component {
                                 let isHasChild = that.isHasChild(that.props.sideBar.menu,menu.code);
                                 if(menu.parentCode===v.code){
                                     return (<li className='animation-flipInY' key={menu.parentCode+'_'+menu.id}
-                                                onMouseEnter={()=>{if(isHasChild){that.props.miniMenuItemHover(menu);}}}
+                                                onMouseEnter={()=>{if(isHasChild||hoverMenu.length>1){that.props.miniMenuItemHover(menu);}}}
                                                 onClick={(e)=>{
                                                 that.props.meunItemToggle(menu, isHasChild);
                                                  e.stopPropagation();
