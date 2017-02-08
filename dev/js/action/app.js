@@ -8,8 +8,26 @@ export const screenHeightListenner = (height,width)=>{
         width:width
     });
 }
+
+function reSetAppDidMount(data){
+    return {
+        userInfo:data[0].userInfo,
+        menu:data[1].menu
+    }
+}
+
 export const AppDidMount = ()=>{
     return dispatch=>{
-
-    }
+        return appStart().then(e=>{
+            return dispatch({
+                type:Constants.INIT_CONTAINER_APP_DID_MOUNT,
+                payload:reSetAppDidMount(e)
+            });
+        }).catch(e=>{
+            return dispatch({
+                type:Constants.INIT_CONTAINER_APP_DID_MOUNT,
+                error:e
+            });
+        })
+    };
 }

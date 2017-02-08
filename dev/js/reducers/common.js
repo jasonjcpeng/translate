@@ -15,7 +15,9 @@ const initState = {
 export default function (state=initState,action) {
     switch (action.type) {
         case Constants.INIT_CONTAINER_APP_DID_MOUNT:
-            return update(state,{getReady:{$set:true}});
+            if(action.payload){
+                return update(state,{getReady:{$set:true}});
+            }
             break;
         case Constants.HEADER_TOGGLE:
             let newStatus = update(state,{lastToggleStatus:{$set:action.toggleStatus}});

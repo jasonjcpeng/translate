@@ -15,10 +15,12 @@ const initState = {
 export default function (state = initState, action) {
     switch (action.type) {
         case Constants.INIT_CONTAINER_APP_DID_MOUNT:
-            return update(state, {
-                userInfo: {$set: action.payload.sideBar.userInfo},
-                menu: {$set: action.payload.sideBar.menu}
-            });
+            if(action.payload){
+                return update(state, {
+                    userInfo: {$set: action.payload.userInfo},
+                    menu: {$set: action.payload.menu}
+                });
+            }
             break;
         case Constants.SIDE_BAR_MENU_SCROLL:
             return update(state, {menuScrollY: {$set: action.payload}})

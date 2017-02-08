@@ -17,7 +17,7 @@ module.exports = {
             poll: 1000
         },
         inline: true,
-        contentBase: './dist',
+        contentBase: './dev',
         port: 3003
     },
     devtool: 'cheap-module-eval-source-map',
