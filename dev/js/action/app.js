@@ -9,19 +9,13 @@ export const screenHeightListenner = (height,width)=>{
     });
 }
 
-function reSetAppDidMount(data){
-    return {
-        userInfo:data[0].userInfo,
-        menu:data[1].menu
-    }
-}
 
 export const AppDidMount = ()=>{
     return dispatch=>{
         return appStart().then(e=>{
             return dispatch({
                 type:Constants.INIT_CONTAINER_APP_DID_MOUNT,
-                payload:reSetAppDidMount(e)
+                payload:e
             });
         }).catch(e=>{
             return dispatch({

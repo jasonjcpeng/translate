@@ -2,6 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as ActionCreators from '../action/app';
+import Loader from 'react-loader';
+import {LoaderOption} from '../config/config';
 import SideBar from '../components/side-bar';
 import Header from '../components/header';
 import Container from '../components/container';
@@ -17,28 +19,33 @@ class App extends React.Component{
 
 
     renderInit(){
-        this.screenHeightListen = setInterval(()=>{
-            let windowHeight = window.innerHeight;
-            let windowWidth = window.innerWidth;
-            if(this.props.windowHeight!==windowHeight||this.props.windowWidth!==windowWidth){
-                this.props.screenHeightListenner(windowHeight,windowWidth);
-            }
-        },100);
-        return (<div className="skin-1"><Header/><SideBar/><Container/></div>);
+        if(this.props.error){
+            return (<div>{this.props.error}</div>);
+        }else{
+            this.screenHeightListen = setInterval(()=>{
+                let windowHeight = window.innerHeight;
+                let windowWidth = window.innerWidth;
+                if(this.props.windowHeight!==windowHeight||this.props.windowWidth!==windowWidth){
+                    this.props.screenHeightListenner(windowHeight,windowWidth);
+                }
+            },100);
+            return (<div className={this.props.useSkin}><Header/><SideBar/><Container/></div>);
+        }
+
     }
 
     render(){
-        if(this.props.getReady){
-            return this.renderInit();
-        }else{
-            return (<div>Loading!</div>);
-        }
+        return <Loader loaded={this.props.loaded} options={LoaderOption}>
+            {this.renderInit()}
+        </Loader>
     }
 }
 
 function state(state){
     return ({
-        getReady:state.common.getReady,
+        useSkin:state.common.useSkin,
+        loaded:state.common.loaded,
+        error:state.common.error,
         windowHeight:state.common.windowHeight,
         windowWidth:state.common.windowWidth
     });

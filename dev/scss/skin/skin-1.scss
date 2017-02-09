@@ -63,8 +63,8 @@ $alert-color:#c00;
           height: 40px;
           background-color: rgba(255,255,255,.15);
           bottom: -1000px;
-          -webkit-animation: square 25s infinite;
-          animation: square 25s infinite;
+          -webkit-animation: square 95s infinite;
+          animation: square 95s infinite;
           -webkit-transition-timing-function: linear;
           transition-timing-function: linear;
         }
@@ -73,8 +73,8 @@ $alert-color:#c00;
           left: 10%;
           -webkit-animation-delay: 700ms;
           animation-delay: 700ms;
-          -webkit-animation-duration: 19s;
-          animation-duration: 19s;
+          -webkit-animation-duration: 69s;
+          animation-duration: 69s;
         }
 
         li:nth-child(2) {
@@ -83,16 +83,16 @@ $alert-color:#c00;
           height: 80px;
           -webkit-animation-delay: 200ms;
           animation-delay: 200ms;
-          -webkit-animation-duration: 17s;
-          animation-duration: 17s
+          -webkit-animation-duration: 57s;
+          animation-duration: 57s
         }
 
         li:nth-child(3) {
           left: 25%;
           -webkit-animation-delay: 400ms;
           animation-delay: 400ms;
-          -webkit-animation-duration: 14s;
-          animation-duration: 14s;
+          -webkit-animation-duration: 44s;
+          animation-duration: 44s;
         }
 
         li:nth-child(4) {
@@ -101,16 +101,16 @@ $alert-color:#c00;
           height: 60px;
           -webkit-animation-delay: 5s;
           animation-delay: 5s;
-          -webkit-animation-duration: 10s;
-          animation-duration: 10s;
+          -webkit-animation-duration: 60s;
+          animation-duration: 60s;
           background-color: rgba(255, 255, 255, .25)
         }
 
         li:nth-child(5) {
           -webkit-animation-delay: 1200ms;
           animation-delay: 1200ms;
-          -webkit-animation-duration: 18s;
-          animation-duration: 18s;
+          -webkit-animation-duration: 78s;
+          animation-duration: 78s;
           left: 70%
         }
 
@@ -120,8 +120,8 @@ $alert-color:#c00;
           height: 120px;
           -webkit-animation-delay: 3s;
           animation-delay: 3s;
-          -webkit-animation-duration: 17s;
-          animation-duration: 17s;
+          -webkit-animation-duration: 97s;
+          animation-duration: 97s;
           background-color: rgba(255, 255, 255, .2)
         }
 
@@ -129,6 +129,8 @@ $alert-color:#c00;
           left: 32%;
           width: 100px;
           height: 100px;
+          -webkit-animation-duration: 127s;
+          animation-duration: 127s;
           -webkit-animation-delay: 7s;
           animation-delay: 7s
         }
@@ -139,8 +141,8 @@ $alert-color:#c00;
           height: 20px;
           -webkit-animation-delay: 15s;
           animation-delay: 15s;
-          -webkit-animation-duration: 40s;
-          animation-duration: 40s
+          -webkit-animation-duration: 90s;
+          animation-duration: 90s
         }
 
         li:nth-child(9) {

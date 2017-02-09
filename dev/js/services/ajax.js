@@ -1,12 +1,12 @@
 import fetch from 'isomorphic-fetch';
 import {Host,TimeOut} from '../config/config';
 
-export const AjaxGet = (url,args)=>{
+export const Get = (url,args)=>{
     let Url = Host+url;
     return new Promise((resolve,reject)=>{
         let timer = setTimeout(()=>{
             console.log('Timing Out!');
-            reject('超时！请检查网络连接！');
+            reject(2333);
         },TimeOut);
         fetch(Url).then(res=>{
             clearTimeout(timer);

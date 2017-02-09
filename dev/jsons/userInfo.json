@@ -2,6 +2,7 @@
   "userInfo": {
     "name":"Beaut-zihan",
     "power":"超级管理员",
-    "imgUrl":"./img/profile_small.jpg"
+    "imgUrl":"./img/profile_small.jpg",
+    "useSkin":"skin-1"
   }
 }

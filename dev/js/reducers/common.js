@@ -2,7 +2,9 @@ import update from 'react-addons-update';
 import * as Constants from '../action/CONSTANTS';
 
 const initState = {
-    getReady:false,
+    loaded:false,
+    error:undefined,
+    useSkin:'',
     windowHeight: 0,
     windowWidth:0,
     nowOnContentTarget: null,
@@ -15,9 +17,10 @@ const initState = {
 export default function (state=initState,action) {
     switch (action.type) {
         case Constants.INIT_CONTAINER_APP_DID_MOUNT:
-            if(action.payload){
-                return update(state,{getReady:{$set:true}});
+            if(action.error){
+                return update(state,{error:{$set:action.error},loaded:{$set:true}});
             }
+            return update(state,{loaded:{$set:true},useSkin:{$set:action.payload.userInfo.useSkin}});
             break;
         case Constants.HEADER_TOGGLE:
             let newStatus = update(state,{lastToggleStatus:{$set:action.toggleStatus}});

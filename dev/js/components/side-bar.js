@@ -211,7 +211,6 @@ class SideBar extends Component {
     * return:render
     * */
     createMiniToggleMenuItem(hoverMenu,val) {
-        let that = this;
         let newMenu = [];
         let style={};
 
@@ -230,23 +229,23 @@ class SideBar extends Component {
                 return (<div key={val.code+'_'+v.id} style={style} className="side-bar-toggle-menu-mini-item">
                     <ul>
                         {function(){
-                            return that.props.sideBar.menu.map(menu=>{
-                                let isHasChild = that.isHasChild(that.props.sideBar.menu,menu.code);
+                            return this.props.sideBar.menu.map(menu=>{
+                                let isHasChild = this.isHasChild(this.props.sideBar.menu,menu.code);
                                 if(menu.parentCode===v.code){
                                     return (<li className='animation-flipInY' key={menu.parentCode+'_'+menu.id}
-                                                onMouseEnter={()=>{if(isHasChild||hoverMenu.length>1){that.props.miniMenuItemHover(menu);}}}
+                                                onMouseEnter={()=>{if(isHasChild||hoverMenu.length>1){this.props.miniMenuItemHover(menu);}}}
                                                 onClick={(e)=>{
-                                                that.props.meunItemToggle(menu, isHasChild);
+                                                    this.props.meunItemToggle(menu, isHasChild);
                                                  e.stopPropagation();
                                                 }}
                                         >{menu.menuName}
                                         {isHasChild ? (
                                             <i className={'side-bar-mini-arr fa fa-angle-right'}></i>) : ''}
-                                        {that.createMiniToggleMenuItem(newMenu,menu)}
+                                        {this.createMiniToggleMenuItem(newMenu,menu)}
                                     </li> );
                                 }
                             });
-                        }()}
+                        }.bind(this)()}
                     </ul>
                 </div> );
             }

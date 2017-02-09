@@ -2,6 +2,10 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import ContainerTittleMenu from './container-title-menu';
+//-----Content--------
+import ContentSetting from './content/content-setting';
+//--------------------
+
 import * as ActionCreators from '../action/side-bar';
 
 class Container extends Component {
@@ -56,6 +60,16 @@ class Container extends Component {
         return '';
     }
 
+    switchCreateContent(){
+        if(this.props.nowOnContentTarget){
+            switch (this.props.nowOnContentTarget.id){
+                case 'setting':
+                    return (<ContentSetting/>);
+                    break;
+            }
+        }
+    }
+
     renderNormal() {
         this.isCreateScrollBar = this.props.toggleStatus === 'full'?true:false;
         let contentHeight = this.props.windowHeight - 93+(this.isCreateScrollBar?0:42);
@@ -63,8 +77,9 @@ class Container extends Component {
         return (
             <div  style={{marginLeft: containerMargin}} className={'container ' + this.getContainerToggleAnimation()}>
             <ContainerTittleMenu/>
-            <section className="content" style={{height: contentHeight}}>
-            </section>
+            <div className="content" style={{height: contentHeight}}>
+                {this.switchCreateContent()}
+            </div>
         </div>);
     }
 
@@ -73,8 +88,9 @@ class Container extends Component {
     }
 }
 
-function state(state) {
+const state = state=>{
     return ({
+        nowOnContentTarget:state.common.nowOnContentTarget,
         windowHeight: state.common.windowHeight,
         windowWidth: state.common.windowWidth,
         defaultToggleStatus: state.common.defaultToggleStatus,
@@ -84,7 +100,7 @@ function state(state) {
 }
 
 
-function action(dispatch) {
+const action = dispatch=>{
     return bindActionCreators({}, dispatch);
 }
 
