@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var autoprefixer = require('autoprefixer');
 
 module.exports = {
     //不打包的基本库，可以做CDN加速
@@ -31,11 +32,11 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                loader: 'style-loader!css-loader!sass-loader'
+                loader: 'style-loader!css-loader!postcss-loader!sass-loader'
             },
             {
                 test: /\.css$/,
-                loader: 'style-loader!css-loader!sass-loader'
+                loader: 'style-loader!css-loader!postcss-loader!sass-loader'
             },
             {
                 test:/\.(ttf|jpg|gif|png)$/,
@@ -47,6 +48,7 @@ module.exports = {
             }
         ]
     },
+    postcss: [ autoprefixer({ browsers: ['last 2 versions'] }) ],
     output: {
         path: 'dist',
         filename: 'js/[chunkHash:32].js'

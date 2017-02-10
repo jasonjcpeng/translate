@@ -5,22 +5,17 @@ import * as ActionCreators from '../../action/content-setting';
 
 import Loader from 'react-loader';
 import {LoaderOption} from '../../config/config';
-import Pager from './pager';
+import Pager from '../pager';
 
 class ContentSetting extends React.Component{
 
-    componentWillUpdate(){
-        console.log('ContentSetting update!')
-    }
 
     render(){
-        console.log(this.props.contentSetting.count)
         return (<Loader loaded={true} options={LoaderOption}>
             <div className="content-setting animation-fadeIn">
-                <Pager count={this.props.contentSetting.count}></Pager>
-                 <button onClick={()=>{
-                     this.props.count(this.props.contentSetting.count);
-                 }}>+++++</button>
+                <Pager count={this.props.contentSetting.count} plusOnClick={function(count){
+                        this.props.actionCount(count);
+                }.bind(this)}></Pager>
             </div>
         </Loader> );
     }
