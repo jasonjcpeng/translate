@@ -7,13 +7,18 @@ const initState = {
         power: '',
         imgUrl: ''
     },
-    menu: [{icon: '', item_1: '', item_2: ''}],
+    menu: [],
     menuScrollY: 0,
     activeMenu: [],
     miniHoverMenu:[]
 }
 export default function (state = initState, action) {
     switch (action.type) {
+        case Constants.APP_RELOAD_FROM_LOCAL_STORAGE:
+            return update(state, {
+                userInfo: {$set: action.payload.sideBar.userInfo},
+                menu: {$set: action.payload.sideBar.menu}
+            });
         case Constants.INIT_CONTAINER_APP_DID_MOUNT:
             if(action.payload){
                 return update(state, {

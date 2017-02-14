@@ -13,6 +13,8 @@ const initState = {
 
 export default function (state=initState,action) {
     switch (action.type){
+        case Constants.APP_RELOAD_FROM_LOCAL_STORAGE:
+            return action.payload.containerTitleMenu;
         case Constants.CONTAINER_TITTLE_MENU_SCROLL:
             return update(state,{menuScrollX:{$set:action.payload}});
             break;

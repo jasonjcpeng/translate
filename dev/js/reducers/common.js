@@ -16,6 +16,8 @@ const initState = {
 
 export default function (state=initState,action) {
     switch (action.type) {
+        case Constants.APP_RELOAD_FROM_LOCAL_STORAGE:
+            return action.payload.common;
         case Constants.INIT_CONTAINER_APP_DID_MOUNT:
             if(action.error){
                 return update(state,{error:{$set:action.error},loaded:{$set:true}});

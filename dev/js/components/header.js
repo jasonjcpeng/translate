@@ -6,13 +6,26 @@ import * as ActionCreators from '../action/header';
 
 
 class Header extends Component{
+    handleExitApp(){
+        window.localStorage.removeItem('store');
+        var browserName=navigator.appName;
+        alert('该浏览器不支持关闭操作，请手动关闭');
+        if (browserName=="Netscape") {
+            window.open('','_self','');
+            window.close();
+        } else {
+            window.close();
+        }
+    }
     render(){
         return (
             <header className="header">
                 <div className="menu-toggle-button" onClick={()=>{
                     this.props.toggle(this.props.defaultToggleStatus,this.props.toggleStatus);
                 }}><i className="fa fa-bars"></i></div>
-                <div className="header-exit"><i className="fa fa-power-off"></i></div>
+                <div className="header-exit" onClick={e=>{
+                this.handleExitApp();
+                }}><i className="fa fa-power-off"></i></div>
                 <div className="header-logo"><img src="./img/zongyi.png" alt="logo"/></div>
             </header>
         );

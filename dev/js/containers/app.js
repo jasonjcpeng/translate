@@ -10,7 +10,12 @@ import Container from '../components/container';
 
 class App extends React.Component{
     componentWillMount(){
-        this.props.AppDidMount();
+        if(window.localStorage.getItem('store')){
+            let store = JSON.parse(window.localStorage.getItem('store'));
+            this.props.reloadFromLocalStorage(store);
+        }else{
+            this.props.AppDidMount();
+        }
     }
 
     componentWillUnmount(){

@@ -13,7 +13,7 @@ class ContentSetting extends React.Component{
     render(){
         return (<Loader loaded={true} options={LoaderOption}>
             <div className="content-setting animation-fadeIn">
-                <Pager count={this.props.contentSetting.count} plusOnClick={function(count){
+                <Pager count={this.props.contentSetting.count} conutPayload={function(count){
                         this.props.actionCount(count);
                 }.bind(this)}></Pager>
             </div>

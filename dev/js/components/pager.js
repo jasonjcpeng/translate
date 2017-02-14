@@ -15,7 +15,7 @@ class Pager extends React.Component{
     }
 
     handlePlusOnClick(){
-        this.props.plusOnClick(this.state.count)
+        this.props.conutPayload(this.state.count)
     }
 
     render(){
