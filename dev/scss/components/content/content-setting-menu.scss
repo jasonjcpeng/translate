@@ -1,0 +1,63 @@
+.content-setting-menu {
+  margin: 10px auto 0;
+  color:#000;
+  font-weight: 100;
+  border: solid 2px #eee;
+  background-color: #fff;
+  width: 96%;
+  height: 100%;
+  .content-setting-header {
+    height: 50px;
+  }
+  .content-setting-table::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    background-color: #F5F5F5;
+  }
+  .content-setting-table::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+  }
+
+  .content-setting-table::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #bfbfbf;
+  }
+  .content-setting-table {
+    overflow-x: auto;
+    overflow-y: auto;
+    table{
+      border-spacing: 0px;
+      padding: 0;
+      border:0;
+      font-size: 14px;
+      min-width: 1000px;
+      thead{
+        tr{
+          height: 35px;
+          th{
+            border: 0px solid;
+            width: 300px;
+            text-align: center;
+          }
+        }
+      }
+      tbody{
+        tr{
+          height: 30px;
+          td{
+            text-align: center;
+            i{
+              line-height: 30px;
+              font-size: 25px;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+  }
+
+}

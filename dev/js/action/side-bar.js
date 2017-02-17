@@ -1,4 +1,5 @@
 import * as Constants from './CONSTANTS';
+import menuSetting from '../../jsons/meun-setting.json';
 
 export const menuScroll = e=>{
     return {
@@ -30,18 +31,7 @@ export const miniMenuItemHover = (v)=>{
 }
 
 export const selectSettingMenu= () =>{
-    let e = {
-        "icon": "fa-home",
-        "id": 'setting',
-        "code": "",
-        "parentCode": "",
-        "url": "",
-        "menuName": "设置",
-        "menuSort": 0,
-        "isEnable": true,
-        "createtime": "",
-        "updatetime": ""
-    };
+    let e = menuSetting;
     return ({
         type:Constants.SIDE_BAR_MENU_ITEM_TOGGLE,
         isHasChild:false,

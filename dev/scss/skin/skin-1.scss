@@ -6,6 +6,7 @@ $border-color:#eee;
 $font-color:#F5F5F5;
 $content-background-color:#F5F5F5;
 $alert-color:#c00;
+$default-toggle-color:#cecece;
 .skin-1{
   height: 100%;
   .header {
@@ -316,6 +317,36 @@ $alert-color:#c00;
     }
     .content {
       background-color: $content-background-color;
+    }
+
+    .content-setting-menu{
+      .content-setting-table {
+        table{
+          thead{
+            tr{
+              background-color: $content-background-color;
+              th{
+                background-color: $border-color;
+              }
+            }
+          }
+          tbody{
+            tr{
+              td{
+                border-bottom: dashed 2px $border-color;
+                i{
+                }
+                .fa-toggle-on{
+                  color: $main-color;
+                }
+                .fa-toggle-off{
+                  color: $default-toggle-color;
+                }
+              }
+            }
+          }
+        }
+      }
     }
 
   }

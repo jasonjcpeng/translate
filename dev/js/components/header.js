@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as ActionCreators from '../action/header';
+import * as IMG from '../config/img-base64';
 
 
 
@@ -26,7 +27,7 @@ class Header extends Component{
                 <div className="header-exit" onClick={e=>{
                 this.handleExitApp();
                 }}><i className="fa fa-power-off"></i></div>
-                <div className="header-logo"><img src="./img/zongyi.png" alt="logo"/></div>
+                <div className="header-logo"><img src={IMG.Logo} alt="logo"/></div>
             </header>
         );
     }
