@@ -8,11 +8,13 @@ import {LoaderOption} from '../../config/config';
 import Pager from '../pager';
 
 class ContentSetting extends React.Component{
-
+    componentWillMount(){
+        this.props.contentSettingGetMount(this.props.target);
+    }
 
     render(){
         return (<Loader loaded={true} options={LoaderOption}>
-            <div className="content-setting animation-fadeIn">
+            <div className="content-setting animation-fadeInRight">
                 <Pager count={this.props.contentSetting.count} conutPayload={function(count){
                         this.props.actionCount(count);
                 }.bind(this)}></Pager>

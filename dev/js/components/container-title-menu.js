@@ -105,7 +105,7 @@ class ContainerTittleMenu extends Component {
     }
 
     deleteActiveContent(v, k) {
-        this.props.deleteActiveContent(k);
+        this.props.deleteActiveContent(k,this.props.nowOnContent);
         let result = null;
         if (v.active) {
             if (k > 0 && k + 1 === this.props.activeContent.length) {
@@ -145,7 +145,7 @@ class ContainerTittleMenu extends Component {
         if(this.props.closeOptionToggle){
             return (<ul className="title-menu-drop-down animation-fadeIn">
                 <li className="top" onClick={()=>{this.props.forkActiveItem()}}>定位当前选项卡</li>
-                <li onClick={()=>{this.props.closeOtherItem()}}>关闭其他选项卡</li>
+                <li onClick={()=>{this.props.closeOtherItem(this.props.nowOnContent)}}>关闭其他选项卡</li>
                 <li onClick={()=>{this.props.closeAllItem()}}>关闭全部选项卡</li>
             </ul>);
         }else{
@@ -257,6 +257,7 @@ function state(state) {
         limit: state.containerTitleMenu.limit,
         cursor: state.containerTitleMenu.cursor,
         activeContent:state.containerTitleMenu.activeContent,
+        nowOnContent:state.common.nowOnContentTarget,
         menuScrollX: state.containerTitleMenu.menuScrollX,
         defaultToggleStatus:state.common.defaultToggleStatus,
         toggleStatus:state.common.toggleStatus,

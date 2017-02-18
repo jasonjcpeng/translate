@@ -24,10 +24,11 @@ export const selectActiveContent= e =>{
     });
 }
 
-export const deleteActiveContent = k=>{
+export const deleteActiveContent = (k,nowOnContent)=>{
     return ({
         type:Constants.CONTAINER_TITTLE_MENU_DELETE_ACTIVE_CONTENT,
-        key:k
+        key:k,
+        payload:nowOnContent
     });
 }
 export const closeOption = ()=>{
@@ -41,9 +42,10 @@ export const closeAllItem = ()=>{
         type:Constants.CONTAINER_TITTLE_MENU_CLOSE_ALL_ITEM,
     });
 }
-export const closeOtherItem = ()=>{
+export const closeOtherItem = (nowOnContent)=>{
     return({
         type:Constants.CONTAINER_TITTLE_MENU_CLOSE_OTHER_ITEM,
+        payload:nowOnContent
     });
 }
 export const forkActiveItem = ()=>{

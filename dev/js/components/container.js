@@ -64,7 +64,7 @@ class Container extends Component {
         if(this.props.nowOnContentTarget){
             switch (this.props.nowOnContentTarget.id){
                 case 'setting':
-                    return (<ContentSetting/>);
+                    return (<ContentSetting target={this.props.nowOnContentTarget}/>);
                     break;
             }
         }

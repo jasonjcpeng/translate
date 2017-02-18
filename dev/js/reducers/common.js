@@ -91,6 +91,9 @@ export default function (state=initState,action) {
                 return update(state,{nowOnContentTarget:{$set:null}});
             }
             break;
+        case Constants.CONTAINER_TITTLE_MENU_CLOSE_ALL_ITEM:
+            return update(state,{nowOnContentTarget:{$set:null}});
+            break;
         case Constants.APP_FULL_SCREEN:
             return update(state,{isFullScreen:{$set:!state.isFullScreen}});
             break;
