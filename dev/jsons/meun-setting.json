@@ -1,0 +1,12 @@
+{
+  "icon": "fa-home",
+  "id": "setting",
+  "code": "",
+  "parentCode": "",
+  "url": "",
+  "menuName": "设置",
+  "menuSort": 0,
+  "isEnable": true,
+  "createtime": "",
+  "updatetime": ""
+}

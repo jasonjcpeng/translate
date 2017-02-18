@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import configCreateStore from './config/configCreateStrore';
+import configCreateStore from './config/config-create-strore';
 
 import App from './containers/app';
 

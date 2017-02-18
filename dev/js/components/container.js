@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import ContainerTittleMenu from './container-title-menu';
 //-----Content--------
 import ContentSetting from './content/content-setting';
+import ContentSettingMenu from './content/content-setting-menu';
 //--------------------
 
 import * as ActionCreators from '../action/side-bar';
@@ -24,7 +25,6 @@ class Container extends Component {
     }
 
     getContainerToggleAnimation() {
-
         switch (this.props.lastToggleStatus) {
             case 'full':
                 switch (this.props.toggleStatus) {
@@ -60,7 +60,7 @@ class Container extends Component {
         return '';
     }
 
-    switchCreateContent(){
+    switchCreateContent(height){
         if(this.props.nowOnContentTarget){
             switch (this.props.nowOnContentTarget.id){
                 case 'setting':
@@ -78,7 +78,8 @@ class Container extends Component {
             <div  style={{marginLeft: containerMargin}} className={'container ' + this.getContainerToggleAnimation()}>
             <ContainerTittleMenu/>
             <div className="content" style={{height: contentHeight}}>
-                {this.switchCreateContent()}
+               {/* {this.switchCreateContent(contentHeight)}*/}
+                <ContentSettingMenu height={contentHeight}></ContentSettingMenu>
             </div>
         </div>);
     }
