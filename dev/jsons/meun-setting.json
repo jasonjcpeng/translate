@@ -5,7 +5,7 @@
   "parentCode": "",
   "url": "",
   "menuName": "设置",
-  "menuSort": 0,
+  "menuSort": "setting",
   "isEnable": true,
   "createtime": "",
   "updatetime": ""

@@ -7,31 +7,44 @@ import Loader from 'react-loader';
 import {LoaderOption} from '../../config/config';
 import Pager from '../pager';
 
-class ContentSetting extends React.Component{
-    componentWillMount(){
-        this.props.contentSettingGetMount(this.props.target);
+class ContentSetting extends React.Component {
+    componentWillMount() {
+        if (!this.props.status) {
+            this.props.contentSettingGetMount(this.props.nowOnContentTarget);
+        }
     }
 
-    render(){
-        return (<Loader loaded={true} options={LoaderOption}>
-            <div className="content-setting animation-fadeInRight">
-                <Pager count={this.props.contentSetting.count} conutPayload={function(count){
-                        this.props.actionCount(count);
-                }.bind(this)}></Pager>
-            </div>
-        </Loader> );
+    render() {
+        if(this.props.status){
+            return (
+                <div className="content-setting animation-fadeInRight">
+                    <Pager count={this.props.status.count} conutPayload={(count)=>{
+                this.props.actionCount(count);
+                }}></Pager>
+                </div>
+             );
+        }else{
+            return (<Loader loaded={false} options={LoaderOption}></Loader>);
+        }
+
     }
 }
 
-const state = state=>{
+const state = state=> {
+    let status;
+    state.containerTitleMenu.activeContent.map(v=> {
+        if (v.obj.id===state.common.nowOnContentTarget.id) {
+            status = v.status;
+        }
+    });
     return ({
-        contentSetting:state.contentSetting
+        status: status,
     });
 }
 
-const action = dispatch=>{
-    return bindActionCreators(ActionCreators,dispatch);
+const action = dispatch=> {
+    return bindActionCreators(ActionCreators, dispatch);
 }
 
 
-export default connect(state,action)(ContentSetting);
+export default connect(state, action)(ContentSetting);

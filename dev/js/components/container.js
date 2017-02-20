@@ -62,9 +62,9 @@ class Container extends Component {
 
     switchCreateContent(height){
         if(this.props.nowOnContentTarget){
-            switch (this.props.nowOnContentTarget.id){
+            switch (this.props.nowOnContentTarget.menuSort){
                 case 'setting':
-                    return (<ContentSetting target={this.props.nowOnContentTarget}/>);
+                    return (<ContentSetting height={height}/>);
                     break;
             }
         }
@@ -78,8 +78,7 @@ class Container extends Component {
             <div  style={{marginLeft: containerMargin}} className={'container ' + this.getContainerToggleAnimation()}>
             <ContainerTittleMenu/>
             <div className="content" style={{height: contentHeight}}>
-               {/* {this.switchCreateContent(contentHeight)}*/}
-                <ContentSettingMenu height={contentHeight}></ContentSettingMenu>
+               {this.switchCreateContent(contentHeight)}
             </div>
         </div>);
     }
