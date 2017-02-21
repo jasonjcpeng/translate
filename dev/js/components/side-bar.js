@@ -176,7 +176,9 @@ class SideBar extends Component {
             }}>
 
                 <div className="side-bar-title ">
-                    <div className="side-bar-title-head-img animation-fadeIn"><img
+                    <div onClick={()=> {
+                        this.props.selectSettingMenu();
+                    }} className="side-bar-title-head-img animation-fadeIn"><img
                         src={this.props.sideBar.userInfo.imgUrl}/></div>
                     <div onClick={()=> {
                         this.props.selectSettingMenu();
@@ -270,7 +272,9 @@ class SideBar extends Component {
             <div className={"side-bar-toggle " + this.getToggleAnimation()}>
                 <div className="side-bar-toggle-menu">
                     <ul className="animation-fadeIn">
-                        <li className="head-li"><img className="head-img animation-fadeIn"
+                        <li className="head-li" onClick={()=> {
+                        this.props.selectSettingMenu();
+                    }}><img className="head-img animation-fadeIn"
                                  src={this.props.sideBar.userInfo.imgUrl}/></li>
                         {this.createMiniItemList()}
                     </ul>

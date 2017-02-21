@@ -1,14 +1,14 @@
-$main-color: #3399cc;
+$main-color: #008f00;
 $second-main-color:#fff;
 $side-bar-menu-color:#ebebec;
-$side-bar-menu-font-color: #2b78a3;
+$side-bar-menu-font-color: #a8ad1a;
 $border-color:#eee;
 $reverse-font-color:#F5F5F5;
 $content-background-color:#F5F5F5;
 $alert-color:#c00;
 $default-option-toggle-color:#cecece;
 $content-font-color:#6f6f6f;
-.skin-1{
+.skin-3{
   height: 100%;
   .br-line{
     border-top:solid 2px $border-color;
@@ -61,7 +61,6 @@ $content-font-color:#6f6f6f;
         li {
           position: absolute;
           list-style: none;
-          border-radius: 1000px;
           box-shadow: 1px 1px 6px #a4c7ed inset;
           display: block;
           width: 40px;

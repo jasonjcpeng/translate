@@ -145,7 +145,7 @@ export default function (state = initState, action) {
         case Constants.CONTENT_SETTING_INIT:
             let initContentSetting = {
                 error: undefined,
-                count: 0
+                rightActiveContent:{key:'baseInfo',name:'基本信息'},
             }
             if (action.error) {
                 initContentSetting.error=action.error;
@@ -153,10 +153,9 @@ export default function (state = initState, action) {
             }
             return setActiveContentStatus(state,'setting',{status:{$set:initContentSetting}});
             break;
-        case 'COUNT':
-            return setActiveContentStatus(state,'setting',{status:{count:{$set:action.payload}}});
+        case Constants.CONTENT_SETTING_CHECK_RIGHT_ACTIVE_CONTAINER:
+            return setActiveContentStatus(state,action.menuSort,{status:{rightActiveContent:{$set:action.payload}}});
             break;
-
     }
     return state;
 }

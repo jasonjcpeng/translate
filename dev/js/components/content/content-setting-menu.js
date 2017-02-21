@@ -11,9 +11,9 @@ class ContentSettingMenu extends React.Component {
     render() {
         let tableHeight = this.props.height - 80;
         return (<Loader loaded={true} options={LoaderOption}>
-            <div className="content-setting-menu animation-fadeInRight">
+            <div className="content-container animation-fadeInRight">
                 <div className="content-setting-header">header</div>
-                <div className="content-setting-table" style={{height: tableHeight}}>
+                <div className="content-container-inset" style={{height: tableHeight}}>
                     <table>
                         <thead>
                         <tr>

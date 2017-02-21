@@ -1,167 +1,426 @@
-.skin-1{
+$main-color: pink;
+$second-main-color:#fff;
+$side-bar-menu-color:#ebebec;
+$side-bar-menu-font-color: #a33c54;
+$border-color:#eee;
+$reverse-font-color:#F5F5F5;
+$content-background-color:#F5F5F5;
+$alert-color:#c00;
+$default-option-toggle-color:#cecece;
+$content-font-color:#6f6f6f;
+.skin-2{
   height: 100%;
+  .br-line{
+    border-top:solid 2px $border-color;
+  }
+  .header {
+    background-color: $second-main-color;
+    .menu-toggle-button {
+      background-color: $main-color;
+      color: $reverse-font-color;
+    }
+    .menu-toggle-button:active{
+      color: $main-color;
+      background-color: #fff;
+    }
+
+    .header-exit{
+      color: $main-color;
+    }
+    .header-exit:hover{
+      color: $alert-color;
+    }
+    .header-exit:active{
+      color: red;
+    }
+
+  }
   .side-bar{
-    background-color:#2f4050;
+    width: 218px;
+    border-right: solid 2px $border-color;
+    background-color: $side-bar-menu-color;
     .side-bar-title{
-      background-color:rgb(35,54,69);
-      .side-bar-title-skin{
-        position: relative;
-        div:nth-child(1){
-          z-index: 0;
-          animation: fadeIn 7s infinite;
-          position: absolute;
-          transform: rotate(70deg)rotateX(20deg) rotateY(60deg);
-          left:-60px;
-          top:-70px;
-          height: 90px;
-          width: 90px;
-          background-color: rgb(39, 61, 74);
+      background-color: $main-color;
+      .side-bar-title-name{
+        color: $reverse-font-color;
+      }
+      .side-bar-title-power{
+        color: $reverse-font-color;
+        i{
+          color: $reverse-font-color;
         }
-        div:nth-child(2){
+      }
+      .bg-bubbles {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
+        pointer-events:none;
+        li {
           position: absolute;
-          animation: fadeIn 8s infinite;
-          transform: rotate(-70deg)rotateX(20deg) rotateY(60deg);
-          top:-65px;
-          left:25px;
-          height: 90px;
-          width: 90px;
-          background-color: rgb(38, 57, 73);
+          list-style: none;
+          border-radius: 1000px;
+          box-shadow: 1px 1px 6px #e4aced inset;
+          display: block;
+          width: 40px;
+          height: 40px;
+          background-color: rgba(255,255,255,.15);
+          bottom: -1500px;
+          -webkit-animation: square 95s infinite;
+          animation: square 95s infinite;
+          -webkit-transition-timing-function: linear;
+          transition-timing-function: linear;
         }
-        div:nth-child(3){
-          position: absolute;
-          animation: fadeIn 9s infinite;
-          transform: rotate(-100deg)rotateX(20deg) rotateY(60deg);
-          top:-65px;
-          left:97px;
-          height: 90px;
-          width: 90px;
-          background-color: rgb(39, 61, 74);
+
+        li:nth-child(1) {
+          left: 10%;
+          -webkit-animation-delay: 700ms;
+          animation-delay: 700ms;
+          -webkit-animation-duration: 69s;
+          animation-duration: 69s;
         }
-        div:nth-child(4){
-          animation: fadeIn 10s infinite;
-          position: absolute;
-          top:-6px;
-          left:91px;
-          width:0;
-          height:0;
-          border-top:15px solid transparent;
-          border-bottom:110px solid transparent;
-          border-right:104px solid rgb(38,57,73);
+
+        li:nth-child(2) {
+          left: 20%;
+          width: 80px;
+          height: 80px;
+          -webkit-animation-delay: 200ms;
+          animation-delay: 200ms;
+          -webkit-animation-duration: 57s;
+          animation-duration: 57s
         }
+
+        li:nth-child(3) {
+          left: 25%;
+          -webkit-animation-delay: 400ms;
+          animation-delay: 400ms;
+          -webkit-animation-duration: 44s;
+          animation-duration: 44s;
+        }
+
+        li:nth-child(4) {
+          left: 40%;
+          width: 60px;
+          height: 60px;
+          -webkit-animation-delay: 5s;
+          animation-delay: 5s;
+          -webkit-animation-duration: 60s;
+          animation-duration: 60s;
+          background-color: rgba(255, 255, 255, .25)
+        }
+
+        li:nth-child(5) {
+          -webkit-animation-delay: 1200ms;
+          animation-delay: 1200ms;
+          -webkit-animation-duration: 78s;
+          animation-duration: 78s;
+          left: 70%
+        }
+
+        .bg-bubbles li:nth-child(6) {
+          left: 80%;
+          width: 120px;
+          height: 120px;
+          -webkit-animation-delay: 3s;
+          animation-delay: 3s;
+          -webkit-animation-duration: 97s;
+          animation-duration: 97s;
+          background-color: rgba(255, 255, 255, .2)
+        }
+
+        li:nth-child(7) {
+          left: 32%;
+          width: 100px;
+          height: 100px;
+          -webkit-animation-duration: 127s;
+          animation-duration: 127s;
+          -webkit-animation-delay: 7s;
+          animation-delay: 7s
+        }
+
+        li:nth-child(8) {
+          left: 55%;
+          width: 20px;
+          height: 20px;
+          -webkit-animation-delay: 15s;
+          animation-delay: 15s;
+          -webkit-animation-duration: 90s;
+          animation-duration: 90s
+        }
+
+        li:nth-child(9) {
+          left: 25%;
+          width: 10px;
+          height: 10px;
+          -webkit-animation-delay: 2s;
+          animation-delay: 2s;
+          -webkit-animation-duration: 40s;
+          animation-duration: 40s;
+          background-color: rgba(255, 255, 255, .3)
+        }
+
+        li:nth-child(10) {
+          width: 120px;
+          height: 120px;
+          -webkit-animation-delay: 11s;
+          animation-delay: 11s
+        }
+
+        @-webkit-keyframes square {
+          0% {
+            -webkit-transform: translateY(0);
+            transform: translateY(0)
+          }
+
+          100% {
+            -webkit-transform: translateY(-1700px) rotate(600deg);
+            transform: translateY(-1700px) rotate(600deg)
+          }
+
+        }
+
+        @keyframes square {
+          0% {
+            -webkit-transform: translateY(0);
+            transform: translateY(0)
+          }
+
+          100% {
+            -webkit-transform: translateY(-1700px) rotate(600deg);
+            transform: translateY(-1700px) rotate(600deg)
+          }
+
+        }
+
       }
     }
     .side-bar-menu {
       ul {
         li {
+          color: $main-color;
+          border-bottom: solid 1px #e1e1e2;
+          ul{
+            li{
+              color: $main-color;
+              border:0px;
+            }
+            .active{
+              border-right: 0px;
+            }
+          }
           .side-bar-menu-pop {
-            color: #fff;
             background-color: orange;
           }
         }
         li:hover {
-          background-color: rgb(35, 54, 69);
-          color: #fff;
+          color: $side-bar-menu-font-color;
         }
         .active{
-          background-color: rgb(35,54,69);
-          color: #fff;
+          border-right: solid 5px $main-color;
+          background-color: $side-bar-menu-color;
+          color: $side-bar-menu-font-color;
         }
       }
+
     }
   }
 
   .side-bar-toggle {
-    background-color: #2f4050;
+    background-color: $side-bar-menu-color;
     .side-bar-toggle-menu {
       ul {
         li {
-          color: #a7b1c2;
+          color: $main-color;
+        }
+        li:hover {
+          background-color: $main-color;
+          color: $reverse-font-color;
         }
         .active {
-          background-color: #293846;
-          color: #fff;
+          background-color: $main-color;
+          color: $reverse-font-color;
+        }
+      }
+      .side-bar-toggle-menu-mini-item{
+        background-color: $second-main-color;
+        ul{
+          li{
+            border-bottom: solid 1px $border-color;
+          }
         }
       }
     }
-  }
-  .side-bar-toggle:hover{
-    background-color: #293846;
   }
 
 
   .container {
-    color: #999;
-    .header {
-      background-color: #F5F5F5;
-      border-bottom: solid 1px #eee;
-      .menu-toggle-button {
-        background-color: #1ab394;
-        color: #FFF;
-      }
-      .menu-toggle-button:active{
-        background-color: #2f4050;
-      }
-    }
+    color: $main-color;
     .title-menu {
-      border-bottom: solid 2px #2f4050;
+      border-top: solid 2px $border-color;
+      border-bottom: solid 3px $border-color;
       .title-menu-button{
-        border-right: solid 1px #eee;
-        background-color: #fff;
+        border-right: solid 1px $border-color;
+        background-color: $second-main-color;
       }
       .title-menu-button-forward {
-        border-left: solid 1px #eee;
+        border-left: solid 1px $border-color;
       }
       .title-menu-container{
-        border-right: solid 1px #eee;
-        background-color: #fff;
+        border-right: solid 1px $border-color;
+        background-color: $second-main-color;
         ul{
           li{
-            border-right: solid 1px #eee;
+            border-right: solid 1px $border-color;
           }
           li:hover{
-            background-color: #F5F5F5;
+            background-color: $content-background-color;
           }
           .active{
-            background-color: #2f4050;
             i:hover{
               cursor: pointer;
-              color: #eee;
+              color: $alert-color;
             }
           }
           .active:hover{
-            background-color: #2f4050;
             i:hover{
               cursor: pointer;
-              color: #eee;
+              color: $alert-color;
             }
           }
         }
       }
       .title-menu-button:hover{
-        background-color: #F5F5F5;
+        background-color: $content-background-color;
       }
       .title-menu-button:active{
-        background-color: #2f4050;
+        color:$reverse-font-color;
+        background-color: $main-color;
       }
       .title-menu-drop-down{
-        background-color: #fff;
-        border: solid 2px #eee;
+        background-color: $second-main-color;
+        border: solid 2px $border-color;
         .top{
-          border-bottom:solid 3px #eee;
+          border-bottom:solid 3px $border-color;
+        }
+        li{
+          color: $main-color;
         }
         li:hover{
-          color: #000;
+          background-color: $border-color;
         }
       }
       .active{
-        background-color: #2f4050;
+        height: 37px;
+        border-bottom: solid 5px $main-color;
       }
       .active:hover{
-        background-color: #2f4050;
+        background-color: $content-background-color;
       }
     }
     .content {
-      background-color: #F5F5F5;
+      background-color: $content-background-color;
+    }
+
+    .content-setting-menu{
+      .content-setting-table {
+        table{
+          thead{
+            tr{
+              background-color: $content-background-color;
+              th{
+                background-color: $border-color;
+              }
+            }
+          }
+          tbody{
+            tr{
+              td{
+                border-bottom: dashed 2px $border-color;
+                i{
+                }
+                .fa-toggle-on{
+                  color: $main-color;
+                }
+                .fa-toggle-off{
+                  color: $default-option-toggle-color;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    //-----------content---------------
+    .content-container {
+      color:#000;
+      border-color:#eee;
+      background-color: #fff;
+      .content-setting-header {
+      }
+      .content-container-inset::-webkit-scrollbar {
+        background-color: #F5F5F5;
+      }
+      .content-container-inset::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+        background-color: #F5F5F5;
+      }
+
+      .content-container-inset::-webkit-scrollbar-thumb {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        background-color: #bfbfbf;
+      }
+      .content-container-inset {
+        .content-setting-nav-bar{
+          color: $content-font-color;
+          ul{
+            li{
+            }
+            li:hover{
+              border-left-color:$content-font-color;
+              background-color: $content-background-color;
+            }
+            .active{
+              border-left-color:$main-color;
+              background-color: $content-background-color;
+            }
+          }
+        }
+        .right-active-content{
+          .right-active-content-header{
+            .br-line{
+            }
+          }
+          ul{
+            li{
+              input{
+                border-color:$default-option-toggle-color;
+              }
+            }
+          }
+        }
+
+
+        table{
+          thead{
+            tr{
+              th{
+              }
+            }
+          }
+          tbody{
+            tr{
+              td{
+                i{
+                }
+              }
+            }
+          }
+        }
+      }
+
     }
 
   }

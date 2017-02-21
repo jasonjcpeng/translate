@@ -61,7 +61,8 @@ class Container extends Component {
     }
 
     switchCreateContent(height){
-        if(this.props.nowOnContentTarget){
+        let boolean = this.props.toggleStatus!=='full'||this.props.defaultToggleStatus==='full';
+        if(this.props.nowOnContentTarget&&boolean){
             switch (this.props.nowOnContentTarget.menuSort){
                 case 'setting':
                     return (<ContentSetting height={height}/>);
@@ -71,7 +72,7 @@ class Container extends Component {
     }
 
     renderNormal() {
-        this.isCreateScrollBar = this.props.toggleStatus === 'full'?true:false;
+        this.isCreateScrollBar = this.props.defaultToggleStatus === 'full'?true:false;
         let contentHeight = this.props.windowHeight - 93+(this.isCreateScrollBar?0:42);
         let containerMargin = this.getContainerMargin();
         return (

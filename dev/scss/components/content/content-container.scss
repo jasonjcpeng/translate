@@ -1,0 +1,133 @@
+.content-container {
+  position: relative;
+  border:solid 2px;
+  top:10px;
+  margin: 0 auto;
+  font-weight: 100;
+  width: 96%;
+  height: 100%;
+  .content-setting-header {
+    height: 50px;
+  }
+  .content-container-inset::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  .content-container-inset::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+
+  .content-container-inset::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+  }
+  .content-container-inset {
+    font-size: 12px;
+    overflow-x: auto;
+    overflow-y: auto;
+    .content-setting-nav-bar{
+      user-select: none;
+      ul{
+        margin-top:20px;
+        padding: 0;
+        li{
+          border-left: solid 5px transparent;
+          text-align: center;
+          line-height: 50px;
+          cursor: pointer;
+          height: 50px;
+          font-weight: 600;
+        }
+        li:hover{
+          border-left:solid 5px;
+        }
+      }
+    }
+
+    .right-active-content{
+      margin:0 5% 0 5%;
+      .right-active-content-header{
+        height: 50px;
+        line-height: 50px;
+        cursor: default;
+        user-select: none;
+        font-weight: 600;
+        .br-line{
+          width: 100%;
+        }
+      }
+      ul{
+        padding: 0;
+        li{
+          height: 25px;
+          margin-top: 25px;
+          font-weight: 600;
+          line-height: 25px;
+          input{
+            height: 100%;
+            margin-left: 10%;
+            border:solid 1px;
+            border-radius: 5px;
+          }
+        }
+      }
+    }
+    .skin-group{
+      div{
+        cursor: pointer;
+        background-color: pink;
+        float: left;
+        margin: 5% 0 0 5%;
+        height: 80px;
+        width: 100px;
+      }
+      .active:before{
+        color: #fff;
+        line-height: 80px;
+        text-align: center;
+        color: #00ff00;
+        font-size: 50px;
+        content: '√';
+        background-color: #000;
+        opacity: 0.3;
+        display: block;
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+
+
+
+    table{
+      border-spacing: 0px;
+      padding: 0;
+      border:0;
+      font-size: 14px;
+      min-width: 1000px;
+      thead{
+        tr{
+          height: 35px;
+          th{
+            border: 0px solid;
+            width: 300px;
+            text-align: center;
+          }
+        }
+      }
+      tbody{
+        tr{
+          height: 30px;
+          td{
+            text-align: center;
+            i{
+              line-height: 30px;
+              font-size: 25px;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+  }
+
+}

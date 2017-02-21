@@ -16,7 +16,10 @@ body {
   li {
     list-style: none;
   }
-
+  .br-line{
+    margin: 0 auto;
+    width: 80%;
+  }
   .container {
     height: 100%;
     z-index: 1000;
@@ -27,10 +30,12 @@ body {
 
 
 @import './skin/skin-1';
+@import './skin/skin-2';
+@import './skin/skin-3';
 @import './components/side-bar';
 @import './components/header';
 @import './components/title-menu';
 @import './components/content.scss';
-@import './components/content/content-setting-menu';
+@import './components/content/content-container';
 
 

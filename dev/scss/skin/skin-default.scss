@@ -1,0 +1,168 @@
+.skin-1{
+  height: 100%;
+  .side-bar{
+    background-color:#2f4050;
+    .side-bar-title{
+      background-color:rgb(35,54,69);
+      .side-bar-title-skin{
+        position: relative;
+        div:nth-child(1){
+          z-index: 0;
+          animation: fadeIn 7s infinite;
+          position: absolute;
+          transform: rotate(70deg)rotateX(20deg) rotateY(60deg);
+          left:-60px;
+          top:-70px;
+          height: 90px;
+          width: 90px;
+          background-color: rgb(39, 61, 74);
+        }
+        div:nth-child(2){
+          position: absolute;
+          animation: fadeIn 8s infinite;
+          transform: rotate(-70deg)rotateX(20deg) rotateY(60deg);
+          top:-65px;
+          left:25px;
+          height: 90px;
+          width: 90px;
+          background-color: rgb(38, 57, 73);
+        }
+        div:nth-child(3){
+          position: absolute;
+          animation: fadeIn 9s infinite;
+          transform: rotate(-100deg)rotateX(20deg) rotateY(60deg);
+          top:-65px;
+          left:97px;
+          height: 90px;
+          width: 90px;
+          background-color: rgb(39, 61, 74);
+        }
+        div:nth-child(4){
+          animation: fadeIn 10s infinite;
+          position: absolute;
+          top:-6px;
+          left:91px;
+          width:0;
+          height:0;
+          border-top:15px solid transparent;
+          border-bottom:110px solid transparent;
+          border-right:104px solid rgb(38,57,73);
+        }
+      }
+    }
+    .side-bar-menu {
+      ul {
+        li {
+          .side-bar-menu-pop {
+            color: #fff;
+            background-color: orange;
+          }
+        }
+        li:hover {
+          background-color: rgb(35, 54, 69);
+          color: #fff;
+        }
+        .active{
+          background-color: rgb(35,54,69);
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .side-bar-toggle {
+    background-color: #2f4050;
+    .side-bar-toggle-menu {
+      ul {
+        li {
+          color: #a7b1c2;
+        }
+        .active {
+          background-color: #293846;
+          color: #fff;
+        }
+      }
+    }
+  }
+  .side-bar-toggle:hover{
+    background-color: #293846;
+  }
+
+
+  .container {
+    color: #999;
+    .header {
+      background-color: #F5F5F5;
+      border-bottom: solid 1px #eee;
+      .menu-toggle-button {
+        background-color: #1ab394;
+        color: #FFF;
+      }
+      .menu-toggle-button:active{
+        background-color: #2f4050;
+      }
+    }
+    .title-menu {
+      border-bottom: solid 2px #2f4050;
+      .title-menu-button{
+        border-right: solid 1px #eee;
+        background-color: #fff;
+      }
+      .title-menu-button-forward {
+        border-left: solid 1px #eee;
+      }
+      .title-menu-container{
+        border-right: solid 1px #eee;
+        background-color: #fff;
+        ul{
+          li{
+            border-right: solid 1px #eee;
+          }
+          li:hover{
+            background-color: #F5F5F5;
+          }
+          .active{
+            background-color: #2f4050;
+            i:hover{
+              cursor: pointer;
+              color: #eee;
+            }
+          }
+          .active:hover{
+            background-color: #2f4050;
+            i:hover{
+              cursor: pointer;
+              color: #eee;
+            }
+          }
+        }
+      }
+      .title-menu-button:hover{
+        background-color: #F5F5F5;
+      }
+      .title-menu-button:active{
+        background-color: #2f4050;
+      }
+      .title-menu-drop-down{
+        background-color: #fff;
+        border: solid 2px #eee;
+        .top{
+          border-bottom:solid 3px #eee;
+        }
+        li:hover{
+          color: #000;
+        }
+      }
+      .active{
+        background-color: #2f4050;
+      }
+      .active:hover{
+        background-color: #2f4050;
+      }
+    }
+    .content {
+      background-color: #F5F5F5;
+    }
+
+  }
+}
