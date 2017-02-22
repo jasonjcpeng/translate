@@ -6,6 +6,8 @@ import * as ActionCreators from '../../action/content-setting';
 import Loader from 'react-loader';
 import {LoaderOption} from '../../config/config';
 
+import SkinList from '../../../jsons/skin-list.json';
+
 class ContentSetting extends React.Component {
     componentWillMount() {
         if (!this.props.target.status) {
@@ -32,19 +34,25 @@ class ContentSetting extends React.Component {
         </div>);
     }
 
-    createBaseInfo(rightActiveContent) {
+    createBaseInfo(rightActiveContent, tableHeight) {
+        let height = tableHeight - 50;
         return (<div key={rightActiveContent.key} className="right-active-content animation-fadeInRight">
             {this.createActiveContentHeader(rightActiveContent)}
+            <div style={{height: height}} className="content-setting-frame">
             <ul>
                 <li><span>姓名</span><input type="text"/></li>
                 <li><span>权限</span><input type="text"/></li>
             </ul>
+            </div>
         </div>);
     }
 
-    createTel(rightActiveContent) {
+    createTel(rightActiveContent,tableHeight) {
+        let height = tableHeight - 50;
         return (<div key={rightActiveContent.key} className="right-active-content animation-fadeInRight">
+            <div style={{height: height}} className="content-setting-frame">
             {this.createActiveContentHeader(rightActiveContent)}
+            </div>
         </div>);
     }
 
@@ -60,28 +68,88 @@ class ContentSetting extends React.Component {
         });
     }
 
-    createSkin(rightActiveContent) {
-        let arr = [{key: 'skin-1', img: '#3399cc'}, {key: 'skin-2', img: 'pink'}, {key: 'skin-3', img: 'green'}];
+    createSkin(rightActiveContent, tableHeight) {
+        let height = tableHeight - 50;
+        let arr = SkinList.skinList;
         return (<div key={rightActiveContent.key} className="right-active-content animation-fadeInRight">
             {this.createActiveContentHeader(rightActiveContent)}
+            <div style={{height: height}} className="content-setting-frame">
             <div className="skin-group">
                 {this.createSkinItem(arr)}
+            </div>
             </div>
         </div>);
     }
 
-    createRightActiveContent() {
+
+    createMenuSettingTableBody() {
+        return this.props.currentMenu.map((m, k)=> {
+            return (<tr key={k} style={{display: ''}}>
+                <td key={m.id + '_' + k}>{k + 1}</td>
+                <td>{m.menuName}</td>
+                <td><i className={'fa ' + m.icon}></i></td>
+                <td>{m.api}</td>
+                <td onClick={
+                    (e)=> {
+                        let obj = m;
+                        obj.isEnable = !m.isEnable;
+                        this.props.changeMenuSetting(obj);
+                        e.stopPropagation();
+                    }
+                }>{function () {
+                    if (m.isEnable) {
+                        return (<i className="fa fa-toggle-on"></i>);
+                    } else {
+                        return (<i className="fa fa-toggle-off"></i>);
+                    }
+                }.bind(this)()}</td>
+                <td>{m.menuSort}</td>
+                <td></td>
+            </tr>);
+        });
+    }
+
+    createMenuSetting(rightActiveContent, tableHeight) {
+        let height = tableHeight - 100;
+        return (<div key={rightActiveContent.key} className="right-active-content animation-fadeInRight">
+            {this.createActiveContentHeader(rightActiveContent)}
+            <div className="content-setting-header">header</div>
+            <div style={{height: height}} className="content-setting-frame">
+                <table>
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>名称</th>
+                        <th>图标</th>
+                        <th>API</th>
+                        <th>有效</th>
+                        <th>菜单种类</th>
+                        <th>介绍</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {this.createMenuSettingTableBody()}
+                    </tbody>
+                </table>
+            </div>
+        </div>);
+    }
+
+    createRightActiveContent(tableHeight) {
         let rightActiveContent = this.props.target.status.rightActiveContent;
         switch (rightActiveContent.key) {
             case 'baseInfo':
-                return this.createBaseInfo(rightActiveContent);
+                return this.createBaseInfo(rightActiveContent,tableHeight);
                 break;
             case 'tel':
-                return this.createTel(rightActiveContent);
+                return this.createTel(rightActiveContent,tableHeight);
                 break;
             case 'skin':
-                return this.createSkin(rightActiveContent);
+                return this.createSkin(rightActiveContent,tableHeight);
                 break;
+            case 'menuSetting':
+                return this.createMenuSetting(rightActiveContent, tableHeight);
+                return
         }
     }
 
@@ -112,7 +180,7 @@ class ContentSetting extends React.Component {
                     <div className="content-container animation-fadeInRight"
                          style={{width:'75%',float:'right',marginRight:'1%'}}>
                         <div className="content-container-inset" style={{height: tableHeight}}>
-                            {this.createRightActiveContent()}
+                            {this.createRightActiveContent(tableHeight)}
                         </div>
                     </div>
                 </div>
@@ -144,7 +212,8 @@ const state = state=> {
     return ({
         target: target,
         useSkin: state.common.useSkin,
-        defaultToggleStatus: state.common.defaultToggleStatus
+        defaultToggleStatus: state.common.defaultToggleStatus,
+        currentMenu: state.sideBar.menu
     });
 }
 

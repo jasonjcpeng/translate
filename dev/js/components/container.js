@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import ContainerTittleMenu from './container-title-menu';
 //-----Content--------
 import ContentSetting from './content/content-setting';
-import ContentSettingMenu from './content/content-setting-menu';
 //--------------------
 
 import * as ActionCreators from '../action/side-bar';

@@ -403,16 +403,25 @@ $content-font-color:#6f6f6f;
 
 
         table{
+          border-color:$border-color;
           thead{
             tr{
               th{
+                border-color: $border-color;
               }
             }
           }
           tbody{
             tr{
               td{
+                border-color: $border-color;
                 i{
+                }
+                .fa-toggle-on{
+                  color: $main-color;
+                }
+                .fa-toggle-off{
+                  color: $default-option-toggle-color;
                 }
               }
             }

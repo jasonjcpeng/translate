@@ -16,11 +16,20 @@ export const checkRightActiveContainer = (menuSort, v)=> {
 }
 
 export const changeSkin = (v)=> {
-    console.log('action');
-    //ToDo: fetch to dataBase if success then return
+    //ToDo:change Skin fetch to dataBase if success then return
     return dispatch=> {
         return dispatch({
             type: Constants.CONTENT_SETTING_CHANGE_SKIN,
+            payload: v
+        })
+    };
+}
+
+export const changeMenuSetting = (v)=>{
+    //ToDo:Change menu fetch to dataBase if success then return
+    return dispatch=> {
+        return dispatch({
+            type: Constants.CONTENT_SETTING_CHANGE_MENU,
             payload: v
         })
     };

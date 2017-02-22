@@ -156,6 +156,17 @@ export default function (state = initState, action) {
         case Constants.CONTENT_SETTING_CHECK_RIGHT_ACTIVE_CONTAINER:
             return setActiveContentStatus(state,action.menuSort,{status:{rightActiveContent:{$set:action.payload}}});
             break;
+        case Constants.CONTENT_SETTING_CHANGE_MENU:
+            return update(state,{activeContent:{$apply:arr=>{
+                return arr.map(v=>{
+                    if(v.id===action.payload.id){
+                        return action.payload;
+                    }else{
+                        return v;
+                    }
+                });
+            }}});
+        break;
     }
     return state;
 }

@@ -75,6 +75,17 @@ export default function (state = initState, action) {
                 }
             }
             break;
+        case Constants.CONTENT_SETTING_CHANGE_MENU:
+            return update(state,{menu:{$apply:arr=>{
+                return arr.map(v=>{
+                    if(v.id===action.payload.id){
+                        return action.payload;
+                    }else{
+                        return v;
+                    }
+                });
+            }}});
+            break;
     }
     return state;
 }

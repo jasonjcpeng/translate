@@ -108,12 +108,12 @@ class SideBar extends Component {
                                 }
                             });
                             let isHasChild = this.isHasChild(menu, v.code);
-                            return (
-                                <li className={'toggleOutLv_' + this.createToggleAnimationLv(v) + ' ' + this.createItemActive(v)}
-                                    onClick={e=> {
-                                this.props.meunItemToggle(v, isHasChild);
-                                e.stopPropagation();
-                            }} key={v.id}>{this.createItemIcon(v)}
+                            if(v.isEnable){
+                                return (<li className={'toggleOutLv_' + this.createToggleAnimationLv(v) + ' ' + this.createItemActive(v)}
+                                            onClick={e=> {
+                                                this.props.meunItemToggle(v, isHasChild);
+                                                e.stopPropagation();
+                                            }} key={v.id}>{this.createItemIcon(v)}
                                     {v.menuName}
                                     {isHasChild ? (
                                         <i className={this.createItemActive(v) ? 'side-bar-menu-arr fa fa-angle-down' : 'side-bar-menu-arr fa fa-angle-left'}></i>) : ''}
@@ -125,6 +125,7 @@ class SideBar extends Component {
                                         }()
                                     }
                                 </li>);
+                            }
                         }
                     })
                 }
@@ -233,7 +234,7 @@ class SideBar extends Component {
                         {function(){
                             return this.props.sideBar.menu.map(menu=>{
                                 let isHasChild = this.isHasChild(this.props.sideBar.menu,menu.code);
-                                if(menu.parentCode===v.code){
+                                if(menu.parentCode===v.code&&menu.isEnable){
                                     return (<li className='animation-flipInY' key={menu.parentCode+'_'+menu.id}
                                                 onMouseEnter={()=>{if(isHasChild||hoverMenu.length>1){this.props.miniMenuItemHover(menu);}}}
                                                 onClick={(e)=>{
@@ -256,7 +257,7 @@ class SideBar extends Component {
 
     createMiniItemList() {
         return (this.props.sideBar.menu.map(v=> {
-            if (v.parentCode === '0') {
+            if (v.parentCode === '0'&&v.isEnable) {
                 return (<li key={v.id} onMouseEnter={()=> {
                 this.props.miniMenuItemHover(v);
                 }} onMouseLeave={()=>{

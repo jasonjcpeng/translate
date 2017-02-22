@@ -323,41 +323,11 @@ $content-font-color:#6f6f6f;
       background-color: $content-background-color;
     }
 
-    .content-setting-menu{
-      .content-setting-table {
-        table{
-          thead{
-            tr{
-              background-color: $content-background-color;
-              th{
-                background-color: $border-color;
-              }
-            }
-          }
-          tbody{
-            tr{
-              td{
-                border-bottom: dashed 2px $border-color;
-                i{
-                }
-                .fa-toggle-on{
-                  color: $main-color;
-                }
-                .fa-toggle-off{
-                  color: $default-option-toggle-color;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
     //-----------content---------------
     .content-container {
-      color:#000;
-      border-color:#eee;
-      background-color: #fff;
+      color:$content-font-color;
+      border-color:$border-color;
+      background-color: $second-main-color;
       .content-setting-header {
       }
       .content-container-inset::-webkit-scrollbar {
@@ -404,16 +374,25 @@ $content-font-color:#6f6f6f;
 
 
         table{
+          border-color:$border-color;
           thead{
             tr{
               th{
+                border-color: $border-color;
               }
             }
           }
           tbody{
             tr{
               td{
+                border-color: $border-color;
                 i{
+                }
+                .fa-toggle-on{
+                  color: $main-color;
+                }
+                .fa-toggle-off{
+                  color: $default-option-toggle-color;
                 }
               }
             }

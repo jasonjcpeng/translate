@@ -104,6 +104,13 @@ export default function (state = initState, action) {
         case Constants.CONTENT_SETTING_CHANGE_SKIN:
             return update(state, {useSkin: {$set: action.payload}});
             break;
+        case Constants.CONTENT_SETTING_CHANGE_MENU:
+            if (state.nowOnContentTarget) {
+                if (state.nowOnContentTarget.id === action.payload.id) {
+                    return update(state, {nowOnContentTarget: {$set: action.payload}});
+                }
+            }
+            break;
     }
     return state;
 }

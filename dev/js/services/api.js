@@ -23,6 +23,10 @@ export const appStart =()=>{
                     code: v.code,
                     parentCode: v.parentCode,
                     menuName: v.menuName,
+                    createTime:v.createtime,
+                    menuSort:v.menuSort,
+                    isEnable:v.isEnable,
+                    api:v.url
                 }
             });
             resolve({
