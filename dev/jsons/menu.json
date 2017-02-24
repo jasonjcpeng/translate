@@ -13,17 +13,6 @@
       "updatetime": "2016-01-20T17:00:34"
     },
     {
-      "id": 2,
-      "code": "1101",
-      "parentCode": "11",
-      "url": "/Role/",
-      "menuName": "角色配置",
-      "menuSort": 0,
-      "isEnable": true,
-      "createtime": "2016-01-11T00:00:00",
-      "updatetime": "2016-01-20T16:18:30"
-    },
-    {
       "id": 3,
       "code": "1102",
       "parentCode": "11",
@@ -245,6 +234,16 @@
       "isEnable": true,
       "createtime": "2016-09-27T15:13:57",
       "updatetime": "2016-09-27T15:13:57"
+    },{
+      "id": 2,
+      "code": "1101",
+      "parentCode": "11",
+      "url": "/Role/",
+      "menuName": "角色配置",
+      "menuSort": 0,
+      "isEnable": true,
+      "createtime": "2016-01-11T00:00:00",
+      "updatetime": "2016-01-20T16:18:30"
     }
   ]
 }

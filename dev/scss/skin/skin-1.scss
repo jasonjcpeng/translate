@@ -8,6 +8,7 @@ $content-background-color:#F5F5F5;
 $alert-color:#c00;
 $default-option-toggle-color:#cecece;
 $content-font-color:#6f6f6f;
+$default-button-hover-button:#6f6f6f;
 .skin-1{
   height: 100%;
   .br-line{
@@ -275,7 +276,9 @@ $content-font-color:#6f6f6f;
             border-right: solid 1px $border-color;
           }
           li:hover{
+            height: 37px;
             background-color: $content-background-color;
+            border-bottom: solid 5px $default-button-hover-button;
           }
           .active{
             i:hover{
@@ -292,7 +295,9 @@ $content-font-color:#6f6f6f;
         }
       }
       .title-menu-button:hover{
+        height: 37px;
         background-color: $content-background-color;
+        border-bottom:solid 5px $default-button-hover-button;
       }
       .title-menu-button:active{
         color:$reverse-font-color;
@@ -349,7 +354,7 @@ $content-font-color:#6f6f6f;
             li{
             }
             li:hover{
-              border-left-color:$content-font-color;
+              border-left-color:$default-button-hover-button;
               background-color: $content-background-color;
             }
             .active{

@@ -81,8 +81,55 @@ class ContentSetting extends React.Component {
         </div>);
     }
 
+    isMenuHasChild(newMenu,currentMenu){
+        for(let i in newMenu){
+            if(newMenu[i].parentCode===currentMenu.code){
+                return true;
+                break;
+            }
+        }
+        return false;
+    }
 
-    createMenuSettingTableBody() {
+    createMenuSettingTableBody(menu,parentCode,root) {
+        let newMenu = menu.filter((val)=> {
+            if (val.parentCode !== parentCode) {
+                return val;
+            }
+        });
+        return menu.map((m, k)=> {
+            if (m.parentCode ===parentCode) {
+                return (<tr key={m.id + '_' + k} style={{display: ''}}>
+                    <td>{k + 1}</td>
+                    <td style={{textAlign:'left'}}>{m.menuName}{function () {
+                        if(this.isMenuHasChild(newMenu,m)){
+                            return (<i style={{float:'right'}} className={true ? 'side-bar-menu-arr fa fa-caret-right' : 'side-bar-menu-arr fa fa-angle-left'}></i>)
+                        }
+                    }.bind(this)()}</td>
+                    <td><i className={'fa ' + m.icon}></i></td>
+                    <td>{m.api}</td>
+                    <td onClick={
+                        (e)=> {
+                            let obj = m;
+                            obj.isEnable = !m.isEnable;
+                            this.props.changeMenuSetting(obj);
+                            e.stopPropagation();
+                        }
+                    }>{function () {
+                        if (m.isEnable) {
+                            return (<i className="fa fa-toggle-on"></i>);
+                        } else {
+                            return (<i className="fa fa-toggle-off"></i>);
+                        }
+                    }.bind(this)()}</td>
+                    <td>{m.menuSort}</td>
+                    <td></td>
+                </tr>);
+            }
+        });
+    }
+
+    /*createMenuSettingTableBody() {
         return this.props.currentMenu.map((m, k)=> {
             return (<tr key={k} style={{display: ''}}>
                 <td key={m.id + '_' + k}>{k + 1}</td>
@@ -107,7 +154,7 @@ class ContentSetting extends React.Component {
                 <td></td>
             </tr>);
         });
-    }
+     }*/
 
     createMenuSetting(rightActiveContent, tableHeight) {
         let height = tableHeight - 100;
@@ -128,7 +175,7 @@ class ContentSetting extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {this.createMenuSettingTableBody()}
+                    {this.createMenuSettingTableBody(this.props.currentMenu,'0',0)}
                     </tbody>
                 </table>
             </div>
