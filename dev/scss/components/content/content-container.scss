@@ -118,7 +118,13 @@
             i{
               line-height: 30px;
               font-size: 25px;
+
+            }
+            .menu-toggle{
               cursor: pointer;
+            }
+            .menu-toggle:hover{
+              color: #cecece;
             }
           }
         }

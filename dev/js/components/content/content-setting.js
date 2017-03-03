@@ -91,70 +91,81 @@ class ContentSetting extends React.Component {
         return false;
     }
 
-    createMenuSettingTableBody(menu,parentCode,root) {
-        let newMenu = menu.filter((val)=> {
-            if (val.parentCode !== parentCode) {
-                return val;
+    quickSort(arr,root={code:'0'},result=[]) {
+        let menu = [];
+        if(arr.length>0){
+            let newArr = arr.filter(v=>{
+                if(v.parentCode===root.code){
+                    menu.push(v);
+                }else{
+                    return v;
+                }
+            });
+            if(menu.length>0){
+                for(let i in menu){
+                    result.push(menu[i]);
+                    this.quickSort(newArr,menu[i],result);
+                }
             }
-        });
-        return menu.map((m, k)=> {
-            if (m.parentCode ===parentCode) {
-                return (<tr key={m.id + '_' + k} style={{display: ''}}>
-                    <td>{k + 1}</td>
-                    <td style={{textAlign:'left'}}>{m.menuName}{function () {
-                        if(this.isMenuHasChild(newMenu,m)){
-                            return (<i style={{float:'right'}} className={true ? 'side-bar-menu-arr fa fa-caret-right' : 'side-bar-menu-arr fa fa-angle-left'}></i>)
-                        }
-                    }.bind(this)()}</td>
-                    <td><i className={'fa ' + m.icon}></i></td>
-                    <td>{m.api}</td>
-                    <td onClick={
-                        (e)=> {
-                            let obj = m;
-                            obj.isEnable = !m.isEnable;
-                            this.props.changeMenuSetting(obj);
-                            e.stopPropagation();
-                        }
-                    }>{function () {
-                        if (m.isEnable) {
-                            return (<i className="fa fa-toggle-on"></i>);
-                        } else {
-                            return (<i className="fa fa-toggle-off"></i>);
-                        }
-                    }.bind(this)()}</td>
-                    <td>{m.menuSort}</td>
-                    <td></td>
-                </tr>);
-            }
-        });
+
+            return result;
+        }
     }
 
-    /*createMenuSettingTableBody() {
-        return this.props.currentMenu.map((m, k)=> {
-            return (<tr key={k} style={{display: ''}}>
-                <td key={m.id + '_' + k}>{k + 1}</td>
-                <td>{m.menuName}</td>
-                <td><i className={'fa ' + m.icon}></i></td>
-                <td>{m.api}</td>
-                <td onClick={
-                    (e)=> {
-                        let obj = m;
-                        obj.isEnable = !m.isEnable;
-                        this.props.changeMenuSetting(obj);
-                        e.stopPropagation();
+    isSingleMenuSettingTableToggle(toggleCode,menuCode){
+        for(let i in toggleCode){
+            if(menuCode===toggleCode[i]){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    createMenuSettingTableBody(toggleCode) {
+        let menu = this.quickSort(this.props.currentMenu);
+        return menu.map((m, k)=> {
+            for(let i in toggleCode){
+                if (m.parentCode ===toggleCode[i]) {
+                    let textIndent = 0;
+                    for(let space=0;space<i;space++){
+                        textIndent+=20;
                     }
-                }>{function () {
-                    if (m.isEnable) {
-                        return (<i className="fa fa-toggle-on"></i>);
-                    } else {
-                        return (<i className="fa fa-toggle-off"></i>);
-                    }
-                }.bind(this)()}</td>
-                <td>{m.menuSort}</td>
-                <td></td>
-            </tr>);
+                    return (<tr key={m.id + '_' + k} style={{display: ''}}>
+                        <td>{k + 1}</td>
+                        <td style={{textAlign:'left',textIndent:textIndent}}>{m.menuName}{function () {
+                            if(this.isMenuHasChild(menu,m)){
+                                return (<i style={{float:'right'}} onClick={
+                                    (e)=>{
+                                        this.props.toggleSingleMenuItem(m.code);
+                                        e.stopPropagation();
+                                    }
+                                } className={this.isSingleMenuSettingTableToggle(toggleCode,m.code)? 'menu-toggle fa fa-caret-down' : 'menu-toggle fa fa-caret-right'}></i>)
+                            }
+                        }.bind(this)()}</td>
+                        <td ><i className={'fa ' + m.icon}></i></td>
+                        <td onClick={
+                            (e)=> {
+                                let obj = m;
+                                obj.isEnable = !m.isEnable;
+                                this.props.changeMenuSetting(obj);
+                                e.stopPropagation();
+                            }
+                        }>{function () {
+                            if (m.isEnable) {
+                                return (<i className="fa fa-toggle-on"></i>);
+                            } else {
+                                return (<i className="fa fa-toggle-off"></i>);
+                            }
+                        }.bind(this)()}</td>
+                        <td>{m.menuSort}</td>
+                        <td>{m.api}</td>
+                        <td></td>
+                    </tr>);
+                }
+            }
+
         });
-     }*/
+    }
 
     createMenuSetting(rightActiveContent, tableHeight) {
         let height = tableHeight - 100;
@@ -165,17 +176,17 @@ class ContentSetting extends React.Component {
                 <table>
                     <thead>
                     <tr>
-                        <th></th>
-                        <th>名称</th>
-                        <th>图标</th>
+                        <th style={{width:'60px'}}></th>
+                        <th style={{width:'300px'}}>名称</th>
+                        <th style={{width:'60px'}}>图标</th>
+                        <th style={{width:'60px'}}>有效</th>
+                        <th style={{width:'100px'}}>菜单种类</th>
                         <th>API</th>
-                        <th>有效</th>
-                        <th>菜单种类</th>
                         <th>介绍</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {this.createMenuSettingTableBody(this.props.currentMenu,'0',0)}
+                    {this.createMenuSettingTableBody(this.props.target.status.defaultMenuSettingTableToggleItem)}
                     </tbody>
                 </table>
             </div>
@@ -260,7 +271,7 @@ const state = state=> {
         target: target,
         useSkin: state.common.useSkin,
         defaultToggleStatus: state.common.defaultToggleStatus,
-        currentMenu: state.sideBar.menu
+        currentMenu: state.sideBar.menu,
     });
 }
 

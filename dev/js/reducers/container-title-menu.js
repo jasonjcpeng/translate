@@ -146,6 +146,7 @@ export default function (state = initState, action) {
             let initContentSetting = {
                 error: undefined,
                 rightActiveContent:{key:'baseInfo',name:'基本信息'},
+                defaultMenuSettingTableToggleItem:['0']
             }
             if (action.error) {
                 initContentSetting.error=action.error;
@@ -157,6 +158,9 @@ export default function (state = initState, action) {
             return setActiveContentStatus(state,action.menuSort,{status:{rightActiveContent:{$set:action.payload}}});
             break;
         case Constants.CONTENT_SETTING_CHANGE_MENU:
+            /*修改菜单内容
+            * payload:obj 修改后的菜单
+            * */
             return update(state,{activeContent:{$apply:arr=>{
                 return arr.map(v=>{
                     if(v.id===action.payload.id){
@@ -167,6 +171,33 @@ export default function (state = initState, action) {
                 });
             }}});
         break;
+        case Constants.CONTENT_SETTING_SETTING_MENU_TOGGLE_TABLE_MENU_ITEM:
+            return setActiveContentStatus(state,'setting',{status:{defaultMenuSettingTableToggleItem:{$apply:arr=>{
+                let isPush = true;
+                let newArr = [];
+                let DelArr = [];
+                let root = '';
+                for(let i in arr){
+                    if(arr[i]===action.payload){
+                        isPush = false;
+                        root = action.payload;
+                        DelArr.push(arr[i]);
+                    }
+                    if(root){
+                        if(arr[i]!==action.payload&&arr[i].slice(0,root.length)===root){
+                            DelArr.push(arr[i]);
+                            isPush = false;
+                        }
+                    }
+                }
+                newArr = arr.filter(i=>{return DelArr.indexOf(i) < 0;});
+                if(isPush){
+                    newArr.push(action.payload);
+                    return newArr;
+                }else{
+                    return newArr;
+                }
+            }}}})
     }
     return state;
 }

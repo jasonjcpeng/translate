@@ -16,7 +16,7 @@ export const checkRightActiveContainer = (menuSort, v)=> {
 }
 
 export const changeSkin = (v)=> {
-    //ToDo:change Skin fetch to dataBase if success then return
+    //ToDo:change Skin!fetch to dataBase if success then return
     return dispatch=> {
         return dispatch({
             type: Constants.CONTENT_SETTING_CHANGE_SKIN,
@@ -26,11 +26,18 @@ export const changeSkin = (v)=> {
 }
 
 export const changeMenuSetting = (v)=>{
-    //ToDo:Change menu fetch to dataBase if success then return
+    //ToDo:Change menu!fetch to dataBase if success then return
     return dispatch=> {
         return dispatch({
             type: Constants.CONTENT_SETTING_CHANGE_MENU,
             payload: v
         })
     };
+}
+
+export const toggleSingleMenuItem = v=>{
+    return ({
+        type:Constants.CONTENT_SETTING_SETTING_MENU_TOGGLE_TABLE_MENU_ITEM,
+        payload:v
+    });
 }
