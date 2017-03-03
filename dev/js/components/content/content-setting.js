@@ -130,7 +130,13 @@ class ContentSetting extends React.Component {
                     for(let space=0;space<i;space++){
                         textIndent+=20;
                     }
-                    return (<tr key={m.id + '_' + k} style={{display: ''}}>
+                    return (<tr className={function(){
+                        if(this.props.target.status.selectMenuSettingTableItem===m){
+                            return 'active';
+                        }
+                    }.bind(this)()} onClick={()=>{
+                        this.props.selectSingleMenuItem(m);
+                    }} key={m.id + '_' + k} style={{display: ''}}>
                         <td>{k + 1}</td>
                         <td style={{textAlign:'left',textIndent:textIndent}}>{m.menuName}{function () {
                             if(this.isMenuHasChild(menu,m)){
@@ -166,12 +172,18 @@ class ContentSetting extends React.Component {
 
         });
     }
+    createMenuSettingOption(){
+        if(this.props.target.status.selectMenuSettingTableItem){
+            return (<div className="content-setting-header animation-menu-setting-toggle-out">
 
+            </div>);
+        }
+    }
     createMenuSetting(rightActiveContent, tableHeight) {
         let height = tableHeight - 100;
         return (<div key={rightActiveContent.key} className="right-active-content animation-fadeInRight">
             {this.createActiveContentHeader(rightActiveContent)}
-            <div className="content-setting-header">header</div>
+            {this.createMenuSettingOption()}
             <div style={{height: height}} className="content-setting-frame">
                 <table>
                     <thead>

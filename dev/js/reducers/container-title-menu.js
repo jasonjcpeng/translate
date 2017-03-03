@@ -146,7 +146,8 @@ export default function (state = initState, action) {
             let initContentSetting = {
                 error: undefined,
                 rightActiveContent:{key:'baseInfo',name:'基本信息'},
-                defaultMenuSettingTableToggleItem:['0']
+                defaultMenuSettingTableToggleItem:['0'],
+                selectMenuSettingTableItem:undefined
             }
             if (action.error) {
                 initContentSetting.error=action.error;
@@ -172,7 +173,8 @@ export default function (state = initState, action) {
             }}});
         break;
         case Constants.CONTENT_SETTING_SETTING_MENU_TOGGLE_TABLE_MENU_ITEM:
-            return setActiveContentStatus(state,'setting',{status:{defaultMenuSettingTableToggleItem:{$apply:arr=>{
+            let newStat = setActiveContentStatus(state,'setting',{status:{selectMenuSettingTableItem:{$set:undefined}}});
+            return setActiveContentStatus(newStat,'setting',{status:{defaultMenuSettingTableToggleItem:{$apply:arr=>{
                 let isPush = true;
                 let newArr = [];
                 let DelArr = [];
@@ -197,7 +199,11 @@ export default function (state = initState, action) {
                 }else{
                     return newArr;
                 }
-            }}}})
+            }}}});
+        break;
+        case Constants.CONTENT_SETTING_SETTING_MENU_SELECT_TABLE_MENU_ITEM:
+            return setActiveContentStatus(state,'setting',{status:{selectMenuSettingTableItem:{$set:action.payload}}});
+        break;
     }
     return state;
 }

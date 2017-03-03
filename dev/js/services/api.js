@@ -1,14 +1,15 @@
 import userInfo from '../../jsons/userInfo.json';
-import * as Ajax from './ajax';
+import * as Fetch from './fetch';
 
 const api = {
     getMenu:'./jsons/menu.json',
     getUser:'./jsons/userInfo.json'
 }
 
+
 export const appStart =()=>{
     return new Promise((resolve,reject)=>{
-        Promise.all([Ajax.Get(api.getUser),Ajax.Get(api.getMenu)]).then(res=>{
+        Promise.all([Fetch.Fetch(api.getUser),Fetch.Fetch(api.getMenu)]).then(res=>{
             let [resUserInfo,resMenu] = res;
             let userInfo = {
                 name:resUserInfo.userInfo.name,

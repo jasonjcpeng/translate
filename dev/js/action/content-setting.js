@@ -41,3 +41,10 @@ export const toggleSingleMenuItem = v=>{
         payload:v
     });
 }
+
+export const selectSingleMenuItem = v=>{
+    return ({
+        type:Constants.CONTENT_SETTING_SETTING_MENU_SELECT_TABLE_MENU_ITEM,
+        payload:v
+    })
+}
