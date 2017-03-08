@@ -94,7 +94,7 @@
       padding: 0;
       border:solid 2px;
       font-size: 14px;
-      min-width: 1000px;
+      min-width: 700px;
       thead{
         tr{
           height: 35px;
@@ -127,6 +127,9 @@
               color: #cecece;
             }
           }
+        }
+        tr:hover{
+          background-color: #fffdf5;
         }
         .active{
           background-color: #fcffe8;

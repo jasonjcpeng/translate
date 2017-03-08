@@ -2,10 +2,11 @@ import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as ActionCreators from '../../action/content-setting';
-
+//Component
+import OptionBar from '../option-bar';
 import Loader from 'react-loader';
 import {LoaderOption} from '../../config/config';
-
+//JSON
 import SkinList from '../../../jsons/skin-list.json';
 
 class ContentSetting extends React.Component {
@@ -164,7 +165,6 @@ class ContentSetting extends React.Component {
                             }
                         }.bind(this)()}</td>
                         <td>{m.menuSort}</td>
-                        <td>{m.api}</td>
                         <td></td>
                     </tr>);
                 }
@@ -172,10 +172,18 @@ class ContentSetting extends React.Component {
 
         });
     }
+
     createMenuSettingOption(){
         if(this.props.target.status.selectMenuSettingTableItem){
-            return (<div className="content-setting-header animation-menu-setting-toggle-out">
-
+            return (<div className="content-setting-header animation-menu-setting-toggle-out animation-fadeIn">
+                <div className="component-option-bar">
+                    <ul>
+                        <li><i className="fa fa-trash-o"></i>&nbsp;删除</li>
+                        <li><i className="fa fa-columns"></i>&nbsp;详细</li>
+                        <li><i className="fa fa-pencil-square-o"></i>&nbsp;编辑</li>
+                        <li ><i className="fa fa-plus"></i>&nbsp;新增</li>
+                    </ul>
+                </div>
             </div>);
         }
     }
@@ -193,7 +201,6 @@ class ContentSetting extends React.Component {
                         <th style={{width:'60px'}}>图标</th>
                         <th style={{width:'60px'}}>有效</th>
                         <th style={{width:'100px'}}>菜单种类</th>
-                        <th>API</th>
                         <th>介绍</th>
                     </tr>
                     </thead>

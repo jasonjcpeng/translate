@@ -26,9 +26,9 @@ export const Fetch = (url,args,method='GET')=> {
                 console.log(Url + ':' + res.status);
                 reject(res.status);
             } else {
-                res.text().then(data=> {
+                res.json().then(data=> {
                     console.log(Url + ':Done!');
-                    resolve(JSON.parse(data));
+                    resolve(data);
                 })
             }
         })
