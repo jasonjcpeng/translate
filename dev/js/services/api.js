@@ -1,23 +1,24 @@
-import userInfo from '../../jsons/userInfo.json';
+import userInfo from '../../jsons/apiData/userInfo.json';
 import * as Fetch from './fetch';
+import {isOnline} from '../config/config';
 
-const api = {
-    getMenu:'./jsons/menu.json',
-    getUser:'./jsons/userInfo.json'
+const api = isOnline?{
+    getUser:''
+}:{
+    getUser:'./jsons/apiData/userInfo.json'
 }
 
 
 export const appStart =()=>{
     return new Promise((resolve,reject)=>{
-        Promise.all([Fetch.Fetch(api.getUser),Fetch.Fetch(api.getMenu)]).then(res=>{
-            let [resUserInfo,resMenu] = res;
+       Fetch.Fetch(api.getUser).then(res=>{
             let userInfo = {
-                name:resUserInfo.userInfo.name,
-                power:resUserInfo.userInfo.power,
-                imgUrl:resUserInfo.userInfo.imgUrl,
-                useSkin:resUserInfo.userInfo.useSkin
+                name:res.userInfo.name,
+                power:res.userInfo.power,
+                imgUrl:res.userInfo.imgUrl,
+                useSkin:res.userInfo.useSkin
             }
-            let menu = resMenu.menu.map(v=>{
+            let menu = res.menu.map(v=>{
                 return {
                     icon: v.icon,
                     id: v.id,

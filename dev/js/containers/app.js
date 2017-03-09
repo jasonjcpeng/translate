@@ -13,6 +13,7 @@ class App extends React.Component{
         if(window.localStorage.getItem('store')){
             let store = JSON.parse(window.localStorage.getItem('store'));
             this.props.reloadFromLocalStorage(store);
+            this.props.AppDidMount();
         }else{
             this.props.AppDidMount();
         }

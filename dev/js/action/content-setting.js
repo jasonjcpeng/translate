@@ -48,3 +48,21 @@ export const selectSingleMenuItem = v=>{
         payload:v
     })
 }
+
+export const openOption = v=>{
+    return ({
+        type:Constants.SIDE_BAR_MENU_ITEM_TOGGLE,
+        isHasChild:false,
+        payload:v
+    });
+}
+
+export const optionDeleteMenu = v=>{
+    //ToDo:Delete Menu!fetch to dataBase if success then return
+    return dispatch=>{
+        return dispatch({
+                type:Constants.APP_DELETE_MENU_ITEM,
+                payload:v
+            });
+    }
+}

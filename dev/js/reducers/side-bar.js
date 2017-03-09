@@ -86,6 +86,15 @@ export default function (state = initState, action) {
                 });
             }}});
             break;
+        case Constants.APP_DELETE_MENU_ITEM:
+            return update(state,{menu:{$apply:arr=>{
+                return arr.filter(v=>{
+                    if(v.id!==action.payload.id){
+                        return v;
+                    }
+                });
+            }}});
+            break;
     }
     return state;
 }

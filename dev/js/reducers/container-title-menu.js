@@ -47,7 +47,7 @@ export default function (state = initState, action) {
                                     if (v.obj.id === action.payload.id) {
                                         Push = false;
                                         return {
-                                            obj: v.obj,
+                                            obj: action.payload,
                                             active: true,
                                             status: v.status
                                         }
@@ -151,7 +151,6 @@ export default function (state = initState, action) {
             }
             if (action.error) {
                 initContentSetting.error=action.error;
-                return setActiveContentStatus(state,'setting',{status:{$set:initContentSetting}});
             }
             return setActiveContentStatus(state,'setting',{status:{$set:initContentSetting}});
             break;
@@ -164,7 +163,7 @@ export default function (state = initState, action) {
             * */
             return update(state,{activeContent:{$apply:arr=>{
                 return arr.map(v=>{
-                    if(v.id===action.payload.id){
+                    if(v.obj.id===action.payload.id){
                         return action.payload;
                     }else{
                         return v;
@@ -204,6 +203,28 @@ export default function (state = initState, action) {
         case Constants.CONTENT_SETTING_SETTING_MENU_SELECT_TABLE_MENU_ITEM:
             return setActiveContentStatus(state,'setting',{status:{selectMenuSettingTableItem:{$set:action.payload}}});
         break;
+        case Constants.APP_DELETE_MENU_ITEM:
+            let newState =  update(state,{activeContent:{$apply:arr=>{
+                return arr.filter(v=>{
+                    if(v.obj.id!==action.payload.id){
+                        return v;
+                    }
+                });
+            }}});
+            return setActiveContentStatus(newState,'setting',{status:{selectMenuSettingTableItem:{$set:undefined}}});
+            break;
+        //---------------MenuSettingOption------------------------------
+        case Constants.MENU_SETTING_OPTION_ADD_MENU_DID_MOUNT:
+            let initMenuSettingOptionAdd = {
+                error: undefined,
+                fromTarget:action.obj.targetMenu
+            }
+            if (action.error) {
+                initMenuSettingOptionAdd.error=action.error;
+                return setActiveContentStatus(state,"menuSettingAddMenu",{status:{$set:initContentSetting}});
+            }
+            return setActiveContentStatus(state,'menuSettingAddMenu',{status:{$set:initContentSetting}});
+            break;
     }
     return state;
 }

@@ -19,10 +19,11 @@ export default function (state = initState, action) {
         case Constants.APP_RELOAD_FROM_LOCAL_STORAGE:
             return action.payload.common;
         case Constants.INIT_CONTAINER_APP_DID_MOUNT:
+            let error = undefined;
             if (action.error) {
-                return update(state, {error: {$set: action.error}, loaded: {$set: true}});
+                error = action.error;
             }
-            return update(state, {loaded: {$set: true}, useSkin: {$set: action.payload.userInfo.useSkin}});
+            return update(state, {loaded: {$set: true}, error: {$set: action.error},useSkin: {$set: action.payload.userInfo.useSkin}});
             break;
         case Constants.HEADER_TOGGLE:
             let newStatus = update(state, {lastToggleStatus: {$set: action.toggleStatus}});

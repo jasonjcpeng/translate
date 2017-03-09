@@ -8,6 +8,7 @@ import Loader from 'react-loader';
 import {LoaderOption} from '../../config/config';
 //JSON
 import SkinList from '../../../jsons/skin-list.json';
+import menuSettingOption from '../../../jsons/menu-setting-option.json';
 
 class ContentSetting extends React.Component {
     componentWillMount() {
@@ -132,7 +133,7 @@ class ContentSetting extends React.Component {
                         textIndent+=20;
                     }
                     return (<tr className={function(){
-                        if(this.props.target.status.selectMenuSettingTableItem===m){
+                        if(this.props.target.status.selectMenuSettingTableItem&&this.props.target.status.selectMenuSettingTableItem.id===m.id){
                             return 'active';
                         }
                     }.bind(this)()} onClick={()=>{
@@ -178,10 +179,23 @@ class ContentSetting extends React.Component {
             return (<div className="content-setting-header animation-menu-setting-toggle-out animation-fadeIn">
                 <div className="component-option-bar">
                     <ul>
-                        <li><i className="fa fa-trash-o"></i>&nbsp;删除</li>
-                        <li><i className="fa fa-columns"></i>&nbsp;详细</li>
-                        <li><i className="fa fa-pencil-square-o"></i>&nbsp;编辑</li>
-                        <li ><i className="fa fa-plus"></i>&nbsp;新增</li>
+                        <li onClick={
+                            ()=>{
+                                this.props.optionDeleteMenu(this.props.target.status.selectMenuSettingTableItem);
+                            }
+                        }><i className="fa fa-trash-o"></i>&nbsp;删除</li>
+                        <li onClick={()=>{
+                            menuSettingOption.detail.targetMenu = this.props.target.status.selectMenuSettingTableItem;
+                            this.props.openOption(menuSettingOption.detail);
+                        }}><i className="fa fa-columns"></i>&nbsp;详细</li>
+                        <li onClick={()=>{
+                            menuSettingOption.edit.targetMenu = this.props.target.status.selectMenuSettingTableItem;
+                            this.props.openOption(menuSettingOption.edit);
+                        }}><i className="fa fa-pencil-square-o"></i>&nbsp;编辑</li>
+                        <li onClick={()=>{
+                            menuSettingOption.add.targetMenu = this.props.target.status.selectMenuSettingTableItem;
+                            this.props.openOption(menuSettingOption.add);
+                        }}><i className="fa fa-plus"></i>&nbsp;新增</li>
                     </ul>
                 </div>
             </div>);

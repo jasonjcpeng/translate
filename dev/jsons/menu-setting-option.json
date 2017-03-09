@@ -1,0 +1,39 @@
+
+{
+  "add": {
+    "icon": "",
+    "id": "menuSettingAddMenu",
+    "code": "",
+    "parentCode": "",
+    "url": "",
+    "menuName": "新增菜单",
+    "menuSort": "menuSettingAddMenu",
+    "isEnable": true,
+    "createtime": "",
+    "updatetime": ""
+  },
+  "detail": {
+    "icon": "",
+    "id": "menuSettingDetailMenu",
+    "code": "",
+    "parentCode": "",
+    "url": "",
+    "menuName": "菜单详情",
+    "menuSort": "menuSettingDetailMenu",
+    "isEnable": true,
+    "createtime": "",
+    "updatetime": ""
+  },
+  "edit": {
+    "icon": "",
+    "id": "menuSettingEditMenu",
+    "code": "",
+    "parentCode": "",
+    "url": "",
+    "menuName": "编辑菜单",
+    "menuSort": "menuSettingEditMenu",
+    "isEnable": true,
+    "createtime": "",
+    "updatetime": ""
+  }
+}

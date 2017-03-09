@@ -1,8 +1,7 @@
 //配置文件
 //请求域名
-/*
-export const Host = 'http://admlnapi.zongyijia.com';*/
-export const Host = '';
+export const Host = 'http://admlnapi.zongyijia.com';
+export const isOnline= false;
 //超时限制时长
 export const TimeOut = '10000';
 //加载器样式选项

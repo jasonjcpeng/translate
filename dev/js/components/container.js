@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import ContainerTittleMenu from './container-title-menu';
 //-----Content--------
 import ContentSetting from './content/content-setting';
+import MenuSettingOptionMenu from './content/menu-setting-option-menu';
 //--------------------
 
 import * as ActionCreators from '../action/side-bar';
@@ -66,6 +67,9 @@ class Container extends Component {
                 case 'setting':
                     return (<ContentSetting height={height}/>);
                     break;
+                case 'menuSettingAddMenu':
+                    return (<MenuSettingOptionMenu type='add' height={height}/>);
+                break;
             }
         }
     }
