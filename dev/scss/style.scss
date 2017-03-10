@@ -25,6 +25,22 @@ body {
     z-index: 1000;
   }
 
+  .btn{
+    cursor: pointer;
+    font-weight: 600;
+    padding:10px;
+    margin: 10px;
+    border: solid 2px;
+    border-radius: 5px;
+  }
+  .btn:focus{
+    cursor: pointer;
+    font-weight: 600;
+    padding:10px;
+    margin: 10px;
+    border-radius: 5px;
+  }
+
 }
 
 
@@ -37,6 +53,6 @@ body {
 @import './components/title-menu';
 @import './components/content.scss';
 @import './components/content/content-container';
-@import './components/component-option-bar';
+@import 'components/content/component-option-bar';
 
 

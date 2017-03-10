@@ -200,6 +200,9 @@ export default function (state = initState, action) {
                 }
             }}}});
         break;
+        case Constants.CONTENT_SETTING_SETTING_MENU_TOGGLE_OFF_MENU_ITEM:
+            return setActiveContentStatus(state,'setting',{status:{defaultMenuSettingTableToggleItem:{$set:["0"]},selectMenuSettingTableItem:{$set:undefined}}});
+            break;
         case Constants.CONTENT_SETTING_SETTING_MENU_SELECT_TABLE_MENU_ITEM:
             return setActiveContentStatus(state,'setting',{status:{selectMenuSettingTableItem:{$set:action.payload}}});
         break;

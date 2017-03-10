@@ -7,13 +7,14 @@ import {LoaderOption} from '../config/config';
 import SideBar from '../components/side-bar';
 import Header from '../components/header';
 import Container from '../components/container';
+import {isOnline} from '../config/config';
 
 class App extends React.Component{
     componentWillMount(){
         if(window.localStorage.getItem('store')){
             let store = JSON.parse(window.localStorage.getItem('store'));
             this.props.reloadFromLocalStorage(store);
-            this.props.AppDidMount();
+            isOnline?this.props.AppDidMount():'';
         }else{
             this.props.AppDidMount();
         }

@@ -11,6 +11,10 @@ import SkinList from '../../../jsons/skin-list.json';
 import menuSettingOption from '../../../jsons/menu-setting-option.json';
 
 class ContentSetting extends React.Component {
+    /*
+    * 为了使存储在container-title-menu中的ActiveContent数组正确找到当前启动标签的位置以及本页面在ActiveContent数组中
+    * 加载初始化状态，需要在组件第一次渲染前重新定向，并再次渲染。这个事件中也可以包含本页面需要从后台获取的数据的异步方法。
+    * */
     componentWillMount() {
         if (!this.props.target.status) {
             this.props.contentSettingGetMount(this.props.nowOnContentTarget);
@@ -173,29 +177,58 @@ class ContentSetting extends React.Component {
 
         });
     }
-
-    createMenuSettingOption(){
+    judgeRenderSettingOption(){
         if(this.props.target.status.selectMenuSettingTableItem){
-            return (<div className="content-setting-header animation-menu-setting-toggle-out animation-fadeIn">
+            return this.createMenuSettingOption();
+        }else{
+            return (<div key="rootOption" className="content-setting-header animation-fadeInRight animation-fadeIn">
                 <div className="component-option-bar">
                     <ul>
                         <li onClick={
                             ()=>{
-                                this.props.optionDeleteMenu(this.props.target.status.selectMenuSettingTableItem);
+                                this.props.toggleOffAllMenuItem();
                             }
-                        }><i className="fa fa-trash-o"></i>&nbsp;删除</li>
-                        <li onClick={()=>{
-                            menuSettingOption.detail.targetMenu = this.props.target.status.selectMenuSettingTableItem;
-                            this.props.openOption(menuSettingOption.detail);
-                        }}><i className="fa fa-columns"></i>&nbsp;详细</li>
+                        } className="right-button"><i className="fa fa-reply-all"></i>&nbsp;全部收起</li>
+                        <li className="first-child" onClick={()=>{
+                            menuSettingOption.add.targetMenu = '0';
+                             this.props.openOption(menuSettingOption.add);
+                        }}><i className="fa fa-plus"></i>&nbsp;新增父级节点</li>
+                    </ul>
+                </div>
+            </div>);
+        }
+    }
+
+    createMenuSettingOption(){
+        if(this.props.target.status.selectMenuSettingTableItem){
+            return (<div key="option" className="content-setting-header animation-fadeInRight animation-fadeIn">
+                <div className="component-option-bar">
+                    <ul>
+                        <li onClick={
+                            ()=>{
+                                this.props.toggleOffAllMenuItem();
+                            }
+                        } className="right-button"><i className="fa fa-reply-all"></i>&nbsp;全部收起</li>
+                        <li className="first-child" onClick={()=>{
+                            menuSettingOption.add.targetMenu = this.props.target.status.selectMenuSettingTableItem;
+                            this.props.openOption(menuSettingOption.add);
+                        }}><i className="fa fa-plus"></i>&nbsp;新增</li>
                         <li onClick={()=>{
                             menuSettingOption.edit.targetMenu = this.props.target.status.selectMenuSettingTableItem;
                             this.props.openOption(menuSettingOption.edit);
                         }}><i className="fa fa-pencil-square-o"></i>&nbsp;编辑</li>
                         <li onClick={()=>{
-                            menuSettingOption.add.targetMenu = this.props.target.status.selectMenuSettingTableItem;
-                            this.props.openOption(menuSettingOption.add);
-                        }}><i className="fa fa-plus"></i>&nbsp;新增</li>
+                            menuSettingOption.detail.targetMenu = this.props.target.status.selectMenuSettingTableItem;
+                            this.props.openOption(menuSettingOption.detail);
+                        }}><i className="fa fa-columns"></i>&nbsp;详细</li>
+                        <li  onClick={
+                            ()=>{
+                                this.props.optionDeleteMenu(this.props.target.status.selectMenuSettingTableItem);
+                            }
+                        }><i className="fa fa-trash-o"></i>&nbsp;删除</li>
+
+
+
                     </ul>
                 </div>
             </div>);
@@ -203,10 +236,10 @@ class ContentSetting extends React.Component {
     }
     createMenuSetting(rightActiveContent, tableHeight) {
         let height = tableHeight - 100;
-        return (<div key={rightActiveContent.key} className="right-active-content animation-fadeInRight">
+        return (<div key={rightActiveContent.key} className=" right-active-content animation-fadeInRight ">
             {this.createActiveContentHeader(rightActiveContent)}
-            {this.createMenuSettingOption()}
-            <div style={{height: height}} className="content-setting-frame">
+            {this.judgeRenderSettingOption()}
+            <div key={this.props.target.status.selectMenuSettingTableItem} style={{height: height}} className="content-setting-frame">
                 <table>
                     <thead>
                     <tr>

@@ -6,10 +6,31 @@ $border-color:#eee;
 $reverse-font-color:#F5F5F5;
 $content-background-color:#F5F5F5;
 $alert-color:#c00;
-$default-option-toggle-color:#cecece;
+$default-option-toggle-color:#ddd;
 $content-font-color:#6f6f6f;
 $default-option-hover-button:#6f6f6f;
 .skin-1{
+  .btn{
+    color: $content-font-color;
+    background-color: $second-main-color;
+    border-color: $default-option-toggle-color;
+  }
+  .btn:hover{
+    color: $content-font-color;
+    background-color: $side-bar-menu-color;
+    border-color: $default-option-toggle-color;
+  }
+  .btn-finish{
+    color: $second-main-color;
+    background-color: $main-color;
+    border-color: $main-color;
+  }
+  .btn-finish:hover{
+    color: $second-main-color;
+    background-color: $side-bar-menu-font-color;
+    border-color: $side-bar-menu-font-color;
+  }
+
   height: 100%;
   .br-line{
     border-top:solid 2px $border-color;
@@ -403,6 +424,38 @@ $default-option-hover-button:#6f6f6f;
             }
           }
         }
+
+        .option-menu-progress{
+          font-size: 100%;
+          font-weight: 600;
+          ul{
+            margin: 0;
+            padding: 0;
+            height: 60px;
+            li {
+              color: $default-option-toggle-color;
+            }
+
+            .active{
+              color: #000;
+              span{
+                color: $main-color;
+              }
+              border-bottom-color: $main-color;
+
+            }
+
+            .active:hover {
+              color: $main-color;
+            }
+            .active:hover::before {
+              border-left-color: $main-color;
+            }
+            .now-on:before {
+              border-left-color: $main-color;
+            }
+          }
+        }
       }
 
     }
@@ -413,7 +466,7 @@ $default-option-hover-button:#6f6f6f;
       li{
         border-color: $border-color;
       }
-      li:last-child{
+      li:first-child{
         border-color: $border-color;
       }
       li:hover{

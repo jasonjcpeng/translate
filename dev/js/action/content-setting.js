@@ -1,4 +1,5 @@
 import * as Constants from './CONSTANTS';
+import {isOnline} from '../config/config';
 
 export const contentSettingGetMount = (target)=> {
     return ({
@@ -17,28 +18,50 @@ export const checkRightActiveContainer = (menuSort, v)=> {
 
 export const changeSkin = (v)=> {
     //ToDo:change Skin!fetch to dataBase if success then return
-    return dispatch=> {
-        return dispatch({
+    if(isOnline){
+        return dispatch=> {
+            return dispatch({
+                type: Constants.CONTENT_SETTING_CHANGE_SKIN,
+                payload: v
+            })
+        };
+    }else{
+        return ({
             type: Constants.CONTENT_SETTING_CHANGE_SKIN,
             payload: v
-        })
-    };
+        });
+    }
+
 }
 
 export const changeMenuSetting = (v)=>{
     //ToDo:Change menu!fetch to dataBase if success then return
-    return dispatch=> {
-        return dispatch({
+    if(isOnline){
+        return dispatch=> {
+            return dispatch({
+                type: Constants.CONTENT_SETTING_CHANGE_MENU,
+                payload: v
+            })
+        };
+    }else{
+        return ({
             type: Constants.CONTENT_SETTING_CHANGE_MENU,
             payload: v
-        })
-    };
+        });
+    }
+
 }
 
 export const toggleSingleMenuItem = v=>{
     return ({
         type:Constants.CONTENT_SETTING_SETTING_MENU_TOGGLE_TABLE_MENU_ITEM,
         payload:v
+    });
+}
+
+export const toggleOffAllMenuItem = ()=>{
+    return ({
+        type:Constants.CONTENT_SETTING_SETTING_MENU_TOGGLE_OFF_MENU_ITEM,
     });
 }
 
@@ -59,10 +82,18 @@ export const openOption = v=>{
 
 export const optionDeleteMenu = v=>{
     //ToDo:Delete Menu!fetch to dataBase if success then return
-    return dispatch=>{
-        return dispatch({
+    if(isOnline){
+        return dispatch=>{
+            return dispatch({
                 type:Constants.APP_DELETE_MENU_ITEM,
                 payload:v
             });
+        };
+    }else{
+        return ({
+            type:Constants.APP_DELETE_MENU_ITEM,
+            payload:v
+        });
     }
+
 }
