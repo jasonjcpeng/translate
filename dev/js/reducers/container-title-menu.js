@@ -217,17 +217,36 @@ export default function (state = initState, action) {
             return setActiveContentStatus(newState,'setting',{status:{selectMenuSettingTableItem:{$set:undefined}}});
             break;
         //---------------MenuSettingOption------------------------------
-        case Constants.MENU_SETTING_OPTION_ADD_MENU_DID_MOUNT:
+        case Constants.MENU_SETTING_OPTION_MENU_DID_MOUNT:
             let initMenuSettingOptionAdd = {
                 error: undefined,
-                fromTarget:action.obj.targetMenu
+                isRootMenu:undefined,
+                progress:[{active:true,on:true},{active:false,on:false},{active:false,on:false},{active:false,on:false}]
             }
             if (action.error) {
                 initMenuSettingOptionAdd.error=action.error;
-                return setActiveContentStatus(state,"menuSettingAddMenu",{status:{$set:initContentSetting}});
+                return setActiveContentStatus(state,"menuSettingAddMenu",{status:{$set:initMenuSettingOptionAdd}});
             }
-            return setActiveContentStatus(state,'menuSettingAddMenu',{status:{$set:initContentSetting}});
+            return setActiveContentStatus(state,'menuSettingAddMenu',{status:{$set:initMenuSettingOptionAdd}});
             break;
+        case Constants.MENU_SETTING_OPTION_CHECK_IS_ROOT_MENU:
+            return setActiveContentStatus(state,"menuSettingAddMenu",{status:{isRootMenu:{$set:action.payload}}});
+            break;
+        case Constants.MENU_SETTING_OPTION_ONCLICK_NEXT_STEP:
+            return setActiveContentStatus(state,"menuSettingAddMenu",{status:{progress:{$splice:[[action.payload-1,2,{active:true,on:false},{active:true,on:true}]]}}})
+            break;
+        case Constants.MENU_SETTING_OPTION_ONCLICK_CHANGE_STEP:
+            return setActiveContentStatus(state,"menuSettingAddMenu",{status:{progress:{$apply:arr=>{
+                return arr.map((val,k)=>{
+                    if(k===action.payload){
+                        return {active:true,on:true};
+                    }else{
+                        return {active:val.active,on:false}
+                    }
+                });
+            }}}});
+            break;
+
     }
     return state;
 }

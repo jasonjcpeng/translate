@@ -31,6 +31,14 @@ $default-option-hover-button:#6f6f6f;
     border-color: $side-bar-menu-font-color;
   }
 
+  .standard-ul {
+      li{
+        input{
+          border-color:$default-option-toggle-color;
+        }
+      }
+  }
+
   height: 100%;
   .br-line{
     border-top:solid 2px $border-color;
@@ -387,13 +395,6 @@ $default-option-hover-button:#6f6f6f;
         .right-active-content{
           .right-active-content-header{
             .br-line{
-            }
-          }
-          ul{
-            li{
-              input{
-                border-color:$default-option-toggle-color;
-              }
             }
           }
         }

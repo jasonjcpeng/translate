@@ -2,7 +2,8 @@
   font-family: base;
   src: url('../src/opensans.ttf');
 }
-$font:base;
+
+$font: base;
 @import './constants/keyframes';
 @import './constants/animation';
 
@@ -16,7 +17,7 @@ body {
   li {
     list-style: none;
   }
-  .br-line{
+  .br-line {
     margin: 0 auto;
     width: 80%;
   }
@@ -25,25 +26,47 @@ body {
     z-index: 1000;
   }
 
-  .btn{
+  .btn {
     cursor: pointer;
     font-weight: 600;
-    padding:10px;
+    padding: 10px;
     margin: 10px;
     border: solid 2px;
     border-radius: 5px;
   }
-  .btn:focus{
+  .btn:focus {
     cursor: pointer;
     font-weight: 600;
-    padding:10px;
+    padding: 10px;
     margin: 10px;
     border-radius: 5px;
   }
 
+  .standard-ul {
+    padding: 0;
+    li {
+      padding:12px 0;
+      height: 25px;
+      font-weight: 600;
+      line-height: 25px;
+      input {
+        line-height: 23px;
+        margin: 0 0 0 10%;
+        text-align: center;
+        border: solid 1px;
+        border-radius: 5px;
+      }
+    }
+  }
+
+  .standard-ul-two-column{
+    li{
+      float: left;
+      width: 50%;
+    }
+  }
+
 }
-
-
 
 @import './skin/skin-1';
 @import './skin/skin-2';

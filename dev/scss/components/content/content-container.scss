@@ -45,21 +45,6 @@
           width: 100%;
         }
       }
-      ul{
-        padding: 0;
-        li{
-          height: 25px;
-          margin-top: 25px;
-          font-weight: 600;
-          line-height: 25px;
-          input{
-            height: 100%;
-            margin-left: 10%;
-            border:solid 1px;
-            border-radius: 5px;
-          }
-        }
-      }
     }
     .skin-group{
       div{
@@ -94,7 +79,6 @@
       padding: 0;
       border:solid 2px;
       font-size: 14px;
-      min-width: 700px;
       thead{
         tr{
           height: 35px;
@@ -145,8 +129,8 @@
         padding: 0;
         height: 60px;
         li {
-          cursor: pointer;
           user-select: none;
+          cursor: default;
           span{
             position: relative;
             top:4px;
@@ -191,6 +175,7 @@
         }
 
         .active{
+          cursor: pointer;
           span{
           }
           height: 59px;
