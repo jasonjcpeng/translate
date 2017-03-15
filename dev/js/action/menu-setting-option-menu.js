@@ -1,29 +1,47 @@
 import * as Constants from './CONSTANTS';
 
-export const GetMount = (target)=> {
+export const GetMount = (targetMenuSort)=> {
     return ({
         type: Constants.MENU_SETTING_OPTION_MENU_DID_MOUNT,
-        target: target
+        targetMenuSort: targetMenuSort
     });
 }
 
-export const checkIsRootMenu = (bol)=>{
+export const checkIsRootMenu = (targetMenuSort,bol)=>{
     return ({
         type:Constants.MENU_SETTING_OPTION_CHECK_IS_ROOT_MENU,
-        payload:bol
+        payload:bol,
+        targetMenuSort: targetMenuSort
     });
 }
 
-export const clickNextStep = order=>{
+export const clickNextStep = (targetMenuSort,order)=>{
     return ({
         type:Constants.MENU_SETTING_OPTION_ONCLICK_NEXT_STEP,
-        payload:order
+        payload:order,
+        targetMenuSort: targetMenuSort
     });
 }
 
-export const clickChangeSetp = order=>{
+export const clickChangeSetp = (targetMenuSort,order)=>{
     return ({
         type:Constants.MENU_SETTING_OPTION_ONCLICK_CHANGE_STEP,
-        payload:order
+        payload:order,
+        targetMenuSort: targetMenuSort
     });
+}
+
+export const toggleIconSetting = (targetMenuSort,iconName)=>{
+    if(iconName){
+        return ({
+            type:Constants.MENU_SETTING_TOGGLE_ICON_SETTING,
+            targetMenuSort: targetMenuSort,
+            icon:iconName
+        });
+    }else{
+        return ({
+            type:Constants.MENU_SETTING_TOGGLE_ICON_SETTING,
+            targetMenuSort: targetMenuSort
+        });
+    }
 }

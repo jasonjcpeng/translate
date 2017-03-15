@@ -6,11 +6,13 @@ import * as ActionCreators from '../../action/menu-setting-option-menu';
 import Loader from 'react-loader';
 import {LoaderOption} from '../../config/config';
 import classNames from 'classnames';
+//json
+import IconList from '../../../jsons/icon-list.json';
 
 class MenuSettingOptionAddMenu extends React.Component {
     componentWillMount() {
         if (!this.props.target.status) {
-            this.props.GetMount(this.props.target);
+            this.props.GetMount(this.props.targetMenuSort);
         }
     }
 
@@ -43,41 +45,46 @@ class MenuSettingOptionAddMenu extends React.Component {
     createIsRootMenuCheckBox() {
         if (this.props.target.obj.targetMenu !== '0') {
             return (
-                <span><input style={{cursor:'pointer'}} type="checkbox" defaultChecked={this.props.isRootMenu} onChange={e=>{
-                            this.props.checkIsRootMenu(e.target.checked);
-                        }}/>父级菜单</span>);
+                <li><label style={{cursor: 'pointer', userSelect: 'none', marginLeft: '0'}}
+                           htmlFor="rootMenu">作为节点菜单:</label><input id="rootMenu" style={{cursor: 'pointer'}}
+                                                                    type="checkbox"
+                                                                    defaultChecked={this.props.isRootMenu}
+                                                                    onChange={e=> {
+                                                                        this.props.checkIsRootMenu(this.props.targetMenuSort, e.target.checked);
+                                                                    }}/></li> );
         }
     }
 
+
     createOperationSetUp() {
+        let iconClassName = (()=> {
+            if (this.props.menuData.icon!=='null') {
+                return 'fa ' + this.props.menuData.icon;
+            } else {
+                return '';
+            }
+        })();
+        let iContent = (()=> {
+            if (this.props.menuData.icon==='null') {
+                return '空';
+            } else {
+                return '';
+            }
+        })();
         return (
             <div className="standard-ul standard-ul-two-column">
                 <ul>
-                    <li><span>上级菜单:</span><input type="text" disabled={true}
-                                                 value={this.props.target.obj.targetMenu === '0'?"根级菜单":this.props.target.obj.targetMenu.menuName}/>
-                        {this.createIsRootMenuCheckBox()}</li>
-                    <li><span>上级菜单Code:</span><input type="text" disabled={true}
+                    <li>上级菜单:<input type="text" disabled={true}
+                                    value={this.props.target.obj.targetMenu === '0'?"根级菜单":this.props.target.obj.targetMenu.menuName}/>
+                    </li>
+                    {this.createIsRootMenuCheckBox()}
+                    <li>上级菜单Code:<input type="text" disabled={true}
                                                      value={this.props.target.obj.targetMenu === '0'?"0":this.props.target.obj.targetMenu.code}/>
                     </li>
-                    <li><span>菜单名称:</span><input type="text"/></li>
-                    <li><span>菜单名称:</span><input type="text"/></li>
-                    <li><span>菜单名称:</span><input type="text"/></li>
-                    <li><span>菜单名称:</span><input type="text"/></li>
-                    <li><span>菜单名称:</span><input type="text"/></li>
-                    <li><span>菜单名称:</span><input type="text"/></li>
-                    <li><span>菜单名称:</span><input type="text"/></li>
-                    <li><span>菜单名称:</span><input type="text"/></li>
-                    <li><span>菜单名称:</span><input type="text"/></li>
-                    <li><span>菜单名称:</span><input type="text"/></li>
-                    <li><span>菜单名称:</span><input type="text"/></li>
-                    <li><span>菜单名称:</span><input type="text"/></li>
-                    <li><span>菜单名称:</span><input type="text"/></li>
-                    <li><span>菜单名称:</span><input type="text"/></li>
-                    <li><span>菜单名称:</span><input type="text"/></li>
-                    <li><span>菜单名称:</span><input type="text"/></li>
-                    <li><span>菜单名称:</span><input type="text"/></li>
-                    <li><span>菜单名称:</span><input type="text"/></li>
-                    <li><span>菜单名称:</span><input type="text"/></li>
+                    <li>菜单名称:<input type="text"/></li>
+                    <li>菜单图标:<i onClick={()=> {
+                        this.props.toggleIconSetting(this.props.targetMenuSort);
+                    }} className={iconClassName}>{iContent}</i></li>
                 </ul>
             </div>);
 
@@ -104,7 +111,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                         <li onClick={
                             ()=>{
                             if(progressState[0].active){
-                            this.props.clickChangeSetp(0);
+                                this.props.clickChangeSetp(this.props.targetMenuSort, 0);
                             }
                             }
                         } className={stepOne}><span>①</span>&nbsp;功能
@@ -112,7 +119,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                         <li onClick={
                             ()=>{
                             if(progressState[1].active){
-                            this.props.clickChangeSetp(1);
+                                this.props.clickChangeSetp(this.props.targetMenuSort, 1);
                             }
                             }
                         } className={stepTwo}><span>②</span>&nbsp;视图
@@ -120,7 +127,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                         <li onClick={
                             ()=>{
                             if(progressState[2].active){
-                            this.props.clickChangeSetp(2);
+                                this.props.clickChangeSetp(this.props.targetMenuSort, 2);
                             }
                             }
                         } className={stepThree}><span>③</span>&nbsp;按钮
@@ -128,7 +135,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                         <li onClick={
                             ()=>{
                             if(progressState[3].active){
-                            this.props.clickChangeSetp(3);
+                                this.props.clickChangeSetp(this.props.targetMenuSort, 3);
                             }
                             }
                         } className={stepFour}><span>④</span>&nbsp;添加修改
@@ -150,7 +157,7 @@ class MenuSettingOptionAddMenu extends React.Component {
         }();
         if (!this.props.isRootMenu && nextStep < 4) {
             return (<button onClick={()=>{
-                this.props.clickNextStep(nextStep);
+                this.props.clickNextStep(this.props.targetMenuSort, nextStep);
             }} className="btn">下一步</button>);
         }
     }
@@ -167,7 +174,7 @@ class MenuSettingOptionAddMenu extends React.Component {
         if (!this.props.isRootMenu && lastStep > -1) {
             return (<button className="btn" onClick={
             ()=>{
-            this.props.clickChangeSetp(lastStep);
+                this.props.clickChangeSetp(this.props.targetMenuSort, lastStep);
             }
             }>上一步</button>);
         }
@@ -199,17 +206,47 @@ class MenuSettingOptionAddMenu extends React.Component {
 
     }
 
+    createToggleIconSetting() {
+        if(this.props.target.status.isToggleIconSetting){
+            return (<div>
+                <div className="shield">
+                </div>
+                <div className="shield-content">
+                    <ul>
+                        {
+                            (()=>{
+                                return IconList.IconList.map((e,k)=>{
+                                    if(e.name==='null'){
+                                        return (<li key={k}><i  onClick={()=>{
+                                            this.props.toggleIconSetting(this.props.targetMenuSort,e.name)
+                                        }}  style={{fontStyle:'normal'}}>空</i> </li> );
+                                    }
+                                    return (<li key={k}><i onClick={()=>{
+                                        this.props.toggleIconSetting(this.props.targetMenuSort,e.name)
+                                    }} className={'fa '+e.name}></i> </li> );
+                                });
+                            })()
+                        }
+                    </ul>
+                </div>
+            </div>);
+        }
+    }
+
     renderPC() {
         let height = this.props.height;
         let bodyHeight = height - 150;
         return (
             <div className="content-container animation-fadeInRight">
+                {this.createToggleIconSetting()}
                 <div className="content-container-inset" style={{height: height}}>
+                    <div style={{minWidth: 600}}>
                     {this.createOptionMenuProgress()}
                     <div style={{height: bodyHeight, clear: "both"}} className="content-setting-frame">
                         {this.judgeRenderFunction()}
                     </div>
                     {this.createFooter()}
+                    </div>
                 </div>
             </div>
         );
@@ -243,6 +280,8 @@ const state = state=> {
     return ({
         isRootMenu: isRootMenu,
         target: target,
+        targetMenuSort: target.obj.menuSort,
+        menuData: target.status.menuData,
         defaultToggleStatus: state.common.defaultToggleStatus
     });
 }

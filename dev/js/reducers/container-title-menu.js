@@ -218,25 +218,46 @@ export default function (state = initState, action) {
             break;
         //---------------MenuSettingOption------------------------------
         case Constants.MENU_SETTING_OPTION_MENU_DID_MOUNT:
-            let initMenuSettingOptionAdd = {
+            let initMenuSettingOption = {
                 error: undefined,
                 isRootMenu:undefined,
-                progress:[{active:true,on:true},{active:false,on:false},{active:false,on:false},{active:false,on:false}]
+                isToggleIconSetting:false,
+                progress:[{active:true,on:true},{active:false,on:false},{active:false,on:false},{active:false,on:false}],
+                menuData:{
+                    id: undefined,
+                    icon:'null',
+                    code: undefined,
+                    parentCode: undefined,
+                    menuName: undefined,
+                    menuSort: undefined,
+                    isEnable: undefined,
+                    createtime: undefined,
+                    updatetime: undefined,
+                    viewPoint:{
+
+                    },
+                    btnGroup:{
+
+                    },
+                    modifyViewPoint:{
+
+                    }
+                }
             }
             if (action.error) {
-                initMenuSettingOptionAdd.error=action.error;
-                return setActiveContentStatus(state,"menuSettingAddMenu",{status:{$set:initMenuSettingOptionAdd}});
+                initMenuSettingOption.error=action.error;
+                return setActiveContentStatus(state,action.targetMenuSort,{status:{$set:initMenuSettingOption}});
             }
-            return setActiveContentStatus(state,'menuSettingAddMenu',{status:{$set:initMenuSettingOptionAdd}});
+            return setActiveContentStatus(state,action.targetMenuSort,{status:{$set:initMenuSettingOption}});
             break;
         case Constants.MENU_SETTING_OPTION_CHECK_IS_ROOT_MENU:
-            return setActiveContentStatus(state,"menuSettingAddMenu",{status:{isRootMenu:{$set:action.payload}}});
+            return setActiveContentStatus(state,action.targetMenuSort,{status:{isRootMenu:{$set:action.payload}}});
             break;
         case Constants.MENU_SETTING_OPTION_ONCLICK_NEXT_STEP:
-            return setActiveContentStatus(state,"menuSettingAddMenu",{status:{progress:{$splice:[[action.payload-1,2,{active:true,on:false},{active:true,on:true}]]}}})
+            return setActiveContentStatus(state,action.targetMenuSort,{status:{progress:{$splice:[[action.payload-1,2,{active:true,on:false},{active:true,on:true}]]}}})
             break;
         case Constants.MENU_SETTING_OPTION_ONCLICK_CHANGE_STEP:
-            return setActiveContentStatus(state,"menuSettingAddMenu",{status:{progress:{$apply:arr=>{
+            return setActiveContentStatus(state,action.targetMenuSort,{status:{progress:{$apply:arr=>{
                 return arr.map((val,k)=>{
                     if(k===action.payload){
                         return {active:true,on:true};
@@ -245,6 +266,17 @@ export default function (state = initState, action) {
                     }
                 });
             }}}});
+            break;
+        case Constants.MENU_SETTING_TOGGLE_ICON_SETTING:
+            if(action.icon){
+                return setActiveContentStatus(state,action.targetMenuSort,{status:{isToggleIconSetting:{$apply:bol=>{
+                    return !bol;
+                }},menuData:{icon:{$set:action.icon}}}});
+            }else{
+                return setActiveContentStatus(state,action.targetMenuSort,{status:{isToggleIconSetting:{$apply:bol=>{
+                    return !bol;
+                }}}});
+            }
             break;
 
     }

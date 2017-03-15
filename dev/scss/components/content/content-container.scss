@@ -6,6 +6,17 @@
   font-weight: 100;
   width: 96%;
   height: 100%;
+  .shield-content{
+    ul{
+      li{
+        cursor: pointer;
+        font-size: 30px;
+        float: left;
+        margin:10px;
+      }
+    }
+  }
+
   .content-container-inset {
     font-size: 12px;
     overflow-x: auto;
