@@ -28,7 +28,8 @@ export const appStart =()=>{
                     createTime:v.createtime,
                     menuSort:v.menuSort,
                     isEnable:v.isEnable,
-                    api:v.url
+                    api:v.url,
+                    viewPoint:v.viewPoint
                 }
             });
             resolve({

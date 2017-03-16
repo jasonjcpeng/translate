@@ -107,14 +107,12 @@ class ContainerTittleMenu extends Component {
     deleteActiveContent(v, k) {
         this.props.deleteActiveContent(k,this.props.nowOnContent);
         let result = null;
-        if (v.active) {
             if (k > 0 && k + 1 === this.props.activeContent.length) {
                 result = this.props.activeContent[k - 1];
             } else if (this.props.activeContent.length > 0) {
                 result = this.props.activeContent[k + 1];
             }
             result ? this.props.selectActiveContent(result) : '';
-        }
     }
 
     selectForBack() {

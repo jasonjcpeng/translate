@@ -7,10 +7,10 @@ export const menuScroll = e=>{
         payload:e
     }
 }
-export const meunItemToggle = (e,isHasChild)=>{
+export const meunItemToggle = (e,isNoView)=>{
     return {
         type:Constants.SIDE_BAR_MENU_ITEM_TOGGLE,
-        isHasChild:isHasChild,
+        isNoView:isNoView,
         payload:e
     }
 }
@@ -34,7 +34,7 @@ export const selectSettingMenu= () =>{
     let e = menuSetting;
     return ({
         type:Constants.SIDE_BAR_MENU_ITEM_TOGGLE,
-        isHasChild:false,
+        isNoView:false,
         payload:e
     });
 }

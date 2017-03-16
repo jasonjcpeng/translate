@@ -93,6 +93,14 @@ class SideBar extends Component {
         }
 
     }
+    /*判断菜单是否含有视图
+     * */
+    isNoView(MenuItem){
+        for(let i in MenuItem.viewPoint){
+            return false;
+        }
+        return true;
+    }
 
     createNormalMenuItem(menu, parentCode) {
         return (
@@ -108,10 +116,11 @@ class SideBar extends Component {
                                 }
                             });
                             let isHasChild = this.isHasChild(menu, v.code);
+                            let isNoView = this.isNoView(v);
                             if(v.isEnable){
                                 return (<li className={'toggleOutLv_' + this.createToggleAnimationLv(v) + ' ' + this.createItemActive(v)}
                                             onClick={e=> {
-                                                this.props.meunItemToggle(v, isHasChild);
+                                                this.props.meunItemToggle(v, isNoView);
                                                 e.stopPropagation();
                                             }} key={v.id}>{this.createItemIcon(v)}
                                     {v.menuName}

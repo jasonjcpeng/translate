@@ -37,7 +37,7 @@ export default function (state = initState, action) {
             return update(state, {menuScrollX: {$set: action.payload}});
             break;
         case Constants.SIDE_BAR_MENU_ITEM_TOGGLE:
-            if (!action.isHasChild) {
+            if (!action.isNoView) {
                 let Push = true;
                 let newState = update(state, {
                     activeContent: {
@@ -117,6 +117,7 @@ export default function (state = initState, action) {
             });
             break;
         case Constants.CONTAINER_TITTLE_MENU_DELETE_ACTIVE_CONTENT:
+            console.log(action.key)
             return update(state, {activeContent: {$splice: [[action.key, 1]]}});
             break;
         case Constants.CONTAINER_TITTLE_MENU_CLOSE_OPTION:
@@ -218,23 +219,25 @@ export default function (state = initState, action) {
             break;
         //---------------MenuSettingOption------------------------------
         case Constants.MENU_SETTING_OPTION_MENU_DID_MOUNT:
+            let parentCode = action.target.obj.targetMenu === '0'?'0':action.target.obj.targetMenu.code;
             let initMenuSettingOption = {
                 error: undefined,
                 isRootMenu:undefined,
                 isToggleIconSetting:false,
                 progress:[{active:true,on:true},{active:false,on:false},{active:false,on:false},{active:false,on:false}],
+                configApi:'',
                 menuData:{
-                    id: undefined,
-                    icon:'null',
-                    code: undefined,
-                    parentCode: undefined,
-                    menuName: undefined,
-                    menuSort: undefined,
-                    isEnable: undefined,
-                    createtime: undefined,
-                    updatetime: undefined,
+                    id: '',
+                    icon:'',
+                    code: '',
+                    parentCode: parentCode,
+                    menuName: '',
+                    menuSort: 0,
+                    isEnable: true,
+                    createtime: '',
+                    updatetime: '',
+                    api:'',
                     viewPoint:{
-
                     },
                     btnGroup:{
 
@@ -246,9 +249,9 @@ export default function (state = initState, action) {
             }
             if (action.error) {
                 initMenuSettingOption.error=action.error;
-                return setActiveContentStatus(state,action.targetMenuSort,{status:{$set:initMenuSettingOption}});
+                return setActiveContentStatus(state,action.target.obj.menuSort,{status:{$set:initMenuSettingOption}});
             }
-            return setActiveContentStatus(state,action.targetMenuSort,{status:{$set:initMenuSettingOption}});
+            return setActiveContentStatus(state,action.target.obj.menuSort,{status:{$set:initMenuSettingOption}});
             break;
         case Constants.MENU_SETTING_OPTION_CHECK_IS_ROOT_MENU:
             return setActiveContentStatus(state,action.targetMenuSort,{status:{isRootMenu:{$set:action.payload}}});
@@ -268,7 +271,7 @@ export default function (state = initState, action) {
             }}}});
             break;
         case Constants.MENU_SETTING_TOGGLE_ICON_SETTING:
-            if(action.icon){
+            if(action.icon!==undefined){
                 return setActiveContentStatus(state,action.targetMenuSort,{status:{isToggleIconSetting:{$apply:bol=>{
                     return !bol;
                 }},menuData:{icon:{$set:action.icon}}}});
@@ -278,6 +281,27 @@ export default function (state = initState, action) {
                 }}}});
             }
             break;
+        case Constants.MENU_SETTING_CHANGE_MENU_DATA:
+            switch(action.progressName){
+                case 'setUp':
+                    return setActiveContentStatus(state,action.targetMenuSort,{status:{menuData:{$apply:obj=>{
+                        for(let i in obj){
+                            if(i===action.key){
+                                obj[i]=action.value;
+                            }
+                        }
+                        return obj;
+                    }}}});
+                    break;
+                case 'viewPoint':
+                    break;
+                case 'btnGroup':
+                    break;
+                case 'modifyViewPoint':
+                    break;
+            }
+            break;
+
 
     }
     return state;

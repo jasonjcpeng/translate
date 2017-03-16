@@ -92,7 +92,7 @@ export default function (state = initState, action) {
             return update(state, {nowOnContentTarget: {$set: action.payload.obj}});
             break;
         case Constants.CONTAINER_TITTLE_MENU_DELETE_ACTIVE_CONTENT:
-            if (action.key === 0) {
+            if (action.payload === state.nowOnContentTarget) {
                 return update(state, {nowOnContentTarget: {$set: null}});
             }
             break;

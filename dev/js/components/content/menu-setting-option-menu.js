@@ -8,11 +8,15 @@ import {LoaderOption} from '../../config/config';
 import classNames from 'classnames';
 //json
 import IconList from '../../../jsons/icon-list.json';
+//tool
+import {getNowFormatDate} from '../../config/tools';
+import {isOnline} from '../../config/config'
+
 
 class MenuSettingOptionAddMenu extends React.Component {
     componentWillMount() {
         if (!this.props.target.status) {
-            this.props.GetMount(this.props.targetMenuSort);
+            this.props.GetMount(this.props.target);
         }
     }
 
@@ -43,7 +47,6 @@ class MenuSettingOptionAddMenu extends React.Component {
     }
 
     createIsRootMenuCheckBox() {
-        if (this.props.target.obj.targetMenu !== '0') {
             return (
                 <li><label style={{cursor: 'pointer', userSelect: 'none', marginLeft: '0'}}
                            htmlFor="rootMenu">作为节点菜单:</label><input id="rootMenu" style={{cursor: 'pointer'}}
@@ -52,20 +55,19 @@ class MenuSettingOptionAddMenu extends React.Component {
                                                                     onChange={e=> {
                                                                         this.props.checkIsRootMenu(this.props.targetMenuSort, e.target.checked);
                                                                     }}/></li> );
-        }
     }
 
 
     createOperationSetUp() {
         let iconClassName = (()=> {
-            if (this.props.menuData.icon!=='null') {
+            if (this.props.menuData.icon!=='') {
                 return 'fa ' + this.props.menuData.icon;
             } else {
                 return '';
             }
         })();
         let iContent = (()=> {
-            if (this.props.menuData.icon==='null') {
+            if (this.props.menuData.icon==='') {
                 return '空';
             } else {
                 return '';
@@ -81,8 +83,57 @@ class MenuSettingOptionAddMenu extends React.Component {
                     <li>上级菜单Code:<input type="text" disabled={true}
                                                      value={this.props.target.obj.targetMenu === '0'?"0":this.props.target.obj.targetMenu.code}/>
                     </li>
-                    <li>菜单名称:<input type="text"/></li>
-                    <li>菜单图标:<i onClick={()=> {
+                    <li>菜单名称:<input defaultValue={this.props.menuData.menuName!==''?this.props.menuData.menuName:''} onChange={
+                        e=>{
+                            this.props.changeMenuData(this.props.targetMenuSort,'setUp','menuName',e.target.value);
+                        }
+                    } type="text"/></li>
+                    {(()=>{
+                        if(!this.props.isRootMenu){
+                            return (<div>
+                                <li>菜单视图项API:<input defaultValue={this.props.configApi} onChange={
+                                e=>{
+
+                                }
+                            } type="text"/></li>
+                                <li>菜单内容项API:<input defaultValue={this.props.menuData.api} onChange={
+                                e=>{
+                                    this.props.changeMenuData(this.props.targetMenuSort,'setUp','api',e.target.value);
+                                }
+                            } type="text"/></li>
+                                <li>菜单类型: <select onChange={e=>{
+                                    console.log(e.target.value);
+                                }}>
+                                {(()=>{
+                                    let allSort = ['0','1','2','3'];
+                                    function writeContent(sort){
+                                        switch(sort){
+                                            case '0':
+                                                return '普通菜单';
+                                                break;
+                                            case '1':
+                                                return '一般菜单';
+                                                break;
+                                            case '2':
+                                                return '高级菜单';
+                                                break;
+                                            case '3':
+                                                return '超级菜单';
+                                                break;
+                                        }
+                                    }
+                                    return allSort.map((v,k)=>{
+                                        if(v===this.props.menuData.menuSort){
+                                            return (<option key={k} value={v} selected="selected">{writeContent(v)}</option>);
+                                        }else{
+                                            return (<option key={k} value={v}>{writeContent(v)}</option>);
+                                        }
+                                    });
+                                }).apply(this)}
+                            </select> </li></div>);
+                        }
+                    })()}
+                    <li>菜单图标:<i style={{fontStyle:'normal'}} onClick={()=> {
                         this.props.toggleIconSetting(this.props.targetMenuSort);
                     }} className={iconClassName}>{iContent}</i></li>
                 </ul>
@@ -180,6 +231,53 @@ class MenuSettingOptionAddMenu extends React.Component {
         }
     }
 
+    deleteActiveContent(k,v) {
+        this.props.closeMenuSetting(k,v);
+        let result = null;
+        if (k > 0 && k + 1 === this.props.activeContent.length) {
+            result = this.props.activeContent[k - 1];
+        } else if (this.props.activeContent.length > 0) {
+            result = this.props.activeContent[k + 1];
+        }
+        result ? this.props.selectActiveContent(result) : '';
+    }
+
+    handleFinishButton(){
+        let menuData = this.props.menuData;
+        switch (this.props.targetMenuSort){
+            case 'menuSettingAddMenu':
+                if(isOnline){
+
+                }else{
+                    let allMenu = this.props.allMenu;
+                    let createTime = getNowFormatDate();
+                    let updateTime = getNowFormatDate();
+                    let id = allMenu.length+1;
+                    let parentCode = '';
+                    if(this.props.target.obj.targetMenu.code){
+                        parentCode = this.props.target.obj.targetMenu.code;
+                    }else{
+                        parentCode = '0';
+                    }
+                    let code = '';
+                    let deCode = 1;
+                    for(let i in allMenu){
+                        if(allMenu[i].parentCode===parentCode){
+                            deCode++;
+                        }
+                    }
+                    code = (parentCode==='0'?'':parentCode)+''+deCode;
+                    menuData.createtime = createTime;
+                    menuData.updatetime = updateTime;
+                    menuData.id=id;
+                    menuData.code=code;
+                }
+                break;
+        }
+        this.props.clickFinish(menuData);
+        this.deleteActiveContent(this.props.nowOnContentKey,this.props.target.obj);
+    }
+
     createFooterFinishStepButton() {
         let progressState = this.props.target.status.progress;
         let Step = function () {
@@ -190,7 +288,9 @@ class MenuSettingOptionAddMenu extends React.Component {
             }
         }();
         if (this.props.isRootMenu || Step === '3') {
-            return (<button className="btn btn-finish">完成</button>);
+            return (<button onClick={()=>{
+                this.handleFinishButton();
+            }} className="btn btn-finish">完成</button>);
         }
 
     }
@@ -216,7 +316,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                         {
                             (()=>{
                                 return IconList.IconList.map((e,k)=>{
-                                    if(e.name==='null'){
+                                    if(e.name===''){
                                         return (<li key={k}><i  onClick={()=>{
                                             this.props.toggleIconSetting(this.props.targetMenuSort,e.name)
                                         }}  style={{fontStyle:'normal'}}>空</i> </li> );
@@ -265,21 +365,20 @@ class MenuSettingOptionAddMenu extends React.Component {
 }
 
 const state = state=> {
-    let target;
-    let isRootMenu;
-    state.containerTitleMenu.activeContent.map(v=> {
+    let target,nowOnContentKey;
+    state.containerTitleMenu.activeContent.map((v,k)=> {
         if (v.obj.id === state.common.nowOnContentTarget.id) {
             target = v;
+            nowOnContentKey = k;
         }
     });
-    if (target.obj.targetMenu === '0') {
-        isRootMenu = true;
-    } else {
-        isRootMenu = target.status.isRootMenu;
-    }
     return ({
-        isRootMenu: isRootMenu,
+        allMenu:state.sideBar.menu,
+        activeContent:state.containerTitleMenu.activeContent,
         target: target,
+        nowOnContentKey:nowOnContentKey,
+        isRootMenu: target.status.isRootMenu,
+        configApi:target.status.configApi,
         targetMenuSort: target.obj.menuSort,
         menuData: target.status.menuData,
         defaultToggleStatus: state.common.defaultToggleStatus

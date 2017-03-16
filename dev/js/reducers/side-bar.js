@@ -95,6 +95,9 @@ export default function (state = initState, action) {
                 });
             }}});
             break;
+        case Constants.MENU_SETTING_ADD_MENU_TO_SIDE_BAR:
+            return update(state,{menu:{$push:[action.payload]}})
+            break;
     }
     return state;
 }
