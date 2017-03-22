@@ -48,6 +48,7 @@ export const toggleIconSetting = (targetMenuSort,iconName)=>{
 }
 
 export const changeMenuData = (targetMenuSort,progressName,key,val)=>{
+    console.log(1);
     return ({
         type:Constants.MENU_SETTING_CHANGE_MENU_DATA,
         targetMenuSort:targetMenuSort,
@@ -87,3 +88,11 @@ export const clickFinish = (menuData)=>{
         });
     }
 }
+
+export const getViewPointConfig = (targetMenuSort,ViewPointConfigApi)=>{
+    return ({
+        type:Constants,
+        targetMenuSort:targetMenuSort
+    });
+}
+

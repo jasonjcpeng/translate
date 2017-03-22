@@ -91,9 +91,9 @@ class MenuSettingOptionAddMenu extends React.Component {
                     {(()=>{
                         if(!this.props.isRootMenu){
                             return (<div>
-                                <li><span>菜单视图项API:</span><span><input defaultValue={this.props.configApi} onChange={
+                                <li><span>菜单视图项API:</span><span><input defaultValue={this.props.viewPointConfigApi} onChange={
                                     e=>{
-                                        this.props.changeMenuData(this.props.targetMenuSort,'setUp','configApi',e.target.value);
+                                        this.props.changeMenuData(this.props.targetMenuSort,'setUp','viewPointConfigApi',e.target.value);
                                     }
                                 } type="text"/></span></li>
                                 <li><span>菜单内容项API:</span><span><input defaultValue={this.props.menuData.api} onChange={
@@ -101,7 +101,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                                         this.props.changeMenuData(this.props.targetMenuSort,'setUp','api',e.target.value);
                                     }
                                 } type="text"/></span></li>
-                                <li><span>菜单类型:</span><span><select value={this.props.menuData.menuSort} onChange={e=>{
+                                <li><span>视图类型:</span><span><select value={this.props.menuData.menuSort} onChange={e=>{
                                     this.props.changeMenuData(this.props.targetMenuSort,'setUp','menuSort',e.target.value);
                                 }}>
                                 {(()=>{
@@ -109,16 +109,16 @@ class MenuSettingOptionAddMenu extends React.Component {
                                     function writeContent(sort){
                                         switch(sort){
                                             case 0:
-                                                return '普通菜单';
+                                                return '普通表格';
                                                 break;
                                             case 1:
-                                                return '一般菜单';
+                                                return '一般表格';
                                                 break;
                                             case 2:
-                                                return '高级菜单';
+                                                return '高级表格';
                                                 break;
                                             case 3:
-                                                return '超级菜单';
+                                                return '超级表格';
                                                 break;
                                         }
                                     }
@@ -204,6 +204,9 @@ class MenuSettingOptionAddMenu extends React.Component {
         }();
         if (!this.props.isRootMenu && nextStep < 4) {
             return (<button onClick={()=>{
+                if(nextStep===1){
+                    this.props.getViewPointConfig(this.props.targetMenuSort,this.props.viewPointConfigApi);
+                }
                 this.props.clickNextStep(this.props.targetMenuSort, nextStep);
             }} className="btn">下一步</button>);
         }

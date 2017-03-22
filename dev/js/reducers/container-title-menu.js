@@ -117,7 +117,6 @@ export default function (state = initState, action) {
             });
             break;
         case Constants.CONTAINER_TITTLE_MENU_DELETE_ACTIVE_CONTENT:
-            console.log(action.key)
             return update(state, {activeContent: {$splice: [[action.key, 1]]}});
             break;
         case Constants.CONTAINER_TITTLE_MENU_CLOSE_OPTION:
@@ -236,7 +235,7 @@ export default function (state = initState, action) {
                     createtime: '',
                     updatetime: '',
                     api:'',
-                    configApi:'',
+                    viewPointConfigApi:'',
                     viewPoint:{
 
                     },

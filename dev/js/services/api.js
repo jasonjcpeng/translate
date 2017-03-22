@@ -3,7 +3,7 @@ import * as Fetch from './fetch';
 import {isOnline} from '../config/config';
 
 const api = {
-    getUser:'userInfo'
+    getInfo:'userInfo',
 };
 if(!isOnline){
     for(let Key in api){
@@ -13,7 +13,7 @@ if(!isOnline){
 
 export const appStart =()=>{
     return new Promise((resolve,reject)=>{
-       Fetch.Fetch(api.getUser).then(res=>{
+       Fetch.Fetch(api.getInfo).then(res=>{
             let userInfo = {
                 name:res.userInfo.name,
                 power:res.userInfo.power,
