@@ -1,9 +1,11 @@
+/*
 @font-face {
   font-family: base;
   src: url('../src/opensans.ttf');
 }
+*/
 
-$font: base;
+$font: 'Microsoft YaHei';
 @import './constants/keyframes';
 @import './constants/animation';
 
@@ -74,6 +76,16 @@ body {
     li{
       float: left;
       width: 50%;
+      span:nth-child(1){
+        float: left;
+        display: block;
+        width: 25%;
+      }
+      span:nth-child(2){
+        float: left;
+        display: block;
+        width: 75%;
+      }
     }
   }
 

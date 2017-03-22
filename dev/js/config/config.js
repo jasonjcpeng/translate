@@ -2,6 +2,7 @@
 //请求域名
 export const isOnline= false;
 export const Host = 'http://admlnapi.zongyijia.com';
+export const Location = './jsons/apiData/';
 //超时限制时长
 export const TimeOut = '10000';
 //加载器样式选项

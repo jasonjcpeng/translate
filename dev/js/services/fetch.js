@@ -1,9 +1,9 @@
 import qs from 'qs';
 import fetch from 'isomorphic-fetch';
-import {Host, TimeOut,isOnline} from '../config/config';
+import {Location,Host, TimeOut,isOnline} from '../config/config';
 
 export const Fetch = (url,args,method='GET')=> {
-    let Url = (isOnline?Host:'') + url;
+    let Url = (isOnline?Host:Location) + url;
     const opts = {method: method.toUpperCase(), body: qs.stringify(args)}
     const headers = {
         'mode': 'no-cors',

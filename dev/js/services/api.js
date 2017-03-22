@@ -2,12 +2,14 @@ import userInfo from '../../jsons/apiData/userInfo.json';
 import * as Fetch from './fetch';
 import {isOnline} from '../config/config';
 
-const api = isOnline?{
-    getUser:''
-}:{
-    getUser:'./jsons/apiData/userInfo.json'
+const api = {
+    getUser:'userInfo'
+};
+if(!isOnline){
+    for(let Key in api){
+        api[Key] +='.json';
+    }
 }
-
 
 export const appStart =()=>{
     return new Promise((resolve,reject)=>{

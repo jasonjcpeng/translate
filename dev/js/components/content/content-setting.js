@@ -303,7 +303,7 @@ class ContentSetting extends React.Component {
             return (
                 <div>
                     <div className="content-container animation-fadeInRight"
-                         style={{width:'20%',float:'left',marginLeft:'1%'}}>
+                         style={{width:'15%',float:'left',marginLeft:'1%'}}>
                         <div className="content-container-inset" style={{height: tableHeight}}>
                             <div className="content-setting-nav-bar">
                                 <ul>
@@ -317,7 +317,7 @@ class ContentSetting extends React.Component {
                         </div>
                     </div>
                     <div className="content-container animation-fadeInRight"
-                         style={{width:'75%',float:'right',marginRight:'1%'}}>
+                         style={{width:'80%',float:'right',marginRight:'1%'}}>
                         <div className="content-container-inset" style={{height: tableHeight}}>
                             {this.createRightActiveContent(tableHeight)}
                         </div>

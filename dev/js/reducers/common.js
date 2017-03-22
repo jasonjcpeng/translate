@@ -19,9 +19,8 @@ export default function (state = initState, action) {
         case Constants.APP_RELOAD_FROM_LOCAL_STORAGE:
             return action.payload.common;
         case Constants.INIT_CONTAINER_APP_DID_MOUNT:
-            let error = undefined;
             if (action.error) {
-                error = action.error;
+                return update(state, {loaded: {$set: true}, error: {$set: action.error}});
             }
             return update(state, {loaded: {$set: true}, error: {$set: action.error},useSkin: {$set: action.payload.userInfo.useSkin}});
             break;

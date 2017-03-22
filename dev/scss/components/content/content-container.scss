@@ -23,6 +23,9 @@
     overflow-y: hidden;
     .content-setting-frame{
       overflow-y: auto;
+      table{
+        width: 100%;
+      }
     }
 
     .content-setting-nav-bar{

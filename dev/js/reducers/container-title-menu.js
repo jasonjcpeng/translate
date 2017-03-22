@@ -225,7 +225,6 @@ export default function (state = initState, action) {
                 isRootMenu:undefined,
                 isToggleIconSetting:false,
                 progress:[{active:true,on:true},{active:false,on:false},{active:false,on:false},{active:false,on:false}],
-                configApi:'',
                 menuData:{
                     id: '',
                     icon:'',
@@ -237,7 +236,9 @@ export default function (state = initState, action) {
                     createtime: '',
                     updatetime: '',
                     api:'',
+                    configApi:'',
                     viewPoint:{
+
                     },
                     btnGroup:{
 

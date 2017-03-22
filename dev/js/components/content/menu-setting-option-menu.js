@@ -76,66 +76,62 @@ class MenuSettingOptionAddMenu extends React.Component {
         return (
             <div className="standard-ul standard-ul-two-column">
                 <ul>
-                    <li>上级菜单:<input type="text" disabled={true}
-                                    value={this.props.target.obj.targetMenu === '0'?"根级菜单":this.props.target.obj.targetMenu.menuName}/>
+                    <li><span>上级菜单:</span><span><input type="text" disabled={true}
+                                                       value={this.props.target.obj.targetMenu === '0'?"根级菜单":this.props.target.obj.targetMenu.menuName}/></span>
                     </li>
                     {this.createIsRootMenuCheckBox()}
-                    <li>上级菜单Code:<input type="text" disabled={true}
-                                                     value={this.props.target.obj.targetMenu === '0'?"0":this.props.target.obj.targetMenu.code}/>
+                    <li><span>上级菜单Code:</span><span><input type="text" disabled={true}
+                                                           value={this.props.target.obj.targetMenu === '0'?"0":this.props.target.obj.targetMenu.code}/></span>
                     </li>
-                    <li>菜单名称:<input defaultValue={this.props.menuData.menuName!==''?this.props.menuData.menuName:''} onChange={
+                    <li><span>菜单名称:</span><span><input defaultValue={this.props.menuData.menuName!==''?this.props.menuData.menuName:''} onChange={
                         e=>{
                             this.props.changeMenuData(this.props.targetMenuSort,'setUp','menuName',e.target.value);
                         }
-                    } type="text"/></li>
+                    } type="text"/></span></li>
                     {(()=>{
                         if(!this.props.isRootMenu){
                             return (<div>
-                                <li>菜单视图项API:<input defaultValue={this.props.configApi} onChange={
-                                e=>{
-
-                                }
-                            } type="text"/></li>
-                                <li>菜单内容项API:<input defaultValue={this.props.menuData.api} onChange={
-                                e=>{
-                                    this.props.changeMenuData(this.props.targetMenuSort,'setUp','api',e.target.value);
-                                }
-                            } type="text"/></li>
-                                <li>菜单类型: <select onChange={e=>{
-                                    console.log(e.target.value);
+                                <li><span>菜单视图项API:</span><span><input defaultValue={this.props.configApi} onChange={
+                                    e=>{
+                                        this.props.changeMenuData(this.props.targetMenuSort,'setUp','configApi',e.target.value);
+                                    }
+                                } type="text"/></span></li>
+                                <li><span>菜单内容项API:</span><span><input defaultValue={this.props.menuData.api} onChange={
+                                    e=>{
+                                        this.props.changeMenuData(this.props.targetMenuSort,'setUp','api',e.target.value);
+                                    }
+                                } type="text"/></span></li>
+                                <li><span>菜单类型:</span><span><select value={this.props.menuData.menuSort} onChange={e=>{
+                                    this.props.changeMenuData(this.props.targetMenuSort,'setUp','menuSort',e.target.value);
                                 }}>
                                 {(()=>{
-                                    let allSort = ['0','1','2','3'];
+                                    let allSort = [0,1,2,3];
                                     function writeContent(sort){
                                         switch(sort){
-                                            case '0':
+                                            case 0:
                                                 return '普通菜单';
                                                 break;
-                                            case '1':
+                                            case 1:
                                                 return '一般菜单';
                                                 break;
-                                            case '2':
+                                            case 2:
                                                 return '高级菜单';
                                                 break;
-                                            case '3':
+                                            case 3:
                                                 return '超级菜单';
                                                 break;
                                         }
                                     }
                                     return allSort.map((v,k)=>{
-                                        if(v===this.props.menuData.menuSort){
-                                            return (<option key={k} value={v} selected="selected">{writeContent(v)}</option>);
-                                        }else{
-                                            return (<option key={k} value={v}>{writeContent(v)}</option>);
-                                        }
+                                        return (<option key={k} value={v}>{writeContent(v)}</option>);
                                     });
                                 }).apply(this)}
-                            </select> </li></div>);
+                            </select></span> </li></div>);
                         }
                     })()}
-                    <li>菜单图标:<i style={{fontStyle:'normal'}} onClick={()=> {
+                    <li><span>菜单图标:</span><span><i style={{fontStyle:'normal'}} onClick={()=> {
                         this.props.toggleIconSetting(this.props.targetMenuSort);
-                    }} className={iconClassName}>{iContent}</i></li>
+                    }} className={iconClassName}>{iContent}</i></span></li>
                 </ul>
             </div>);
 
