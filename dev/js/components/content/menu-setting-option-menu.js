@@ -308,28 +308,28 @@ class MenuSettingOptionAddMenu extends React.Component {
 
     createToggleIconSetting() {
         if(this.props.target.status.isToggleIconSetting){
-            return (<div>
+            return (
                 <div className="shield">
-                </div>
-                <div className="shield-content">
-                    <ul>
-                        {
-                            (()=>{
-                                return IconList.IconList.map((e,k)=>{
-                                    if(e.name===''){
-                                        return (<li key={k}><i  onClick={()=>{
+                    <div className="shield-content">
+                        <ul>
+                            {
+                                (()=>{
+                                    return IconList.IconList.map((e,k)=>{
+                                        if(e.name===''){
+                                            return (<li key={k}><i  onClick={()=>{
+                                                this.props.toggleIconSetting(this.props.targetMenuSort,e.name)
+                                            }}  style={{fontStyle:'normal'}}>空</i> </li> );
+                                        }
+                                        return (<li key={k}><i onClick={()=>{
                                             this.props.toggleIconSetting(this.props.targetMenuSort,e.name)
-                                        }}  style={{fontStyle:'normal'}}>空</i> </li> );
-                                    }
-                                    return (<li key={k}><i onClick={()=>{
-                                        this.props.toggleIconSetting(this.props.targetMenuSort,e.name)
-                                    }} className={'fa '+e.name}></i> </li> );
-                                });
-                            })()
-                        }
-                    </ul>
+                                        }} className={'fa '+e.name}></i> </li> );
+                                    });
+                                })()
+                            }
+                        </ul>
+                    </div>
                 </div>
-            </div>);
+            );
         }
     }
 

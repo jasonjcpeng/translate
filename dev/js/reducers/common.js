@@ -84,7 +84,7 @@ export default function (state = initState, action) {
             }
             break;
         case Constants.SIDE_BAR_MENU_ITEM_TOGGLE:
-            if (!action.isHasChild) {
+            if (!action.isNoView) {
                 return update(state, {nowOnContentTarget: {$set: action.payload}});
             }
             break;

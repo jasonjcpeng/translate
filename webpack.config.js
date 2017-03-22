@@ -55,7 +55,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'My App',
+            title: '综艺嘉',
             template: 'dev/index.html',
             filename: 'index.html',
             inject: 'body'

@@ -87,16 +87,47 @@ export default function (state = initState, action) {
             }}});
             break;
         case Constants.APP_DELETE_MENU_ITEM:
-            return update(state,{menu:{$apply:arr=>{
-                return arr.filter(v=>{
-                    if(v.id!==action.payload.id){
-                        return v;
+        function deleteMenu(state, id, parentCode) {
+            if (id !== '') {
+                let newParentCode = '';
+                let newState = update(state, {
+                    menu: {
+                        $apply: arr=> {
+                            return arr.filter(v=> {
+                                if (v.id !== id) {
+                                    return v;
+                                } else {
+                                    newParentCode = v.code;
+                                }
+                            });
+                        }
                     }
                 });
-            }}});
+                return deleteMenu(newState, '', newParentCode);
+            } else if (parentCode !== '') {
+                let newParentCode = '';
+                let newState = update(state, {
+                    menu: {
+                        $apply: arr=> {
+                            return arr.filter(v=> {
+                                if (v.parentCode !== parentCode) {
+                                    return v;
+                                } else {
+                                    newParentCode = v.code;
+                                }
+                            });
+                        }
+                    }
+                });
+                return deleteMenu(newState, '', newParentCode);
+            } else {
+                return state;
+            }
+        }
+            return deleteMenu(state, action.payload.id, '');
             break;
         case Constants.MENU_SETTING_ADD_MENU_TO_SIDE_BAR:
-            return update(state,{menu:{$push:[action.payload]}})
+            return update(state, {menu: {$push: [action.payload]}});
             break;
     }
     return state;
