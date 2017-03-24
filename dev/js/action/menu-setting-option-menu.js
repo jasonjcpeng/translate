@@ -3,6 +3,7 @@ import {isOnline} from '../config/config';
 import {menuSettingOptionMenuFetchViewPointConfig} from '../services/api';
 
 export const GetMount = (target)=> {
+    console.log()
     return ({
         type: Constants.MENU_SETTING_OPTION_MENU_DID_MOUNT,
         target: target

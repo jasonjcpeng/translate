@@ -8,6 +8,31 @@ const filterIsOnline = api=>{
         return (api+='.json');
     }
 }
+/*
+* 整合包装异步获取数据的方法，最终返回一个Promise
+* @param
+* api:string api
+* callBack:function 解析返回对象的回调函数，回调参数有(data,resolve,reject)
+*           data:JSON 数据对象
+*           resolve:Promise中的resolve
+*           reject:Promise中的reject
+* @return
+* promise:Promise
+* */
+const createFetchPromise = (api,callBack)=>{
+    return new Promise((resolve,reject)=>{
+        Fetch.Fetch(filterIsOnline(api)).then(
+            res=>{
+                callBack(res,resolve,reject);
+            }
+        ).catch(
+            rej=>{
+                reject(rej);
+            }
+        )
+    });
+}
+
 
 const apis = {
     getInfo:'userInfo',
@@ -50,19 +75,11 @@ export const appStart =()=>{
 }
 
 export const menuSettingOptionMenuFetchViewPointConfig = (api)=>{
-    return new Promise((resolve,reject)=>{
-        Fetch.Fetch(filterIsOnline(api)).then(
-                res=>{
-                    if(res.state!=="1"){
-                        reject(res.message);
-                    }else{
-                        resolve(res.data);
-                    }
-                }
-        ).catch(
-                rej=>{
-                    reject(rej);
-                }
-        )
-    });
+    return createFetchPromise(api,(data,resolve,reject)=>{
+        if(data.state!=="1"){
+            reject(data.message);
+        }else{
+            resolve(data.data);
+        }
+    })
 }

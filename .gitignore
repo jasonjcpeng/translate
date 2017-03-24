@@ -2,5 +2,3 @@
 /.idea
 /node_modules
 /npm-debug.log
-/dist/index.html
-/dist/js
