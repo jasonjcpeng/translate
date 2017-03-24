@@ -53,7 +53,6 @@ module.exports = {
     postcss: [ autoprefixer({ browsers: ['last 2 versions'] }) ],
     output: {
         path: 'docs',
-        publicPath: 'js/',
         filename: 'js/[chunkHash:32].js',
     },
     plugins: [
