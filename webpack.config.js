@@ -22,7 +22,9 @@ module.exports = {
         port: 3003
     },
     devtool: 'cheap-module-eval-source-map',
-    entry: './dev/js/index.js',
+    entry: {index:'./dev/js/index.js'
+       /* ,vendor: ['react', 'react-dom', 'react-router','redux','react-redux','classnames']*/
+    },
     module: {
         loaders: [
             {
@@ -51,6 +53,7 @@ module.exports = {
     postcss: [ autoprefixer({ browsers: ['last 2 versions'] }) ],
     output: {
         path: 'docs',
+        publicPath: 'js/',
         filename: 'js/[chunkHash:32].js',
     },
     plugins: [
@@ -60,8 +63,8 @@ module.exports = {
             filename: 'index.html',
             inject: 'body'
         }),
-        new webpack.optimize.OccurrenceOrderPlugin(),
-        /*new webpack.ProvidePlugin({
+        /*new webpack.optimize.CommonsChunkPlugin("vendor", "./js/vendor.bundle.js"),
+        new webpack.ProvidePlugin({
             React: 'react'
         })*///解决不用CDN的全打包状态下丢失全局变量window.React问题
     ]
