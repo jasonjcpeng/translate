@@ -1,5 +1,6 @@
 import * as Constants from './CONSTANTS';
 import {isOnline} from '../config/config';
+import {GetMount} from './menu-setting-option-menu';
 
 export const contentSettingGetMount = (target)=> {
     return ({
@@ -73,11 +74,16 @@ export const selectSingleMenuItem = v=>{
 }
 
 export const openOption = v=>{
-    return ({
-        type:Constants.SIDE_BAR_MENU_ITEM_TOGGLE,
-        isHasChild:false,
-        payload:v
-    });
+    return dispatch=>{
+        if(v.targetMenu){
+            dispatch(GetMount(v));
+        }
+        dispatch({
+            type:Constants.SIDE_BAR_MENU_ITEM_TOGGLE,
+            isHasChild:false,
+            payload:v
+        });
+    }
 }
 
 export const optionDeleteMenu = v=>{

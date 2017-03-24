@@ -2,18 +2,22 @@ import userInfo from '../../jsons/apiData/userInfo.json';
 import * as Fetch from './fetch';
 import {isOnline} from '../config/config';
 
-const api = {
-    getInfo:'userInfo',
-};
-if(!isOnline){
-    for(let Key in api){
-        api[Key] +='.json';
+//根据线上状态过滤API内容
+const filterIsOnline = api=>{
+    if(!isOnline){
+        return (api+='.json');
     }
 }
 
+const apis = {
+    getInfo:'userInfo',
+};
+
+
+
 export const appStart =()=>{
     return new Promise((resolve,reject)=>{
-       Fetch.Fetch(api.getInfo).then(res=>{
+       Fetch.Fetch(filterIsOnline(apis.getInfo)).then(res=>{
             let userInfo = {
                 name:res.userInfo.name,
                 power:res.userInfo.power,
@@ -42,5 +46,23 @@ export const appStart =()=>{
         }).catch(rej=>{
             reject(rej);
         });
+    });
+}
+
+export const menuSettingOptionMenuFetchViewPointConfig = (api)=>{
+    return new Promise((resolve,reject)=>{
+        Fetch.Fetch(filterIsOnline(api)).then(
+                res=>{
+                    if(res.state!=="1"){
+                        reject(res.message);
+                    }else{
+                        resolve(res.data);
+                    }
+                }
+        ).catch(
+                rej=>{
+                    reject(rej);
+                }
+        )
     });
 }

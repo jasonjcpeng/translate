@@ -1,5 +1,6 @@
 import * as Constants from './CONSTANTS';
 import {isOnline} from '../config/config';
+import {menuSettingOptionMenuFetchViewPointConfig} from '../services/api';
 
 export const GetMount = (target)=> {
     return ({
@@ -48,7 +49,6 @@ export const toggleIconSetting = (targetMenuSort,iconName)=>{
 }
 
 export const changeMenuData = (targetMenuSort,progressName,key,val)=>{
-    console.log(1);
     return ({
         type:Constants.MENU_SETTING_CHANGE_MENU_DATA,
         targetMenuSort:targetMenuSort,
@@ -90,9 +90,28 @@ export const clickFinish = (menuData)=>{
 }
 
 export const getViewPointConfig = (targetMenuSort,ViewPointConfigApi)=>{
-    return ({
-        type:Constants,
-        targetMenuSort:targetMenuSort
-    });
+    return dispatch=> {
+        menuSettingOptionMenuFetchViewPointConfig(ViewPointConfigApi).then(
+            res=> {
+                console.log(res);
+                return dispatch({
+                    type: Constants.MENU_SETTING_GET_VIEW_POINT_CONFIG,
+                    targetMenuSort: targetMenuSort,
+                    payload: res
+                });
+            }).catch(
+            rej=> {
+                console.log(rej);
+                return dispatch({
+                    type: Constants.MENU_SETTING_GET_VIEW_POINT_CONFIG,
+                    targetMenuSort: targetMenuSort,
+                    error: rej
+                });
+            }
+        );
+    }
+
+
+
 }
 

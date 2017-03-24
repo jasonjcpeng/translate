@@ -16,7 +16,7 @@ import {isOnline} from '../../config/config'
 class MenuSettingOptionAddMenu extends React.Component {
     componentWillMount() {
         if (!this.props.target.status) {
-            this.props.GetMount(this.props.target);
+            this.props.GetMount(this.props.target.obj);
         }
     }
 
@@ -91,7 +91,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                     {(()=>{
                         if(!this.props.isRootMenu){
                             return (<div>
-                                <li><span>菜单视图项API:</span><span><input defaultValue={this.props.viewPointConfigApi} onChange={
+                                <li><span>菜单视图项API:</span><span><input defaultValue={this.props.menuData.viewPointConfigApi} onChange={
                                     e=>{
                                         this.props.changeMenuData(this.props.targetMenuSort,'setUp','viewPointConfigApi',e.target.value);
                                     }
@@ -101,7 +101,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                                         this.props.changeMenuData(this.props.targetMenuSort,'setUp','api',e.target.value);
                                     }
                                 } type="text"/></span></li>
-                                <li><span>视图类型:</span><span><select value={this.props.menuData.menuSort} onChange={e=>{
+                                <li><span>视图类型:</span><span><select  value={this.props.menuData.menuSort} onChange={e=>{
                                     this.props.changeMenuData(this.props.targetMenuSort,'setUp','menuSort',e.target.value);
                                 }}>
                                 {(()=>{
@@ -205,7 +205,7 @@ class MenuSettingOptionAddMenu extends React.Component {
         if (!this.props.isRootMenu && nextStep < 4) {
             return (<button onClick={()=>{
                 if(nextStep===1){
-                    this.props.getViewPointConfig(this.props.targetMenuSort,this.props.viewPointConfigApi);
+                    this.props.getViewPointConfig(this.props.targetMenuSort,this.props.menuData.viewPointConfigApi);
                 }
                 this.props.clickNextStep(this.props.targetMenuSort, nextStep);
             }} className="btn">下一步</button>);

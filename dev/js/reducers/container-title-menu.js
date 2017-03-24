@@ -218,12 +218,13 @@ export default function (state = initState, action) {
             break;
         //---------------MenuSettingOption------------------------------
         case Constants.MENU_SETTING_OPTION_MENU_DID_MOUNT:
-            let parentCode = action.target.obj.targetMenu === '0'?'0':action.target.obj.targetMenu.code;
+            let parentCode = action.target.targetMenu === '0'?'0':action.target.targetMenu.code;
             let initMenuSettingOption = {
                 error: undefined,
                 isRootMenu:undefined,
                 isToggleIconSetting:false,
                 progress:[{active:true,on:true},{active:false,on:false},{active:false,on:false},{active:false,on:false}],
+                viewPointConfigData:{},
                 menuData:{
                     id: '',
                     icon:'',
@@ -249,9 +250,9 @@ export default function (state = initState, action) {
             }
             if (action.error) {
                 initMenuSettingOption.error=action.error;
-                return setActiveContentStatus(state,action.target.obj.menuSort,{status:{$set:initMenuSettingOption}});
+                return setActiveContentStatus(state,action.target.menuSort,{status:{$set:initMenuSettingOption}});
             }
-            return setActiveContentStatus(state,action.target.obj.menuSort,{status:{$set:initMenuSettingOption}});
+            return setActiveContentStatus(state,action.target.menuSort,{status:{$set:initMenuSettingOption}});
             break;
         case Constants.MENU_SETTING_OPTION_CHECK_IS_ROOT_MENU:
             return setActiveContentStatus(state,action.targetMenuSort,{status:{isRootMenu:{$set:action.payload}}});
@@ -299,6 +300,13 @@ export default function (state = initState, action) {
                     break;
                 case 'modifyViewPoint':
                     break;
+            }
+            break;
+        case Constants.MENU_SETTING_GET_VIEW_POINT_CONFIG:
+            if(action.error){
+                return setActiveContentStatus(state,action.targetMenuSort,{status:{error:{$set:action.error}}})
+            }else{
+                return setActiveContentStatus(state,action.targetMenuSort,{status:{viewPointConfigData:{$set:action.payload}}})
             }
             break;
 

@@ -11,8 +11,8 @@ import {isOnline} from '../config/config';
 
 class App extends React.Component{
     componentWillMount(){
-        if(window.localStorage.getItem('store')){
-            let store = JSON.parse(window.localStorage.getItem('store'));
+        let store = JSON.parse(window.localStorage.getItem('store'));
+        if(store&&!store.common.error){
             this.props.reloadFromLocalStorage(store);
             isOnline?this.props.AppDidMount():'';
         }else{

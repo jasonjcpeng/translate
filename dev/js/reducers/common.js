@@ -8,6 +8,7 @@ const initState = {
     windowHeight: 0,
     windowWidth: 0,
     nowOnContentTarget: null,
+    lastOnContentTarget:null,
     toggleStatus: '',
     defaultToggleStatus: '',
     lastToggleStatus: '',
@@ -84,19 +85,19 @@ export default function (state = initState, action) {
             break;
         case Constants.SIDE_BAR_MENU_ITEM_TOGGLE:
             if (!action.isNoView) {
-                return update(state, {nowOnContentTarget: {$set: action.payload}});
+                return update(state, {lastOnContentTarget:{$set:state.nowOnContentTarget},nowOnContentTarget: {$set: action.payload}});
             }
             break;
         case Constants.CONTAINER_TITTLE_MENU_SELECT_ACTIVE_CONTENT:
-            return update(state, {nowOnContentTarget: {$set: action.payload.obj}});
+            return update(state, {lastOnContentTarget:{$set:state.nowOnContentTarget},nowOnContentTarget: {$set: action.payload.obj}});
             break;
         case Constants.CONTAINER_TITTLE_MENU_DELETE_ACTIVE_CONTENT:
             if (action.payload === state.nowOnContentTarget) {
-                return update(state, {nowOnContentTarget: {$set: null}});
+                return update(state, {lastOnContentTarget:{$set:state.nowOnContentTarget},nowOnContentTarget: {$set: null}});
             }
             break;
         case Constants.CONTAINER_TITTLE_MENU_CLOSE_ALL_ITEM:
-            return update(state, {nowOnContentTarget: {$set: null}});
+            return update(state, {lastOnContentTarget:{$set:state.nowOnContentTarget},nowOnContentTarget: {$set: null}});
             break;
         case Constants.APP_FULL_SCREEN:
             return update(state, {isFullScreen: {$set: !state.isFullScreen}});
@@ -107,7 +108,7 @@ export default function (state = initState, action) {
         case Constants.CONTENT_SETTING_CHANGE_MENU:
             if (state.nowOnContentTarget) {
                 if (state.nowOnContentTarget.id === action.payload.id) {
-                    return update(state, {nowOnContentTarget: {$set: action.payload}});
+                    return update(state, {lastOnContentTarget:{$set:state.nowOnContentTarget},nowOnContentTarget: {$set: action.payload}});
                 }
             }
             break;
