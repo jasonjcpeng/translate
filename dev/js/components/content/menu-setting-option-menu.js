@@ -6,10 +6,11 @@ import * as ActionCreators from '../../action/menu-setting-option-menu';
 import Loader from 'react-loader';
 import {LoaderOption} from '../../config/config';
 import classNames from 'classnames';
+import ShieldAlert from '../shield-alert';
 //json
 import IconList from '../../../jsons/icon-list.json';
 //tool
-import {getNowFormatDate} from '../../config/tools';
+import {getNowFormatDate,IsObjEmpty} from '../../config/tools';
 import {isOnline} from '../../config/config'
 
 
@@ -205,9 +206,12 @@ class MenuSettingOptionAddMenu extends React.Component {
         if (!this.props.isRootMenu && nextStep < 4) {
             return (<button onClick={()=>{
                 if(nextStep===1){
-                    this.props.getViewPointConfig(this.props.targetMenuSort,this.props.menuData.viewPointConfigApi);
+                    this.props.getViewPointConfig(this.props.targetMenuSort,this.props.menuData.viewPointConfigApi,()=>{
+                        this.props.clickNextStep(this.props.targetMenuSort, nextStep);
+                    });
+                }else{
+                    this.props.clickNextStep(this.props.targetMenuSort, nextStep);
                 }
-                this.props.clickNextStep(this.props.targetMenuSort, nextStep);
             }} className="btn">下一步</button>);
         }
     }
@@ -305,6 +309,15 @@ class MenuSettingOptionAddMenu extends React.Component {
 
     }
 
+    createAlertShield(){
+        let onOkFunc = ()=>{
+            this.props.clickShieldAlertOK(this.props.targetMenuSort);
+        }
+        if(this.props.target.status.error){
+            return (<ShieldAlert title="警告" content={this.props.target.status.error} onOkFunc={onOkFunc}></ShieldAlert>);
+        }
+    }
+
     createToggleIconSetting() {
         if(this.props.target.status.isToggleIconSetting){
             return (
@@ -338,6 +351,7 @@ class MenuSettingOptionAddMenu extends React.Component {
         return (
             <div className="content-container animation-fadeInRight">
                 {this.createToggleIconSetting()}
+                {this.createAlertShield()}
                 <div className="content-container-inset" style={{height: height}}>
                     <div style={{minWidth: 600}}>
                     {this.createOptionMenuProgress()}

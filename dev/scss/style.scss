@@ -107,6 +107,29 @@ body {
     height: 70%;
     width: 70%;
   }
+  .shield-alert{
+    position: absolute;
+    z-index: 1002;
+    top:25%;
+    left:25%;
+    border-radius: 5px;
+    opacity: 1 ;
+    background-color: #fff;
+    height: 200px;
+    width: 300px;
+    .alert-header{
+      padding: 10px 0 0 10px;
+      height: 30px;
+    }
+    .alert-content{
+      height: 100px;
+      padding: 0 0 0 50px;
+      line-height: 100px;
+    }
+    .alert-footer{
+      float: right;
+    }
+  }
 
 }
 

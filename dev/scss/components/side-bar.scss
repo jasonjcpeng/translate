@@ -105,6 +105,7 @@
       left: 150px;
       ul{
         li{
+          user-select: none;
           .side-bar-mini-arr{
             position: absolute;
             line-height: 50px;

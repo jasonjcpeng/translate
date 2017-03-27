@@ -44,6 +44,13 @@ export const IsPC= ()=>{
     return flag;
 }
 
+export const IsObjEmpty = (obj)=>{
+    for(let i in obj){
+        return false
+    }
+    return true;
+}
+
 export const getNowFormatDate=()=>{
     var date = new Date();
     var seperator1 = "-";

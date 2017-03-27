@@ -3,7 +3,6 @@ import {isOnline} from '../config/config';
 import {menuSettingOptionMenuFetchViewPointConfig} from '../services/api';
 
 export const GetMount = (target)=> {
-    console.log()
     return ({
         type: Constants.MENU_SETTING_OPTION_MENU_DID_MOUNT,
         target: target
@@ -90,11 +89,12 @@ export const clickFinish = (menuData)=>{
     }
 }
 
-export const getViewPointConfig = (targetMenuSort,ViewPointConfigApi)=>{
+//callback 如果拿到数据就运行这个回调
+export const getViewPointConfig = (targetMenuSort,ViewPointConfigApi,callback)=>{
     return dispatch=> {
         menuSettingOptionMenuFetchViewPointConfig(ViewPointConfigApi).then(
             res=> {
-                console.log(res);
+                callback();
                 return dispatch({
                     type: Constants.MENU_SETTING_GET_VIEW_POINT_CONFIG,
                     targetMenuSort: targetMenuSort,
@@ -102,7 +102,6 @@ export const getViewPointConfig = (targetMenuSort,ViewPointConfigApi)=>{
                 });
             }).catch(
             rej=> {
-                console.log(rej);
                 return dispatch({
                     type: Constants.MENU_SETTING_GET_VIEW_POINT_CONFIG,
                     targetMenuSort: targetMenuSort,
@@ -111,8 +110,12 @@ export const getViewPointConfig = (targetMenuSort,ViewPointConfigApi)=>{
             }
         );
     }
+}
 
-
-
+export const clickShieldAlertOK=(targetMenuSort)=>{
+    return ({
+        type:Constants.MENU_SETTING_RESET_ERROR,
+        targetMenuSort: targetMenuSort
+    });
 }
 

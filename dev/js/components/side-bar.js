@@ -243,11 +243,12 @@ class SideBar extends Component {
                         {function(){
                             return this.props.sideBar.menu.map(menu=>{
                                 let isHasChild = this.isHasChild(this.props.sideBar.menu,menu.code);
+                                let isNoView = this.isNoView(menu);
                                 if(menu.parentCode===v.code&&menu.isEnable){
                                     return (<li className='animation-flipInY' key={menu.parentCode+'_'+menu.id}
                                                 onMouseEnter={()=>{if(isHasChild||hoverMenu.length>1){this.props.miniMenuItemHover(menu);}}}
                                                 onClick={(e)=>{
-                                                    this.props.meunItemToggle(menu, isHasChild);
+                                                    this.props.meunItemToggle(menu, isNoView);
                                                  e.stopPropagation();
                                                 }}
                                         >{menu.menuName}

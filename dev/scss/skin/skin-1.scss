@@ -31,6 +31,17 @@ $default-option-hover-button:#6f6f6f;
     border-color: $side-bar-menu-font-color;
   }
 
+  .shield-alert{
+    background-color: $second-main-color;
+    .alert-header{
+      color: $main-color;
+    }
+    .alert-content{
+    }
+    .alert-footer{
+    }
+  }
+
   .standard-ul {
       li{
         input{

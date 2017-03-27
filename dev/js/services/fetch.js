@@ -10,11 +10,11 @@ export const Fetch = (url,args,method='GET')=> {
         'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
     }
     if (opts.method === 'GET') {
-        Url = Url + '?' + opts.body
-        delete opts.body
+        Url = Url + '?' + opts.body;
+        delete opts.body;
         headers['Content-Type'] = 'application/json'
     }
-    opts.headers = headers
+    opts.headers = headers;
     return new Promise((resolve, reject)=> {
         let timer = setTimeout(()=> {
             console.log('Timing Out!');
@@ -31,6 +31,8 @@ export const Fetch = (url,args,method='GET')=> {
                     resolve(data);
                 })
             }
+        }).catch(rej=>{
+            console.log('fetch message:'+rej);
         })
     });
 
