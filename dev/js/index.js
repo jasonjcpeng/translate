@@ -1,20 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {Provider} from 'react-redux';
-import configCreateStore from './config/config-create-strore';
+/**
+ * 
+ * Created by JasonPeng on 2017/3/30.
+ */
+class LoginModel{
+    constructor(domId){
+        this.domID = domId;
+    }
+    createView(){
+        let root = window.document.getElementById(this.domID);
+        let content = "<div></div>";
+        root.innerHTML = "<div>aaaa</div>";
+        console.log(root);
+    }
 
-import App from './containers/app';
+}
 
-import allReducers from './reducers';
+(()=>{
+    let loginModel = new LoginModel('login');
+    loginModel.createView();
+})();
 
-import '../scss/style.scss';
 
-const store = configCreateStore(allReducers);/* 利用中间件附加trunk（异步解决方案）的store生成器*/
-store.subscribe(()=>{
-    window.localStorage.setItem('store',JSON.stringify(store.getState()));
-});
-
-ReactDOM.render(<Provider store={store}>
-    <App></App>
-</Provider>,document.getElementById('root'));
 

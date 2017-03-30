@@ -7,7 +7,6 @@ import {LoaderOption} from '../config/config';
 import SideBar from '../components/side-bar';
 import Header from '../components/header';
 import Container from '../components/container';
-import {isOnline} from '../config/config';
 
 class App extends React.Component{
     componentWillMount(){

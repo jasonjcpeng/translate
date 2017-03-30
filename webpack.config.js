@@ -22,8 +22,8 @@ module.exports = {
         port: 3003
     },
     devtool: 'cheap-module-eval-source-map',
-    entry: {index:'./dev/js/index.js',
-        login:'./dev/js/login.js'
+    entry: {app:'./dev/js/app.js',
+        index:'./dev/js/index.js'
        /* ,vendor: ['react', 'react-dom', 'react-router','redux','react-redux','classnames']*/
     },
     module: {
@@ -53,20 +53,34 @@ module.exports = {
     },
     postcss: [ autoprefixer({ browsers: ['last 2 versions'] }) ],
     output: {
-        path: 'docs',
+        path: 'docs/',
         filename: 'js/[chunkHash:32].js',
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: '综艺嘉',
+            title: '综艺嘉登陆',
             template: 'dev/index.html',
             filename: 'index.html',
-            inject: 'body'
+            inject: 'body',
+            chunks:['index','app']
         }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name:'login', // 上面入口定义的节点组
-            filename:'./js/bundle.login.js' //最后生成的文件名
+        new HtmlWebpackPlugin({
+            title: '综艺嘉',
+            template: 'dev/app.html',
+            filename: 'app.html',
+            inject: 'body',
+            chunks:['app']
         }),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        }),
+        /* 生成公共文件
+         new webpack.optimize.CommonsChunkPlugin({
+         name:'index', // 上面入口定义的节点组
+         filename:'./js/bundle.login.js' //最后生成的文件名
+         }),*/
         /*
         new webpack.ProvidePlugin({
             React: 'react'
