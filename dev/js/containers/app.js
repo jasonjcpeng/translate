@@ -11,13 +11,27 @@ import {isOnline} from '../config/config';
 
 class App extends React.Component{
     componentWillMount(){
+        let userName = 'admin';
+        let psw = '000';
+        this.props.appLogin(userName,psw);
+    }
+
+    componentInit(){
+        let flag = false;
         let store = JSON.parse(window.localStorage.getItem('store'));
-        if(store&&!store.common.error){
-            this.props.reloadFromLocalStorage(store);
-            isOnline?this.props.AppDidMount():'';
-        }else{
-            this.props.AppDidMount();
+        if(!store){
+            console.log("no store");
+            flag = true;
+        }else if(store.common.error){
+            console.log("error");
+            flag = true;
         }
+        if(flag){
+            this.props.AppDidMount();
+        }else{
+            this.props.reloadFromLocalStorage(store);
+        }
+
     }
 
     componentWillUnmount(){
@@ -41,15 +55,24 @@ class App extends React.Component{
 
     }
 
+    isLogin(){
+        if(this.props.isLogin){
+            return <Loader loaded={this.props.loaded} options={LoaderOption}>
+                {this.renderInit()}
+            </Loader>
+        }else{
+            return <div></div>
+        }
+    }
+
     render(){
-        return <Loader loaded={this.props.loaded} options={LoaderOption}>
-            {this.renderInit()}
-        </Loader>
+        return this.isLogin();
     }
 }
 
 function state(state){
     return ({
+        isLogin:state.common.isLogin,
         useSkin:state.common.useSkin,
         loaded:state.common.loaded,
         error:state.common.error,

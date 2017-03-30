@@ -3,6 +3,7 @@ import * as Constants from '../action/CONSTANTS';
 
 const initState = {
     userInfo: {
+        userID:'',
         name: '',
         power: '',
         imgUrl: ''

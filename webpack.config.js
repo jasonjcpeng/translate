@@ -22,7 +22,8 @@ module.exports = {
         port: 3003
     },
     devtool: 'cheap-module-eval-source-map',
-    entry: {index:'./dev/js/index.js'
+    entry: {index:'./dev/js/index.js',
+        login:'./dev/js/login.js'
        /* ,vendor: ['react', 'react-dom', 'react-router','redux','react-redux','classnames']*/
     },
     module: {
@@ -62,7 +63,11 @@ module.exports = {
             filename: 'index.html',
             inject: 'body'
         }),
-        /*new webpack.optimize.CommonsChunkPlugin("vendor", "./js/vendor.bundle.js"),
+        new webpack.optimize.CommonsChunkPlugin({
+            name:'login', // 上面入口定义的节点组
+            filename:'./js/bundle.login.js' //最后生成的文件名
+        }),
+        /*
         new webpack.ProvidePlugin({
             React: 'react'
         })*///解决不用CDN的全打包状态下丢失全局变量window.React问题

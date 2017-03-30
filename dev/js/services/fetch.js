@@ -4,7 +4,8 @@ import {Location,Host, TimeOut,isOnline} from '../config/config';
 
 export const Fetch = (url,args,method='GET')=> {
     let Url = (isOnline?Host:Location) + url;
-    const opts = {method: method.toUpperCase(), body: qs.stringify(args)}
+    let localMethod = isOnline?method:'GET';
+    const opts = {method: localMethod.toUpperCase(), body: qs.stringify(args)}
     const headers = {
         'mode': 'no-cors',
         'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
