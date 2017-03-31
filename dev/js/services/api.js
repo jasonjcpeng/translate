@@ -41,7 +41,8 @@ const createFetchPromise = (api,callBack,args='',method='GET')=>{
 
 const apis = {
     login:'api/User/logon',
-    getInfo:'userInfo',
+    getMenu: 'api/Module',
+    getUserInfo: 'userInfo'
 };
 
 export const login = (userName,pwd)=>{
@@ -56,7 +57,40 @@ export const login = (userName,pwd)=>{
 
 
 export const appStart =()=>{
-    return new Promise((resolve,reject)=>{
+    return new Promise((resolve, reject)=> {
+        Promise.all([Fetch.Fetch(filterIsOnline(apis.getMenu)), Fetch.Fetch(filterIsOnline(apis.getUserInfo))]).then(
+            res=> {
+                let userInfo = {
+                    name: res[1].userInfo.name,
+                    power: res[1].userInfo.power,
+                    imgUrl: res[1].userInfo.imgUrl,
+                    useSkin: res[1].userInfo.useSkin
+                }
+                let menu = res[0].data.map(v=> {
+                    return {
+                        icon: v.F_Icon,
+                        id: v.F_Id,
+                        code: v.F_Id,
+                        parentCode: v.F_ParentId,
+                        menuName: v.F_FullName,
+                        createTime: v.F_CreatorTime,
+                        menuSort: v.F_SortCode,
+                        isEnable: v.F_EnabledMark,
+                        api: v.F_UrlAddress,
+                    }
+                });
+                resolve({
+                    userInfo: userInfo,
+                    menu: menu
+                });
+            }
+        ).catch(
+            rej=> {
+                reject(rej);
+            }
+        );
+    });
+/* return new Promise((resolve,reject)=>{
        Fetch.Fetch(filterIsOnline(apis.getInfo)).then(res=>{
             let userInfo = {
                 userID:res.userInfo.userID,
@@ -87,7 +121,7 @@ export const appStart =()=>{
         }).catch(rej=>{
             reject(rej);
         });
-    });
+ });*/
 }
 
 export const menuSettingOptionMenuFetchViewPointConfig = (api)=>{

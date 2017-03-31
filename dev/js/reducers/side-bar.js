@@ -33,7 +33,7 @@ export default function (state = initState, action) {
             break;
         case Constants.SIDE_BAR_MENU_ITEM_TOGGLE:
             let length = state.activeMenu.length;
-            if(!isNaN(action.payload.id)){
+            if(!isNaN(action.payload.menuSort)){
                 if (length === 0) {
                     return update(state, {activeMenu: {$set: [action.payload]}});
                 } else {

@@ -99,7 +99,7 @@ class ContentSetting extends React.Component {
         return false;
     }
 
-    quickSort(arr, root = {code: '0'}, result = []) {
+    quickSort(arr, root = {code: '0'}, result=[]) {
         let menu = [];
         if (arr.length > 0) {
             let newArr = arr.filter(v=> {
@@ -115,9 +115,8 @@ class ContentSetting extends React.Component {
                     this.quickSort(newArr, menu[i], result);
                 }
             }
-
-            return result;
         }
+        return result;
     }
 
     isSingleMenuSettingTableToggle(toggleCode, menuCode) {
