@@ -14,7 +14,10 @@ store.subscribe(()=>{
     window.localStorage.setItem('store',JSON.stringify(store.getState()));
 });
 
-ReactDOM.render(<Provider store={store}>
-    <App></App>
-</Provider>,document.getElementById('root'));
+if(document.getElementById('root')){
+    ReactDOM.render(<Provider store={store}>
+        <App></App>
+    </Provider>,document.getElementById('root'));
+}
+
 
