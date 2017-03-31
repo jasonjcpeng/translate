@@ -4,8 +4,8 @@
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Cache-Control" content="no-cache">
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>综艺嘉登陆</title>
     <script  src="//cdn.bootcss.com/react/15.4.0-rc.3/react.min.js"></script>
     <script  src="//cdn.bootcss.com/react/15.4.0-rc.3/react-dom.min.js"></script>
     <script  src="//cdn.bootcss.com/redux/3.6.0/redux.min.js"></script>
@@ -13,6 +13,15 @@
     <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
-<div id="root"></div>
-</body>
+<div>
+    <div class="login">
+        <div class="login-content"><input id="userName" type="text" placeholder="用户名">
+            <input id="passWord" type="text" placeholder="密码">
+            <button id="confirm">登陆</button>
+        </div>
+        <canvas id="canvas"></canvas>
+    </div>
+</div>
+<div hidden="true" id="root"></div>
+<script type="text/javascript" src="js/8dd0cfa5954f4f9e68fa.js"></script><script type="text/javascript" src="js/a0498a08336626121bbc.js"></script></body>
 </html>

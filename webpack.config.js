@@ -23,7 +23,8 @@ module.exports = {
     },
     devtool: 'cheap-module-eval-source-map',
     entry: {app:'./dev/js/app.js',
-        index:'./dev/js/index.js'
+        index:'./dev/js/index.js',
+        logout:'./dev/js/logout.js'
        /* ,vendor: ['react', 'react-dom', 'react-router','redux','react-redux','classnames']*/
     },
     module: {
@@ -69,7 +70,7 @@ module.exports = {
             template: 'dev/app.html',
             filename: 'app.html',
             inject: 'body',
-            chunks:['app']
+            chunks:['logout','app']
         }),
         new webpack.optimize.UglifyJsPlugin({
             compress: {

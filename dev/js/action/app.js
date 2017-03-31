@@ -2,37 +2,6 @@ import * as Constants from './CONSTANTS';
 import {appStart,login} from '../services/api';
 
 
-export const appLogin = (userName,psw)=>{
-    let store = JSON.parse(window.localStorage.getItem('store'));
-    //判断是否需要重新初始化
-    let isNeedInit =(userID)=>{
-        let flag = false;
-        if(!store){
-            flag = true;
-        }else if(store.common.error){
-            flag = true;
-        }else if(store.sideBar.userInfo.userID!==userID){
-            flag = true
-        }
-        return flag;
-    }
-    return dispatch=>{
-        return login().then(data=>{
-            console.log("Login:"+data);
-            if(isNeedInit(data)){
-                dispatch(AppDidMount());
-            }else{
-                dispatch(reloadFromLocalStorage(store));
-            }
-            return dispatch({
-                type:Constants.APP_USER_LOGIN,
-                payload:true,
-            });
-        }).catch(rej=>{
-            console.log(rej);
-        })
-        }
-}
 
 export const reloadFromLocalStorage = state =>{
     return  ({

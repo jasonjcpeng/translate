@@ -10,9 +10,7 @@ import Container from '../components/container';
 
 class App extends React.Component{
     componentWillMount(){
-        let userName = 'admin';
-        let psw = '000';
-        this.props.appLogin(userName,psw);
+        this.componentInit();
     }
 
     componentInit(){
@@ -54,24 +52,15 @@ class App extends React.Component{
 
     }
 
-    isLogin(){
-        if(this.props.isLogin){
-            return <Loader loaded={this.props.loaded} options={LoaderOption}>
-                {this.renderInit()}
-            </Loader>
-        }else{
-            return <div></div>
-        }
-    }
-
     render(){
-        return this.isLogin();
+        return <Loader loaded={this.props.loaded} options={LoaderOption}>
+            {this.renderInit()}
+        </Loader>
     }
 }
 
 function state(state){
     return ({
-        isLogin:state.common.isLogin,
         useSkin:state.common.useSkin,
         loaded:state.common.loaded,
         error:state.common.error,

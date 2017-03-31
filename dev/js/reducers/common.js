@@ -18,9 +18,6 @@ const initState = {
 
 export default function (state = initState, action) {
     switch (action.type) {
-        case Constants.APP_USER_LOGIN:
-            return update(state,{isLogin:{$set:action.payload}});
-            break;
         case Constants.APP_RELOAD_FROM_LOCAL_STORAGE:
             return action.payload.common;
         case Constants.INIT_CONTAINER_APP_DID_MOUNT:

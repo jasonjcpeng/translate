@@ -133,14 +133,15 @@ body {
 
 }
 
-@import './skin/skin-1';
-@import './skin/skin-2';
-@import './skin/skin-3';
+
 @import './components/side-bar';
 @import './components/header';
 @import './components/title-menu';
 @import './components/content.scss';
 @import './components/content/content-container';
-@import 'components/content/component-option-bar';
+@import './components/content/component-option-bar';
+@import './components/login';
 
-
+@import './skin/skin-1';
+@import './skin/skin-2';
+@import './skin/skin-3';
