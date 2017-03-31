@@ -1,29 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>综艺嘉登陆</title>
-    <script  src="//cdn.bootcss.com/react/15.4.0-rc.3/react.min.js"></script>
-    <script  src="//cdn.bootcss.com/react/15.4.0-rc.3/react-dom.min.js"></script>
-    <script  src="//cdn.bootcss.com/redux/3.6.0/redux.min.js"></script>
-    <script  src="//cdn.bootcss.com/react-redux/5.0.0-beta.3/redux.min.js"></script>
+    <script src="//cdn.bootcss.com/react/15.4.0-rc.3/react.min.js"></script>
+    <script src="//cdn.bootcss.com/react/15.4.0-rc.3/react-dom.min.js"></script>
+    <script src="//cdn.bootcss.com/redux/3.6.0/redux.min.js"></script>
+    <script src="//cdn.bootcss.com/react-redux/5.0.0-beta.3/redux.min.js"></script>
     <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        .canvas-bg {
+            background-image: url("../img/login_bg.jpg");
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 100%;
+            opacity: 0.4;
+            z-index: 10;
+            position: absolute;
+        }
+
+        .login-content {
+            z-index: 100;
+            position: absolute;
+            left: calc(50% - 150px);
+            top: calc(40% - 150px);
+            width: 300px;
+            height: 300px;
+        }
+
+        h1 {
+            user-select: none;
+            color: #fff;
+        }
+
+        input {
+            padding: 0 15px 0 15px;
+            width: 255px;
+            height: 42px;
+            color: #fff;
+            border-radius: 3px;
+            border: 1px solid rgba(255, 255, 255, .15);
+            background: rgba(45, 45, 45, .15);
+            margin: 5px auto 30px;
+            display: block;
+        }
+
+        .login-content-btn {
+            text-align: center;
+            cursor: pointer;
+            width: 285px;
+            height: 42px;
+            color: #fff;
+            border-radius: 3px;
+            border: 1px solid #3399cc;
+            background-color: #3399cc;
+            margin: 5px auto 30px;
+            display: block;
+        }
+
+        input::-webkit-input-placeholder {
+            color: #fff;
+        }
+
+        input::-moz-placeholder {
+            color: #fff;
+        }
+
+        input:-ms-input-placeholder {
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
 <div>
-    <div class="login">
+    <div>
         <div class="login-content">
             <h1>综艺嘉后台管理系统</h1>
             <input id="userName" type="text" placeholder="用户名"/>
             <input id="passWord" type="password" placeholder="密码"/>
-            <button class="login-content-btn" id="confirm" >Login</button>
+            <button class="login-content-btn" id="confirm">Login</button>
         </div>
         <div class="canvas-bg"></div>
         <canvas id="canvas"></canvas>
     </div>
 </div>
-<script type="text/javascript" src="js/e1cb6e719481918411f1.js"></script><script async type="text/javascript" src="js/66e0ff9e028c5d70e3bb.js"></script></body>
+<script type="text/javascript" src="js/9f311599c2838f914166.js"></script><script type="text/javascript" src="js/1eba4be6990a2c0aee0f.js"></script></body>
 </html>
