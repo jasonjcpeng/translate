@@ -41,7 +41,7 @@ const createFetchPromise = (api,callBack,args='',method='GET')=>{
 
 const apis = {
     login:'api/User/logon',
-    getMenu: 'api/Module',
+    getMenu: 'api/module',
     getUserInfo: 'userInfo'
 };
 
