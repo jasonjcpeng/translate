@@ -4,7 +4,7 @@ class LogonOut{
     }
     init(){
         if(!this.loginStore){
-            window.location.href='../';
+            window.location.href='./';
         }
     }
 }

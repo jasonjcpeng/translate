@@ -2,7 +2,8 @@
   "data":{
     "name":"name",
     "age":"age",
-    "sex":"sex"
+    "sex":"sex",
+    "class":"class"
   },
   "message":"OK",
   "state":"1"

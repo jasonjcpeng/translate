@@ -18,7 +18,7 @@ export const Fetch = (url,args,method='GET')=> {
     opts.headers = headers;
     return new Promise((resolve, reject)=> {
         let timer = setTimeout(()=> {
-            console.log('Timing Out!');
+            console.log(Url+':Timing Out!');
             reject(2333);
         }, TimeOut);
         fetch(Url, opts).then(res=> {

@@ -10,7 +10,7 @@ import ShieldAlert from '../shield-alert';
 //json
 import IconList from '../../../jsons/icon-list.json';
 //tool
-import {getNowFormatDate,IsObjEmpty} from '../../config/tools';
+import {getNowFormatDate, IsObjEmpty} from '../../config/tools';
 import {isOnline} from '../../config/config'
 
 
@@ -21,6 +21,7 @@ class MenuSettingOptionAddMenu extends React.Component {
         }
     }
 
+    //判断需要渲染哪个进度状态视图界面
     judgeRenderFunction() {
         let progressState = this.props.target.status.progress;
         let nowOnProgress = function () {
@@ -30,12 +31,12 @@ class MenuSettingOptionAddMenu extends React.Component {
                 }
             }
         }();
-        switch (nowOnProgress){
+        switch (nowOnProgress) {
             case '0':
                 return this.createOperationSetUp();
                 break;
             case '1':
-                return <div>视图</div>
+                return this.createViewPointSetting();
                 break;
             case '2':
                 return <div>按钮</div>
@@ -47,7 +48,75 @@ class MenuSettingOptionAddMenu extends React.Component {
 
     }
 
-    createIsRootMenuCheckBox() {
+    //渲染表格视图设置
+    createViewPointSetting() {
+        let handleOnChange = (value)=> {
+            this.props.changeMenuData(this.props.targetMenuSort, 'viewPoint', value);
+        }
+
+        let tBody = ()=> {
+            let result = [];
+            for (let v in this.props.menuData.viewPoint) {
+                let render = (<tr key={v}>
+                    <td><input onChange={e=>{
+                        let checked = e.target.checked;
+                        let viewPoint = this.props.menuData.viewPoint;
+                        viewPoint[v].isEnable = checked;
+                        handleOnChange(viewPoint);
+                    }} checked={this.props.menuData.viewPoint[v].isEnable} type="checkbox"/></td>
+                    <td>{v}</td>
+                    <td><input onChange={
+                    e=>{
+                    let CNName = e.target.value;
+                    let viewPoint = this.props.menuData.viewPoint;
+                        viewPoint[v].CNName = CNName;
+                        handleOnChange(viewPoint);
+                    }
+                    } value={this.props.menuData.viewPoint[v].CNName} type="text"/></td>
+                    <td><input onChange={
+                    e=>{
+                    let width = (()=>{
+                       if(e.target.value<0){
+                       return 0;
+                       }else if(e.target.value>100){
+                       return 100;
+                       }else{
+                       return e.target.value
+                       }
+                    })();
+                    let viewPoint = this.props.menuData.viewPoint;
+                        viewPoint[v].width = width;
+                        handleOnChange(viewPoint);
+                    }
+                    } value={this.props.menuData.viewPoint[v].width} min="0" max="100" type="number"/></td>
+                </tr>);
+                result.push(render);
+            }
+            return result;
+        }
+
+        let table = (<table className="view-point-table">
+            <thead>
+            <tr>
+                <th>是否呈现</th>
+                <th>Api字段名</th>
+                <th>匹配中文名</th>
+                <th>宽度设置(%)</th>
+            </tr>
+            </thead>
+            <tbody>
+            {tBody()}
+            </tbody>
+        </table>);
+
+        return (<div >{table}</div>);
+
+    }
+
+
+    //渲染功能设置
+    createOperationSetUp() {
+        let createIsRootMenuCheckBox = ()=> {
             return (
                 <li><label style={{cursor: 'pointer', userSelect: 'none', marginLeft: '0'}}
                            htmlFor="rootMenu">作为节点菜单:</label><input id="rootMenu" style={{cursor: 'pointer'}}
@@ -56,19 +125,18 @@ class MenuSettingOptionAddMenu extends React.Component {
                                                                     onChange={e=> {
                                                                         this.props.checkIsRootMenu(this.props.targetMenuSort, e.target.checked);
                                                                     }}/></li> );
-    }
+        }
 
 
-    createOperationSetUp() {
         let iconClassName = (()=> {
-            if (this.props.menuData.icon!=='') {
+            if (this.props.menuData.icon !== '') {
                 return 'fa ' + this.props.menuData.icon;
             } else {
                 return '';
             }
         })();
         let iContent = (()=> {
-            if (this.props.menuData.icon==='') {
+            if (this.props.menuData.icon === '') {
                 return '空';
             } else {
                 return '';
@@ -80,35 +148,38 @@ class MenuSettingOptionAddMenu extends React.Component {
                     <li><span>上级菜单:</span><span><input type="text" disabled={true}
                                                        value={this.props.target.obj.targetMenu === '0'?"根级菜单":this.props.target.obj.targetMenu.menuName}/></span>
                     </li>
-                    {this.createIsRootMenuCheckBox()}
+                    {createIsRootMenuCheckBox()}
                     <li><span>上级菜单Code:</span><span><input type="text" disabled={true}
                                                            value={this.props.target.obj.targetMenu === '0'?"0":this.props.target.obj.targetMenu.code}/></span>
                     </li>
-                    <li><span>菜单名称:</span><span><input defaultValue={this.props.menuData.menuName!==''?this.props.menuData.menuName:''} onChange={
+                    <li><span>菜单名称:</span><span><input
+                        defaultValue={this.props.menuData.menuName!==''?this.props.menuData.menuName:''} onChange={
                         e=>{
-                            this.props.changeMenuData(this.props.targetMenuSort,'setUp','menuName',e.target.value);
+                            this.props.changeMenuData(this.props.targetMenuSort,'menuName',e.target.value);
                         }
                     } type="text"/></span></li>
-                    {(()=>{
-                        if(!this.props.isRootMenu){
+                    {(()=> {
+                        if (!this.props.isRootMenu) {
                             return (<div>
-                                <li><span>菜单视图项API:</span><span><input defaultValue={this.props.menuData.viewPointConfigApi} onChange={
+                                <li><span>菜单视图项API:</span><span><input
+                                    defaultValue={this.props.menuData.viewPointConfigApi} onChange={
                                     e=>{
-                                        this.props.changeMenuData(this.props.targetMenuSort,'setUp','viewPointConfigApi',e.target.value);
+                                        this.props.changeMenuData(this.props.targetMenuSort,'viewPointConfigApi',e.target.value);
                                     }
                                 } type="text"/></span></li>
                                 <li><span>菜单内容项API:</span><span><input defaultValue={this.props.menuData.api} onChange={
                                     e=>{
-                                        this.props.changeMenuData(this.props.targetMenuSort,'setUp','api',e.target.value);
+                                        this.props.changeMenuData(this.props.targetMenuSort,'api',e.target.value);
                                     }
                                 } type="text"/></span></li>
-                                <li><span>视图类型:</span><span><select  value={this.props.menuData.menuSort} onChange={e=>{
-                                    this.props.changeMenuData(this.props.targetMenuSort,'setUp','menuSort',e.target.value);
+                                <li><span>视图类型:</span><span><select value={this.props.menuData.menuSort} onChange={e=>{
+                                    this.props.changeMenuData(this.props.targetMenuSort,'menuSort',e.target.value);
                                 }}>
-                                {(()=>{
-                                    let allSort = [0,1,2,3];
-                                    function writeContent(sort){
-                                        switch(sort){
+                                {(()=> {
+                                    let allSort = [0, 1, 2, 3];
+
+                                    function writeContent(sort) {
+                                        switch (sort) {
                                             case 0:
                                                 return '普通表格';
                                                 break;
@@ -123,11 +194,13 @@ class MenuSettingOptionAddMenu extends React.Component {
                                                 break;
                                         }
                                     }
-                                    return allSort.map((v,k)=>{
+
+                                    return allSort.map((v, k)=> {
                                         return (<option key={k} value={v}>{writeContent(v)}</option>);
                                     });
                                 }).apply(this)}
-                            </select></span> </li></div>);
+                            </select></span></li>
+                            </div>);
                         }
                     })()}
                     <li><span>菜单图标:</span><span><i style={{fontStyle:'normal'}} onClick={()=> {
@@ -138,6 +211,7 @@ class MenuSettingOptionAddMenu extends React.Component {
 
     }
 
+    //渲染进度状态条
     createOptionMenuProgress() {
         let progressState = this.props.target.status.progress;
         if (progressState) {
@@ -194,17 +268,37 @@ class MenuSettingOptionAddMenu extends React.Component {
         }
     }
 
-    createFooterNextStepButton() {
-        let progressState = this.props.target.status.progress;
-        let nextStep = function () {
-            for (let i in progressState) {
-                if (progressState[i].on) {
-                    return ++i;
+    //渲染页脚按钮
+    createFooter(height) {
+        let createFooterLastStepButton = ()=> {
+            let progressState = this.props.target.status.progress;
+            let lastStep = function () {
+                for (let i in progressState) {
+                    if (progressState[i].on) {
+                        return --i;
+                    }
                 }
+            }();
+            if (!this.props.isRootMenu && lastStep > -1) {
+                return (<button className="btn" onClick={
+            ()=>{
+                this.props.clickChangeSetp(this.props.targetMenuSort, lastStep);
             }
-        }();
-        if (!this.props.isRootMenu && nextStep < 4) {
-            return (<button onClick={()=>{
+            }>上一步</button>);
+            }
+        }
+
+        let createFooterNextStepButton = ()=> {
+            let progressState = this.props.target.status.progress;
+            let nextStep = function () {
+                for (let i in progressState) {
+                    if (progressState[i].on) {
+                        return ++i;
+                    }
+                }
+            }();
+            if (!this.props.isRootMenu && nextStep < 4) {
+                return (<button onClick={()=>{
                 if(nextStep===1){
                     this.props.getViewPointConfig(this.props.targetMenuSort,this.props.menuData.viewPointConfigApi,()=>{
                         this.props.clickNextStep(this.props.targetMenuSort, nextStep);
@@ -213,128 +307,112 @@ class MenuSettingOptionAddMenu extends React.Component {
                     this.props.clickNextStep(this.props.targetMenuSort, nextStep);
                 }
             }} className="btn">下一步</button>);
+            }
         }
-    }
 
-    createFooterLastStepButton() {
-        let progressState = this.props.target.status.progress;
-        let lastStep = function () {
-            for (let i in progressState) {
-                if (progressState[i].on) {
-                    return --i;
+        let createFooterFinishStepButton = ()=> {
+            let deleteActiveContent = (k, v)=> {
+                this.props.closeMenuSetting(k, v);
+                let result = null;
+                if (k > 0 && k + 1 === this.props.activeContent.length) {
+                    result = this.props.activeContent[k - 1];
+                } else if (this.props.activeContent.length > 0) {
+                    result = this.props.activeContent[k + 1];
                 }
+                result ? this.props.selectActiveContent(result) : '';
             }
-        }();
-        if (!this.props.isRootMenu && lastStep > -1) {
-            return (<button className="btn" onClick={
-            ()=>{
-                this.props.clickChangeSetp(this.props.targetMenuSort, lastStep);
-            }
-            }>上一步</button>);
-        }
-    }
 
-    deleteActiveContent(k,v) {
-        this.props.closeMenuSetting(k,v);
-        let result = null;
-        if (k > 0 && k + 1 === this.props.activeContent.length) {
-            result = this.props.activeContent[k - 1];
-        } else if (this.props.activeContent.length > 0) {
-            result = this.props.activeContent[k + 1];
-        }
-        result ? this.props.selectActiveContent(result) : '';
-    }
+            let handleFinishButton = ()=> {
+                let menuData = this.props.menuData;
+                switch (this.props.targetMenuSort) {
+                    case 'menuSettingAddMenu':
+                        if (isOnline) {
 
-    handleFinishButton(){
-        let menuData = this.props.menuData;
-        switch (this.props.targetMenuSort){
-            case 'menuSettingAddMenu':
-                if(isOnline){
-
-                }else{
-                    let allMenu = this.props.allMenu;
-                    let createTime = getNowFormatDate();
-                    let updateTime = getNowFormatDate();
-                    let id = allMenu.length+1;
-                    let parentCode = '';
-                    if(this.props.target.obj.targetMenu.code){
-                        parentCode = this.props.target.obj.targetMenu.code;
-                    }else{
-                        parentCode = '0';
-                    }
-                    let code = '';
-                    let deCode = 1;
-                    for(let i in allMenu){
-                        if(allMenu[i].parentCode===parentCode){
-                            deCode++;
+                        } else {
+                            let allMenu = this.props.allMenu;
+                            let createTime = getNowFormatDate();
+                            let updateTime = getNowFormatDate();
+                            let id = allMenu.length + 1;
+                            let parentCode = '';
+                            if (this.props.target.obj.targetMenu.code) {
+                                parentCode = this.props.target.obj.targetMenu.code;
+                            } else {
+                                parentCode = '0';
+                            }
+                            let code = '';
+                            let deCode = 1;
+                            for (let i in allMenu) {
+                                if (allMenu[i].parentCode === parentCode) {
+                                    deCode++;
+                                }
+                            }
+                            code = (parentCode === '0' ? '' : parentCode) + '' + deCode;
+                            menuData.createtime = createTime;
+                            menuData.updatetime = updateTime;
+                            menuData.id = id;
+                            menuData.code = code;
                         }
-                    }
-                    code = (parentCode==='0'?'':parentCode)+''+deCode;
-                    menuData.createtime = createTime;
-                    menuData.updatetime = updateTime;
-                    menuData.id=id;
-                    menuData.code=code;
+                        break;
                 }
-                break;
-        }
-        this.props.clickFinish(menuData);
-        this.deleteActiveContent(this.props.nowOnContentKey,this.props.target.obj);
-    }
-
-    createFooterFinishStepButton() {
-        let progressState = this.props.target.status.progress;
-        let Step = function () {
-            for (let i in progressState) {
-                if (progressState[i].on) {
-                    return i;
-                }
+                this.props.clickFinish(menuData);
+                deleteActiveContent(this.props.nowOnContentKey, this.props.target.obj);
             }
-        }();
-        if (this.props.isRootMenu || Step === '3') {
-            return (<button onClick={()=>{
-                this.handleFinishButton();
+
+            let progressState = this.props.target.status.progress;
+            let Step = function () {
+                for (let i in progressState) {
+                    if (progressState[i].on) {
+                        return i;
+                    }
+                }
+            }();
+            if (this.props.isRootMenu || Step === '3') {
+                return (<button onClick={()=>{
+                handleFinishButton();
             }} className="btn btn-finish">完成</button>);
+            }
+
         }
 
-    }
-
-    createFooter(height) {
         return (<div className="option-menu-footer">
             <div className="btn-group">
-                {this.createFooterLastStepButton()}
-                {this.createFooterNextStepButton()}
-                {this.createFooterFinishStepButton()}
+                {createFooterLastStepButton()}
+                {createFooterNextStepButton()}
+                {createFooterFinishStepButton()}
             </div>
         </div>);
 
     }
 
-    createAlertShield(){
-        let onOkFunc = ()=>{
+    //渲染通知遮罩层
+    createAlertShield() {
+        let onOkFunc = ()=> {
             this.props.clickShieldAlertOK(this.props.targetMenuSort);
         }
-        if(this.props.target.status.error){
-            return (<ShieldAlert title="警告" content={this.props.target.status.error} onOkFunc={onOkFunc}></ShieldAlert>);
+        if (this.props.target.status.error) {
+            return (
+                <ShieldAlert title="警告" content={this.props.target.status.error} onOkFunc={onOkFunc}></ShieldAlert>);
         }
     }
 
+    //渲染按钮设置遮罩层
     createToggleIconSetting() {
-        if(this.props.target.status.isToggleIconSetting){
+        if (this.props.target.status.isToggleIconSetting) {
             return (
                 <div className="shield">
                     <div className="shield-content">
                         <ul>
                             {
-                                (()=>{
-                                    return IconList.IconList.map((e,k)=>{
-                                        if(e.name===''){
-                                            return (<li key={k}><i  onClick={()=>{
+                                (()=> {
+                                    return IconList.IconList.map((e, k)=> {
+                                        if (e.name === '') {
+                                            return (<li key={k}><i onClick={()=>{
                                                 this.props.toggleIconSetting(this.props.targetMenuSort,e.name)
-                                            }}  style={{fontStyle:'normal'}}>空</i> </li> );
+                                            }} style={{fontStyle:'normal'}}>空</i></li> );
                                         }
                                         return (<li key={k}><i onClick={()=>{
                                             this.props.toggleIconSetting(this.props.targetMenuSort,e.name)
-                                        }} className={'fa '+e.name}></i> </li> );
+                                        }} className={'fa '+e.name}></i></li> );
                                     });
                                 })()
                             }
@@ -345,6 +423,7 @@ class MenuSettingOptionAddMenu extends React.Component {
         }
     }
 
+
     renderPC() {
         let height = this.props.height;
         let bodyHeight = height - 150;
@@ -354,11 +433,11 @@ class MenuSettingOptionAddMenu extends React.Component {
                 {this.createAlertShield()}
                 <div className="content-container-inset" style={{height: height}}>
                     <div style={{minWidth: 600}}>
-                    {this.createOptionMenuProgress()}
-                    <div style={{height: bodyHeight, clear: "both"}} className="content-setting-frame">
-                        {this.judgeRenderFunction()}
-                    </div>
-                    {this.createFooter()}
+                        {this.createOptionMenuProgress()}
+                        <div style={{height: bodyHeight, clear: "both"}} className="content-setting-frame">
+                            {this.judgeRenderFunction()}
+                        </div>
+                        {this.createFooter()}
                     </div>
                 </div>
             </div>
@@ -378,20 +457,24 @@ class MenuSettingOptionAddMenu extends React.Component {
 }
 
 const state = state=> {
-    let target,nowOnContentKey;
-    state.containerTitleMenu.activeContent.map((v,k)=> {
+    let target, nowOnContentKey;
+    state.containerTitleMenu.activeContent.map((v, k)=> {
         if (v.obj.id === state.common.nowOnContentTarget.id) {
             target = v;
             nowOnContentKey = k;
         }
     });
     return ({
-        allMenu:state.sideBar.menu,
-        activeContent:state.containerTitleMenu.activeContent,
+        allMenu: state.sideBar.menu,
+        activeContent: state.containerTitleMenu.activeContent,
+        //本选项卡头包含的选项卡内数据{obj:选项卡菜单，status：选项卡内状态，isActive:是否正使用}
         target: target,
-        nowOnContentKey:nowOnContentKey,
+        //视图层通过菜单视图项Api获取的表字段内容
+        viewPointConfigData: target.status.viewPointConfigData,
+        //当前选项卡所在数组的位置，用来关闭本选项卡
+        nowOnContentKey: nowOnContentKey,
         isRootMenu: target.status.isRootMenu,
-        configApi:target.status.configApi,
+        configApi: target.status.configApi,
         targetMenuSort: target.obj.menuSort,
         menuData: target.status.menuData,
         defaultToggleStatus: state.common.defaultToggleStatus

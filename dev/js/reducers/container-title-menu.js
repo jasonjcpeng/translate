@@ -12,15 +12,14 @@ const initState = {
 }
 
 
-
-function setActiveContentStatus(state,menuSort,data){
-    return update(state,{
+function setActiveContentStatus(state, menuSort, data) {
+    return update(state, {
         activeContent: {
             $apply: function (arr) {
-                return arr.map(function(v){
-                    if(v.obj.menuSort===menuSort){
-                        return update(v,data);
-                    }else{
+                return arr.map(function (v) {
+                    if (v.obj.menuSort === menuSort) {
+                        return update(v, data);
+                    } else {
                         return v;
                     }
                 });
@@ -145,89 +144,113 @@ export default function (state = initState, action) {
         case Constants.CONTENT_SETTING_INIT:
             let initContentSetting = {
                 error: undefined,
-                rightActiveContent:{key:'baseInfo',name:'基本信息'},
-                defaultMenuSettingTableToggleItem:['0'],
-                selectMenuSettingTableItem:undefined
+                rightActiveContent: {key: 'baseInfo', name: '基本信息'},
+                defaultMenuSettingTableToggleItem: ['0'],
+                selectMenuSettingTableItem: undefined
             }
             if (action.error) {
-                initContentSetting.error=action.error;
+                initContentSetting.error = action.error;
             }
-            return setActiveContentStatus(state,'setting',{status:{$set:initContentSetting}});
+            return setActiveContentStatus(state, 'setting', {status: {$set: initContentSetting}});
             break;
         case Constants.CONTENT_SETTING_CHECK_RIGHT_ACTIVE_CONTAINER:
-            return setActiveContentStatus(state,action.menuSort,{status:{rightActiveContent:{$set:action.payload}}});
+            return setActiveContentStatus(state, action.menuSort, {status: {rightActiveContent: {$set: action.payload}}});
             break;
         case Constants.CONTENT_SETTING_CHANGE_MENU:
             /*修改菜单内容
-            * payload:obj 修改后的菜单
-            * */
-            return update(state,{activeContent:{$apply:arr=>{
-                return arr.map(v=>{
-                    if(v.obj.id===action.payload.id){
-                        return action.payload;
-                    }else{
-                        return v;
+             * payload:obj 修改后的菜单
+             * */
+            return update(state, {
+                activeContent: {
+                    $apply: arr=> {
+                        return arr.map(v=> {
+                            if (v.obj.id === action.payload.id) {
+                                return action.payload;
+                            } else {
+                                return v;
+                            }
+                        });
                     }
-                });
-            }}});
-        break;
+                }
+            });
+            break;
         case Constants.CONTENT_SETTING_SETTING_MENU_TOGGLE_TABLE_MENU_ITEM:
-            let newStat = setActiveContentStatus(state,'setting',{status:{selectMenuSettingTableItem:{$set:undefined}}});
-            return setActiveContentStatus(newStat,'setting',{status:{defaultMenuSettingTableToggleItem:{$apply:arr=>{
-                let isPush = true;
-                let newArr = [];
-                let DelArr = [];
-                let root = '';
-                for(let i in arr){
-                    if(arr[i]===action.payload){
-                        isPush = false;
-                        root = action.payload;
-                        DelArr.push(arr[i]);
-                    }
-                    if(root){
-                        if(arr[i]!==action.payload&&arr[i].slice(0,root.length)===root){
-                            DelArr.push(arr[i]);
-                            isPush = false;
+            let newStat = setActiveContentStatus(state, 'setting', {status: {selectMenuSettingTableItem: {$set: undefined}}});
+            return setActiveContentStatus(newStat, 'setting', {
+                status: {
+                    defaultMenuSettingTableToggleItem: {
+                        $apply: arr=> {
+                            let isPush = true;
+                            let newArr = [];
+                            let DelArr = [];
+                            let root = '';
+                            for (let i in arr) {
+                                if (arr[i] === action.payload) {
+                                    isPush = false;
+                                    root = action.payload;
+                                    DelArr.push(arr[i]);
+                                }
+                                if (root) {
+                                    if (arr[i] !== action.payload && arr[i].slice(0, root.length) === root) {
+                                        DelArr.push(arr[i]);
+                                        isPush = false;
+                                    }
+                                }
+                            }
+                            newArr = arr.filter(i=> {
+                                return DelArr.indexOf(i) < 0;
+                            });
+                            if (isPush) {
+                                newArr.push(action.payload);
+                                return newArr;
+                            } else {
+                                return newArr;
+                            }
                         }
                     }
                 }
-                newArr = arr.filter(i=>{return DelArr.indexOf(i) < 0;});
-                if(isPush){
-                    newArr.push(action.payload);
-                    return newArr;
-                }else{
-                    return newArr;
-                }
-            }}}});
-        break;
+            });
+            break;
         case Constants.CONTENT_SETTING_SETTING_MENU_TOGGLE_OFF_MENU_ITEM:
-            return setActiveContentStatus(state,'setting',{status:{defaultMenuSettingTableToggleItem:{$set:["0"]},selectMenuSettingTableItem:{$set:undefined}}});
+            return setActiveContentStatus(state, 'setting', {
+                status: {
+                    defaultMenuSettingTableToggleItem: {$set: ["0"]},
+                    selectMenuSettingTableItem: {$set: undefined}
+                }
+            });
             break;
         case Constants.CONTENT_SETTING_SETTING_MENU_SELECT_TABLE_MENU_ITEM:
-            return setActiveContentStatus(state,'setting',{status:{selectMenuSettingTableItem:{$set:action.payload}}});
-        break;
+            return setActiveContentStatus(state, 'setting', {status: {selectMenuSettingTableItem: {$set: action.payload}}});
+            break;
         case Constants.APP_DELETE_MENU_ITEM:
-            let newState =  update(state,{activeContent:{$apply:arr=>{
-                return arr.filter(v=>{
-                    if(v.obj.id!==action.payload.id){
-                        return v;
+            let newState = update(state, {
+                activeContent: {
+                    $apply: arr=> {
+                        return arr.filter(v=> {
+                            if (v.obj.id !== action.payload.id) {
+                                return v;
+                            }
+                        });
                     }
-                });
-            }}});
-            return setActiveContentStatus(newState,'setting',{status:{selectMenuSettingTableItem:{$set:undefined}}});
+                }
+            });
+            return setActiveContentStatus(newState, 'setting', {status: {selectMenuSettingTableItem: {$set: undefined}}});
             break;
         //---------------MenuSettingOption------------------------------
         case Constants.MENU_SETTING_OPTION_MENU_DID_MOUNT:
-            let parentCode = action.target.targetMenu === '0'?'0':action.target.targetMenu.code;
+            let parentCode = action.target.targetMenu === '0' ? '0' : action.target.targetMenu.code;
             let initMenuSettingOption = {
                 error: undefined,
-                isRootMenu:undefined,
-                isToggleIconSetting:false,
-                progress:[{active:true,on:true},{active:false,on:false},{active:false,on:false},{active:false,on:false}],
-                viewPointConfigData:{},
-                menuData:{
+                isRootMenu: undefined,
+                isToggleIconSetting: false,
+                progress: [{active: true, on: true}, {active: false, on: false}, {
+                    active: false,
+                    on: false
+                }, {active: false, on: false}],
+                viewPointConfigData: {},
+                menuData: {
                     id: '',
-                    icon:'',
+                    icon: '',
                     code: '',
                     parentCode: parentCode,
                     menuName: '',
@@ -235,82 +258,124 @@ export default function (state = initState, action) {
                     isEnable: true,
                     createtime: '',
                     updatetime: '',
-                    api:'',
-                    viewPointConfigApi:'',
-                    viewPoint:{
-
-                    },
-                    btnGroup:{
-
-                    },
-                    modifyViewPoint:{
-
-                    }
+                    api: '',
+                    viewPointConfigApi: 'api/configapi',
+                    viewPoint: {},
+                    btnGroup: {},
+                    modifyViewPoint: {}
                 }
             }
             if (action.error) {
-                initMenuSettingOption.error=action.error;
-                return setActiveContentStatus(state,action.target.menuSort,{status:{$set:initMenuSettingOption}});
+                initMenuSettingOption.error = action.error;
+                return setActiveContentStatus(state, action.target.menuSort, {status: {$set: initMenuSettingOption}});
             }
-            return setActiveContentStatus(state,action.target.menuSort,{status:{$set:initMenuSettingOption}});
+            return setActiveContentStatus(state, action.target.menuSort, {status: {$set: initMenuSettingOption}});
             break;
         case Constants.MENU_SETTING_OPTION_CHECK_IS_ROOT_MENU:
-            return setActiveContentStatus(state,action.targetMenuSort,{status:{isRootMenu:{$set:action.payload}}});
+            return setActiveContentStatus(state, action.targetMenuSort, {status: {isRootMenu: {$set: action.payload}}});
             break;
         case Constants.MENU_SETTING_OPTION_ONCLICK_NEXT_STEP:
-            return setActiveContentStatus(state,action.targetMenuSort,{status:{progress:{$splice:[[action.payload-1,2,{active:true,on:false},{active:true,on:true}]]}}})
+            return setActiveContentStatus(state, action.targetMenuSort, {
+                status: {
+                    progress: {
+                        $splice: [[action.payload - 1, 2, {
+                            active: true,
+                            on: false
+                        }, {active: true, on: true}]]
+                    }
+                }
+            })
             break;
         case Constants.MENU_SETTING_OPTION_ONCLICK_CHANGE_STEP:
-            return setActiveContentStatus(state,action.targetMenuSort,{status:{progress:{$apply:arr=>{
-                return arr.map((val,k)=>{
-                    if(k===action.payload){
-                        return {active:true,on:true};
-                    }else{
-                        return {active:val.active,on:false}
+            return setActiveContentStatus(state, action.targetMenuSort, {
+                status: {
+                    progress: {
+                        $apply: arr=> {
+                            return arr.map((val, k)=> {
+                                if (k === action.payload) {
+                                    return {active: true, on: true};
+                                } else {
+                                    return {active: val.active, on: false}
+                                }
+                            });
+                        }
                     }
-                });
-            }}}});
+                }
+            });
             break;
         case Constants.MENU_SETTING_TOGGLE_ICON_SETTING:
-            if(action.icon!==undefined){
-                return setActiveContentStatus(state,action.targetMenuSort,{status:{isToggleIconSetting:{$apply:bol=>{
-                    return !bol;
-                }},menuData:{icon:{$set:action.icon}}}});
-            }else{
-                return setActiveContentStatus(state,action.targetMenuSort,{status:{isToggleIconSetting:{$apply:bol=>{
-                    return !bol;
-                }}}});
+            if (action.icon !== undefined) {
+                return setActiveContentStatus(state, action.targetMenuSort, {
+                    status: {
+                        isToggleIconSetting: {
+                            $apply: bol=> {
+                                return !bol;
+                            }
+                        }, menuData: {icon: {$set: action.icon}}
+                    }
+                });
+            } else {
+                return setActiveContentStatus(state, action.targetMenuSort, {
+                    status: {
+                        isToggleIconSetting: {
+                            $apply: bol=> {
+                                return !bol;
+                            }
+                        }
+                    }
+                });
             }
             break;
         case Constants.MENU_SETTING_CHANGE_MENU_DATA:
-            switch(action.progressName){
-                case 'setUp':
-                    return setActiveContentStatus(state,action.targetMenuSort,{status:{menuData:{$apply:obj=>{
-                        for(let i in obj){
-                            if(i===action.key){
-                                obj[i]=action.value;
-                            }
-                        }
-                        return obj;
-                    }}}});
-                    break;
-                case 'viewPoint':
-                    break;
-                case 'btnGroup':
-                    break;
-                case 'modifyViewPoint':
-                    break;
+            let judgeInterfaceDataIsSameAsMenuDataViewPoint = (menuData, apiData)=> {
+                let menuDataLength=0,apiDataLength = 0;
+                let sample={}, compare ={};
+                for (let m in menuData) {
+                    menuDataLength++;
+                }
+                for (let i in apiData) {
+                    apiDataLength++;
+                }
+                sample = menuDataLength >= apiDataLength ? menuData : apiData;
+                compare = menuDataLength < apiDataLength? menuData : apiData;
+                for (let v in sample) {
+                    if (!compare[v]) {
+                        return false;
+                    }
+                }
+                return true;
             }
+            return setActiveContentStatus(state, action.targetMenuSort, {
+                status: {
+                    menuData: {
+                        $apply: obj=> {
+                            for (let i in obj) {
+                                if (i === action.key) {
+                                    //额外判断ViewPoint接口数据键值与菜单数据是否相同，否则接口的空白数据覆盖菜单数据。
+                                    if (action.flag && action.flag === 'viewPointInit') {
+                                        if (!judgeInterfaceDataIsSameAsMenuDataViewPoint(obj[i], action.value)) {
+                                            obj[i] = action.value;
+                                        }
+                                    } else {
+                                        obj[i] = action.value;
+                                    }
+                                }
+                            }
+                            return obj;
+                        }
+                    }
+                }
+            });
             break;
         case Constants.MENU_SETTING_GET_VIEW_POINT_CONFIG:
-            if(action.error){
-                return setActiveContentStatus(state,action.targetMenuSort,{status:{error:{$set:"来自菜单视图项API:"+action.error}}})
-            }else{
-                return setActiveContentStatus(state,action.targetMenuSort,{status:{viewPointConfigData:{$set:action.payload}}})
+            if (action.error) {
+                return setActiveContentStatus(state, action.targetMenuSort, {status: {error: {$set: "来自菜单视图项API:" + action.error}}})
+            } else {
+                return setActiveContentStatus(state, action.targetMenuSort, {status: {viewPointConfigData: {$set: action.payload}}})
             }
             break;
         case Constants.MENU_SETTING_RESET_ERROR:
-            return setActiveContentStatus(state,action.targetMenuSort,{status:{error:{$set:undefined}}});
+            return setActiveContentStatus(state, action.targetMenuSort, {status: {error: {$set: undefined}}});
             break;
 
 

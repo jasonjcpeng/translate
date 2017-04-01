@@ -26,6 +26,36 @@
       table{
         width: 100%;
       }
+      .view-point-table{
+        tr{
+          td{
+            cursor:text;
+          }
+        }
+        tr:hover{
+          background: none;
+        }
+        input:hover{
+          background-color:#fcffe8;
+        }
+        input[type=checkbox]{
+          cursor: pointer;
+        }
+        input[type=text]{
+          text-align: center;
+          height: 30px;
+          width: 100%;
+          line-height: 30px;
+          border:0px;
+        }
+        input[type=number]{
+          text-align: center;
+          height: 30px;
+          width: 100%;
+          line-height: 30px;
+          border:0px;
+        }
+      }
     }
 
     .content-setting-nav-bar{

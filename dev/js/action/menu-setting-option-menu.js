@@ -48,14 +48,23 @@ export const toggleIconSetting = (targetMenuSort,iconName)=>{
     }
 }
 
-export const changeMenuData = (targetMenuSort,progressName,key,val)=>{
-    return ({
-        type:Constants.MENU_SETTING_CHANGE_MENU_DATA,
-        targetMenuSort:targetMenuSort,
-        progressName:progressName,
-        key:key,
-        value:val
-    });
+export const changeMenuData = (targetMenuSort,key,val,flag)=>{
+    if(flag){
+        return ({
+            type:Constants.MENU_SETTING_CHANGE_MENU_DATA,
+            targetMenuSort:targetMenuSort,
+            key:key,
+            value:val,
+            flag:flag
+        });
+    }else{
+        return ({
+            type:Constants.MENU_SETTING_CHANGE_MENU_DATA,
+            targetMenuSort:targetMenuSort,
+            key:key,
+            value:val
+        });
+    }
 }
 
 export const closeMenuSetting = (k,nowOnContent)=>{
@@ -95,6 +104,7 @@ export const getViewPointConfig = (targetMenuSort,ViewPointConfigApi,callback)=>
         menuSettingOptionMenuFetchViewPointConfig(ViewPointConfigApi).then(
             res=> {
                 callback();
+                dispatch(changeMenuData(targetMenuSort,'viewPoint',res,'viewPointInit'));
                 return dispatch({
                     type: Constants.MENU_SETTING_GET_VIEW_POINT_CONFIG,
                     targetMenuSort: targetMenuSort,
@@ -118,4 +128,5 @@ export const clickShieldAlertOK=(targetMenuSort)=>{
         targetMenuSort: targetMenuSort
     });
 }
+
 
