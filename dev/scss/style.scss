@@ -76,13 +76,14 @@ body {
     li{
       float: left;
       width: 50%;
-      span:nth-child(1){
+      span{
         float: left;
+      }
+      span:nth-child(1){
         display: block;
         width: 25%;
       }
       span:nth-child(2){
-        float: left;
         display: block;
         width: 75%;
       }
@@ -130,7 +131,6 @@ body {
       float: right;
     }
   }
-
 }
 
 

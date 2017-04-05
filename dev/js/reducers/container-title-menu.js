@@ -259,7 +259,7 @@ export default function (state = initState, action) {
                     createtime: '',
                     updatetime: '',
                     api: '',
-                    viewPointConfigApi: 'api/configapi',
+                    viewPointConfigApi: 'api/configApi',
                     viewPoint: {},
                     btnGroup: {},
                     modifyViewPoint: {}

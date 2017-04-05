@@ -7,8 +7,10 @@ import Loader from 'react-loader';
 import {LoaderOption} from '../../config/config';
 import classNames from 'classnames';
 import ShieldAlert from '../shield-alert';
+import Checker from '../piecemeal-components/checker';
 //json
 import IconList from '../../../jsons/icon-list.json';
+import BtnGroupList from '../../../jsons/btn-group-list.json';
 //tool
 import {getNowFormatDate, IsObjEmpty} from '../../config/tools';
 import {isOnline} from '../../config/config'
@@ -39,13 +41,47 @@ class MenuSettingOptionAddMenu extends React.Component {
                 return this.createViewPointSetting();
                 break;
             case '2':
-                return <div>按钮</div>
+                return this.createButtonGroupSetting();
                 break;
             case '3':
                 return <div>添加修改</div>
                 break;
         }
 
+    }
+
+    createButtonGroupSetting() {
+        let createBtnGroupList = ()=>{
+            let btnGroupList = BtnGroupList;
+            let render = [];
+            let btnGroup = this.props.menuData.btnGroup;
+            let handleOnClick = (componentName,btnGroupItem)=>{
+                let btnItem = {
+                    componentName:componentName,
+                    isNeedTarget:btnGroupItem.isNeedTarget,
+                    isToggle:btnGroupItem.isNeedTarget,
+                    CNName:'',
+                    api:''
+                }
+                let newBtnGroup = {}
+                let count = 0;
+                for(let i in btnGroup){
+                    newBtnGroup[i] = btnGroup[i];
+                    count++;
+                }
+                newBtnGroup[count]=btnItem;
+                this.props.changeMenuData(this.props.targetMenuSort, 'btnGroup', newBtnGroup);
+            }
+            for(let componentName in btnGroupList){
+                let item = (<li onClick={()=>{
+                    handleOnClick(componentName,btnGroupList[componentName]);
+                }}>{btnGroupList[componentName].remark}</li>);
+                render.push(item);
+            }
+            return (<ul className="btn-group-setting-btn-group-list">{render}</ul>);
+        }
+
+        return <div className="btn-group-setting">{createBtnGroupList()}</div>;
     }
 
     //渲染表格视图设置
@@ -56,23 +92,21 @@ class MenuSettingOptionAddMenu extends React.Component {
 
         let tBody = ()=> {
             let result = [];
-            for (let v in this.props.menuData.viewPoint) {
+            let viewPoint = this.props.menuData.viewPoint;
+            for (let v in viewPoint) {
                 let render = (<tr key={v}>
-                    <td><input onChange={e=>{
-                        let checked = e.target.checked;
-                        let viewPoint = this.props.menuData.viewPoint;
-                        viewPoint[v].isEnable = checked;
-                        handleOnChange(viewPoint);
-                    }} checked={this.props.menuData.viewPoint[v].isEnable} type="checkbox"/></td>
+                    <td> <Checker key={viewPoint[v].isEnable} checkState={viewPoint[v].isEnable} funcOnClick={(callBackCheck)=>{
+                            viewPoint[v].isEnable = callBackCheck;
+                             handleOnChange(viewPoint);
+                        }}  ></Checker></td>
                     <td>{v}</td>
                     <td><input onChange={
                     e=>{
                     let CNName = e.target.value;
-                    let viewPoint = this.props.menuData.viewPoint;
                         viewPoint[v].CNName = CNName;
                         handleOnChange(viewPoint);
                     }
-                    } value={this.props.menuData.viewPoint[v].CNName} type="text"/></td>
+                    } value={viewPoint[v].CNName} type="text"/></td>
                     <td><input onChange={
                     e=>{
                     let width = (()=>{
@@ -84,18 +118,17 @@ class MenuSettingOptionAddMenu extends React.Component {
                        return e.target.value
                        }
                     })();
-                    let viewPoint = this.props.menuData.viewPoint;
                         viewPoint[v].width = width;
                         handleOnChange(viewPoint);
                     }
-                    } value={this.props.menuData.viewPoint[v].width} min="0" max="100" type="number"/></td>
+                    } value={viewPoint[v].width} min="0" max="100" type="number"/></td>
                 </tr>);
                 result.push(render);
             }
             return result;
         }
 
-        let table = (<table className="view-point-table">
+        let table = (<table className="setting-table">
             <thead>
             <tr>
                 <th>是否呈现</th>
@@ -118,13 +151,11 @@ class MenuSettingOptionAddMenu extends React.Component {
     createOperationSetUp() {
         let createIsRootMenuCheckBox = ()=> {
             return (
-                <li><label style={{cursor: 'pointer', userSelect: 'none', marginLeft: '0'}}
-                           htmlFor="rootMenu">作为节点菜单:</label><input id="rootMenu" style={{cursor: 'pointer'}}
-                                                                    type="checkbox"
-                                                                    defaultChecked={this.props.isRootMenu}
-                                                                    onChange={e=> {
-                                                                        this.props.checkIsRootMenu(this.props.targetMenuSort, e.target.checked);
-                                                                    }}/></li> );
+                <li><span>作为节点菜单:</span>
+                    <Checker key={this.props.isRootMenu} checkState={this.props.isRootMenu} funcOnClick={(callBackCheckState)=>{
+                        this.props.checkIsRootMenu(this.props.targetMenuSort,callBackCheckState);
+                    }}></Checker>
+                </li> );
         }
 
 
