@@ -44,11 +44,36 @@ class MenuSettingOptionAddMenu extends React.Component {
                 return this.createButtonGroupSetting();
                 break;
             case '3':
-                return <div>添加修改</div>
+                return this.createModifyViewPointSetting();
                 break;
         }
 
     }
+
+    //渲染添加修改遮罩层设置
+    createModifyViewPointSetting(){
+        let createModifyItemList = ()=>{
+
+        }
+
+        return (<div className="btn-group-setting">{createModifyItemList()}
+        <table className="setting-table">
+            <thead>
+            <tr>
+                <th>字段名称</th>
+                <th style={{width:"80px"}}>是否呈现</th>
+                <th style={{width:"260px"}}>匹配中文名称</th>
+                <th style={{width:"220px"}}>布局方式</th>
+                <th style={{width:"120px"}}>占比</th>
+                <th>备注</th>
+                <th style={{width:"80px"}}>预览</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table></div>);
+    }
+
     //渲染按钮组设置
     createButtonGroupSetting() {
         let createBtnGroupList = ()=>{
@@ -76,7 +101,7 @@ class MenuSettingOptionAddMenu extends React.Component {
             return (<div className="btn-group-setting-btn-group-list"><ul >{render}</ul></div>);
         }
 
-        let createBtnGroupTable = ()=>{
+        let createBtnGroupTableBody = ()=>{
             let handleOnChange = (key,val)=>{
                 let newValue = [];
                 newValue = this.props.menuData.btnGroup.map((v,k)=>{
@@ -165,7 +190,7 @@ class MenuSettingOptionAddMenu extends React.Component {
             </tr>
             </thead>
             <tbody>
-            {createBtnGroupTable()}
+            {createBtnGroupTableBody()}
             </tbody>
         </table>
             <div className="btn-group-setting-remark">
@@ -390,7 +415,7 @@ class MenuSettingOptionAddMenu extends React.Component {
     }
 
     //渲染页脚按钮
-    createFooter(height) {
+    createFooter() {
         let createFooterLastStepButton = ()=> {
             let progressState = this.props.target.status.progress;
             let lastStep = function () {
@@ -516,7 +541,7 @@ class MenuSettingOptionAddMenu extends React.Component {
         }
     }
 
-    //渲染按钮设置遮罩层
+    //渲染图标设置遮罩层
     createToggleIconSetting() {
         if (this.props.target.status.isToggleIconSetting) {
             return (
