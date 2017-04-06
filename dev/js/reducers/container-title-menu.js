@@ -261,7 +261,7 @@ export default function (state = initState, action) {
                     api: '',
                     viewPointConfigApi: 'api/configApi',
                     viewPoint: {},
-                    btnGroup: {},
+                    btnGroup: [],
                     modifyViewPoint: {}
                 }
             }

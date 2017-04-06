@@ -59,11 +59,16 @@
 
       .btn-group-setting{
         .btn-group-setting-btn-group-list{
+          overflow: hidden;
+          margin: 10px 0 10px 0;
+          ul{
+            margin: 0;
             li{
+              user-select: none;
               cursor: pointer;
               padding-left:10px;
               margin-right: 10px;
-              border:solid 1px #ddd;
+              border:solid 1px;
               border-radius: 3px;
               height: 30px;
               line-height: 30px;
@@ -73,9 +78,15 @@
               white-space: nowrap;
               text-overflow: ellipsis;
             }
-          li:hover{
-            background-color: #fcffe8;
+            li:hover{
+            }
+            li:active{
+            }
           }
+        }
+        .btn-group-setting-remark{
+          font-weight: 600;
+          text-align: right;
         }
       }
     }
@@ -221,13 +232,13 @@
           height: 0px;
           position: absolute;
           top: 0;
-          right: -56px;
+          right: -52px;
           content: ' '
         }
 
         li:before {
           border-left-color: #ddd;
-          right: -64px;
+          right: -60px;
         }
         li:last-child::after,li:last-child::before{
           border: 0px solid transparent;

@@ -1,6 +1,6 @@
 {
-  "add":{"remark":"表单内添加新内容","isNeedTarget":"false"},
-  "delete":{"remark":"删除选中的表单项内容","isNeedTarget":"true"},
-  "modify":{"remark":"打开模态框修改选中的表单项内容","isNeedTarget":"true"},
-  "check":{"remark":"打开模态框查看选中表单项的具体内容","isNeedTarget":"true"}
+  "add":{"remark":"表单内添加新内容","isNeedTarget":false},
+  "delete":{"remark":"删除选中的表单项内容","isNeedTarget":true},
+  "modify":{"remark":"打开模态框修改选中的表单项内容","isNeedTarget":true},
+  "check":{"remark":"打开模态框查看选中表单项的具体内容","isNeedTarget":true}
 }

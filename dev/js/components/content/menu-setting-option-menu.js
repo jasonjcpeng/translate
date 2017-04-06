@@ -49,7 +49,7 @@ class MenuSettingOptionAddMenu extends React.Component {
         }
 
     }
-
+    //渲染按钮组设置
     createButtonGroupSetting() {
         let createBtnGroupList = ()=>{
             let btnGroupList = BtnGroupList;
@@ -58,19 +58,14 @@ class MenuSettingOptionAddMenu extends React.Component {
             let handleOnClick = (componentName,btnGroupItem)=>{
                 let btnItem = {
                     componentName:componentName,
+                    componentRemark:btnGroupItem.remark,
                     isNeedTarget:btnGroupItem.isNeedTarget,
-                    isToggle:btnGroupItem.isNeedTarget,
+                    isToggleGroup:btnGroupItem.isNeedTarget,
                     CNName:'',
                     api:''
                 }
-                let newBtnGroup = {}
-                let count = 0;
-                for(let i in btnGroup){
-                    newBtnGroup[i] = btnGroup[i];
-                    count++;
-                }
-                newBtnGroup[count]=btnItem;
-                this.props.changeMenuData(this.props.targetMenuSort, 'btnGroup', newBtnGroup);
+                btnGroup.push(btnItem);
+                this.props.changeMenuData(this.props.targetMenuSort, 'btnGroup', btnGroup);
             }
             for(let componentName in btnGroupList){
                 let item = (<li onClick={()=>{
@@ -78,10 +73,105 @@ class MenuSettingOptionAddMenu extends React.Component {
                 }}>{btnGroupList[componentName].remark}</li>);
                 render.push(item);
             }
-            return (<ul className="btn-group-setting-btn-group-list">{render}</ul>);
+            return (<div className="btn-group-setting-btn-group-list"><ul >{render}</ul></div>);
         }
 
-        return <div className="btn-group-setting">{createBtnGroupList()}</div>;
+        let createBtnGroupTable = ()=>{
+            let handleOnChange = (key,val)=>{
+                let newValue = [];
+                newValue = this.props.menuData.btnGroup.map((v,k)=>{
+                    if(k===key){
+                       return val;
+                    }else{
+                        return v;
+                    }
+                });
+                this.props.changeMenuData(this.props.targetMenuSort, 'btnGroup', newValue);
+            }
+
+            let handleDelete = (key)=>{
+                let newValue = [];
+                newValue = this.props.menuData.btnGroup.filter((v,k)=>{
+                    if(!(k===key)){
+                        return v;
+                    }
+                });
+                this.props.changeMenuData(this.props.targetMenuSort, 'btnGroup', newValue);
+
+            }
+
+            return this.props.menuData.btnGroup.map((val,k)=>{
+                return (<tr key={k}>
+                    <td>{val.componentName}</td>
+                    <td>{val.componentRemark}</td>
+                    <td><input type="text" onChange={e=>{
+                        let targetValue = e.target.value;
+                        let newVal = {
+                            componentName:val.componentName,
+                            componentRemark:val.componentRemark,
+                            isNeedTarget:val.isNeedTarget,
+                            isToggleGroup:val.isNeedTarget,
+                            CNName:targetValue,
+                            api:val.api
+                        }
+                        handleOnChange(k,newVal);
+                    }} value={val.CNName}/></td>
+                    <td><input type="text" onChange={e=>{
+                        let targetValue = e.target.value;
+                        let newVal = {
+                            componentName:val.componentName,
+                            componentRemark:val.componentRemark,
+                            isNeedTarget:val.isNeedTarget,
+                            isToggleGroup:val.isNeedTarget,
+                            CNName:val.CNName,
+                            api:targetValue
+                        }
+                        handleOnChange(k,newVal);
+                    }} value={val.api}/></td>
+                    <td>{val.isNeedTarget?"是":""}</td>
+                    <td><Checker key={val.isToggleGroup} checkState={val.isToggleGroup} funcOnClick={(checkState)=>{
+                        let targetValue = checkState;
+                        let newVal = {
+                            componentName:val.componentName,
+                            componentRemark:val.componentRemark,
+                            isNeedTarget:val.isNeedTarget,
+                            isToggleGroup:targetValue,
+                            CNName:val.CNName,
+                            api:val.api
+                        }
+                        if(!val.isNeedTarget){
+                            handleOnChange(k,newVal);
+                        }
+                    }}></Checker></td>
+                    <td><i onClick={()=>{
+                        handleDelete(k)
+                    }} className="fa fa-times-circle delete"></i></td>
+                </tr> );
+            });
+
+        }
+
+        return <div className="btn-group-setting">{createBtnGroupList()}
+        <table className="setting-table">
+            <thead>
+            <tr>
+                <th>组件名称</th>
+                <th>组件备注</th>
+                <th>匹配中文名</th>
+                <th>匹配API</th>
+                <th>需要选中</th>
+                <th style={{maxWidth:"120px"}}>作为内层按钮组</th>
+                <th style={{width:"50px"}}>删除</th>
+            </tr>
+            </thead>
+            <tbody>
+            {createBtnGroupTable()}
+            </tbody>
+        </table>
+            <div className="btn-group-setting-remark">
+                注:选择上方功能条将其加入按钮组，需要有选中目标的按钮只能作为内层按钮。
+            </div>
+        </div>;
     }
 
     //渲染表格视图设置
