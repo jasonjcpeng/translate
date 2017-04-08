@@ -403,6 +403,31 @@ $default-option-hover-button:#6f6f6f;
       }
       .content-container-inset {
         .content-setting-frame{
+          .setting-table{
+            .delete{
+              cursor: pointer;
+              color: $alert-color;
+            }
+          }
+          .field-list{
+            ul{
+              li{
+                color: $second-main-color;
+                background-color:$main-color;
+                border-color:$main-color;
+              }
+              li:hover{
+                color: $content-font-color;
+                border-color:$default-option-toggle-color;
+                background-color: #fcffe8;
+              }
+              li:active{
+                color: $second-main-color;
+                background-color: $main-color;
+              }
+            }
+          }
+
           .btn-group-setting{
             .btn-group-setting-btn-group-list{
               ul{
@@ -423,10 +448,6 @@ $default-option-hover-button:#6f6f6f;
               }
             }
             .btn-group-setting-remark{
-              color: $alert-color;
-            }
-            .delete{
-              cursor: pointer;
               color: $alert-color;
             }
           }

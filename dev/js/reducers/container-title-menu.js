@@ -247,7 +247,7 @@ export default function (state = initState, action) {
                     active: false,
                     on: false
                 }, {active: false, on: false}],
-                viewPointConfigData: {},
+                viewPointConfigData: [],
                 menuData: {
                     id: '',
                     icon: '',
@@ -260,9 +260,9 @@ export default function (state = initState, action) {
                     updatetime: '',
                     api: '',
                     viewPointConfigApi: 'api/configApi',
-                    viewPoint: {},
+                    viewPoint: [],
                     btnGroup: [],
-                    modifyViewPoint: {}
+                    modifyViewPoint: []
                 }
             }
             if (action.error) {
@@ -327,38 +327,13 @@ export default function (state = initState, action) {
             }
             break;
         case Constants.MENU_SETTING_CHANGE_MENU_DATA:
-            let judgeInterfaceDataIsSameAsMenuDataViewPoint = (menuData, apiData)=> {
-                let menuDataLength=0,apiDataLength = 0;
-                let sample={}, compare ={};
-                for (let m in menuData) {
-                    menuDataLength++;
-                }
-                for (let i in apiData) {
-                    apiDataLength++;
-                }
-                sample = menuDataLength >= apiDataLength ? menuData : apiData;
-                compare = menuDataLength < apiDataLength? menuData : apiData;
-                for (let v in sample) {
-                    if (!compare[v]) {
-                        return false;
-                    }
-                }
-                return true;
-            }
             return setActiveContentStatus(state, action.targetMenuSort, {
                 status: {
                     menuData: {
                         $apply: obj=> {
                             for (let i in obj) {
                                 if (i === action.key) {
-                                    //额外判断ViewPoint接口数据键值与菜单数据是否相同，否则接口的空白数据覆盖菜单数据。
-                                    if (action.flag && action.flag === 'viewPointInit') {
-                                        if (!judgeInterfaceDataIsSameAsMenuDataViewPoint(obj[i], action.value)) {
-                                            obj[i] = action.value;
-                                        }
-                                    } else {
                                         obj[i] = action.value;
-                                    }
                                 }
                             }
                             return obj;

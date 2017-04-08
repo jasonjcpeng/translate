@@ -94,13 +94,14 @@ export const appStart = ()=> {
 
 export const menuSettingOptionMenuFetchViewPointConfig = (api)=> {
     return createFetchPromise(api, (data, resolve, reject)=> {
-        let formatData = new Object();
+        let formatData = [];
         for (let i in data) {
-            formatData[i] = {
+            formatData.push({
+                name:i,
                 isEnable: false,
                 CNName: '',
                 width: 0
-            }
+            });
         }
         resolve(formatData);
     })

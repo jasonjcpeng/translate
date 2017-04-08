@@ -51,73 +51,76 @@ class MenuSettingOptionAddMenu extends React.Component {
     }
 
     //渲染添加修改遮罩层设置
-    createModifyViewPointSetting(){
-        let createModifyItemList = ()=>{
+    createModifyViewPointSetting() {
+        let createModifyItemList = ()=> {
 
         }
 
         return (<div className="btn-group-setting">{createModifyItemList()}
-        <table className="setting-table">
-            <thead>
-            <tr>
-                <th>字段名称</th>
-                <th style={{width:"80px"}}>是否呈现</th>
-                <th style={{width:"260px"}}>匹配中文名称</th>
-                <th style={{width:"220px"}}>布局方式</th>
-                <th style={{width:"120px"}}>占比</th>
-                <th>备注</th>
-                <th style={{width:"80px"}}>预览</th>
-            </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table></div>);
+            <table className="setting-table">
+                <thead>
+                <tr>
+                    <th>字段名称</th>
+                    <th style={{width:"80px"}}>是否呈现</th>
+                    <th style={{width:"260px"}}>匹配中文名称</th>
+                    <th style={{width:"220px"}}>布局方式</th>
+                    <th style={{width:"120px"}}>占比</th>
+                    <th>备注</th>
+                    <th style={{width:"80px"}}>预览</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>);
     }
 
     //渲染按钮组设置
     createButtonGroupSetting() {
-        let createBtnGroupList = ()=>{
+        let createBtnGroupList = ()=> {
             let btnGroupList = BtnGroupList;
             let render = [];
             let btnGroup = this.props.menuData.btnGroup;
-            let handleOnClick = (componentName,btnGroupItem)=>{
+            let handleOnClick = (componentName, btnGroupItem)=> {
                 let btnItem = {
-                    componentName:componentName,
-                    componentRemark:btnGroupItem.remark,
-                    isNeedTarget:btnGroupItem.isNeedTarget,
-                    isToggleGroup:btnGroupItem.isNeedTarget,
-                    CNName:'',
-                    api:''
+                    componentName: componentName,
+                    componentRemark: btnGroupItem.remark,
+                    isNeedTarget: btnGroupItem.isNeedTarget,
+                    isToggleGroup: btnGroupItem.isNeedTarget,
+                    CNName: '',
+                    api: ''
                 }
                 btnGroup.push(btnItem);
                 this.props.changeMenuData(this.props.targetMenuSort, 'btnGroup', btnGroup);
             }
-            for(let componentName in btnGroupList){
+            for (let componentName in btnGroupList) {
                 let item = (<li onClick={()=>{
                     handleOnClick(componentName,btnGroupList[componentName]);
                 }}>{btnGroupList[componentName].remark}</li>);
                 render.push(item);
             }
-            return (<div className="btn-group-setting-btn-group-list"><ul >{render}</ul></div>);
+            return (<div className="btn-group-setting-btn-group-list">
+                <ul >{render}</ul>
+            </div>);
         }
 
-        let createBtnGroupTableBody = ()=>{
-            let handleOnChange = (key,val)=>{
+        let createBtnGroupTableBody = ()=> {
+            let handleOnChange = (key, val)=> {
                 let newValue = [];
-                newValue = this.props.menuData.btnGroup.map((v,k)=>{
-                    if(k===key){
-                       return val;
-                    }else{
+                newValue = this.props.menuData.btnGroup.map((v, k)=> {
+                    if (k === key) {
+                        return val;
+                    } else {
                         return v;
                     }
                 });
                 this.props.changeMenuData(this.props.targetMenuSort, 'btnGroup', newValue);
             }
 
-            let handleDelete = (key)=>{
+            let handleDelete = (key)=> {
                 let newValue = [];
-                newValue = this.props.menuData.btnGroup.filter((v,k)=>{
-                    if(!(k===key)){
+                newValue = this.props.menuData.btnGroup.filter((v, k)=> {
+                    if (!(k === key)) {
                         return v;
                     }
                 });
@@ -125,7 +128,7 @@ class MenuSettingOptionAddMenu extends React.Component {
 
             }
 
-            return this.props.menuData.btnGroup.map((val,k)=>{
+            return this.props.menuData.btnGroup.map((val, k)=> {
                 return (<tr key={k}>
                     <td>{val.componentName}</td>
                     <td>{val.componentRemark}</td>
@@ -153,7 +156,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                         }
                         handleOnChange(k,newVal);
                     }} value={val.api}/></td>
-                    <td>{val.isNeedTarget?"是":""}</td>
+                    <td>{val.isNeedTarget ? "是" : ""}</td>
                     <td><Checker key={val.isToggleGroup} checkState={val.isToggleGroup} funcOnClick={(checkState)=>{
                         let targetValue = checkState;
                         let newVal = {
@@ -176,23 +179,27 @@ class MenuSettingOptionAddMenu extends React.Component {
 
         }
 
+        let table = ()=> {
+            return <table className="setting-table">
+                <thead>
+                <tr>
+                    <th>组件名称</th>
+                    <th>组件备注</th>
+                    <th>匹配中文名</th>
+                    <th>匹配API</th>
+                    <th>需要选中</th>
+                    <th style={{maxWidth:"120px"}}>作为内层按钮组</th>
+                    <th style={{width:"50px"}}>删除</th>
+                </tr>
+                </thead>
+                <tbody>
+                {createBtnGroupTableBody()}
+                </tbody>
+            </table>
+        }
+
         return <div className="btn-group-setting">{createBtnGroupList()}
-        <table className="setting-table">
-            <thead>
-            <tr>
-                <th>组件名称</th>
-                <th>组件备注</th>
-                <th>匹配中文名</th>
-                <th>匹配API</th>
-                <th>需要选中</th>
-                <th style={{maxWidth:"120px"}}>作为内层按钮组</th>
-                <th style={{width:"50px"}}>删除</th>
-            </tr>
-            </thead>
-            <tbody>
-            {createBtnGroupTableBody()}
-            </tbody>
-        </table>
+            {table()}
             <div className="btn-group-setting-remark">
                 注:选择上方功能条将其加入按钮组，需要有选中目标的按钮只能作为内层按钮。
             </div>
@@ -201,27 +208,55 @@ class MenuSettingOptionAddMenu extends React.Component {
 
     //渲染表格视图设置
     createViewPointSetting() {
-        let handleOnChange = (value)=> {
-            this.props.changeMenuData(this.props.targetMenuSort, 'viewPoint', value);
+        let handleOnChange = (key, val)=> {
+            let newValue = [];
+            newValue = this.props.menuData.viewPoint.map((v, k)=> {
+                if (k === key) {
+                    return val;
+                } else {
+                    return v;
+                }
+            });
+            this.props.changeMenuData(this.props.targetMenuSort, 'viewPoint', newValue);
+        }
+
+        let handleDelete = (key)=> {
+            let newValue = [];
+            newValue = this.props.menuData.viewPoint.filter((v, k)=> {
+                if (!(k === key)) {
+                    return v;
+                }
+            });
+            this.props.changeMenuData(this.props.targetMenuSort, 'viewPoint', newValue);
+
         }
 
         let tBody = ()=> {
-            let result = [];
-            let viewPoint = this.props.menuData.viewPoint;
-            for (let v in viewPoint) {
-                let render = (<tr key={v}>
-                    <td> <Checker key={viewPoint[v].isEnable} checkState={viewPoint[v].isEnable} funcOnClick={(callBackCheck)=>{
-                            viewPoint[v].isEnable = callBackCheck;
-                             handleOnChange(viewPoint);
-                        }}  ></Checker></td>
-                    <td>{v}</td>
+            return this.props.menuData.viewPoint.map((v, k)=> {
+                return <tr key={k}>
+                    <td><Checker key={v.isEnable} checkState={v.isEnable} funcOnClick={(callBackCheck)=>{
+                        let viewPoint = {
+                            name:v.name,
+                            isEnable: callBackCheck,
+                            CNName: v.CNName,
+                            width: v.width
+                        }
+                             handleOnChange(k,viewPoint);
+                        }}></Checker></td>
+                    <td>{v.name}</td>
+                    <td></td>
                     <td><input onChange={
                     e=>{
                     let CNName = e.target.value;
-                        viewPoint[v].CNName = CNName;
-                        handleOnChange(viewPoint);
+                        let value = {
+                            name:v.name,
+                            isEnable: v.isEnable,
+                            CNName: CNName,
+                            width: v.width
+                        }
+                        handleOnChange(k,value);
                     }
-                    } value={viewPoint[v].CNName} type="text"/></td>
+                    } value={v.CNName} type="text"/></td>
                     <td><input onChange={
                     e=>{
                     let width = (()=>{
@@ -233,31 +268,58 @@ class MenuSettingOptionAddMenu extends React.Component {
                        return e.target.value
                        }
                     })();
-                        viewPoint[v].width = width;
-                        handleOnChange(viewPoint);
-                    }
-                    } value={viewPoint[v].width} min="0" max="100" type="number"/></td>
-                </tr>);
-                result.push(render);
+                         let value = {
+                                name:v.name,
+                                isEnable: v.isEnable,
+                                CNName: v.CNName,
+                                width: width
+                            }
+                            handleOnChange(k,value);
+                        }
+                    } value={v.width} min="0" max="100" type="number"/></td>
+                    <td><i onClick={()=>{
+                    handleDelete(k);
+                    }} className="fa fa-times-circle delete"></i></td>
+                </tr>
+            });
+        }
+        let createFieldList = ()=> {
+            let handleOnClick = (viewPointItem)=> {
+                let viewPointGroup = this.props.menuData.viewPoint;
+                viewPointGroup.push(viewPointItem);
+                this.props.changeMenuData(this.props.targetMenuSort, 'viewPoint', viewPointGroup);
             }
-            return result;
+            return this.props.viewPointConfigData.map((v, k)=> {
+                return (<li onClick={()=>{
+                 handleOnClick(v);
+                }
+                } key={k}>{v.name}</li>);
+            });
         }
 
-        let table = (<table className="setting-table">
-            <thead>
-            <tr>
-                <th>是否呈现</th>
-                <th>Api字段名</th>
-                <th>匹配中文名</th>
-                <th>宽度设置(%)</th>
-            </tr>
-            </thead>
-            <tbody>
-            {tBody()}
-            </tbody>
-        </table>);
+        let table = ()=> {
+            return (<table className="setting-table">
+                <thead>
+                <tr>
+                    <th>是否呈现</th>
+                    <th>Api字段名</th>
+                    <th>备注</th>
+                    <th>匹配中文名</th>
+                    <th style={{width:"90px"}}>宽度设置(%)</th>
+                    <th style={{width:"50px"}}>删除</th>
+                </tr>
+                </thead>
+                <tbody>
+                {tBody()}
+                </tbody>
+            </table>)
+        };
 
-        return (<div >{table}</div>);
+        return (<div>
+            <div className="field-list">
+                <ul>{createFieldList()}</ul>
+            </div>
+            {table()}</div>);
 
     }
 
