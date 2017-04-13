@@ -111,8 +111,8 @@ body {
   .shield-alert{
     position: absolute;
     z-index: 1002;
-    top:25%;
-    left:25%;
+    top:calc(50% - 100px);
+    left:calc(50% - 200px);
     border-radius: 5px;
     opacity: 1 ;
     background-color: #fff;
@@ -121,11 +121,13 @@ body {
     .alert-header{
       padding: 10px 0 0 10px;
       height: 30px;
+      border-bottom: solid 3px;
     }
     .alert-content{
-      height: 100px;
-      padding: 0 0 0 50px;
-      line-height: 100px;
+      text-align: center;
+      height: 77px;
+      padding: 20px 50px 0px 50px;
+      line-height: 25px;
     }
     .alert-footer{
       float: right;

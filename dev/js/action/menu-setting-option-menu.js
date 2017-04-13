@@ -111,11 +111,20 @@ export const getViewPointConfig = (targetMenuSort,ViewPointConfigApi,callback)=>
     }
 }
 
+export const sendError = (targetMenuSort,message)=>{
+    return ({
+        type:Constants.MENU_SETTING_SEND_ERROR_MESSAGE,
+        targetMenuSort: targetMenuSort,
+        error:message
+    });
+}
+
 export const clickShieldAlertOK=(targetMenuSort)=>{
     return ({
         type:Constants.MENU_SETTING_RESET_ERROR,
         targetMenuSort: targetMenuSort
     });
 }
+
 
 

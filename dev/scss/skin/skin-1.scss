@@ -48,9 +48,11 @@ $default-option-hover-button:#6f6f6f;
   .shield-alert{
     background-color: $second-main-color;
     .alert-header{
+      border-color: $main-color;
       color: $main-color;
     }
     .alert-content{
+      color: $alert-color;
     }
     .alert-footer{
     }
@@ -447,9 +449,9 @@ $default-option-hover-button:#6f6f6f;
                 }
               }
             }
-            .btn-group-setting-remark{
-              color: $alert-color;
-            }
+          }
+          .setting-remark{
+            color: $alert-color;
           }
         }
 
@@ -513,7 +515,16 @@ $default-option-hover-button:#6f6f6f;
                 color: $main-color;
               }
               border-bottom-color: $main-color;
+            }
+            .active:before{
+              border-left-color: $second-main-color;
+            }
 
+            .now-on{
+              color: $main-color;
+            }
+            .now-on:hover{
+              color: $shallow-than-main-color !important;
             }
 
             .active:hover {

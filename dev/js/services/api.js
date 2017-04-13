@@ -100,7 +100,8 @@ export const menuSettingOptionMenuFetchViewPointConfig = (api)=> {
                 name:i,
                 isEnable: false,
                 CNName: '',
-                width: 0
+                width: 0,
+                remark:data[i]
             });
         }
         resolve(formatData);

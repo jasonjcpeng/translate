@@ -349,6 +349,9 @@ export default function (state = initState, action) {
                 return setActiveContentStatus(state, action.targetMenuSort, {status: {viewPointConfigData: {$set: action.payload}}})
             }
             break;
+        case Constants.MENU_SETTING_SEND_ERROR_MESSAGE:
+            return setActiveContentStatus(state, action.targetMenuSort, {status: {error: {$set: action.error}}});
+            break;
         case Constants.MENU_SETTING_RESET_ERROR:
             return setActiveContentStatus(state, action.targetMenuSort, {status: {error: {$set: undefined}}});
             break;

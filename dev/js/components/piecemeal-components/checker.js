@@ -14,15 +14,23 @@ class Checker extends React.Component{
         }
     }
     render(){
-        return ( <i onClick={
+        return ( <i  onClick={
                             ()=> {
                             this.props.funcOnClick(!this.state.checkState);
                             }
                         }>{function () {
             if (this.state.checkState) {
-                return (<i className="fa fa-toggle-on"></i>);
+                return (<i style={(()=>{
+                    if(this.props.style){
+                        return (this.props.style);
+                    }
+                })()} className="fa fa-toggle-on"></i>);
             } else {
-                return (<i className="fa fa-toggle-off"></i>);
+                return (<i style={(()=>{
+                    if(this.props.style){
+                        return (this.props.style);
+                    }
+                })()} className="fa fa-toggle-off"></i>);
             }
         }.bind(this)()}</i>)
     }
