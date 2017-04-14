@@ -240,6 +240,7 @@ export default function (state = initState, action) {
         case Constants.MENU_SETTING_OPTION_MENU_DID_MOUNT:
             let parentCode = action.target.targetMenu === '0' ? '0' : action.target.targetMenu.code;
             let initMenuSettingOption = {
+                previewStatus:false,
                 error: undefined,
                 isRootMenu: undefined,
                 isToggleIconSetting: false,
@@ -354,6 +355,9 @@ export default function (state = initState, action) {
             break;
         case Constants.MENU_SETTING_RESET_ERROR:
             return setActiveContentStatus(state, action.targetMenuSort, {status: {error: {$set: undefined}}});
+            break;
+        case Constants.MENU_SETTING_CHANGE_PREVIEW_STATUS:
+            return setActiveContentStatus(state, action.targetMenuSort, {status: {previewStatus: {$set: action.previewStatus}}});
             break;
 
 

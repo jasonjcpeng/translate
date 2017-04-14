@@ -8,6 +8,7 @@ import {LoaderOption} from '../../config/config';
 import classNames from 'classnames';
 import ShieldAlert from '../shield-alert';
 import Checker from '../piecemeal-components/checker';
+import ModifyShield from '../piecemeal-components/modifyShield';
 //json
 import IconList from '../../../jsons/icon-list.json';
 import BtnGroupList from '../../../jsons/btn-group-list.json';
@@ -406,7 +407,6 @@ class MenuSettingOptionAddMenu extends React.Component {
 
     }
 
-
     //渲染功能设置
     createOperationSetUp() {
         let createIsRootMenuCheckBox = ()=> {
@@ -684,7 +684,9 @@ class MenuSettingOptionAddMenu extends React.Component {
                 }
             }();
             if(Step === '3'){
-                return (<button className="btn">预览</button> );
+                return (<button onClick={()=>{
+                    this.props.changePreviewStatus(this.props.targetMenuSort,this.props.previewStatus);
+                }} className="btn">预览</button> );
             }
         }
 
@@ -738,12 +740,20 @@ class MenuSettingOptionAddMenu extends React.Component {
         }
     }
 
+    //渲染添加修改预览遮罩层
+    createModifyShield (){
+        if(this.props.target.status.menuData){
+            return (<ModifyShield key={this.props.previewStatus} isShow={this.props.previewStatus} fieldData={this.props.target.status.menuData.modifyViewPoint}></ModifyShield>);
+        }
+    }
+
 
     renderPC() {
         let height = this.props.height;
         let bodyHeight = height - 150;
         return (
             <div className="content-container animation-fadeInRight">
+                {this.createModifyShield()}
                 {this.createToggleIconSetting()}
                 {this.createAlertShield()}
                 <div className="content-container-inset" style={{height: height}}>
@@ -786,6 +796,8 @@ const state = state=> {
         target: target,
         //视图层通过菜单视图项Api获取的表字段内容
         viewPointConfigData: target.status.viewPointConfigData,
+        //是否开启预览遮罩层
+        previewStatus:target.status.previewStatus,
         //当前选项卡所在数组的位置，用来关闭本选项卡
         nowOnContentKey: nowOnContentKey,
         isRootMenu: target.status.isRootMenu,

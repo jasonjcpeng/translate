@@ -111,6 +111,14 @@ export const getViewPointConfig = (targetMenuSort,ViewPointConfigApi,callback)=>
     }
 }
 
+export const changePreviewStatus = (targetMenuSort,previewStatus)=>{
+    return {
+        type:Constants.MENU_SETTING_CHANGE_PREVIEW_STATUS,
+        targetMenuSort: targetMenuSort,
+        previewStatus:!previewStatus
+    };
+}
+
 export const sendError = (targetMenuSort,message)=>{
     return ({
         type:Constants.MENU_SETTING_SEND_ERROR_MESSAGE,

@@ -68,15 +68,15 @@ export const appStart = ()=> {
                 }
                 let menu = res[0].data.map(v=> {
                     return {
-                        icon: v.F_Icon,
-                        id: v.F_Id,
-                        code: v.F_Id,
-                        parentCode: v.F_ParentId,
-                        menuName: v.F_FullName,
-                        createTime: v.F_CreatorTime,
-                        menuSort: v.F_SortCode,
-                        isEnable: v.F_EnabledMark,
-                        api: v.F_UrlAddress,
+                        icon: v.AX_Icon,
+                        id: v.AX_Id,
+                        code: v.AX_Id,
+                        parentCode: v.AX_ParentId,
+                        menuName: v.AX_FullName,
+                        createTime: v.AX_CreatorTime,
+                        menuSort: v.AX_SortCode,
+                        isEnable: v.AX_EnabledMark,
+                        api: v.AX_UrlAddress,
                     }
                 });
                 resolve({
