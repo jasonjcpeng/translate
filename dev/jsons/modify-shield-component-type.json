@@ -1,0 +1,3 @@
+{
+  "componentType":[{"type":"input","remark":"输入框"},{"type":"checkbox","remark":"多选框"},{"type":"select","remark":"下拉选择框"}]
+}

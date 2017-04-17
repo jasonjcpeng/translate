@@ -557,4 +557,17 @@ $default-option-hover-button:#6f6f6f;
     }
   }
 
+
+  .shield-modify {
+    .shield-modify-content {
+      ul {
+        li {
+          input {
+            border-color: $default-option-toggle-color;
+          }
+        }
+      }
+    }
+  }
+
 }

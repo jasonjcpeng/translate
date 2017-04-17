@@ -12,6 +12,7 @@ import ModifyShield from '../piecemeal-components/modifyShield';
 //json
 import IconList from '../../../jsons/icon-list.json';
 import BtnGroupList from '../../../jsons/btn-group-list.json';
+import ComponentType from '../../../jsons/modify-shield-component-type.json';
 //tool
 import {getNowFormatDate, IsObjEmpty} from '../../config/tools';
 import {isOnline} from '../../config/config'
@@ -59,7 +60,9 @@ class MenuSettingOptionAddMenu extends React.Component {
                 isEnable: val.isEnable,
                 CNName: val.CNName,
                 isMultiColumns:val.isMultiColumns,
+                componentType:val.componentType,
                 width: val.width,
+                componentWidth:val.componentWidth,
                 remark:val.remark
             };
             singleItem[itemKey] = itemVal;
@@ -86,8 +89,7 @@ class MenuSettingOptionAddMenu extends React.Component {
 
         }
 
-        let createMultiColumnsOnCheck = (k,v)=>{
-            if(v.isMultiColumns){
+        let createMultiColumnsOnChecker = (k,v)=>{
                 return (<input onChange={
                     e=>{
                         let width = (()=>{
@@ -102,10 +104,33 @@ class MenuSettingOptionAddMenu extends React.Component {
                         handleOnChange(k,v,'width',width);
                     }
                 } value={v.width} min="0" max="100" type="number"/>)
-            }else{
-                return v.width;
-            }
+        }
+        let createItemComponentWidthOnChecker = (k,v)=>{
+            return (<input onChange={
+                e=>{
+                    let componentWidth = (()=>{
+                        if(!e.target.value||e.target.value<0){
+                            return 0;
+                        }else if(e.target.value>100){
+                            return 100;
+                        }else{
+                            return e.target.value
+                        }
+                    })();
+                    handleOnChange(k,v,'componentWidth',componentWidth);
+                }
+            } value={v.componentWidth} min="0" max="100" type="number"/>)
+        }
 
+        let createComponentTypeSelector = (k,v)=>{
+            let mapOption = ComponentType.componentType.map((v,k)=>{
+                    return (<option key={k} value={v.type}>{v.remark}</option>);
+            })
+            return (<select onChange={(e)=>{
+                handleOnChange(k,v,'componentType',e.target.value);
+            }} select={v.componentType}>
+                {mapOption}
+            </select>);
         }
 
         let tBody = ()=> {
@@ -121,10 +146,12 @@ class MenuSettingOptionAddMenu extends React.Component {
                             handleOnChange(k,v,'CNName',e.target.value);
                         }
                     } value={v.CNName} type="text"/></td>
+                    <td>{createComponentTypeSelector(k,v)}</td>
                     <td><Checker key={v.isMultiColumns} checkState={v.isMultiColumns} funcOnClick={(callBackCheck)=>{
                         handleOnChange(k,v,'isMultiColumns',callBackCheck);
                     }}></Checker></td>
-                    <td>{createMultiColumnsOnCheck(k,v)}</td>
+                    <td>{createMultiColumnsOnChecker(k,v)}</td>
+                    <td>{createItemComponentWidthOnChecker(k,v)}</td>
                     <td><i onClick={()=>{
                         handleDelete(k);
                     }} className="fa fa-times-circle delete"></i></td>
@@ -144,7 +171,9 @@ class MenuSettingOptionAddMenu extends React.Component {
                         isEnable: v.isEnable,
                         CNName: v.CNName,
                         isMultiColumns:false,
+                        componentType:'input',
                         width: 100,
+                        componentWidth:50,
                         remark:v.remark
                     };
                     handleOnClick(singleItem);
@@ -161,8 +190,10 @@ class MenuSettingOptionAddMenu extends React.Component {
                     <th>Api字段名</th>
                     <th>备注</th>
                     <th>匹配中文名</th>
+                    <th>组件类型</th>
                     <th style={{width:"90px"}}>并排显示</th>
-                    <th style={{width:"90px"}}>宽度设置(%)</th>
+                    <th style={{width:"120px"}}>总体宽度设置(%)</th>
+                    <th style={{width:"120px"}}>组件宽度设置(%)</th>
                     <th style={{width:"50px"}}>删除</th>
                 </tr>
                 </thead>
@@ -743,7 +774,10 @@ class MenuSettingOptionAddMenu extends React.Component {
     //渲染添加修改预览遮罩层
     createModifyShield (){
         if(this.props.target.status.menuData){
-            return (<ModifyShield key={this.props.previewStatus} isShow={this.props.previewStatus} fieldData={this.props.target.status.menuData.modifyViewPoint}></ModifyShield>);
+            return (<ModifyShield onCancel={()=>{
+                this.props.changePreviewStatus(this.props.targetMenuSort,this.props.previewStatus);
+            }
+            } key={this.props.previewStatus} isShow={this.props.previewStatus} fieldData={this.props.target.status.menuData.modifyViewPoint}></ModifyShield>);
         }
     }
 
