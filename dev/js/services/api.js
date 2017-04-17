@@ -98,7 +98,7 @@ export const menuSettingOptionMenuFetchViewPointConfig = (api)=> {
         for (let i in data) {
             formatData.push({
                 name:i,
-                isEnable: false,
+                isEnable: true,
                 CNName: '',
                 width: 0,
                 remark:data[i]

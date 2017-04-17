@@ -5,6 +5,7 @@ import ContainerTittleMenu from './container-title-menu';
 //-----Content--------
 import ContentSetting from './content/content-setting';
 import MenuSettingOptionMenu from './content/menu-setting-option-menu';
+import NormalTable from './content/normal-table';
 //--------------------
 
 import * as ActionCreators from '../action/side-bar';
@@ -70,6 +71,9 @@ class Container extends Component {
                 case 'menuSettingAddMenu':
                     return (<MenuSettingOptionMenu type='add' height={height}/>);
                 break;
+                case 0:
+                    return (<NormalTable height={height}></NormalTable>);
+                    break
             }
         }
     }
