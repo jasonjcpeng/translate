@@ -12,12 +12,28 @@ const initState = {
 }
 
 
-function setActiveContentStatus(state, menuSort, data) {
+const setActiveContentStatus = (state, menuSort, data)=>{
     return update(state, {
         activeContent: {
             $apply: function (arr) {
                 return arr.map(function (v) {
                     if (v.obj.menuSort === menuSort) {
+                        return update(v, data);
+                    } else {
+                        return v;
+                    }
+                });
+            }
+        }
+    });
+}
+
+const setActiveContentStatusByID = (state, id, data)=>{
+    return update(state, {
+        activeContent: {
+            $apply: function (arr) {
+                return arr.map(function (v) {
+                    if (v.obj.id === id) {
                         return update(v, data);
                     } else {
                         return v;
@@ -358,6 +374,18 @@ export default function (state = initState, action) {
             break;
         case Constants.MENU_SETTING_CHANGE_PREVIEW_STATUS:
             return setActiveContentStatus(state, action.targetMenuSort, {status: {previewStatus: {$set: action.previewStatus}}});
+            break;
+        //-----------------------------normal-table-----------------------------------
+        case Constants.NORMAL_TABLE_INIT:
+            let initStatus = {
+                error:undefined,
+                loaded:false,
+                data:[]
+            }
+            return setActiveContentStatusByID(state,action.targetID,{status:{$set:initStatus}});
+            break;
+        case Constants.NORMAL_TABLE_GET_DATA:
+            return setActiveContentStatusByID(state,action.targetID,{status:{data:{$set:action.data}}});
             break;
 
 

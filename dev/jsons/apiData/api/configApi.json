@@ -1,9 +1,27 @@
 {
-  "data":{
-    "name":"用户姓名",
-    "age":"用户年龄",
-    "sex":"用户的性别",
-    "class":"哪里来的班级"
+  "data": {
+    "AX_Birthday": "",
+    "AX_CreatorUserId": "",
+    "AX_DeleteTime": "",
+    "AX_DeleteUserId": "",
+    "AX_Description": "",
+    "AX_Email": "",
+    "AX_HeadIcon": "",
+    "AX_LastModifyTime": "",
+    "AX_LastModifyUserId": "",
+    "AX_SecurityLevel": "",
+    "AX_WeChat": "",
+    "AX_Account": "",
+    "AX_CreatorTime": "",
+    "AX_DepartmentId": "",
+    "AX_DutyId": "",
+    "AX_EnabledMark": "",
+    "AX_Id": "",
+    "AX_IsAdministrator": "",
+    "AX_MobilePhone": "",
+    "AX_NickName": "",
+    "AX_RealName": "",
+    "AX_RoleId": ""
   },
   "message":"OK",
   "state":"1"

@@ -21,8 +21,12 @@ const filterIsOnline = api=> {
  * promise:Promise
  * */
 const createFetchPromise = (api, callBack, args = '', method = 'GET')=> {
+    let finalArgs = args;
+    if(!isOnline){
+        finalArgs = '';
+    }
     return new Promise((resolve, reject)=> {
-        Fetch.Fetch(filterIsOnline(api), args, method).then(
+        Fetch.Fetch(filterIsOnline(api), finalArgs, method).then(
             res=> {
                 if (Number.parseInt(res.state) !== 1) {
                     reject(res.message);
@@ -40,7 +44,7 @@ const createFetchPromise = (api, callBack, args = '', method = 'GET')=> {
 
 
 const apis = {
-    login: 'api/User/logon',
+    login: 'User/logon',
     getMenu: 'api/module',
     getUserInfo: 'userInfo'
 };
@@ -101,9 +105,28 @@ export const menuSettingOptionMenuFetchViewPointConfig = (api)=> {
                 isEnable: true,
                 CNName: '',
                 width: 0,
-                remark:data[i]
             });
         }
         resolve(formatData);
     })
+}
+
+export const normalTableGetData = (api,...args)=>{
+    /*page	第几页	number	@mock=0
+     records	总条数	number	@mock=0
+     rows	每页显示多少行	number	@mock=0
+     sidx	排序字段1	string	@mock=string
+     sord	asc升序 desc倒序	string	@mock=string
+     total*/
+    let finalArgs = {
+        page:args[0]?args[0]:'',
+        records:args[1]?args[1]:'',
+        rows:args[2]?args[2]:'',
+        sidx:args[3]?args[3]:'',
+        sord:args[4]?args[4]:'',
+        total:args[5]?args[5]:''
+    }
+    return createFetchPromise(api,(data, resolve, reject)=>{
+        resolve(data);
+    },finalArgs)
 }

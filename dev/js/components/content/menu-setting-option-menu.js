@@ -63,7 +63,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                 componentType:val.componentType,
                 width: val.width,
                 componentWidth:val.componentWidth,
-                remark:val.remark
+                api:val.api
             };
             singleItem[itemKey] = itemVal;
 
@@ -139,13 +139,40 @@ class MenuSettingOptionAddMenu extends React.Component {
                     <td><Checker key={v.isEnable} checkState={v.isEnable} funcOnClick={(callBackCheck)=>{
                         handleOnChange(k,v,'isEnable',callBackCheck);
                     }}></Checker></td>
+                    <td><div className="sort"><div onClick={()=>{
+                        let newValue = this.props.menuData.modifyViewPoint;
+                        for(let i=0;i<newValue.length;i++){
+                            if(k>0&&k===i){
+                                let temp = newValue[i-1];
+                                newValue[i-1] =  newValue[i];
+                                newValue[i] = temp;
+                            }
+                        }
+
+                        this.props.changeMenuData(this.props.targetMenuSort, 'modifyViewPoint', newValue);
+                    }
+                    } className="up"></div><div onClick={()=>{
+                        let newValue = this.props.menuData.modifyViewPoint;
+                        for(let i=0;i<newValue.length;i++){
+                            if(k<newValue.length-1&&k===i){
+                                let temp = newValue[i+1];
+                                newValue[i+1] =  newValue[i];
+                                newValue[i] = temp;
+                            }
+                        }
+
+                        this.props.changeMenuData(this.props.targetMenuSort, 'modifyViewPoint', newValue);}} className="down"></div></div></td>
                     <td>{v.name}</td>
-                    <td>{v.remark}</td>
                     <td><input onChange={
                         e=>{
                             handleOnChange(k,v,'CNName',e.target.value);
                         }
                     } value={v.CNName} type="text"/></td>
+                    <td><input onChange={
+                        e=>{
+                            handleOnChange(k,v,'api',e.target.value);
+                        }
+                    } value={v.api} type="text"/></td>
                     <td>{createComponentTypeSelector(k,v)}</td>
                     <td><Checker key={v.isMultiColumns} checkState={v.isMultiColumns} funcOnClick={(callBackCheck)=>{
                         handleOnChange(k,v,'isMultiColumns',callBackCheck);
@@ -165,20 +192,28 @@ class MenuSettingOptionAddMenu extends React.Component {
                 this.props.changeMenuData(this.props.targetMenuSort, 'modifyViewPoint', viewPointGroup);
             }
             return this.props.viewPointConfigData.map((v, k)=> {
-                return (<li onClick={()=>{
-                    let singleItem = {
-                        name:v.name,
-                        isEnable: v.isEnable,
-                        CNName: v.CNName,
-                        isMultiColumns:false,
-                        componentType:'input',
-                        width: 100,
-                        componentWidth:50,
-                        remark:v.remark
-                    };
-                    handleOnClick(singleItem);
+                let flag = true;
+                for(let i in this.props.menuData.modifyViewPoint){
+                    if(this.props.menuData.modifyViewPoint[i].name === v.name){
+                        flag = false;
+                    }
                 }
-                } key={k}>{v.name}</li>);
+                if(flag){
+                    return (<li onClick={()=>{
+                        let singleItem = {
+                            name:v.name,
+                            isEnable: v.isEnable,
+                            CNName: v.CNName,
+                            isMultiColumns:false,
+                            componentType:'input',
+                            width: 100,
+                            componentWidth:50,
+                            api:''
+                        };
+                        handleOnClick(singleItem);
+                    }
+                    } key={k}>{v.name}</li>);
+                }
             });
         }
 
@@ -187,9 +222,10 @@ class MenuSettingOptionAddMenu extends React.Component {
                 <thead>
                 <tr>
                     <th>是否呈现</th>
+                    <th style={{width:"50px"}}>排序</th>
                     <th>Api字段名</th>
-                    <th>备注</th>
                     <th>匹配中文名</th>
+                    <th>匹配API</th>
                     <th>组件类型</th>
                     <th style={{width:"90px"}}>并排显示</th>
                     <th style={{width:"120px"}}>总体宽度设置(%)</th>
@@ -339,7 +375,6 @@ class MenuSettingOptionAddMenu extends React.Component {
                 isEnable: val.isEnable,
                 CNName: val.CNName,
                 width: val.width,
-                remark:val.remark
             };
             singleItem[itemKey] = itemVal;
 
@@ -371,8 +406,30 @@ class MenuSettingOptionAddMenu extends React.Component {
                     <td><Checker key={v.isEnable} checkState={v.isEnable} funcOnClick={(callBackCheck)=>{
                              handleOnChange(k,v,'isEnable',callBackCheck);
                         }}></Checker></td>
+                    <td><div className="sort"><div onClick={()=>{
+                        let newValue = this.props.menuData.viewPoint;
+                        for(let i=0;i<newValue.length;i++){
+                            if(k>0&&k===i){
+                                let temp = newValue[i-1];
+                                newValue[i-1] =  newValue[i];
+                                newValue[i] = temp;
+                            }
+                        }
+
+                        this.props.changeMenuData(this.props.targetMenuSort, 'viewPoint', newValue);
+                       }
+                    } className="up"></div><div onClick={()=>{
+                        let newValue = this.props.menuData.viewPoint;
+                        for(let i=0;i<newValue.length;i++){
+                            if(k<newValue.length-1&&k===i){
+                                let temp = newValue[i+1];
+                                newValue[i+1] =  newValue[i];
+                                newValue[i] = temp;
+                            }
+                        }
+
+                        this.props.changeMenuData(this.props.targetMenuSort, 'viewPoint', newValue);}} className="down"></div></div></td>
                     <td>{v.name}</td>
-                    <td>{v.remark}</td>
                     <td><input onChange={
                     e=>{
                         handleOnChange(k,v,'CNName',e.target.value);
@@ -405,10 +462,18 @@ class MenuSettingOptionAddMenu extends React.Component {
                 this.props.changeMenuData(this.props.targetMenuSort, 'viewPoint', viewPointGroup);
             }
             return this.props.viewPointConfigData.map((v, k)=> {
-                return (<li onClick={()=>{
-                 handleOnClick(v);
+                let flag = true;
+                for (let i in this.props.menuData.viewPoint) {
+                    if (this.props.menuData.viewPoint[i].name === v.name) {
+                        flag = false;
+                    }
                 }
-                } key={k}>{v.name}</li>);
+                if (flag) {
+                    return (<li onClick={()=> {
+                        handleOnClick(v);
+                    }
+                    } key={k}>{v.name}</li>);
+                }
             });
         }
 
@@ -417,8 +482,8 @@ class MenuSettingOptionAddMenu extends React.Component {
                 <thead>
                 <tr>
                     <th>是否呈现</th>
+                    <th style={{width:"50px"}}>排序</th>
                     <th>Api字段名</th>
-                    <th>备注</th>
                     <th>匹配中文名</th>
                     <th style={{width:"90px"}}>宽度设置(%)</th>
                     <th style={{width:"50px"}}>删除</th>
