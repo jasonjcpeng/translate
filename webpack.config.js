@@ -5,12 +5,12 @@ var autoprefixer = require('autoprefixer');
 
 module.exports = {
     //不打包的基本库，可以做CDN加速
-    externals: {
+   /* externals: {
         'react': 'window.React',
         'react-dom': 'window.ReactDOM',
         'redux':'window.Redux',
         'react-redux':'window.ReactRedux'
-    },
+    },*/
     devServer: {
         lazy: false,
         watchOptions: {
@@ -83,9 +83,8 @@ module.exports = {
          name:'index', // 上面入口定义的节点组
          filename:'./js/bundle.login.js' //最后生成的文件名
          }),*/
-        /*
         new webpack.ProvidePlugin({
             React: 'react'
-        })*///解决不用CDN的全打包状态下丢失全局变量window.React问题
+        })//解决不用CDN的全打包状态下丢失全局变量window.React问题
     ]
 };

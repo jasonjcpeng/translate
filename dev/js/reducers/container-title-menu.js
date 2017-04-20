@@ -275,7 +275,7 @@ export default function (state = initState, action) {
                     isEnable: true,
                     createtime: '',
                     updatetime: '',
-                    api: '',
+                    api: 'user/user',
                     viewPointConfigApi: 'api/configApi',
                     viewPoint: [],
                     btnGroup: [],
@@ -380,14 +380,45 @@ export default function (state = initState, action) {
             let initStatus = {
                 error:undefined,
                 loaded:false,
-                data:[]
+                data:[],
+                checkOnItem:undefined,
+                nowOnClickButton:undefined,
+                modifyViewData:undefined
             }
             return setActiveContentStatusByID(state,action.targetID,{status:{$set:initStatus}});
             break;
         case Constants.NORMAL_TABLE_GET_DATA:
-            return setActiveContentStatusByID(state,action.targetID,{status:{data:{$set:action.data}}});
+            return setActiveContentStatusByID(state,action.targetID,{status:{data:{$set:action.data},loaded:{$set:true}}});
             break;
-
+        case Constants.NORMAL_TABLE_CHECK_ON_ITEM:
+            return setActiveContentStatusByID(state,action.targetID,{status:{checkOnItem:{$set:action.item}}});
+            break;
+        case Constants.NORMAL_TABLE_ON_CLICK_BUTTON:
+            return setActiveContentStatusByID(state,action.targetID,{status:{nowOnClickButton:{$set:action.buttonName}}});
+            break;
+        case Constants.NORMAL_TABLE_SAVE_MODIFY_VIEW_DATA:
+            return setActiveContentStatusByID(state,action.targetID,{status:{modifyViewData:{$set:action.modifyViewData}}});
+            break;
+        case Constants.NORMAL_TABLE_SUBMIT_MODIFY_DATA:
+            return setActiveContentStatusByID(state,action.targetID,{status:{data:{$apply:(arr)=>{
+                return arr.map((v,k)=>{
+                    if(v.AX_Id===action.data.AX_Id){
+                        return action.data;
+                    }else{
+                        return v
+                    }
+                });
+            }}}});
+            break;
+        case Constants.NORMAL_TABLE_SUBMIT_DELETE_DATA:
+            return setActiveContentStatusByID(state,action.targetID,{status:{data:{$apply:(arr)=>{
+                return arr.filter((v,k)=>{
+                    if(v.AX_Id!==action.data.AX_Id){
+                        return v;
+                    }
+                });
+            }}}});
+            break;
 
     }
     return state;

@@ -72,7 +72,7 @@ class Container extends Component {
                     return (<MenuSettingOptionMenu type='add' height={height}/>);
                 break;
                 case 0:
-                    return (<NormalTable height={height}></NormalTable>);
+                    return (<NormalTable key={this.props.nowOnContentTarget.id} height={height}></NormalTable>);
                     break
             }
         }

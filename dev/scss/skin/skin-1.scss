@@ -10,6 +10,7 @@ $alert-color:#c00;
 $default-option-toggle-color:#ddd;
 $content-font-color:#6f6f6f;
 $default-option-hover-button:#6f6f6f;
+$table-item-active-color:#cbcdba;
 .skin-1{
   .fa-toggle-on{
     cursor: pointer;
@@ -513,6 +514,10 @@ $default-option-hover-button:#6f6f6f;
           }
         }
 
+        .active{
+          background-color:$table-item-active-color;
+        }
+
         .option-menu-progress{
           font-size: 100%;
           font-weight: 600;
@@ -525,6 +530,7 @@ $default-option-hover-button:#6f6f6f;
             }
 
             .active{
+              background-color: $second-main-color;
               color: #000;
               span{
                 color: $main-color;

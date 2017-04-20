@@ -54,16 +54,16 @@ class MenuSettingOptionAddMenu extends React.Component {
 
     //渲染添加修改遮罩层设置
     createModifyViewPointSetting() {
-        let handleOnChange = (key, val,itemKey,itemVal)=> {
+        let handleOnChange = (key, val, itemKey, itemVal)=> {
             let singleItem = {
-                name:val.name,
+                name: val.name,
                 isEnable: val.isEnable,
                 CNName: val.CNName,
-                isMultiColumns:val.isMultiColumns,
-                componentType:val.componentType,
+                isMultiColumns: val.isMultiColumns,
+                componentType: val.componentType,
                 width: val.width,
-                componentWidth:val.componentWidth,
-                api:val.api
+                componentWidth: val.componentWidth,
+                api: val.api
             };
             singleItem[itemKey] = itemVal;
 
@@ -89,8 +89,8 @@ class MenuSettingOptionAddMenu extends React.Component {
 
         }
 
-        let createMultiColumnsOnChecker = (k,v)=>{
-                return (<input onChange={
+        let createMultiColumnsOnChecker = (k, v)=> {
+            return (<input onChange={
                     e=>{
                         let width = (()=>{
                             if(!e.target.value||e.target.value<0){
@@ -105,7 +105,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                     }
                 } value={v.width} min="0" max="100" type="number"/>)
         }
-        let createItemComponentWidthOnChecker = (k,v)=>{
+        let createItemComponentWidthOnChecker = (k, v)=> {
             return (<input onChange={
                 e=>{
                     let componentWidth = (()=>{
@@ -122,13 +122,13 @@ class MenuSettingOptionAddMenu extends React.Component {
             } value={v.componentWidth} min="0" max="100" type="number"/>)
         }
 
-        let createComponentTypeSelector = (k,v)=>{
-            let mapOption = ComponentType.componentType.map((v,k)=>{
-                    return (<option key={k} value={v.type}>{v.remark}</option>);
+        let createComponentTypeSelector = (k, v)=> {
+            let mapOption = ComponentType.componentType.map((v, k)=> {
+                return (<option key={k} value={v.type}>{v.remark}</option>);
             })
             return (<select onChange={(e)=>{
                 handleOnChange(k,v,'componentType',e.target.value);
-            }} select={v.componentType}>
+            }} selected={v.componentType}>
                 {mapOption}
             </select>);
         }
@@ -139,7 +139,9 @@ class MenuSettingOptionAddMenu extends React.Component {
                     <td><Checker key={v.isEnable} checkState={v.isEnable} funcOnClick={(callBackCheck)=>{
                         handleOnChange(k,v,'isEnable',callBackCheck);
                     }}></Checker></td>
-                    <td><div className="sort"><div onClick={()=>{
+                    <td>
+                        <div className="sort">
+                            <div onClick={()=>{
                         let newValue = this.props.menuData.modifyViewPoint;
                         for(let i=0;i<newValue.length;i++){
                             if(k>0&&k===i){
@@ -151,7 +153,8 @@ class MenuSettingOptionAddMenu extends React.Component {
 
                         this.props.changeMenuData(this.props.targetMenuSort, 'modifyViewPoint', newValue);
                     }
-                    } className="up"></div><div onClick={()=>{
+                    } className="up"></div>
+                            <div onClick={()=>{
                         let newValue = this.props.menuData.modifyViewPoint;
                         for(let i=0;i<newValue.length;i++){
                             if(k<newValue.length-1&&k===i){
@@ -161,7 +164,10 @@ class MenuSettingOptionAddMenu extends React.Component {
                             }
                         }
 
-                        this.props.changeMenuData(this.props.targetMenuSort, 'modifyViewPoint', newValue);}} className="down"></div></div></td>
+                        this.props.changeMenuData(this.props.targetMenuSort, 'modifyViewPoint', newValue);}}
+                                 className="down"></div>
+                        </div>
+                    </td>
                     <td>{v.name}</td>
                     <td><input onChange={
                         e=>{
@@ -173,12 +179,12 @@ class MenuSettingOptionAddMenu extends React.Component {
                             handleOnChange(k,v,'api',e.target.value);
                         }
                     } value={v.api} type="text"/></td>
-                    <td>{createComponentTypeSelector(k,v)}</td>
+                    <td>{createComponentTypeSelector(k, v)}</td>
                     <td><Checker key={v.isMultiColumns} checkState={v.isMultiColumns} funcOnClick={(callBackCheck)=>{
                         handleOnChange(k,v,'isMultiColumns',callBackCheck);
                     }}></Checker></td>
-                    <td>{createMultiColumnsOnChecker(k,v)}</td>
-                    <td>{createItemComponentWidthOnChecker(k,v)}</td>
+                    <td>{createMultiColumnsOnChecker(k, v)}</td>
+                    <td>{createItemComponentWidthOnChecker(k, v)}</td>
                     <td><i onClick={()=>{
                         handleDelete(k);
                     }} className="fa fa-times-circle delete"></i></td>
@@ -193,12 +199,15 @@ class MenuSettingOptionAddMenu extends React.Component {
             }
             return this.props.viewPointConfigData.map((v, k)=> {
                 let flag = true;
-                for(let i in this.props.menuData.modifyViewPoint){
-                    if(this.props.menuData.modifyViewPoint[i].name === v.name){
+                for (let i in this.props.menuData.modifyViewPoint) {
+                    if (this.props.menuData.modifyViewPoint[i].name === v.name) {
                         flag = false;
                     }
                 }
-                if(flag){
+                if(v.name==='AX_Id'||v.name==='AX_ParentId'){
+                    flag = false;
+                }
+                if (flag) {
                     return (<li onClick={()=>{
                         let singleItem = {
                             name:v.name,
@@ -218,7 +227,7 @@ class MenuSettingOptionAddMenu extends React.Component {
         }
 
         let table = ()=> {
-            return (<table key="ModifyViewPointSetting"  className="setting-table">
+            return (<table key="ModifyViewPointSetting" className="setting-table">
                 <thead>
                 <tr>
                     <th>是否呈现</th>
@@ -246,7 +255,8 @@ class MenuSettingOptionAddMenu extends React.Component {
             {table()}
             <div className="setting-remark">
                 注:并排显示需要额外设置宽度，并排列的宽度之和不得超过100%。
-            </div></div>);
+            </div>
+        </div>);
 
     }
 
@@ -269,7 +279,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                 this.props.changeMenuData(this.props.targetMenuSort, 'btnGroup', btnGroup);
             }
             for (let componentName in btnGroupList) {
-                let item = (<li onClick={()=>{
+                let item = (<li key={componentName} onClick={()=>{
                     handleOnClick(componentName,btnGroupList[componentName]);
                 }}>{btnGroupList[componentName].remark}</li>);
                 render.push(item);
@@ -280,14 +290,14 @@ class MenuSettingOptionAddMenu extends React.Component {
         }
 
         let createBtnGroupTableBody = ()=> {
-            let handleOnChange = (key, val,itemKey,itemVal)=> {
+            let handleOnChange = (key, val, itemKey, itemVal)=> {
                 let singleItem = {
-                    componentName:val.componentName,
-                    componentRemark:val.componentRemark,
-                    isNeedTarget:val.isNeedTarget,
-                    isToggleGroup:val.isNeedTarget,
-                    CNName:val.CNName,
-                    api:val.api
+                    componentName: val.componentName,
+                    componentRemark: val.componentRemark,
+                    isNeedTarget: val.isNeedTarget,
+                    isToggleGroup: val.isNeedTarget,
+                    CNName: val.CNName,
+                    api: val.api
                 };
                 singleItem[itemKey] = itemVal;
                 let newValue = [];
@@ -315,6 +325,35 @@ class MenuSettingOptionAddMenu extends React.Component {
             return this.props.menuData.btnGroup.map((val, k)=> {
                 return (<tr key={k}>
                     <td>{val.componentName}</td>
+                    <td>
+                        <div className="sort">
+                            <div onClick={()=>{
+                        let newValue = this.props.menuData.btnGroup;
+                        for(let i=0;i<newValue.length;i++){
+                            if(k>0&&k===i){
+                                let temp = newValue[i-1];
+                                newValue[i-1] =  newValue[i];
+                                newValue[i] = temp;
+                            }
+                        }
+
+                        this.props.changeMenuData(this.props.targetMenuSort, 'btnGroup', newValue);
+                    }
+                    } className="up"></div>
+                            <div onClick={()=>{
+                        let newValue = this.props.menuData.btnGroup;
+                        for(let i=0;i<newValue.length;i++){
+                            if(k<newValue.length-1&&k===i){
+                                let temp = newValue[i+1];
+                                newValue[i+1] =  newValue[i];
+                                newValue[i] = temp;
+                            }
+                        }
+
+                        this.props.changeMenuData(this.props.targetMenuSort, 'btnGroup', newValue);}}
+                                 className="down"></div>
+                        </div>
+                    </td>
                     <td>{val.componentRemark}</td>
                     <td><input type="text" onChange={e=>{
                         handleOnChange(k,val,'CNName',e.target.value);
@@ -341,10 +380,11 @@ class MenuSettingOptionAddMenu extends React.Component {
         }
 
         let table = ()=> {
-            return <table key="ButtonGroupSetting"  className="setting-table">
+            return <table key="ButtonGroupSetting" className="setting-table">
                 <thead>
                 <tr>
                     <th>组件名称</th>
+                    <th style={{width:"50px"}}>排序</th>
                     <th>组件备注</th>
                     <th>匹配中文名</th>
                     <th>匹配API</th>
@@ -369,9 +409,9 @@ class MenuSettingOptionAddMenu extends React.Component {
 
     //渲染表格视图设置
     createViewPointSetting() {
-        let handleOnChange = (key, val,itemKey,itemVal)=> {
+        let handleOnChange = (key, val, itemKey, itemVal)=> {
             let singleItem = {
-                name:val.name,
+                name: val.name,
                 isEnable: val.isEnable,
                 CNName: val.CNName,
                 width: val.width,
@@ -402,11 +442,13 @@ class MenuSettingOptionAddMenu extends React.Component {
 
         let tBody = ()=> {
             return this.props.menuData.viewPoint.map((v, k)=> {
-                return <tr key={k}>
-                    <td><Checker key={v.isEnable} checkState={v.isEnable} funcOnClick={(callBackCheck)=>{
+                    return <tr key={k}>
+                        <td><Checker key={v.isEnable} checkState={v.isEnable} funcOnClick={(callBackCheck)=>{
                              handleOnChange(k,v,'isEnable',callBackCheck);
                         }}></Checker></td>
-                    <td><div className="sort"><div onClick={()=>{
+                        <td>
+                            <div className="sort">
+                                <div onClick={()=>{
                         let newValue = this.props.menuData.viewPoint;
                         for(let i=0;i<newValue.length;i++){
                             if(k>0&&k===i){
@@ -418,7 +460,8 @@ class MenuSettingOptionAddMenu extends React.Component {
 
                         this.props.changeMenuData(this.props.targetMenuSort, 'viewPoint', newValue);
                        }
-                    } className="up"></div><div onClick={()=>{
+                    } className="up"></div>
+                                <div onClick={()=>{
                         let newValue = this.props.menuData.viewPoint;
                         for(let i=0;i<newValue.length;i++){
                             if(k<newValue.length-1&&k===i){
@@ -428,14 +471,17 @@ class MenuSettingOptionAddMenu extends React.Component {
                             }
                         }
 
-                        this.props.changeMenuData(this.props.targetMenuSort, 'viewPoint', newValue);}} className="down"></div></div></td>
-                    <td>{v.name}</td>
-                    <td><input onChange={
+                        this.props.changeMenuData(this.props.targetMenuSort, 'viewPoint', newValue);}}
+                                     className="down"></div>
+                            </div>
+                        </td>
+                        <td>{v.name}</td>
+                        <td><input onChange={
                     e=>{
                         handleOnChange(k,v,'CNName',e.target.value);
                     }
                     } value={v.CNName} type="text"/></td>
-                    <td><input onChange={
+                        <td><input onChange={
                     e=>{
                     let width = (()=>{
                        if(!e.target.value||e.target.value<0){
@@ -449,10 +495,10 @@ class MenuSettingOptionAddMenu extends React.Component {
                             handleOnChange(k,v,'width',width);
                         }
                     } value={v.width} min="0" max="100" type="number"/></td>
-                    <td><i onClick={()=>{
+                        <td><i onClick={()=>{
                     handleDelete(k);
                     }} className="fa fa-times-circle delete"></i></td>
-                </tr>
+                    </tr>
             });
         }
         let createFieldList = ()=> {
@@ -467,6 +513,9 @@ class MenuSettingOptionAddMenu extends React.Component {
                     if (this.props.menuData.viewPoint[i].name === v.name) {
                         flag = false;
                     }
+                }
+                if(v.name==='AX_Id'||v.name==='AX_ParentId'){
+                    flag = false;
                 }
                 if (flag) {
                     return (<li onClick={()=> {
@@ -770,7 +819,7 @@ class MenuSettingOptionAddMenu extends React.Component {
             }
 
         }
-        let createFooterModifyViewPointPreview = ()=>{
+        let createFooterModifyViewPointPreview = ()=> {
             let progressState = this.props.target.status.progress;
             let Step = function () {
                 for (let i in progressState) {
@@ -779,7 +828,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                     }
                 }
             }();
-            if(Step === '3'){
+            if (Step === '3') {
                 return (<button onClick={()=>{
                     this.props.changePreviewStatus(this.props.targetMenuSort,this.props.previewStatus);
                 }} className="btn">预览</button> );
@@ -837,12 +886,13 @@ class MenuSettingOptionAddMenu extends React.Component {
     }
 
     //渲染添加修改预览遮罩层
-    createModifyShield (){
-        if(this.props.target.status.menuData){
+    createModifyShield() {
+        if (this.props.target.status.menuData) {
             return (<ModifyShield onCancel={()=>{
                 this.props.changePreviewStatus(this.props.targetMenuSort,this.props.previewStatus);
             }
-            } key={this.props.previewStatus} isShow={this.props.previewStatus} fieldData={this.props.target.status.menuData.modifyViewPoint}></ModifyShield>);
+            } key={this.props.previewStatus} isShow={this.props.previewStatus}
+                                  fieldData={this.props.target.status.menuData.modifyViewPoint}></ModifyShield>);
         }
     }
 
@@ -896,7 +946,7 @@ const state = state=> {
         //视图层通过菜单视图项Api获取的表字段内容
         viewPointConfigData: target.status.viewPointConfigData,
         //是否开启预览遮罩层
-        previewStatus:target.status.previewStatus,
+        previewStatus: target.status.previewStatus,
         //当前选项卡所在数组的位置，用来关闭本选项卡
         nowOnContentKey: nowOnContentKey,
         isRootMenu: target.status.isRootMenu,
