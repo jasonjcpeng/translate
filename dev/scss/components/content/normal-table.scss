@@ -19,5 +19,14 @@
         }
       }
     }
+    .menu-toggle{
+      width: 17px;
+    }
+    .menu-no-toggle{
+      display: inherit;
+      float: left;
+      height: 30px;
+      width: 17px;
+    }
   }
 }

@@ -100,3 +100,11 @@ export const getData = (targetID,api,...arg)=>{
         });
     };
 }
+
+export const actionToggleItem = (targetID,item)=>{
+    return {
+        type:Constants.NORMAL_TABLE_TOGGLE_ITEM,
+        targetID:targetID,
+        item:item
+    }
+}

@@ -49,7 +49,7 @@ class ModifyShield extends React.Component{
                         return (createNormalInput(val,valData));
                         break;
                     case 'checkBox':
-                        return <div></div>
+                        return <div></div>;
                         break;
                 }
             }

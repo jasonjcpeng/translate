@@ -10,6 +10,8 @@ const initState = {
     contentWidth: 0,
     closeOptionToggle: false
 }
+const constID = 'AX_Id';
+const constParentID='AX_ParentId';
 
 
 const setActiveContentStatus = (state, menuSort, data)=>{
@@ -383,7 +385,8 @@ export default function (state = initState, action) {
                 data:[],
                 checkOnItem:undefined,
                 nowOnClickButton:undefined,
-                modifyViewData:undefined
+                modifyViewData:undefined,
+                toggleItem:[]
             }
             return setActiveContentStatusByID(state,action.targetID,{status:{$set:initStatus}});
             break;
@@ -402,7 +405,7 @@ export default function (state = initState, action) {
         case Constants.NORMAL_TABLE_SUBMIT_MODIFY_DATA:
             return setActiveContentStatusByID(state,action.targetID,{status:{data:{$apply:(arr)=>{
                 return arr.map((v,k)=>{
-                    if(v.AX_Id===action.data.AX_Id){
+                    if(v[constID]===action.data[constID]){
                         return action.data;
                     }else{
                         return v
@@ -413,10 +416,26 @@ export default function (state = initState, action) {
         case Constants.NORMAL_TABLE_SUBMIT_DELETE_DATA:
             return setActiveContentStatusByID(state,action.targetID,{status:{data:{$apply:(arr)=>{
                 return arr.filter((v,k)=>{
-                    if(v.AX_Id!==action.data.AX_Id){
+                    if(v[constID]!==action.data[constID]){
                         return v;
                     }
                 });
+            }}}});
+            break;
+        case Constants.NORMAL_TABLE_TOGGLE_ITEM:
+            return setActiveContentStatusByID(state,action.targetID,{status:{toggleItem:{$apply:(arr)=>{
+                let isPush = true;
+                let newArr = arr.filter((v)=>{
+                    if(v!==action.item){
+                        return v;
+                    }else{
+                        isPush = false;
+                    }
+                });
+                if(isPush){
+                    newArr.push(action.item);
+                }
+                return newArr;
             }}}});
             break;
 

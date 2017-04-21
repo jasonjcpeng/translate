@@ -9,6 +9,8 @@ import ButtonGroupModifier from '../piecemeal-components/button-group-modifier';
 import ButtonGroupDeleter from '../piecemeal-components/button-group-deleter';
 
 import * as ActionCreators from '../../action/normal-table';
+const constID = 'AX_Id';
+const constParentID = 'AX_ParentId';
 
 class NormalTable extends React.Component {
     componentWillMount() {
@@ -23,6 +25,7 @@ class NormalTable extends React.Component {
     //根据当前按钮打开相应按钮组件
     judgementOpenButtonGroupComponent() {
         let isShow = this.props.nowOnClickButton ? true : false;
+        let api = this.props.nowOnClickButton?this.props.nowOnClickButton.api:'';
         if (this.props.nowOnClickButton) {
             switch (this.props.nowOnClickButton.componentName) {
                 case 'add':
@@ -46,14 +49,14 @@ class NormalTable extends React.Component {
                     }}
                                                  onFinish={
                         data=>{
-                        this.props.submitModifyData(this.props.targetID,data,'');
+                        this.props.submitModifyData(this.props.targetID,data,api);
                         }
                     }
                     ></ButtonGroupModifier>);
                     break;
                 case 'delete':
                     return <ButtonGroupDeleter isShow={isShow} deleteFunc={()=>{
-                    this.props.submitDeleteData(this.props.targetID,this.props.nowOnItem,'');
+                    this.props.submitDeleteData(this.props.targetID,this.props.nowOnItem,api);
                     }
                     }></ButtonGroupDeleter>;
                     break;
@@ -127,18 +130,25 @@ class NormalTable extends React.Component {
                     }
                 })
             }
-            return (<thead>
-            <tr>
-                <th style={{width:'20px',borderRight:'0'}}></th>
-                <th style={{width:'20px',borderLeft:'0'}}></th>
-                {mapTh()}</tr>
-            </thead>)
+            if(this.props.data[0]&&this.props.data[0][constParentID]){
+                return (<thead>
+                <tr>
+                    <th style={{borderRight:'0'}}></th>
+                    {mapTh()}</tr>
+                </thead>)
+            }else{
+                return (<thead>
+                <tr>
+                    <th style={{width:'20px',borderLeft:'0'}}></th>
+                    {mapTh()}</tr>
+                </thead>)
+            }
         }
         let createTableBody = ()=> {
             let mapTd = (val)=> {
                 return this.props.viewPoint.map((v, k)=> {
                     if (v.isEnable) {
-                        return (<td key={k}>{val[v.name]}</td>);
+                        return (<td key={k}>{val[v.name]?val[v.name]:''}</td>);
                     }
                 })
             }
@@ -149,16 +159,104 @@ class NormalTable extends React.Component {
                 }
             }
 
-            return <tbody>{this.props.data.map((v, k)=> {
-                return (<tr className={createTrClassName(v)} onClick={(e)=>{
+            let  isMenuHasChild =(newMenu, currentMenu)=>{
+                for (let i in newMenu) {
+                    if (newMenu[i][constParentID] === currentMenu[constID]) {
+                        return true;
+                        break;
+                    }
+                }
+                return false;
+            }
+            let trIsHidden = (v)=>{
+                let toggleStateFlag = true;
+                if(v[constParentID]==='0'){
+                    toggleStateFlag = false;
+                }else{
+                    for(let i in this.props.toggleItem){
+                        if(v[constParentID]===this.props.toggleItem[i][constID]){
+                            toggleStateFlag = false;
+                        }
+                    }
+                }
+                return toggleStateFlag;
+            }
+            let arrowIconMargin = (v,margin)=>{
+                let localMargin = margin;
+                    for(let i=0;i<this.props.data.length;i++){
+                        if(v[constParentID]===this.props.data[i][constID]){
+                            localMargin += arrowIconMargin(this.props.data[i],(margin+5));
+                        }
+                    }
+                return localMargin
+            }
+            let trToggleIconClassNames = (v)=>{
+                let toggleStateFlag = false;
+                for(let i in this.props.toggleItem){
+                    if(v[constID]===this.props.toggleItem[i][constID]){
+                        toggleStateFlag = true;
+                    }
+                }
+                return toggleStateFlag?'menu-toggle fa fa-caret-down':'menu-toggle fa fa-caret-right';
+            }
+            let quickSort  = (arr, root={AX_Id:'0'}, result=[])=>{
+                let menu = [];
+                if (arr.length > 0) {
+                    let newArr = arr.filter(v=> {
+                        if (v[constParentID] === root[constID]) {
+                            menu.push(v);
+                        } else {
+                            return v;
+                        }
+                    });
+                    if (menu.length > 0) {
+                        for (let i in menu) {
+                            result.push(menu[i]);
+                            quickSort(newArr, menu[i], result);
+                        }
+                    }
+                }
+                return result;
+            }
+            let menuData =  this.props.data;
+            if(this.props.data[0]&&this.props.data[0][constParentID]){
+                menuData = quickSort(this.props.data);
+                return <tbody>{menuData.map((v, k)=> {
+                    return (<tr hidden={trIsHidden(v)} className={createTrClassName(v)} onClick={(e)=>{
                             this.props.checkOnItem(this.props.targetID,v);
                             e.stopPropagation();
                         }} key={k}>
-                    <td></td>
-                    <td>{k + 1}</td>
-                    {mapTd(v)}
-                </tr>);
-            })}</tbody>
+                        <td>{ (()=>{
+                            return (<div style={{float:'left',marginLeft:arrowIconMargin(v,5)+'px'}}>
+                                {(()=>{
+                                    if (isMenuHasChild(menuData, v)) {
+                                        return (<i onClick={
+                                e=>{
+                                    this.props.actionToggleItem(this.props.targetID,v);
+                                    e.stopPropagation();
+                                }
+                            } className={trToggleIconClassNames(v)}></i>)
+                                    }else{
+                                        return (<i  className="menu-no-toggle"></i>)
+                                    }
+                                })()}
+                                <span style={{marginLeft:'5px'}}>{k + 1}</span>
+                            </div>);
+                        })()}</td>
+                        {mapTd(v)}
+                    </tr>);
+                })}</tbody>
+            }else{
+                return <tbody>{menuData.map((v, k)=> {
+                    return (<tr hidden={false} className={createTrClassName(v)} onClick={(e)=>{
+                            this.props.checkOnItem(this.props.targetID,v);
+                            e.stopPropagation();
+                        }} key={k}>
+                        <td>{k + 1}</td>
+                        {mapTd(v)}
+                    </tr>);
+                })}</tbody>
+            }
         }
 
         return (<div className="normal-table-content">
@@ -208,7 +306,8 @@ class NormalTable extends React.Component {
 
 
 const state = state=> {
-    let loaded, target, btnGroup, viewPoint, modifyViewPoint, targetID, api, data, nowOnItem, nowOnClickButton, modifyViewData;
+    let loaded, target, btnGroup, viewPoint, modifyViewPoint, targetID, api, data, nowOnItem, nowOnClickButton,
+        modifyViewData,toggleItem;
     state.containerTitleMenu.activeContent.map(v=> {
         if (v.obj.id === state.common.nowOnContentTarget.id) {
             target = v;
@@ -224,6 +323,7 @@ const state = state=> {
     nowOnClickButton = target.status ? target.status.nowOnClickButton : undefined;
     modifyViewData = target.status ? target.status.modifyViewData : undefined;
     loaded = target.status ? target.status.loaded : false;
+    toggleItem=target.status ? target.status.toggleItem : [];
     return ({
         target: target,
         //读取状态
@@ -245,7 +345,9 @@ const state = state=> {
         //当前选中的按钮
         nowOnClickButton: nowOnClickButton,
         //当前模态框中数据
-        modifyViewData: modifyViewData
+        modifyViewData: modifyViewData,
+        //当前折叠展开状态的折叠窗：
+        toggleItem:toggleItem
     });
 }
 
