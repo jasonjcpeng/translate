@@ -7,6 +7,7 @@ import {LoaderOption} from '../../config/config';
 //piecemeal-components
 import ButtonGroupModifier from '../piecemeal-components/button-group-modifier';
 import ButtonGroupDeleter from '../piecemeal-components/button-group-deleter';
+import ButtonGroupAdder from '../piecemeal-components/button-group-adder';
 
 import * as ActionCreators from '../../action/normal-table';
 const constID = 'AX_Id';
@@ -29,6 +30,19 @@ class NormalTable extends React.Component {
         if (this.props.nowOnClickButton) {
             switch (this.props.nowOnClickButton.componentName) {
                 case 'add':
+                    return (<ButtonGroupAdder isShow={isShow} reduxSaveData={this.props.modifyViewData} fieldData={this.props.modifyViewPoint}
+                                                 onCancel={e=>{
+                    this.props.onClickButton(this.props.targetID,undefined);
+                }} onChange={
+                    data=>{
+                    this.props.saveModifyViewData(this.props.targetID,data);
+                    }}
+                                                 onFinish={
+                        data=>{
+                            this.props.submitAddData(this.props.targetID,this.props.data,data,api,this.props.nowOnItem);
+                        }
+                    }
+                    ></ButtonGroupAdder>);
                     break;
                 case 'check':
                     return <ButtonGroupModifier isShow={isShow} reduxSaveData={this.props.modifyViewData}
@@ -227,7 +241,7 @@ class NormalTable extends React.Component {
                             e.stopPropagation();
                         }} key={k}>
                         <td>{ (()=>{
-                            return (<div style={{float:'left',marginLeft:arrowIconMargin(v,5)+'px'}}>
+                            return (<div style={{width:'40px',float:'left',paddingLeft:arrowIconMargin(v,5)+'px'}}>
                                 {(()=>{
                                     if (isMenuHasChild(menuData, v)) {
                                         return (<i onClick={
@@ -279,8 +293,8 @@ class NormalTable extends React.Component {
                             }
                         }
                 } className="content-container-inset" style={{height: height}}>
-                        <Loader options={LoaderOption} loaded={this.props.loaded}>
                         {this.judgementOpenButtonGroupComponent()}
+                        <Loader options={LoaderOption} loaded={this.props.loaded}>
                         <div style={{minWidth: 600, height: '100%'}}>
                             {this.createOptionBar()}
                             {this.createTable()}

@@ -36,6 +36,7 @@ export const onClickButton = (targetID,buttonName)=>{
     }
 }
 
+//btn_delete
 export const submitDeleteData = (targetID,data,api)=>{
     if(isOnline){
         //Todo:表格删除接后台
@@ -57,7 +58,45 @@ export const submitDeleteData = (targetID,data,api)=>{
         }
     }
 }
+//btn_add
+export const submitAddData = (targetID,allData,data,api,item)=>{
+        if(isOnline){
+            //Todo:表格附加增加接后台
+            return dispatch=>{
+                return dispatch({
+                    type:Constants.NORMAL_TABLE_SUBMIT_ADD_DATA,
+                    targetID:targetID,
+                    data:data,
+                    item:item
+                })
+            }
+        }else{
+            let newData ={};
+            let count = allData.length;
+            for(let i in data){
+                if(i!=='AX_Id'&&i!=='AX_ParentId'){
+                    newData[i]=data[i]
+                }
+            }
+            newData['AX_Id']=++count;
+            if(item){
+                newData['AX_ParentId']=item['AX_Id'];
+            }else{
+                newData['AX_ParentId']="0";
+            }
+            return dispatch=>{
+                dispatch(onClickButton(targetID,undefined));
+                return dispatch({
+                    type:Constants.NORMAL_TABLE_SUBMIT_ADD_DATA,
+                    targetID:targetID,
+                    data:newData,
+                    item:item
+                })
+            }
+        }
+}
 
+//btn_modify
 export const submitModifyData = (targetID,data,api)=>{
     if(isOnline){
         //Todo:表格修改接后台
@@ -108,3 +147,4 @@ export const actionToggleItem = (targetID,item)=>{
         item:item
     }
 }
+

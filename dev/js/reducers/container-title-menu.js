@@ -277,8 +277,8 @@ export default function (state = initState, action) {
                     isEnable: true,
                     createtime: '',
                     updatetime: '',
-                    api: 'user/user',
-                    viewPointConfigApi: 'api/configApi',
+                    api: 'api/module',
+                    viewPointConfigApi: 'api/configApi2',
                     viewPoint: [],
                     btnGroup: [],
                     modifyViewPoint: []
@@ -426,7 +426,7 @@ export default function (state = initState, action) {
             return setActiveContentStatusByID(state,action.targetID,{status:{toggleItem:{$apply:(arr)=>{
                 let isPush = true;
                 let newArr = arr.filter((v)=>{
-                    if(v!==action.item){
+                    if(v[constID]!==action.item[constID]){
                         return v;
                     }else{
                         isPush = false;
@@ -438,7 +438,13 @@ export default function (state = initState, action) {
                 return newArr;
             }}}});
             break;
-
+        case Constants.NORMAL_TABLE_SUBMIT_ADD_DATA:
+            console.log(action.data);
+                    return setActiveContentStatusByID(state,action.targetID,{status:{data:{$apply:(arr)=>{
+                      arr.push(action.data);
+                        return arr;
+                    }}}});
+            break;
     }
     return state;
 }

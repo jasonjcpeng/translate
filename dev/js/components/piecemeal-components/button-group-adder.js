@@ -1,6 +1,6 @@
 /**
  *
- * Created by JasonPeng on 2017/4/20.
+ * Created by JasonPeng on 2017/4/22.
  */
 import React from 'react';
 import ModifyShield from '../piecemeal-components/modifyShield';
@@ -19,24 +19,12 @@ import ModifyShield from '../piecemeal-components/modifyShield';
 class ButtonGroupModifier extends React.Component {
     constructor(props) {
         super();
-        let reduxSaveData = (()=> {
-            if (props.reduxSaveData) {
-                return props.reduxSaveData;
-            } else {
-                let temp = {};
-                for (let i in props.initData) {
-                    temp[i] = props.initData[i];
-                }
-                return temp;
-            }
-        })();
-
         this.state = {
             isShow: props.isShow,
             fieldData: props.fieldData,
             onCancel: props.onCancel,
             onFinish: props.onFinish,
-            reduxSaveData: reduxSaveData,
+            reduxSaveData: props.reduxSaveData ? props.reduxSaveData : {},
             onChange: props.onChange
         }
     }

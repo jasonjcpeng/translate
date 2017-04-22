@@ -66,7 +66,6 @@ class MenuSettingOptionAddMenu extends React.Component {
                 api: val.api
             };
             singleItem[itemKey] = itemVal;
-
             let newValue = [];
             newValue = this.props.menuData.modifyViewPoint.map((v, k)=> {
                 if (k === key) {
@@ -264,6 +263,28 @@ class MenuSettingOptionAddMenu extends React.Component {
     createButtonGroupSetting() {
         let createBtnGroupList = ()=> {
             let btnGroupList = BtnGroupList;
+            let btnGroupListApi =(()=>{
+                let tableApi = this.props.menuData.api?this.props.menuData.api:'';
+                let judgeFunc = (name)=>{
+                    switch(name){
+                        case 'add':
+                            return tableApi+'/post'
+                        break;
+                        case 'delete':
+                            return tableApi+'/delete'
+                            break;
+                        case 'modify':
+                            return tableApi+'/put'
+                            break;
+                    }
+                }
+                let result = {};
+                for(let i in btnGroupList){
+                    result[i]={api:judgeFunc(i)};
+                }
+                return result
+            })();
+            console.log(btnGroupListApi);
             let render = [];
             let btnGroup = this.props.menuData.btnGroup;
             let handleOnClick = (componentName, btnGroupItem)=> {
@@ -273,7 +294,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                     isNeedTarget: btnGroupItem.isNeedTarget,
                     isToggleGroup: btnGroupItem.isNeedTarget,
                     CNName: '',
-                    api: ''
+                    api: btnGroupListApi[componentName].api
                 }
                 btnGroup.push(btnItem);
                 this.props.changeMenuData(this.props.targetMenuSort, 'btnGroup', btnGroup);
@@ -295,7 +316,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                     componentName: val.componentName,
                     componentRemark: val.componentRemark,
                     isNeedTarget: val.isNeedTarget,
-                    isToggleGroup: val.isNeedTarget,
+                    isToggleGroup: val.isToggleGroup,
                     CNName: val.CNName,
                     api: val.api
                 };
@@ -598,12 +619,12 @@ class MenuSettingOptionAddMenu extends React.Component {
                         if (!this.props.isRootMenu) {
                             return (<div>
                                 <li><span>菜单视图项API:</span><span><input
-                                    defaultValue={this.props.menuData.viewPointConfigApi} onChange={
+                                    value={this.props.menuData.viewPointConfigApi} onChange={
                                     e=>{
                                         this.props.changeMenuData(this.props.targetMenuSort,'viewPointConfigApi',e.target.value);
                                     }
                                 } type="text"/></span></li>
-                                <li><span>菜单内容项API:</span><span><input defaultValue={this.props.menuData.api} onChange={
+                                <li><span>菜单内容项API:</span><span><input value={this.props.menuData.api} onChange={
                                     e=>{
                                         this.props.changeMenuData(this.props.targetMenuSort,'api',e.target.value);
                                     }
