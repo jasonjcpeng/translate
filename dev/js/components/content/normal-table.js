@@ -10,16 +10,18 @@ import ButtonGroupDeleter from '../piecemeal-components/button-group-deleter';
 import ButtonGroupAdder from '../piecemeal-components/button-group-adder';
 
 import * as ActionCreators from '../../action/normal-table';
+import InitTableArgs from '../../../jsons/init-table-args.json';
+//全局变量
 const constID = 'AX_Id';
 const constParentID = 'AX_ParentId';
 
 class NormalTable extends React.Component {
     componentWillMount() {
         if (!this.props.target.status) {
-            this.props.GetMount(this.props.targetID);
+            this.props.GetMount(this.props.targetID,InitTableArgs);
         }
         if (!this.props.loaded) {
-            this.props.getData(this.props.targetID, this.props.api);
+            this.props.getData(this.props.targetID, this.props.api,InitTableArgs);
         }
     }
 
@@ -234,7 +236,9 @@ class NormalTable extends React.Component {
             }
             let menuData =  this.props.data;
             if(this.props.data[0]&&this.props.data[0][constParentID]){
+                console.log(this.props.data);
                 menuData = quickSort(this.props.data);
+
                 return <tbody>{menuData.map((v, k)=> {
                     return (<tr hidden={trIsHidden(v)} className={createTrClassName(v)} onClick={(e)=>{
                             this.props.checkOnItem(this.props.targetID,v);
@@ -321,7 +325,7 @@ class NormalTable extends React.Component {
 
 const state = state=> {
     let loaded, target, btnGroup, viewPoint, modifyViewPoint, targetID, api, data, nowOnItem, nowOnClickButton,
-        modifyViewData,toggleItem;
+        modifyViewData,toggleItem,tableConfigArgs;
     state.containerTitleMenu.activeContent.map(v=> {
         if (v.obj.id === state.common.nowOnContentTarget.id) {
             target = v;
@@ -338,6 +342,7 @@ const state = state=> {
     modifyViewData = target.status ? target.status.modifyViewData : undefined;
     loaded = target.status ? target.status.loaded : false;
     toggleItem=target.status ? target.status.toggleItem : [];
+    tableConfigArgs = target.status ? target.status.tableConfigArgs : undefined;
     return ({
         target: target,
         //读取状态
@@ -361,7 +366,9 @@ const state = state=> {
         //当前模态框中数据
         modifyViewData: modifyViewData,
         //当前折叠展开状态的折叠窗：
-        toggleItem:toggleItem
+        toggleItem:toggleItem,
+        //当前表格的Api请求参数。决定表格呈现方式，以及排序的字段依据、排序方式等选项
+        tableConfigArgs:tableConfigArgs
     });
 }
 

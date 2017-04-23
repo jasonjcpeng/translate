@@ -25,6 +25,24 @@ class MenuSettingOptionAddMenu extends React.Component {
         }
     }
 
+    componentWillUpdate(){
+        let deleteActiveContent = (k, v)=> {
+            this.props.closeMenuSetting(k, v);
+            let result = null;
+            if (k > 0 && k + 1 === this.props.activeContent.length) {
+                result = this.props.activeContent[k - 1];
+            } else if (this.props.activeContent.length > 0) {
+                result = this.props.activeContent[k + 1];
+            }
+            result ? this.props.selectActiveContent(result) : '';
+        }
+        if(this.props.isFinish){
+            this.props.AppDidMount();
+            deleteActiveContent();
+
+        }
+    }
+
     //判断需要渲染哪个进度状态视图界面
     judgeRenderFunction() {
         let progressState = this.props.target.status.progress;
@@ -284,7 +302,6 @@ class MenuSettingOptionAddMenu extends React.Component {
                 }
                 return result
             })();
-            console.log(btnGroupListApi);
             let render = [];
             let btnGroup = this.props.menuData.btnGroup;
             let handleOnClick = (componentName, btnGroupItem)=> {
@@ -778,24 +795,12 @@ class MenuSettingOptionAddMenu extends React.Component {
         }
 
         let createFooterFinishStepButton = ()=> {
-            let deleteActiveContent = (k, v)=> {
-                this.props.closeMenuSetting(k, v);
-                let result = null;
-                if (k > 0 && k + 1 === this.props.activeContent.length) {
-                    result = this.props.activeContent[k - 1];
-                } else if (this.props.activeContent.length > 0) {
-                    result = this.props.activeContent[k + 1];
-                }
-                result ? this.props.selectActiveContent(result) : '';
-            }
 
             let handleFinishButton = ()=> {
                 let menuData = this.props.menuData;
                 switch (this.props.targetMenuSort) {
                     case 'menuSettingAddMenu':
-                        if (isOnline) {
-
-                        } else {
+                        if (!isOnline) {
                             let allMenu = this.props.allMenu;
                             let createTime = getNowFormatDate();
                             let updateTime = getNowFormatDate();
@@ -819,10 +824,9 @@ class MenuSettingOptionAddMenu extends React.Component {
                             menuData.id = id;
                             menuData.code = code;
                         }
+                        this.props.clickFinish(this.props.targetMenuSort,menuData,this.props.activeContent,this.props.nowOnContentKey,this.props.target.obj);
                         break;
                 }
-                this.props.clickFinish(menuData);
-                deleteActiveContent(this.props.nowOnContentKey, this.props.target.obj);
             }
 
             let progressState = this.props.target.status.progress;

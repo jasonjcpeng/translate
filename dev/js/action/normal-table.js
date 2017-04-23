@@ -3,10 +3,11 @@ import {isOnline} from '../config/config';
 import {normalTableGetData} from '../services/api';
 
 
-export const GetMount = (targetID)=>{
+export const GetMount = (targetID,InitTableArgs)=>{
     return{
             type:Constants.NORMAL_TABLE_INIT,
             targetID:targetID,
+            initTableArgs:InitTableArgs
     }
 }
 
@@ -127,10 +128,9 @@ export const saveModifyViewData = (targetID,modifyViewData)=>{
     }
 }
 
-export const getData = (targetID,api,...arg)=>{
-
+export const getData = (targetID,api,arg)=>{
     return dispatch=>{
-        normalTableGetData(api,...arg).then((data)=>{
+        normalTableGetData(api,arg).then((data)=>{
             return dispatch({
                 type:Constants.NORMAL_TABLE_GET_DATA,
                 targetID:targetID,

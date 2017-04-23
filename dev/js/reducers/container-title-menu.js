@@ -1,5 +1,6 @@
 import update from 'react-addons-update';
 import * as Constants from '../action/CONSTANTS';
+import {isOnline} from '../config/config';
 
 const initState = {
     menuScrollX: 0,
@@ -267,6 +268,7 @@ export default function (state = initState, action) {
                     on: false
                 }, {active: false, on: false}],
                 viewPointConfigData: [],
+                isFinish:false,
                 menuData: {
                     id: '',
                     icon: '',
@@ -277,8 +279,8 @@ export default function (state = initState, action) {
                     isEnable: true,
                     createtime: '',
                     updatetime: '',
-                    api: 'api/module',
-                    viewPointConfigApi: 'api/configApi2',
+                    api: isOnline?'':'api/module',
+                    viewPointConfigApi:isOnline?'':'api/configApi2',
                     viewPoint: [],
                     btnGroup: [],
                     modifyViewPoint: []
@@ -386,7 +388,8 @@ export default function (state = initState, action) {
                 checkOnItem:undefined,
                 nowOnClickButton:undefined,
                 modifyViewData:undefined,
-                toggleItem:[]
+                toggleItem:[],
+                tableConfigArgs:action.initTableArgs
             }
             return setActiveContentStatusByID(state,action.targetID,{status:{$set:initStatus}});
             break;
@@ -439,7 +442,6 @@ export default function (state = initState, action) {
             }}}});
             break;
         case Constants.NORMAL_TABLE_SUBMIT_ADD_DATA:
-            console.log(action.data);
                     return setActiveContentStatusByID(state,action.targetID,{status:{data:{$apply:(arr)=>{
                       arr.push(action.data);
                         return arr;

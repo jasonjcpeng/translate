@@ -127,9 +127,9 @@ class LoginModel{
                 if(data){
                     window.localStorage.setItem('login','login');
                     window.location.href='./app.html';
-                }else{
-                    console.log('登陆失败')
                 }
+            }).catch(e=>{
+                console.log(e);
             });
         }
     }

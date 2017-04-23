@@ -128,7 +128,9 @@ export default function (state = initState, action) {
             return deleteMenu(state, action.payload.id, '');
             break;
         case Constants.MENU_SETTING_ADD_MENU_TO_SIDE_BAR:
-            return update(state, {menu: {$push: [action.payload]}});
+            if(action.payload){
+                return update(state, {menu: {$push: [action.payload]}});
+            }
             break;
     }
     return state;

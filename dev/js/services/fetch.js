@@ -5,9 +5,9 @@ import {Location,Host, TimeOut,isOnline} from '../config/config';
 export const Fetch = (url,args,method='GET')=> {
     let Url = (isOnline?Host:Location) + url;
     let localMethod = isOnline?method:'GET';
-    const opts = {method: localMethod.toUpperCase(), body: qs.stringify(args)}
+    const opts = {method: localMethod.toUpperCase(),credentials: "include",body: qs.stringify(args)}
     const headers = {
-        'mode': 'no-cors',
+        'mode': 'cors',
         'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
     }
     if (opts.method === 'GET') {
@@ -19,7 +19,7 @@ export const Fetch = (url,args,method='GET')=> {
     return new Promise((resolve, reject)=> {
         let timer = setTimeout(()=> {
             console.log(Url+':Timing Out!');
-            reject(2333);
+            reject('连接超时！');
         }, TimeOut);
         fetch(Url, opts).then(res=> {
             clearTimeout(timer);
@@ -29,11 +29,12 @@ export const Fetch = (url,args,method='GET')=> {
             } else {
                 res.json().then(data=> {
                     console.log(Url + ':Done!');
-                    resolve(data);
+                        resolve(data);
                 })
             }
         }).catch(rej=>{
             console.log('fetch message:'+rej);
+            reject('error');
         })
     });
 
