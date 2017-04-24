@@ -6,7 +6,8 @@ const initState = {
         userID:'',
         name: '',
         power: '',
-        imgUrl: ''
+        imgUrl: '',
+        powerEnCode:''
     },
     menu: [],
     menuScrollY: 0,

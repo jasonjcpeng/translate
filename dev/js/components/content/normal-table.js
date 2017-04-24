@@ -235,10 +235,9 @@ class NormalTable extends React.Component {
                 return result;
             }
             let menuData =  this.props.data;
+            this.IsParentAndChildFlag = true;
             if(this.props.data[0]&&this.props.data[0][constParentID]){
-                console.log(this.props.data);
                 menuData = quickSort(this.props.data);
-
                 return <tbody>{menuData.map((v, k)=> {
                     return (<tr hidden={trIsHidden(v)} className={createTrClassName(v)} onClick={(e)=>{
                             this.props.checkOnItem(this.props.targetID,v);
@@ -277,7 +276,7 @@ class NormalTable extends React.Component {
             }
         }
 
-        return (<div className="normal-table-content">
+        return (<div style={{height:this.props.height-100}} className="normal-table-content">
             <table style={{width:'95%',margin:'0 auto'}}>
                 {createTableHead()}
                 {createTableBody()}
@@ -288,7 +287,7 @@ class NormalTable extends React.Component {
     renderPC() {
         let height = this.props.height;
         return (
-            <div className="content-container animation-fadeInRight">
+            <div  className="content-container animation-fadeInRight">
 
                     <div onClick={
                     ()=>{
@@ -296,7 +295,7 @@ class NormalTable extends React.Component {
                                 this.props.checkOnItem(this.props.targetID,undefined);
                             }
                         }
-                } className="content-container-inset" style={{height: height}}>
+                }  className="content-container-inset" style={{height: height}}>
                         {this.judgementOpenButtonGroupComponent()}
                         <Loader options={LoaderOption} loaded={this.props.loaded}>
                         <div style={{minWidth: 600, height: '100%'}}>
@@ -336,7 +335,7 @@ const state = state=> {
     btnGroup = target.obj.btnGroup ? target.obj.btnGroup : [];
     viewPoint = target.obj.viewPoint ? target.obj.viewPoint : [];
     modifyViewPoint = target.obj.modifyViewPoint ? target.obj.modifyViewPoint : [];
-    data = target.status ? target.status.data : [];
+    data = target.status ? target.status.data['UserList'] : [];
     nowOnItem = target.status ? target.status.checkOnItem : undefined;
     nowOnClickButton = target.status ? target.status.nowOnClickButton : undefined;
     modifyViewData = target.status ? target.status.modifyViewData : undefined;

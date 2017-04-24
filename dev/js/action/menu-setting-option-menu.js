@@ -87,14 +87,13 @@ export const clickFinish = (targetMenuSort, menuData,activeContent, nowOnContent
     if (isOnline) {
         return dispatch=> {
             insertTableMenu(menuData).then(data=> {
-                deleteActiveContent(nowOnContentKey, obj,activeContent, dispatch);
+                deleteActiveContent(nowOnContentKey, obj, activeContent, dispatch);
                 dispatch(AppDidMount());
                 return dispatch({
                     type: Constants.MENU_SETTING_ADD_MENU_TO_SIDE_BAR,
                     targetMenuSort: targetMenuSort,
                 });
             }).catch(res=> {
-                console.log('insert Error!');
                 return dispatch({
                     type: Constants.MENU_SETTING_ADD_MENU_TO_SIDE_BAR,
                     targetMenuSort: targetMenuSort,

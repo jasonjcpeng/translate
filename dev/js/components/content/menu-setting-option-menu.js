@@ -283,6 +283,7 @@ class MenuSettingOptionAddMenu extends React.Component {
             let btnGroupList = BtnGroupList;
             let btnGroupListApi =(()=>{
                 let tableApi = this.props.menuData.api?this.props.menuData.api:'';
+                console.log(tableApi.lastIndexOf('/'))
                 let judgeFunc = (name)=>{
                     switch(name){
                         case 'add':
@@ -393,10 +394,10 @@ class MenuSettingOptionAddMenu extends React.Component {
                         </div>
                     </td>
                     <td>{val.componentRemark}</td>
-                    <td><input type="text" onChange={e=>{
+                    <td><input key={val.componentName+''+k} type="text" onChange={e=>{
                         handleOnChange(k,val,'CNName',e.target.value);
                     }} value={val.CNName}/></td>
-                    <td><input type="text" onChange={e=>{
+                    <td><input key={val.componentName+''+k} type="text" onChange={e=>{
                         handleOnChange(k,val,'api',e.target.value);
                     }} value={val.api}/></td>
                     <td>{val.isNeedTarget ? "是" : ""}</td>
@@ -969,15 +970,15 @@ const state = state=> {
         //本选项卡头包含的选项卡内数据{obj:选项卡菜单，status：选项卡内状态，isActive:是否正使用}
         target: target,
         //视图层通过菜单视图项Api获取的表字段内容
-        viewPointConfigData: target.status.viewPointConfigData,
+        viewPointConfigData: target.status?target.status.viewPointConfigData:'',
         //是否开启预览遮罩层
-        previewStatus: target.status.previewStatus,
+        previewStatus: target.status?target.status.previewStatus:'',
         //当前选项卡所在数组的位置，用来关闭本选项卡
         nowOnContentKey: nowOnContentKey,
-        isRootMenu: target.status.isRootMenu,
-        configApi: target.status.configApi,
-        targetMenuSort: target.obj.menuSort,
-        menuData: target.status.menuData,
+        isRootMenu: target.status?target.status.isRootMenu:'',
+        configApi: target.status?target.status.configApi:'',
+        targetMenuSort: target.status?target.obj.menuSort:'',
+        menuData: target.status?target.status.menuData:'',
         defaultToggleStatus: state.common.defaultToggleStatus
     });
 }

@@ -1,6 +1,6 @@
 import * as Constants from './CONSTANTS';
 import {isOnline} from '../config/config';
-import {normalTableGetData} from '../services/api';
+import {normalTableGetData, insertTableItem} from '../services/api';
 
 
 export const GetMount = (targetID,InitTableArgs)=>{
@@ -64,12 +64,18 @@ export const submitAddData = (targetID,allData,data,api,item)=>{
         if(isOnline){
             //Todo:表格附加增加接后台
             return dispatch=>{
-                return dispatch({
-                    type:Constants.NORMAL_TABLE_SUBMIT_ADD_DATA,
-                    targetID:targetID,
-                    data:data,
-                    item:item
-                })
+                insertTableItem(api, item, data).then(data=> {
+                    dispatch(onClickButton(targetID,undefined));
+                    return dispatch({
+                        type: Constants.NORMAL_TABLE_SUBMIT_ADD_DATA,
+                        targetID: targetID,
+                        data: data,
+                        item: item
+                    })
+                }).catch(error=> {
+
+
+                });
             }
         }else{
             let newData ={};

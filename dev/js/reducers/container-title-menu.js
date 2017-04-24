@@ -279,7 +279,7 @@ export default function (state = initState, action) {
                     isEnable: true,
                     createtime: '',
                     updatetime: '',
-                    api: isOnline?'':'api/module',
+                    api: isOnline?'':'api/module/getmenu',
                     viewPointConfigApi:isOnline?'':'api/configApi2',
                     viewPoint: [],
                     btnGroup: [],
@@ -378,6 +378,11 @@ export default function (state = initState, action) {
             break;
         case Constants.MENU_SETTING_CHANGE_PREVIEW_STATUS:
             return setActiveContentStatus(state, action.targetMenuSort, {status: {previewStatus: {$set: action.previewStatus}}});
+            break;
+        case Constants.MENU_SETTING_ADD_MENU_TO_SIDE_BAR:
+            if(action.error){
+                return setActiveContentStatus(state, action.targetMenuSort, {status: {error: {$set: action.error}}});
+            }
             break;
         //-----------------------------normal-table-----------------------------------
         case Constants.NORMAL_TABLE_INIT:

@@ -68,3 +68,23 @@ export const getNowFormatDate=()=>{
         + seperator2 + date.getSeconds();
     return currentdate;
 }
+
+export const stringifyArrWhosChildIsObj = (viewPoint)=>{
+    let viewPointArr = []
+    for(let i in viewPoint){
+        viewPointArr.push(JSON.stringify(viewPoint[i]));
+    }
+    return viewPointArr.join('@#');
+}
+
+export const arraifyStringWhosChildIsObj = (viewPointString)=>{
+    let viewPointArr = [];
+    let result = [];
+    if(viewPointString){
+        viewPointArr = viewPointString.split('@#');
+        result = viewPointArr.map(v=>{
+            return JSON.parse(v);
+        });
+    }
+    return result
+}
