@@ -34,7 +34,7 @@ export const Fetch = (url,args,method='GET')=> {
             }
         }).catch(rej=>{
             console.log('fetch message:'+rej);
-            reject('error');
+            reject(rej+'\n请联系管理员！');
         })
     });
 

@@ -5,6 +5,17 @@ export const INIT_CONTAINER_APP_DID_MOUNT = 'INIT_CONTAINER_APP_DID_MOUNT';
 export const APP_SCREEN_HEIGHT_LISTENNER = 'APP_SCREEN_HEIGHT_LISTENNER';
 export const APP_FULL_SCREEN = 'APP_FULL_SCREEN';
 export const APP_DELETE_MENU_ITEM = 'APP_DELETE_MENU_ITEM';
+//piecemeal-components---------------------------------
+//----------------------------shield-alert
+export const SHIELD_ALERT_ON_OK_DELETE_ERROR_FLAG = 'SHIELD_ALERT_ON_OK_DELETE_ERROR_FLAG';
+
+
+
+
+
+
+
+//Components------------------------------------------------
 //----------------------------sidebar
 export const SIDE_BAR_MENU_ITEM_TOGGLE = 'SIDE_BAR_MENU_ITEM_TOGGLE';
 export const SIDE_BAR_MENU_SCROLL = 'SIDE_BAR_MENU_SCROLL';

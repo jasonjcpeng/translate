@@ -29,6 +29,7 @@ export const AppDidMount = ()=>{
                 payload:e
             });
         }).catch(e=>{
+            console.log(e)
             return dispatch({
                 type:Constants.INIT_CONTAINER_APP_DID_MOUNT,
                 error:e

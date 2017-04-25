@@ -1,6 +1,6 @@
 import * as Constants from './CONSTANTS';
 import {isOnline} from '../config/config';
-import {normalTableGetData, insertTableItem} from '../services/api';
+import {normalTableGetData, insertTableItem,apiModifyTableItem,apiDeleteTableItem} from '../services/api';
 
 
 export const GetMount = (targetID,InitTableArgs)=>{
@@ -42,11 +42,23 @@ export const submitDeleteData = (targetID,data,api)=>{
     if(isOnline){
         //Todo:表格删除接后台
         return dispatch=>{
-            return dispatch({
-                type:Constants.NORMAL_TABLE_SUBMIT_DELETE_DATA,
-                targetID:targetID,
-                data:data
-            })
+            apiDeleteTableItem(api,data).then(resData=>{
+                dispatch(onClickButton(targetID,undefined));
+                return dispatch({
+                    type:Constants.NORMAL_TABLE_SUBMIT_DELETE_DATA,
+                    targetID:targetID,
+                    data:data,
+                    error:undefined
+                })
+            }).catch(rejData=>{
+                dispatch(onClickButton(targetID,undefined));
+                return dispatch({
+                    type:Constants.NORMAL_TABLE_SUBMIT_DELETE_DATA,
+                    targetID:targetID,
+                    data:undefined,
+                    error:rejData
+                })
+            });
         }
     }else{
         return dispatch=>{
@@ -54,36 +66,36 @@ export const submitDeleteData = (targetID,data,api)=>{
             return dispatch({
                 type:Constants.NORMAL_TABLE_SUBMIT_DELETE_DATA,
                 targetID:targetID,
-                data:data
+                data:data,
+                error:undefined
             });
         }
     }
 }
 //btn_add
-export const submitAddData = (targetID,allData,data,api,item)=>{
+export const submitAddData = (targetID,allData,data,addApi,item,tableApi,tableArgs)=>{
         if(isOnline){
             //Todo:表格附加增加接后台
             return dispatch=>{
-                insertTableItem(api, item, data).then(data=> {
+                insertTableItem(addApi, item, data).then(apiData=> {
                     dispatch(onClickButton(targetID,undefined));
+                    return dispatch(getData(targetID,tableApi,tableArgs));
+                }).catch(error=> {
+                    console.log(error);
                     return dispatch({
                         type: Constants.NORMAL_TABLE_SUBMIT_ADD_DATA,
                         targetID: targetID,
                         data: data,
-                        item: item
+                        item: item,
+                        error:error
                     })
-                }).catch(error=> {
-
-
                 });
             }
         }else{
             let newData ={};
             let count = allData.length;
             for(let i in data){
-                if(i!=='AX_Id'&&i!=='AX_ParentId'){
                     newData[i]=data[i]
-                }
             }
             newData['AX_Id']=++count;
             if(item){
@@ -97,7 +109,8 @@ export const submitAddData = (targetID,allData,data,api,item)=>{
                     type:Constants.NORMAL_TABLE_SUBMIT_ADD_DATA,
                     targetID:targetID,
                     data:newData,
-                    item:item
+                    item:item,
+                    error:undefined
                 })
             }
         }
@@ -106,13 +119,17 @@ export const submitAddData = (targetID,allData,data,api,item)=>{
 //btn_modify
 export const submitModifyData = (targetID,data,api)=>{
     if(isOnline){
-        //Todo:表格修改接后台
         return dispatch=>{
-            return dispatch({
-                type:Constants.NORMAL_TABLE_SUBMIT_MODIFY_DATA,
-                targetID:targetID,
-                data:data
-            })
+            apiModifyTableItem(api,data).then(resData=>{
+                dispatch(onClickButton(targetID,undefined));
+                return dispatch({
+                    type:Constants.NORMAL_TABLE_SUBMIT_MODIFY_DATA,
+                    targetID:targetID,
+                    data:data
+                })
+            }).catch(rejData=>{
+                console.log(rejData)
+            });
         }
     }else{
         return dispatch=>{
@@ -140,7 +157,15 @@ export const getData = (targetID,api,arg)=>{
             return dispatch({
                 type:Constants.NORMAL_TABLE_GET_DATA,
                 targetID:targetID,
-                data:data
+                data:data,
+                error:undefined
+            })
+        }).catch(error=>{
+            return dispatch({
+                type:Constants.NORMAL_TABLE_GET_DATA,
+                targetID:targetID,
+                data:undefined,
+                error:error
             })
         });
     };

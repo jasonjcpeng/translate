@@ -23,12 +23,10 @@ class App extends React.Component{
             console.log("error");
             flag = true;
         }
-        if(flag){
-            this.props.AppDidMount();
-        }else{
+        if(!flag){
             this.props.reloadFromLocalStorage(store);
         }
-
+        this.props.AppDidMount();
     }
 
     componentWillUnmount(){

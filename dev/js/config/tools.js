@@ -70,21 +70,28 @@ export const getNowFormatDate=()=>{
 }
 
 export const stringifyArrWhosChildIsObj = (viewPoint)=>{
-    let viewPointArr = []
+    let viewPointArr = [];
     for(let i in viewPoint){
         viewPointArr.push(JSON.stringify(viewPoint[i]));
     }
     return viewPointArr.join('@#');
 }
 
+//这里如果来的数据不是JSON的string会报错
 export const arraifyStringWhosChildIsObj = (viewPointString)=>{
     let viewPointArr = [];
     let result = [];
     if(viewPointString){
         viewPointArr = viewPointString.split('@#');
-        result = viewPointArr.map(v=>{
-            return JSON.parse(v);
-        });
+        if(viewPointArr.length>0){
+            result = viewPointArr.map(v=>{
+                if(v.indexOf('{')>=0){
+                    return (JSON.parse(v));
+                }else{
+                    return '';
+                }
+            });
+        }
     }
     return result
 }

@@ -31,7 +31,7 @@ const setActiveContentStatus = (state, menuSort, data)=>{
     });
 }
 
-const setActiveContentStatusByID = (state, id, data)=>{
+const setActiveContentStatusByID = (state,id,data)=>{
     return update(state, {
         activeContent: {
             $apply: function (arr) {
@@ -373,8 +373,13 @@ export default function (state = initState, action) {
         case Constants.MENU_SETTING_SEND_ERROR_MESSAGE:
             return setActiveContentStatus(state, action.targetMenuSort, {status: {error: {$set: action.error}}});
             break;
-        case Constants.MENU_SETTING_RESET_ERROR:
-            return setActiveContentStatus(state, action.targetMenuSort, {status: {error: {$set: undefined}}});
+        case Constants.SHIELD_ALERT_ON_OK_DELETE_ERROR_FLAG:
+            if(action.targetType){
+                return setActiveContentStatus(state, action.target, {status: {error: {$set: undefined}}});
+            }else{
+                return setActiveContentStatusByID(state,action.target,{status:{error: {$set: undefined}}});
+            }
+
             break;
         case Constants.MENU_SETTING_CHANGE_PREVIEW_STATUS:
             return setActiveContentStatus(state, action.targetMenuSort, {status: {previewStatus: {$set: action.previewStatus}}});
@@ -399,7 +404,8 @@ export default function (state = initState, action) {
             return setActiveContentStatusByID(state,action.targetID,{status:{$set:initStatus}});
             break;
         case Constants.NORMAL_TABLE_GET_DATA:
-            return setActiveContentStatusByID(state,action.targetID,{status:{data:{$set:action.data},loaded:{$set:true}}});
+            let loaded = action.error?false:true;
+            return setActiveContentStatusByID(state,action.targetID,{status:{tableConfigArgs:{$set:action.data?action.data.tablePagination:undefined},data:{$set:action.data?action.data.tableData:undefined},loaded:{$set:loaded},error:{$set:action.error}}});
             break;
         case Constants.NORMAL_TABLE_CHECK_ON_ITEM:
             return setActiveContentStatusByID(state,action.targetID,{status:{checkOnItem:{$set:action.item}}});
@@ -424,11 +430,13 @@ export default function (state = initState, action) {
         case Constants.NORMAL_TABLE_SUBMIT_DELETE_DATA:
             return setActiveContentStatusByID(state,action.targetID,{status:{data:{$apply:(arr)=>{
                 return arr.filter((v,k)=>{
-                    if(v[constID]!==action.data[constID]){
+                    if(action.data&&v[constID]===action.data[constID]){
+
+                    }else{
                         return v;
                     }
                 });
-            }}}});
+            }},error:{$set:action.error}}});
             break;
         case Constants.NORMAL_TABLE_TOGGLE_ITEM:
             return setActiveContentStatusByID(state,action.targetID,{status:{toggleItem:{$apply:(arr)=>{
@@ -450,7 +458,7 @@ export default function (state = initState, action) {
                     return setActiveContentStatusByID(state,action.targetID,{status:{data:{$apply:(arr)=>{
                       arr.push(action.data);
                         return arr;
-                    }}}});
+                    }},error:{$set:action.error}}});
             break;
     }
     return state;

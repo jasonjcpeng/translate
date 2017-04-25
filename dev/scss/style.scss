@@ -34,14 +34,14 @@ body {
     padding: 10px;
     margin: 10px;
     border: solid 2px;
-    border-radius: 5px;
+    border-radius: 3px;
   }
   .btn:focus {
     cursor: pointer;
     font-weight: 600;
     padding: 10px;
     margin: 10px;
-    border-radius: 5px;
+    border-radius: 3px;
   }
 
   .standard-ul {
@@ -92,14 +92,14 @@ body {
 
   .shield{
     background-color:rgba(221,221,221,0.7) ;
-    z-index: 1001;
+    z-index: 1002;
     position: absolute;
     height: 100%;
     width: 100%;
   }
   .shield-content{
     position: absolute;
-    z-index: 1002;
+    z-index: 1003;
     top:15%;
     left:15%;
     border-radius: 10px;
@@ -110,16 +110,17 @@ body {
   }
   .shield-alert{
     position: absolute;
-    z-index: 1002;
+    z-index: 1003;
     top:calc(50% - 100px);
     left:calc(50% - 200px);
-    border-radius: 5px;
+    border:solid 3px;
     opacity: 1 ;
     background-color: #fff;
     height: 200px;
     width: 300px;
     .alert-header{
       padding: 10px 0 0 10px;
+      font-weight: 600;
       height: 30px;
       border-bottom: solid 3px;
     }
@@ -131,6 +132,12 @@ body {
     }
     .alert-footer{
       float: right;
+    }
+  }
+
+  .loader{
+    .spinner{
+      z-index: 1001 !important;
     }
   }
 }

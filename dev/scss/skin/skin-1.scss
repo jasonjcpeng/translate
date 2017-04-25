@@ -47,10 +47,11 @@ $table-item-active-color:#cbcdba;
   }
 
   .shield-alert{
+    border-color:$alert-color;
     background-color: $second-main-color;
     .alert-header{
-      border-color: $main-color;
-      color: $main-color;
+      border-color: $alert-color;
+      color: $alert-color;
     }
     .alert-content{
       color: $alert-color;

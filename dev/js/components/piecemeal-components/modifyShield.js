@@ -63,9 +63,9 @@ class ModifyShield extends React.Component{
                     if (!val.isMultiColumns) {
                         //用以清除浮动
                         if (this.state.fieldData[key - 1] && this.state.fieldData[key - 1].isMultiColumns) {
-                            return (<div>
+                            return (<div key={key}>
                                 <div style={{clear: 'both'}}></div>
-                                <li key={key} style={style}
+                                <li  style={style}
                                     className={choiceClassName(val.isMultiColumns)}>{createItemComponent(val,valData)}</li>
                             </div>)
                         } else {

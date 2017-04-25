@@ -6,7 +6,7 @@ import * as ActionCreators from '../../action/menu-setting-option-menu';
 import Loader from 'react-loader';
 import {LoaderOption} from '../../config/config';
 import classNames from 'classnames';
-import ShieldAlert from '../shield-alert';
+import ShieldAlert from '../piecemeal-components/shield-alert';
 import Checker from '../piecemeal-components/checker';
 import ModifyShield from '../piecemeal-components/modifyShield';
 //json
@@ -281,28 +281,6 @@ class MenuSettingOptionAddMenu extends React.Component {
     createButtonGroupSetting() {
         let createBtnGroupList = ()=> {
             let btnGroupList = BtnGroupList;
-            let btnGroupListApi =(()=>{
-                let tableApi = this.props.menuData.api?this.props.menuData.api:'';
-                console.log(tableApi.lastIndexOf('/'))
-                let judgeFunc = (name)=>{
-                    switch(name){
-                        case 'add':
-                            return tableApi+'/post'
-                        break;
-                        case 'delete':
-                            return tableApi+'/delete'
-                            break;
-                        case 'modify':
-                            return tableApi+'/put'
-                            break;
-                    }
-                }
-                let result = {};
-                for(let i in btnGroupList){
-                    result[i]={api:judgeFunc(i)};
-                }
-                return result
-            })();
             let render = [];
             let btnGroup = this.props.menuData.btnGroup;
             let handleOnClick = (componentName, btnGroupItem)=> {
@@ -312,7 +290,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                     isNeedTarget: btnGroupItem.isNeedTarget,
                     isToggleGroup: btnGroupItem.isNeedTarget,
                     CNName: '',
-                    api: btnGroupListApi[componentName].api
+                    api: ''
                 }
                 btnGroup.push(btnItem);
                 this.props.changeMenuData(this.props.targetMenuSort, 'btnGroup', btnGroup);
@@ -872,17 +850,6 @@ class MenuSettingOptionAddMenu extends React.Component {
 
     }
 
-    //渲染通知遮罩层
-    createAlertShield() {
-        let onOkFunc = ()=> {
-            this.props.clickShieldAlertOK(this.props.targetMenuSort);
-        }
-        if (this.props.target.status.error) {
-            return (
-                <ShieldAlert title="警告" content={this.props.target.status.error} onOkFunc={onOkFunc}></ShieldAlert>);
-        }
-    }
-
     //渲染图标设置遮罩层
     createToggleIconSetting() {
         if (this.props.target.status.isToggleIconSetting) {
@@ -930,7 +897,7 @@ class MenuSettingOptionAddMenu extends React.Component {
             <div className="content-container animation-fadeInRight">
                 {this.createModifyShield()}
                 {this.createToggleIconSetting()}
-                {this.createAlertShield()}
+                <ShieldAlert key={this.props.targetMenuSort+''+this.props.target.status.error} title="警告" content={this.props.target.status.error} onTargetMenuTarget={this.props.targetMenuSort}></ShieldAlert>
                 <div className="content-container-inset" style={{height: height}}>
                     <div style={{minWidth: 600}}>
                         {this.createOptionMenuProgress()}

@@ -32,10 +32,16 @@ const createFetchPromise = (api, callBack, args = '', method = 'GET')=> {
     return new Promise((resolve, reject)=> {
         Fetch.Fetch(filterIsOnline(api), finalArgs, method).then(
             res=> {
-                if (Number.parseInt(res.state) !== 1) {
-                    reject(res.message);
-                } else {
-                    callBack(res.data, resolve, reject);
+                if(res){
+                    if (Number.parseInt(res.state) !== 1) {
+                        if(res.message){
+                            reject(res.message);
+                        }
+                    } else {
+                        callBack(res.data, resolve, reject);
+                    }
+                }else{
+                    reject("来自API返回值的错误！请联系管理员");
                 }
             }
         ).catch(
@@ -66,7 +72,7 @@ export const login = (userName, pwd)=> {
     }, args, 'POST');
 }
 
-
+//集成获取该用户菜单，该用户个人信息，该用户个人权限信息
 export const appStart = ()=> {
     return new Promise((resolve, reject)=> {
         Promise.all([Fetch.Fetch(filterIsOnline(apis.getMenu)),Fetch.Fetch(filterIsOnline(apis.getUserInfo))]).then(
@@ -123,20 +129,8 @@ export const appStart = ()=> {
         );
     });
 }
-
+//根据菜单视图项API获取菜单表头字段
 export const menuSettingOptionMenuFetchViewPointConfig = (args)=> {
-    /*return new Promise((resolve,reject)=>{
-        let formatData = [];
-        for (let i in configApi.data) {
-            formatData.push({
-                name:i,
-                isEnable: true,
-                CNName: '',
-                width: 0,
-            });
-        }
-        resolve(formatData);
-    });*/
     let arg = {
         ModName:args
     }
@@ -153,7 +147,7 @@ export const menuSettingOptionMenuFetchViewPointConfig = (args)=> {
         resolve(formatData);
     }, arg);
 }
-
+//表格获取数据
 export const normalTableGetData = (api,args,searchKey,searchVal)=>{
     /*page	第几页	number	@mock=0
      records	总条数	number	@mock=0
@@ -183,7 +177,11 @@ export const normalTableGetData = (api,args,searchKey,searchVal)=>{
         api +="?key='"+Key+"'&value='"+Val+"'";
     }
     return createFetchPromise(api,(data, resolve, reject)=>{
-        resolve(data);
+        let resultData = {
+            tableData:data['UserList']?data['UserList']:[],
+            tablePagination:data['Pagination']?data['Pagination']:{}
+        }
+        resolve(resultData);
     },finalArgs,'POST')
 }
 //增加菜单内容中的内容项
@@ -199,33 +197,35 @@ export const insertTableItem = (api,item,data)=>{
         resolve(data);
     },newData,'POST')
 }
+//修改菜单内容中的内容项
+export const apiModifyTableItem = (api,item)=>{
+    api+=''+item['AX_Id'];
+    return createFetchPromise(api,(resData,resolve,reject)=>{
+        resolve(resData);
+    },item,'PUT');
+}
+//删除菜单内容中的内容项
+export const apiDeleteTableItem = (api,data)=>{
+    let arr =[];
+    if(Object.prototype.toString.call(data)==='[object Array]'){
+
+    }else{
+        arr.push(data['AX_Id']);
+    }
+    return createFetchPromise(api,(resData,resolve,reject)=>{
+        resolve(resData);
+    },arr,'DELETE');
+}
+
 //增加菜单
 export const insertTableMenu = (menu)=>{
     let arg = {
-        MouduleID: 0,
-        AX_Id: '',
         AX_ParentId: menu.parentCode,
-        AX_Layers: 0,
-        AX_EnCode: '',
         AX_FullName: menu.menuName,
         AX_Icon: menu.icon,
         AX_UrlAddress: menu.api,
-        AX_Target: '',
-        AX_IsMenu: true,
-        AX_IsExpand: true,
-        AX_IsPublic: true,
-        AX_AllowEdit: true,
-        AX_AllowDelete: true,
         AX_SortCode: menu.menuSort,
-        AX_DeleteMark: true,
-        AX_EnabledMark: true,
-        AX_Description: '',
         AX_CreatorTime: menu.createTime,
-        AX_CreatorUserId: '',
-        AX_LastModifyTime: '',
-        AX_LastModifyUserId: '',
-        AX_DeleteTime: '',
-        AX_DeleteUserId: '',
         AX_ViewPoint: stringifyArrWhosChildIsObj(menu.viewPoint),
         AX_BtnGroup: stringifyArrWhosChildIsObj(menu.btnGroup),
         AX_ModifyViewPoint:stringifyArrWhosChildIsObj(menu.modifyViewPoint)
@@ -235,3 +235,4 @@ export const insertTableMenu = (menu)=>{
         resolve(data);
     },arg,'POST');
 }
+

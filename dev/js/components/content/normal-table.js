@@ -8,6 +8,7 @@ import {LoaderOption} from '../../config/config';
 import ButtonGroupModifier from '../piecemeal-components/button-group-modifier';
 import ButtonGroupDeleter from '../piecemeal-components/button-group-deleter';
 import ButtonGroupAdder from '../piecemeal-components/button-group-adder';
+import ShieldAlert from '../piecemeal-components/shield-alert';
 
 import * as ActionCreators from '../../action/normal-table';
 import InitTableArgs from '../../../jsons/init-table-args.json';
@@ -41,7 +42,7 @@ class NormalTable extends React.Component {
                     }}
                                                  onFinish={
                         data=>{
-                            this.props.submitAddData(this.props.targetID,this.props.data,data,api,this.props.nowOnItem);
+                            this.props.submitAddData(this.props.targetID,this.props.data,data,api,this.props.nowOnItem,this.props.api,this.props.tableConfigArgs);
                         }
                     }
                     ></ButtonGroupAdder>);
@@ -146,18 +147,20 @@ class NormalTable extends React.Component {
                     }
                 })
             }
-            if(this.props.data[0]&&this.props.data[0][constParentID]){
-                return (<thead>
-                <tr>
-                    <th style={{borderRight:'0'}}></th>
-                    {mapTh()}</tr>
-                </thead>)
-            }else{
-                return (<thead>
-                <tr>
-                    <th style={{width:'20px',borderLeft:'0'}}></th>
-                    {mapTh()}</tr>
-                </thead>)
+            if(this.props.data){
+                if(this.props.data[0]&&this.props.data[0][constParentID]){
+                    return (<thead>
+                    <tr>
+                        <th style={{borderRight:'0'}}></th>
+                        {mapTh()}</tr>
+                    </thead>)
+                }else{
+                    return (<thead>
+                    <tr>
+                        <th style={{width:'20px',borderLeft:'0'}}></th>
+                        {mapTh()}</tr>
+                    </thead>)
+                }
             }
         }
         let createTableBody = ()=> {
@@ -234,49 +237,51 @@ class NormalTable extends React.Component {
                 }
                 return result;
             }
-            let menuData =  this.props.data;
-            this.IsParentAndChildFlag = true;
-            if(this.props.data[0]&&this.props.data[0][constParentID]){
-                menuData = quickSort(this.props.data);
-                return <tbody>{menuData.map((v, k)=> {
-                    return (<tr hidden={trIsHidden(v)} className={createTrClassName(v)} onClick={(e)=>{
+            //分别渲染级联型表或非级联型表
+            if(this.props.data){
+                let menuData =  this.props.data;
+                if(this.props.data[0]&&this.props.data[0][constParentID]){
+                    menuData = quickSort(this.props.data);
+                    return <tbody>{menuData.map((v, k)=> {
+                        return (<tr hidden={trIsHidden(v)} className={createTrClassName(v)} onClick={(e)=>{
                             this.props.checkOnItem(this.props.targetID,v);
                             e.stopPropagation();
                         }} key={k}>
-                        <td>{ (()=>{
-                            return (<div style={{width:'40px',float:'left',paddingLeft:arrowIconMargin(v,5)+'px'}}>
-                                {(()=>{
-                                    if (isMenuHasChild(menuData, v)) {
-                                        return (<i onClick={
-                                e=>{
-                                    this.props.actionToggleItem(this.props.targetID,v);
-                                    e.stopPropagation();
-                                }
-                            } className={trToggleIconClassNames(v)}></i>)
-                                    }else{
-                                        return (<i  className="menu-no-toggle"></i>)
-                                    }
-                                })()}
-                                <span style={{marginLeft:'5px'}}>{k + 1}</span>
-                            </div>);
-                        })()}</td>
-                        {mapTd(v)}
-                    </tr>);
-                })}</tbody>
-            }else{
-                return <tbody>{menuData.map((v, k)=> {
-                    return (<tr hidden={false} className={createTrClassName(v)} onClick={(e)=>{
+                            <td>{ (()=>{
+                                return (<div style={{width:'40px',float:'left',paddingLeft:arrowIconMargin(v,5)+'px'}}>
+                                    {(()=>{
+                                        if (isMenuHasChild(menuData, v)) {
+                                            return (<i onClick={
+                                                e=>{
+                                                    this.props.actionToggleItem(this.props.targetID,v);
+                                                    e.stopPropagation();
+                                                }
+                                            } className={trToggleIconClassNames(v)}></i>)
+                                        }else{
+                                            return (<i  className="menu-no-toggle"></i>)
+                                        }
+                                    })()}
+                                    <span style={{marginLeft:'5px'}}>{k + 1}</span>
+                                </div>);
+                            })()}</td>
+                            {mapTd(v)}
+                        </tr>);
+                    })}</tbody>
+                }else{
+                    return <tbody>{menuData.map((v, k)=> {
+                        return (<tr hidden={false} className={createTrClassName(v)} onClick={(e)=>{
                             this.props.checkOnItem(this.props.targetID,v);
                             e.stopPropagation();
                         }} key={k}>
-                        <td>{k + 1}</td>
-                        {mapTd(v)}
-                    </tr>);
-                })}</tbody>
+                            <td>{k + 1}</td>
+                            {mapTd(v)}
+                        </tr>);
+                    })}</tbody>
+                }
             }
         }
 
-        return (<div style={{height:this.props.height-100}} className="normal-table-content">
+        return (<div style={{height:this.props.height-150}} className="normal-table-content">
             <table style={{width:'95%',margin:'0 auto'}}>
                 {createTableHead()}
                 {createTableBody()}
@@ -284,11 +289,12 @@ class NormalTable extends React.Component {
         </div>);
     }
 
+
     renderPC() {
         let height = this.props.height;
         return (
             <div  className="content-container animation-fadeInRight">
-
+                <ShieldAlert key={this.props.targetID+''+this.props.error} content={this.props.error} title={'警告'} onTargetMenuTarget={this.props.targetID}></ShieldAlert>
                     <div onClick={
                     ()=>{
                             if(this.props.nowOnItem){
@@ -324,7 +330,7 @@ class NormalTable extends React.Component {
 
 const state = state=> {
     let loaded, target, btnGroup, viewPoint, modifyViewPoint, targetID, api, data, nowOnItem, nowOnClickButton,
-        modifyViewData,toggleItem,tableConfigArgs;
+        modifyViewData,toggleItem,tableConfigArgs,pageNation,error;
     state.containerTitleMenu.activeContent.map(v=> {
         if (v.obj.id === state.common.nowOnContentTarget.id) {
             target = v;
@@ -335,13 +341,14 @@ const state = state=> {
     btnGroup = target.obj.btnGroup ? target.obj.btnGroup : [];
     viewPoint = target.obj.viewPoint ? target.obj.viewPoint : [];
     modifyViewPoint = target.obj.modifyViewPoint ? target.obj.modifyViewPoint : [];
-    data = target.status ? target.status.data['UserList'] : [];
+    data = target.status? target.status.data : [];
     nowOnItem = target.status ? target.status.checkOnItem : undefined;
     nowOnClickButton = target.status ? target.status.nowOnClickButton : undefined;
     modifyViewData = target.status ? target.status.modifyViewData : undefined;
     loaded = target.status ? target.status.loaded : false;
     toggleItem=target.status ? target.status.toggleItem : [];
     tableConfigArgs = target.status ? target.status.tableConfigArgs : undefined;
+    error = target.status ? target.status.error: undefined;
     return ({
         target: target,
         //读取状态
@@ -356,7 +363,7 @@ const state = state=> {
         targetID: targetID,
         //本页面关联的获取数据的api
         api: api,
-        //根据API获取的数据
+        //根据API获取的表格数据
         data: data,
         //当前选中的项
         nowOnItem: nowOnItem,
@@ -367,7 +374,9 @@ const state = state=> {
         //当前折叠展开状态的折叠窗：
         toggleItem:toggleItem,
         //当前表格的Api请求参数。决定表格呈现方式，以及排序的字段依据、排序方式等选项
-        tableConfigArgs:tableConfigArgs
+        tableConfigArgs:tableConfigArgs,
+        //当前错误信息
+        error:error
     });
 }
 

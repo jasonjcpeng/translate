@@ -3,7 +3,6 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as ActionCreators from '../../action/content-setting';
 //Component
-import OptionBar from '../option-bar';
 import Loader from 'react-loader';
 import {LoaderOption} from '../../config/config';
 //JSON

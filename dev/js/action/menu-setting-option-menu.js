@@ -73,7 +73,6 @@ export const selectActiveContent = e => {
 }
 
 export const clickFinish = (targetMenuSort, menuData,activeContent, nowOnContentKey, obj)=> {
-    //ToDo:Add menu!fetch to dataBase if success then return
     let deleteActiveContent = (k, v,activeContent, dispatch)=> {
         dispatch(closeMenuSetting(k, v));
         let result = null;
@@ -83,6 +82,32 @@ export const clickFinish = (targetMenuSort, menuData,activeContent, nowOnContent
             result = activeContent[k + 1];
         }
         result ? dispatch(selectActiveContent(result)) : '';
+    }
+    //api判断增加"/"
+    if(menuData.api&&menuData.api.lastIndexOf('/')!==(menuData.api.length-1)){
+        menuData.api+='/';
+    }
+    //btnGroup的Api判断增加"/"
+    if(menuData.btnGroup.length>0){
+        menuData.btnGroup = menuData.btnGroup.map(v=>{
+            if(v.api&&v.api.lastIndexOf('/')!==(v.api.length-1)){
+                v.api+='/';
+                return v
+            }else{
+                return v
+            }
+        });
+    }
+    //modifyViewPoint的Api判断增加"/"
+    if(menuData.modifyViewPoint.length>0){
+        menuData.modifyViewPoint = menuData.modifyViewPoint.map(v=>{
+            if(v.api&&v.api.lastIndexOf('/')!==(v.api.length-1)){
+                v.api+='/';
+                return v
+            }else{
+                return v
+            }
+        });
     }
     if (isOnline) {
         return dispatch=> {
@@ -149,13 +174,6 @@ export const sendError = (targetMenuSort, message)=> {
         type: Constants.MENU_SETTING_SEND_ERROR_MESSAGE,
         targetMenuSort: targetMenuSort,
         error: message
-    });
-}
-
-export const clickShieldAlertOK = (targetMenuSort)=> {
-    return ({
-        type: Constants.MENU_SETTING_RESET_ERROR,
-        targetMenuSort: targetMenuSort
     });
 }
 
