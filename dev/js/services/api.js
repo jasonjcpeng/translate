@@ -78,7 +78,7 @@ export const appStart = ()=> {
     return new Promise((resolve, reject)=> {
         Promise.all([Fetch.Fetch(filterIsOnline(apis.getMenu)),Fetch.Fetch(filterIsOnline(apis.getUserInfo))]).then(
             res=> {
-                if(res[1].state===1){
+                if(res[1].state===1&&res[1].data!==null){
                     Fetch.Fetch(filterIsOnline(apis.getRole+'/'+res[1].data['AX_RoleId'])).then(getRoleResult=>{
                         if(getRoleResult.state===1){
                             let userInfo = {
@@ -89,39 +89,43 @@ export const appStart = ()=> {
                                 useSkin: 'skin-1'
                             }
                             let menu = [];
-                            for(let i in res[0].data){
-                                let v= res[0].data[i];
-                                if(v){
-                                    let item = {
-                                        icon: v['AX_Icon'],
-                                        id: v['AX_Id'],
-                                        code: v['AX_Id'],
-                                        parentCode:v['AX_ParentId'],
-                                        menuName:v['AX_FullName'],
-                                        createTime:v['AX_CreatorTime'],
-                                        menuSort: v['AX_SortCode'],
-                                        isEnable: true,
-                                        api: v['AX_UrlAddress'],
-                                        viewPoint:arraifyStringWhosChildIsObj(v['AX_ViewPoint']),
-                                        btnGroup:arraifyStringWhosChildIsObj(v['AX_BtnGroup']),
-                                        modifyViewPoint:arraifyStringWhosChildIsObj(v['AX_ModifyViewPoint'])
+                            if(res[0].state===1&&res[0].data!==null){
+                                for(let i in res[0].data){
+                                    let v= res[0].data[i];
+                                    if(v){
+                                        let item = {
+                                            icon: v['AX_Icon'],
+                                            id: v['AX_Id'],
+                                            code: v['AX_Id'],
+                                            parentCode:v['AX_ParentId'],
+                                            menuName:v['AX_FullName'],
+                                            createTime:v['AX_CreatorTime'],
+                                            menuSort: v['AX_SortCode'],
+                                            isEnable: true,
+                                            api: v['AX_UrlAddress'],
+                                            viewPoint:arraifyStringWhosChildIsObj(v['AX_ViewPoint']),
+                                            btnGroup:arraifyStringWhosChildIsObj(v['AX_BtnGroup']),
+                                            modifyViewPoint:arraifyStringWhosChildIsObj(v['AX_ModifyViewPoint'])
+                                        }
+                                        menu.push(item);
                                     }
-                                    menu.push(item);
                                 }
+                            }else{
+                                reject("来自‘"+apis.getMenu+"’的消息："+res[0].message);
                             }
                             resolve({
                                 userInfo: userInfo,
                                 menu: menu
                             });
                         }else{
-                            reject(getRoleResult.message)
+                            reject("来自‘"+apis.getRole+"’的消息："+getRoleResult.message)
                         }
                     }).catch(getRoleRej=>{
                         reject(getRoleRej)
                     })
+                }else{
+                    reject("来自‘"+apis.getUserInfo+"’的消息："+res[1].message);
                 }
-
-
             }
         ).catch(
             rej=> {
@@ -180,7 +184,14 @@ export const normalTableGetData = (api,args,searchKey,searchVal)=>{
     return createFetchPromise(api,(data, resolve, reject)=>{
         let resultData = {
             tableData:data['UserList']?data['UserList']:[],
-            tablePagination:data['Pagination']?data['Pagination']:{}
+            tablePagination:data['Pagination']? {
+                rows: data['Pagination'].rows,
+                page: data['Pagination'].page,
+                sidx: data['Pagination'].sidx,
+                sord: data['Pagination'].sord,
+                records: data['Pagination'].records,
+                total: data['Pagination'].total
+            }:{}
         }
         resolve(resultData);
     },finalArgs,'POST')

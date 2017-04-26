@@ -8,6 +8,7 @@ import {LoaderOption} from '../../config/config';
 import ButtonGroupModifier from '../piecemeal-components/button-group-modifier';
 import ButtonGroupDeleter from '../piecemeal-components/button-group-deleter';
 import ButtonGroupAdder from '../piecemeal-components/button-group-adder';
+import Pagination from '../piecemeal-components/pagination';
 import ShieldAlert from '../piecemeal-components/shield-alert';
 import Checker from '../piecemeal-components/checker';
 
@@ -127,7 +128,7 @@ class NormalTable extends React.Component {
         return (<div className="normal-table-header">
             <div key={(()=>{return this.props.nowOnItem?'undefined':'onItem'})()}
                  className="animation-fadeInRight animation-fadeIn component-option-bar">
-                <ul>
+                <ul style={{float:'left'}}>
                     {mapButton()}
                 </ul>
             </div>
@@ -292,13 +293,7 @@ class NormalTable extends React.Component {
             }
         }
 
-
-        let createTablePagination = ()=> {
-
-
-        }
-
-        return (<div style={{height: this.props.height - 170}} className="normal-table-content">
+        return (<div style={{height: this.props.height - 150}} className="normal-table-content">
             <table style={{width:'95%',margin:'0 auto'}}>
                 {createTableHead()}
                 {createTableBody()}
@@ -309,13 +304,7 @@ class NormalTable extends React.Component {
     //创造底栏
     createFooter() {
         return (<div className="normal-table-footer">
-            <div className="component-option-bar">
-                <ul>
-                    <li className="first-child">1</li>
-                    <li>2</li>
-                    <li>3</li>
-                </ul>
-            </div>
+            <Pagination></Pagination>
         </div>)
     }
 
