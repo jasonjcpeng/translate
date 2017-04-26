@@ -1,4 +1,5 @@
 .normal-table{
+  width: 100%;
   .normal-table-header{
     margin-top: 20px;
     height: 50px;
@@ -28,5 +29,11 @@
       height: 30px;
       width: 17px;
     }
+  }
+  .normal-table-footer{
+    padding:10px 3% 10px 3%;
+    height: 50px;
+    width: 94%;
+    line-height: 50px;
   }
 }

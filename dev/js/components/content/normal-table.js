@@ -292,7 +292,13 @@ class NormalTable extends React.Component {
             }
         }
 
-        return (<div style={{height:this.props.height-150}} className="normal-table-content">
+
+        let createTablePagination = ()=> {
+
+
+        }
+
+        return (<div style={{height: this.props.height - 170}} className="normal-table-content">
             <table style={{width:'95%',margin:'0 auto'}}>
                 {createTableHead()}
                 {createTableBody()}
@@ -300,6 +306,18 @@ class NormalTable extends React.Component {
         </div>);
     }
 
+    //创造底栏
+    createFooter() {
+        return (<div className="normal-table-footer">
+            <div className="component-option-bar">
+                <ul>
+                    <li className="first-child">1</li>
+                    <li>2</li>
+                    <li>3</li>
+                </ul>
+            </div>
+        </div>)
+    }
 
     renderPC() {
         let height = this.props.height;
@@ -312,12 +330,13 @@ class NormalTable extends React.Component {
                                 this.props.checkOnItem(this.props.targetID,undefined);
                             }
                         }
-                }  className="content-container-inset" style={{height: height}}>
+                    } className="content-container-inset" style={{height: height - 30}}>
                         {this.judgementOpenButtonGroupComponent()}
                         <Loader options={LoaderOption} loaded={this.props.loaded}>
                         <div style={{minWidth: 600, height: '100%'}}>
                             {this.createOptionBar()}
                             {this.createTable()}
+                            {this.createFooter()}
                         </div>
                         </Loader>
                     </div>
