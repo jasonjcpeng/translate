@@ -6,6 +6,12 @@
  * funcOnClick:func 回调函数，回调参数callBackCheckState为改变后的checkState
  */
 import React from 'react';
+/*
+* @param
+* checkState:当前选中状态
+* funcOnClick:回调函数 包含一个本组件处理后的选中状态
+*
+* */
 class Checker extends React.Component{
     constructor(props){
         super();
@@ -15,8 +21,9 @@ class Checker extends React.Component{
     }
     render(){
         return ( <i  onClick={
-                            ()=> {
+                            (e)=> {
                             this.props.funcOnClick(!this.state.checkState);
+                                e.stopPropagation();
                             }
                         }>{function () {
             if (this.state.checkState) {

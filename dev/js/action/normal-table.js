@@ -1,6 +1,6 @@
 import * as Constants from './CONSTANTS';
 import {isOnline} from '../config/config';
-import {normalTableGetData, insertTableItem,apiModifyTableItem,apiDeleteTableItem} from '../services/api';
+import {normalTableGetData, insertTableItem,apiModifyTableItem,apiDeleteTableItem,apiOnClickToggleOptions} from '../services/api';
 
 
 export const GetMount = (targetID,InitTableArgs)=>{
@@ -179,3 +179,26 @@ export const actionToggleItem = (targetID,item)=>{
     }
 }
 
+export const actionOnClickToggleOptions = (targetID,api,item,bindField,nowOnState)=>{
+    return dispatch=>{
+        apiOnClickToggleOptions(api,item).then(resData=>{
+                return dispatch({
+                    type:Constants.NORMAL_TABLE_SUBMIT_TABLE_TOGGLE_OPTION,
+                    error:undefined,
+                    targetID:targetID,
+                    item:item,
+                    bindField:bindField,
+                    nowOnState:nowOnState
+                });
+        }
+        ).catch(
+            rejData=>{
+                return dispatch({
+                    type:Constants.NORMAL_TABLE_SUBMIT_TABLE_TOGGLE_OPTION,
+                    targetID:targetID,
+                    error:rejData,
+                });
+            }
+        );
+    };
+}

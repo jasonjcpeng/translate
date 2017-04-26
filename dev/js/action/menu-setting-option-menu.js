@@ -124,10 +124,15 @@ export const clickFinish = (targetMenuSort, menuData,activeContent, nowOnContent
         return dispatch=> {
             insertTableMenu(menuData).then(data=> {
                 deleteActiveContent(nowOnContentKey, obj, activeContent, dispatch);
-                return dispatch(AppDidMount());
+                dispatch(AppDidMount());
+                return dispatch({
+                    type: Constants.MENU_SETTING_ADD_MENU_FINISH,
+                    targetMenuSort: targetMenuSort,
+                    error: undefined
+                })
             }).catch(res=> {
                 return dispatch({
-                    type: Constants.MENU_SETTING_ADD_MENU_ERROR,
+                    type: Constants.MENU_SETTING_ADD_MENU_FINISH,
                     targetMenuSort: targetMenuSort,
                     error: res
                 })

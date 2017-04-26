@@ -9,6 +9,7 @@ import ButtonGroupModifier from '../piecemeal-components/button-group-modifier';
 import ButtonGroupDeleter from '../piecemeal-components/button-group-deleter';
 import ButtonGroupAdder from '../piecemeal-components/button-group-adder';
 import ShieldAlert from '../piecemeal-components/shield-alert';
+import Checker from '../piecemeal-components/checker';
 
 import * as ActionCreators from '../../action/normal-table';
 import InitTableArgs from '../../../jsons/init-table-args.json';
@@ -163,13 +164,23 @@ class NormalTable extends React.Component {
                 }
             }
         }
+
         let createTableBody = ()=> {
             let mapTd = (val)=> {
                 return this.props.viewPoint.map((v, k)=> {
                     if (v.isEnable) {
-                        return (<td key={k}>{val[v.name]?val[v.name]:''}</td>);
+                        if(v.api){
+                            return createOptionsInTD(val,v,k);
+                        }else{
+                            return (<td key={k}>{val[v.name]?val[v.name]:''}</td>);
+                        }
                     }
                 })
+            }
+            let createOptionsInTD = (val,viewPointVal,k)=>{
+                return (<td key={k}><Checker key={val[viewPointVal.bindField]} checkState={val[viewPointVal.bindField]} funcOnClick={e=>{
+                    this.props.actionOnClickToggleOptions(this.props.targetID,viewPointVal.api,val,viewPointVal.bindField,e);
+                }}></Checker></td>);
             }
 
             let createTrClassName = (v)=> {

@@ -437,6 +437,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                 isEnable: val.isEnable,
                 CNName: val.CNName,
                 width: val.width,
+                bindField:val.bindField,
                 api:val.api
             };
             singleItem[itemKey] = itemVal;
@@ -508,6 +509,11 @@ class MenuSettingOptionAddMenu extends React.Component {
                                 handleOnChange(k,v,'api',e.target.value);
                             }
                         } defaultValue={v.api} type="text"/></td>
+                        <td><input  key={v.name+k} disabled={v.bindField===undefined?true:false} onChange={
+                            e=>{
+                                handleOnChange(k,v,'bindField',e.target.value);
+                            }
+                        } defaultValue={v.api} type="text"/></td>
                         <td><input key={v.name+''+k} onChange={
                     e=>{
                     let width = (()=>{
@@ -537,15 +543,16 @@ class MenuSettingOptionAddMenu extends React.Component {
             let createOptionsField = ()=>{
                 if(this.props.viewPointConfigData[0]){
                     let v = {
-                        name: '操作器',
+                        name: '开关式操作器',
                         isEnable:true,
                         CNName:'',
                         width: 0,
+                        bindField:'',
                         api:''
                     };
                     return [<li className="spacial" key={'options'} onClick={()=>{
                         handleOnClick(v);
-                    }}>操作器</li>]
+                    }}>{v.name}</li>]
                 }else{
                     return [];
                 }
@@ -580,6 +587,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                     <th>Api字段名</th>
                     <th>匹配中文名</th>
                     <th>匹配Api</th>
+                    <th>绑定布尔字段</th>
                     <th style={{width:"90px"}}>宽度设置(%)</th>
                     <th style={{width:"50px"}}>删除</th>
                 </tr>

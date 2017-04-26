@@ -3,6 +3,7 @@ import {isOnline} from '../config/config';
 import {stringifyArrWhosChildIsObj,arraifyStringWhosChildIsObj} from '../config/tools';
 import Md5 from 'md5';
 
+
 //根据线上状态过滤API内容
 const filterIsOnline = api=> {
     if (!isOnline) {
@@ -235,4 +236,10 @@ export const insertTableMenu = (menu)=>{
         resolve(data);
     },arg,'POST');
 }
-
+//操作表格中开关式按钮
+export const apiOnClickToggleOptions = (api,item)=>{
+    api+= item['AX_Id'];
+    return createFetchPromise(api, (data, resolve, reject)=> {
+        resolve(data);
+    },'');
+}

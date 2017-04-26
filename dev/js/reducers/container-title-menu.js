@@ -384,7 +384,7 @@ export default function (state = initState, action) {
         case Constants.MENU_SETTING_CHANGE_PREVIEW_STATUS:
             return setActiveContentStatus(state, action.targetMenuSort, {status: {previewStatus: {$set: action.previewStatus}}});
             break;
-        case Constants.MENU_SETTING_ADD_MENU_ERROR:
+        case Constants.MENU_SETTING_ADD_MENU_FINISH:
             return setActiveContentStatus(state, action.targetMenuSort, {status: {error: {$set: action.error}}});
             break;
         //-----------------------------normal-table-----------------------------------
@@ -457,6 +457,22 @@ export default function (state = initState, action) {
                       arr.push(action.data);
                         return arr;
                     }},error:{$set:action.error}}});
+            break;
+        case Constants.NORMAL_TABLE_SUBMIT_TABLE_TOGGLE_OPTION:
+            if(action.error){
+                return setActiveContentStatusByID(state,action.targetID,{status:{error:{$set:action.error}}});
+            }else{
+                return setActiveContentStatusByID(state,action.targetID,{status:{data:{$apply:(arr)=>{
+                    return arr.map((v,k)=>{
+                        if(v[constID]===action.item[constID]){
+                            v[action.bindField]=action.nowOnState
+                            return v;
+                        }else{
+                            return v;
+                        }
+                    });
+                }},error:{$set:action.error}}});
+            }
             break;
     }
     return state;
