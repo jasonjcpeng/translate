@@ -191,12 +191,12 @@ class MenuSettingOptionAddMenu extends React.Component {
                             handleOnChange(k,v,'CNName',e.target.value);
                         }
                     } value={v.CNName} type="text"/></td>
+                    <td>{createComponentTypeSelector(k, v)}</td>
                     <td><input onChange={
                         e=>{
                             handleOnChange(k,v,'api',e.target.value);
                         }
                     } value={v.api} type="text"/></td>
-                    <td>{createComponentTypeSelector(k, v)}</td>
                     <td><Checker key={v.isMultiColumns} checkState={v.isMultiColumns} funcOnClick={(callBackCheck)=>{
                         handleOnChange(k,v,'isMultiColumns',callBackCheck);
                     }}></Checker></td>
@@ -251,8 +251,8 @@ class MenuSettingOptionAddMenu extends React.Component {
                     <th style={{width:"50px"}}>排序</th>
                     <th>Api字段名</th>
                     <th>匹配中文名</th>
-                    <th>匹配API</th>
                     <th>组件类型</th>
+                    <th>组件API</th>
                     <th style={{width:"90px"}}>并排显示</th>
                     <th style={{width:"120px"}}>总体宽度设置(%)</th>
                     <th style={{width:"120px"}}>组件宽度设置(%)</th>
@@ -427,14 +427,19 @@ class MenuSettingOptionAddMenu extends React.Component {
     //渲染表格视图设置
     createViewPointSetting() {
         let handleOnChange = (key, val, itemKey, itemVal)=> {
-            let singleItem = {
+            let singleItem = val.api===undefined?{
                 name: val.name,
                 isEnable: val.isEnable,
                 CNName: val.CNName,
                 width: val.width,
+            }:{
+                name: val.name,
+                isEnable: val.isEnable,
+                CNName: val.CNName,
+                width: val.width,
+                api:val.api
             };
             singleItem[itemKey] = itemVal;
-
             let newValue = [];
             newValue = this.props.menuData.viewPoint.map((v, k)=> {
                 if (k === key) {
@@ -493,12 +498,17 @@ class MenuSettingOptionAddMenu extends React.Component {
                             </div>
                         </td>
                         <td>{v.name}</td>
-                        <td><input onChange={
+                        <td><input key={v.name+''+k} onChange={
                     e=>{
                         handleOnChange(k,v,'CNName',e.target.value);
                     }
                     } value={v.CNName} type="text"/></td>
-                        <td><input onChange={
+                        <td><input  key={v.name+k} disabled={v.api===undefined?true:false} onChange={
+                            e=>{
+                                handleOnChange(k,v,'api',e.target.value);
+                            }
+                        } defaultValue={v.api} type="text"/></td>
+                        <td><input key={v.name+''+k} onChange={
                     e=>{
                     let width = (()=>{
                        if(!e.target.value||e.target.value<0){
@@ -524,7 +534,23 @@ class MenuSettingOptionAddMenu extends React.Component {
                 viewPointGroup.push(viewPointItem);
                 this.props.changeMenuData(this.props.targetMenuSort, 'viewPoint', viewPointGroup);
             }
-            return this.props.viewPointConfigData.map((v, k)=> {
+            let createOptionsField = ()=>{
+                if(this.props.viewPointConfigData[0]){
+                    let v = {
+                        name: '操作器',
+                        isEnable:true,
+                        CNName:'',
+                        width: 0,
+                        api:''
+                    };
+                    return [<li className="spacial" key={'options'} onClick={()=>{
+                        handleOnClick(v);
+                    }}>操作器</li>]
+                }else{
+                    return [];
+                }
+            }
+            return createOptionsField().concat(this.props.viewPointConfigData.map((v, k)=> {
                 let flag = true;
                 for (let i in this.props.menuData.viewPoint) {
                     if (this.props.menuData.viewPoint[i].name === v.name) {
@@ -540,7 +566,9 @@ class MenuSettingOptionAddMenu extends React.Component {
                     }
                     } key={k}>{v.name}</li>);
                 }
-            });
+            }));
+
+
         }
 
         let table = ()=> {
@@ -551,6 +579,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                     <th style={{width:"50px"}}>排序</th>
                     <th>Api字段名</th>
                     <th>匹配中文名</th>
+                    <th>匹配Api</th>
                     <th style={{width:"90px"}}>宽度设置(%)</th>
                     <th style={{width:"50px"}}>删除</th>
                 </tr>
@@ -625,7 +654,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                                         this.props.changeMenuData(this.props.targetMenuSort,'api',e.target.value);
                                     }
                                 } type="text"/></span></li>
-                                <li><span>视图类型:</span><span><select value={this.props.menuData.menuSort} onChange={e=>{
+                               {/* <li><span>视图类型:</span><span><select value={this.props.menuData.menuSort} onChange={e=>{
                                     this.props.changeMenuData(this.props.targetMenuSort,'menuSort',e.target.value);
                                 }}>
                                 {(()=> {
@@ -652,7 +681,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                                         return (<option key={k} value={v}>{writeContent(v)}</option>);
                                     });
                                 }).apply(this)}
-                            </select></span></li>
+                            </select></span></li>*/}
                             </div>);
                         }
                     })()}

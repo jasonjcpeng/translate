@@ -384,10 +384,8 @@ export default function (state = initState, action) {
         case Constants.MENU_SETTING_CHANGE_PREVIEW_STATUS:
             return setActiveContentStatus(state, action.targetMenuSort, {status: {previewStatus: {$set: action.previewStatus}}});
             break;
-        case Constants.MENU_SETTING_ADD_MENU_TO_SIDE_BAR:
-            if(action.error){
-                return setActiveContentStatus(state, action.targetMenuSort, {status: {error: {$set: action.error}}});
-            }
+        case Constants.MENU_SETTING_ADD_MENU_ERROR:
+            return setActiveContentStatus(state, action.targetMenuSort, {status: {error: {$set: action.error}}});
             break;
         //-----------------------------normal-table-----------------------------------
         case Constants.NORMAL_TABLE_INIT:

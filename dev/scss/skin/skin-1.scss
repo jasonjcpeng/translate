@@ -6,6 +6,7 @@ $side-bar-menu-font-color: #2b78a3;
 $border-color:#eee;
 $reverse-font-color:#F5F5F5;
 $content-background-color:#F5F5F5;
+$spacial-color: #67b94b;
 $alert-color:#c00;
 $default-option-toggle-color:#ddd;
 $content-font-color:#6f6f6f;
@@ -430,6 +431,10 @@ $table-item-active-color:#cbcdba;
           }
           .field-list{
             ul{
+              .spacial{
+                background-color:$spacial-color;
+                border-color:$spacial-color;
+              }
               li{
                 color: $second-main-color;
                 background-color:$main-color;

@@ -87,6 +87,17 @@ export const clickFinish = (targetMenuSort, menuData,activeContent, nowOnContent
     if(menuData.api&&menuData.api.lastIndexOf('/')!==(menuData.api.length-1)){
         menuData.api+='/';
     }
+    //viewPoint的Api判断增加"/"
+    if(menuData.viewPoint.length>0){
+        menuData.viewPoint = menuData.viewPoint.map(v=>{
+            if(v.api&&v.api.lastIndexOf('/')!==(v.api.length-1)){
+                v.api+='/';
+                return v
+            }else{
+                return v
+            }
+        });
+    }
     //btnGroup的Api判断增加"/"
     if(menuData.btnGroup.length>0){
         menuData.btnGroup = menuData.btnGroup.map(v=>{
@@ -113,14 +124,10 @@ export const clickFinish = (targetMenuSort, menuData,activeContent, nowOnContent
         return dispatch=> {
             insertTableMenu(menuData).then(data=> {
                 deleteActiveContent(nowOnContentKey, obj, activeContent, dispatch);
-                dispatch(AppDidMount());
-                return dispatch({
-                    type: Constants.MENU_SETTING_ADD_MENU_TO_SIDE_BAR,
-                    targetMenuSort: targetMenuSort,
-                });
+                return dispatch(AppDidMount());
             }).catch(res=> {
                 return dispatch({
-                    type: Constants.MENU_SETTING_ADD_MENU_TO_SIDE_BAR,
+                    type: Constants.MENU_SETTING_ADD_MENU_ERROR,
                     targetMenuSort: targetMenuSort,
                     error: res
                 })

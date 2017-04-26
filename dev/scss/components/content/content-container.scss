@@ -37,6 +37,7 @@
               line-height: 30px;
               border:0px;
             }
+
             input[type=number]{
               text-align: center;
               height: 30px;
@@ -46,6 +47,9 @@
             }
             input:hover{
               background-color:#fcffe8;
+            }
+            input:disabled:hover{
+              background-color:rgb(235, 235, 228);
             }
 
             select{
@@ -104,6 +108,8 @@
         margin: 10px 0 10px 0;
         ul{
           margin: 0px;
+          .spacial{
+          }
           li{
             height: 30px;
             line-height: 30px;
