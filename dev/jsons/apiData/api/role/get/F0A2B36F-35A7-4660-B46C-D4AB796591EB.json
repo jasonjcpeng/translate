@@ -1,0 +1,24 @@
+{
+  "state": 1,
+  "message": "OK",
+  "data": {
+    "AX_Id": "F0A2B36F-35A7-4660-B46C-D4AB796591EB",
+    "AX_OrganizeId": "5AB270C0-5D33-4203-A54F-4552699FDA3C",
+    "AX_Category": 1,
+    "AX_EnCode": "administrators",
+    "AX_FullName": "超级管理员",
+    "AX_Type": "1",
+    "AX_AllowEdit": true,
+    "AX_AllowDelete": true,
+    "AX_SortCode": 1,
+    "AX_DeleteMark": false,
+    "AX_EnabledMark": true,
+    "AX_Description": null,
+    "AX_CreatorTime": "2016-07-10T00:00:00",
+    "AX_CreatorUserId": null,
+    "AX_LastModifyTime": "2016-07-24T00:04:00.02",
+    "AX_LastModifyUserId": "9f2ec079-7d0f-4fe2-90ab-8b09a8302aba",
+    "AX_DeleteTime": null,
+    "AX_DeleteUserId": null
+  }
+}

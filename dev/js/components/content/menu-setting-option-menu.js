@@ -853,12 +853,13 @@ class MenuSettingOptionAddMenu extends React.Component {
                     }
                 }
             }();
-            if (this.props.isRootMenu || Step === '3') {
-                return (<button onClick={()=>{
+            if(this.props.targetMenuSort!=='menuSettingDetailMenu'){
+                if (this.props.isRootMenu || Step === '3') {
+                    return (<button onClick={()=>{
                 handleFinishButton();
             }} className="btn btn-finish">完成</button>);
+                }
             }
-
         }
         let createFooterModifyViewPointPreview = ()=> {
             let progressState = this.props.target.status.progress;
@@ -961,20 +962,33 @@ class MenuSettingOptionAddMenu extends React.Component {
 }
 
 const state = state=> {
-    let target, nowOnContentKey;
+    let target, nowOnContentKey,menuData;
     state.containerTitleMenu.activeContent.map((v, k)=> {
         if (v.obj.id === state.common.nowOnContentTarget.id) {
             target = v;
             nowOnContentKey = k;
         }
     });
+
+    if(target){
+        if(target.obj.menuSort==='menuSettingEditMenu'||target.obj.menuSort==='menuSettingDetailMenu'){
+            menuData = target.obj.targetMenu;
+            let viewPointConfigApi = menuData.api.split('api/')[1];
+            menuData.viewPointConfigApi = 'sys_'+viewPointConfigApi.substring(0,viewPointConfigApi.indexOf('/'));
+        }else if(target.obj.menuSort==='menuSettingAddMenu'){
+            menuData = target.status.menuData;
+        }
+    }else{
+        menuData = '';
+    }
+
     return ({
         allMenu: state.sideBar.menu,
         activeContent: state.containerTitleMenu.activeContent,
         //本选项卡头包含的选项卡内数据{obj:选项卡菜单，status：选项卡内状态，isActive:是否正使用}
         target: target,
         //视图层通过菜单视图项Api获取的表字段内容
-        viewPointConfigData: target.status?target.status.viewPointConfigData:'',
+        viewPointConfigData: target.status&&target.status.viewPointConfigData?target.status.viewPointConfigData:'',
         //是否开启预览遮罩层
         previewStatus: target.status?target.status.previewStatus:'',
         //当前选项卡所在数组的位置，用来关闭本选项卡
@@ -982,7 +996,7 @@ const state = state=> {
         isRootMenu: target.status?target.status.isRootMenu:'',
         configApi: target.status?target.status.configApi:'',
         targetMenuSort: target.status?target.obj.menuSort:'',
-        menuData: target.status?target.status.menuData:'',
+        menuData: menuData,
         defaultToggleStatus: state.common.defaultToggleStatus
     });
 }

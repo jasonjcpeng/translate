@@ -140,8 +140,9 @@ class ContentSetting extends React.Component {
                         if(this.props.target.status.selectMenuSettingTableItem&&this.props.target.status.selectMenuSettingTableItem.id===m.id){
                             return 'active';
                         }
-                    }.bind(this)()} onClick={()=>{
+                    }.bind(this)()} onClick={(e)=>{
                         this.props.selectSingleMenuItem(m);
+                        e.stopPropagation();
                     }} key={m.id + '_' + k} style={{display: ''}}>
                         <td>{k + 1}</td>
                         <td style={{textAlign:'left',textIndent:textIndent}}>{m.menuName}{function () {
@@ -187,14 +188,16 @@ class ContentSetting extends React.Component {
                 <div className="component-option-bar">
                     <ul>
                         <li onClick={
-                            ()=>{
+                            (e)=>{
                                 this.props.toggleOffAllMenuItem();
+                                e.stopPropagation();
                             }
                         } className="right-button"><i className="fa fa-reply-all"></i>&nbsp;全部收起
                         </li>
-                        <li className="first-child" onClick={()=>{
+                        <li className="first-child" onClick={(e)=>{
                             menuSettingOption.add.targetMenu = '0';
                              this.props.openOption(menuSettingOption.add);
+                             e.stopPropagation();
                         }}><i className="fa fa-plus"></i>&nbsp;新增父级节点
                         </li>
                     </ul>
@@ -209,34 +212,37 @@ class ContentSetting extends React.Component {
                 <div className="component-option-bar">
                     <ul>
                         <li onClick={
-                            ()=>{
+                            (e)=>{
                                 this.props.toggleOffAllMenuItem();
+                                e.stopPropagation();
                             }
                         } className="right-button"><i className="fa fa-reply-all"></i>&nbsp;全部收起
                         </li>
-                        <li className="first-child" onClick={()=>{
+                        <li className="first-child" onClick={(e)=>{
                             menuSettingOption.add.targetMenu = this.props.target.status.selectMenuSettingTableItem;
                             this.props.openOption(menuSettingOption.add);
+                            e.stopPropagation();
                         }}><i className="fa fa-plus"></i>&nbsp;新增
                         </li>
-                        <li onClick={()=>{
+                        <li onClick={(e)=>{
                             menuSettingOption.edit.targetMenu = this.props.target.status.selectMenuSettingTableItem;
                             this.props.openOption(menuSettingOption.edit);
+                            e.stopPropagation();
                         }}><i className="fa fa-pencil-square-o"></i>&nbsp;编辑
                         </li>
-                        <li onClick={()=>{
+                        <li onClick={(e)=>{
                             menuSettingOption.detail.targetMenu = this.props.target.status.selectMenuSettingTableItem;
                             this.props.openOption(menuSettingOption.detail);
+                            e.stopPropagation();
                         }}><i className="fa fa-columns"></i>&nbsp;详细
                         </li>
                         <li onClick={
-                            ()=>{
+                            (e)=>{
                                 this.props.optionDeleteMenu(this.props.target.status.selectMenuSettingTableItem);
+                                e.stopPropagation();
                             }
                         }><i className="fa fa-trash-o"></i>&nbsp;删除
                         </li>
-
-
                     </ul>
                 </div>
             </div>);
@@ -245,7 +251,11 @@ class ContentSetting extends React.Component {
 
     createMenuSetting(rightActiveContent, tableHeight) {
         let height = tableHeight - 100;
-        return (<div key={rightActiveContent.key} className=" right-active-content animation-fadeInRight ">
+        return (<div onClick={
+                    ()=>{
+                    this.props.toggleSingleMenuItem(undefined);
+                        }
+                    } key={rightActiveContent.key} className=" right-active-content animation-fadeInRight ">
             <div style={{minWidth:700}}>
                 {this.createActiveContentHeader(rightActiveContent)}
                 {this.judgeRenderSettingOption()}
