@@ -1,6 +1,6 @@
 import * as Constants from './CONSTANTS';
 import {isOnline} from '../config/config';
-import {menuSettingOptionMenuFetchViewPointConfig, insertTableMenu} from '../services/api';
+import {menuSettingOptionMenuFetchViewPointConfig, insertTableMenu,modifyTableMenu} from '../services/api';
 import {AppDidMount} from './app';
 
 export const GetMount = (target)=> {
@@ -72,7 +72,7 @@ export const selectActiveContent = e => {
     });
 }
 
-export const clickFinish = (targetMenuSort, menuData,activeContent, nowOnContentKey, obj)=> {
+export const clickFinish = (targetMenuSort, menuData,activeContent, nowOnContentKey, obj,modifyFlag)=> {
     let deleteActiveContent = (k, v,activeContent, dispatch)=> {
         dispatch(closeMenuSetting(k, v));
         let result = null;
@@ -121,22 +121,44 @@ export const clickFinish = (targetMenuSort, menuData,activeContent, nowOnContent
         });
     }
     if (isOnline) {
-        return dispatch=> {
-            insertTableMenu(menuData).then(data=> {
-                deleteActiveContent(nowOnContentKey, obj, activeContent, dispatch);
-                dispatch(AppDidMount());
-                return dispatch({
-                    type: Constants.MENU_SETTING_ADD_MENU_FINISH,
-                    targetMenuSort: targetMenuSort,
-                    error: undefined
+        if(modifyFlag){
+                //修改菜单
+            return dispatch=> {
+                modifyTableMenu(menuData).then(data=> {
+                    deleteActiveContent(nowOnContentKey, obj, activeContent, dispatch);
+                    dispatch(AppDidMount());
+                    return dispatch({
+                        type: Constants.MENU_SETTING_MODIFY_MENU_FINISH,
+                        targetMenuSort: targetMenuSort,
+                        error: undefined
+                    })
+                }).catch(res=> {
+                    return dispatch({
+                        type: Constants.MENU_SETTING_MODIFY_MENU_FINISH,
+                        targetMenuSort: targetMenuSort,
+                        error: res
+                    })
+                });
+            }
+        }else{
+            return dispatch=> {
+                //添加菜单
+                insertTableMenu(menuData).then(data=> {
+                    deleteActiveContent(nowOnContentKey, obj, activeContent, dispatch);
+                    dispatch(AppDidMount());
+                    return dispatch({
+                        type: Constants.MENU_SETTING_ADD_MENU_FINISH,
+                        targetMenuSort: targetMenuSort,
+                        error: undefined
+                    })
+                }).catch(res=> {
+                    return dispatch({
+                        type: Constants.MENU_SETTING_ADD_MENU_FINISH,
+                        targetMenuSort: targetMenuSort,
+                        error: res
+                    })
                 })
-            }).catch(res=> {
-                return dispatch({
-                    type: Constants.MENU_SETTING_ADD_MENU_FINISH,
-                    targetMenuSort: targetMenuSort,
-                    error: res
-                })
-            })
+            }
         }
     } else {
         return dispatch=> {

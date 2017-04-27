@@ -1,6 +1,7 @@
 import * as Constants from './CONSTANTS';
 import {isOnline} from '../config/config';
 import {GetMount} from './menu-setting-option-menu';
+import {apiDeleteMenu} from '../services/api';
 
 export const contentSettingGetMount = (target)=> {
     return ({
@@ -90,10 +91,17 @@ export const optionDeleteMenu = v=>{
     //ToDo:Delete Menu!fetch to dataBase if success then return
     if(isOnline){
         return dispatch=>{
-            return dispatch({
-                type:Constants.APP_DELETE_MENU_ITEM,
-                payload:v
-            });
+            apiDeleteMenu(v).then(resData=>{
+                return dispatch({
+                    type:Constants.APP_DELETE_MENU_ITEM,
+                    payload:v
+                });
+            }).catch(rej=>{
+                return dispatch({
+                    type:Constants.CONTENT_SETTING_SETTING_MENU_SEND_ERROR,
+                    error:rej
+                });
+            })
         };
     }else{
         return ({

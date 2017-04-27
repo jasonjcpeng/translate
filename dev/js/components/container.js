@@ -64,6 +64,7 @@ class Container extends Component {
     switchCreateContent(height){
         let boolean = this.props.toggleStatus!=='full'||this.props.defaultToggleStatus==='full';
         if(this.props.nowOnContentTarget&&boolean){
+            console.log(this.props.nowOnContentTarget.menuSort)
             switch (this.props.nowOnContentTarget.menuSort){
                 case 'setting':
                     return (<ContentSetting height={height}/>);
@@ -78,6 +79,7 @@ class Container extends Component {
                     return (<MenuSettingOptionMenu key='detail' height={height}/>);
                     break;
                 case 0:
+
                     return (<NormalTable key={this.props.nowOnContentTarget.id} height={height}></NormalTable>);
                     break
             }

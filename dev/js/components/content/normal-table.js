@@ -349,11 +349,11 @@ class NormalTable extends React.Component {
 
 const state = state=> {
     let loaded, target, btnGroup, viewPoint, modifyViewPoint, targetID, api, data, nowOnItem, nowOnClickButton,
-        modifyViewData,toggleItem,tableConfigArgs,pageNation,error;
+        modifyViewData,toggleItem,tableConfigArgs,error;
     state.containerTitleMenu.activeContent.map(v=> {
-        if (v.obj.id === state.common.nowOnContentTarget.id) {
-            target = v;
-        }
+            if (v&&v.obj.id === state.common.nowOnContentTarget.id) {
+                target = v;
+            }
     });
     targetID = target.obj.id ? target.obj.id : '';
     api = target.obj.api ? target.obj.api : '';

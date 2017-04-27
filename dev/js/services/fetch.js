@@ -5,13 +5,13 @@ import {Location,Host, TimeOut,isOnline} from '../config/config';
 export const Fetch = (url,args,method='GET')=> {
     let Url = (isOnline?Host:Location) + url;
     let localMethod = isOnline?method:'GET';
-    const opts = {method: localMethod.toUpperCase(),credentials: "include",body:qs.stringify(args)}
+    const opts = {method: localMethod.toUpperCase(),credentials: "include",body:JSON.stringify(args)};
     const headers = {
         'mode': 'cors',
-        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+        'Content-Type': 'application/json'
     }
     if (opts.method === 'GET') {
-        Url = Url + '?' + opts.body;
+        Url = Url + '?' + qs.stringify(args);
         delete opts.body;
         headers['Content-Type'] = 'application/json'
     }

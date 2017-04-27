@@ -58,6 +58,8 @@ const apis = {
     login: 'api/Login/Login',
     getMenu: 'api/Module/GetMenu',
     insertMenu:'/api/Module/Post',
+    modifyMenu:'/api/Module/Put/',
+    deleteMenu:'/api/Module/Delete',
     getUserInfo: '/api/User/GetUser',
     getRole:'/api/Role/Get/',
     getCols:'/api/Module/GetCols'
@@ -94,15 +96,15 @@ export const appStart = ()=> {
                                     let v= res[0].data[i];
                                     if(v){
                                         let item = {
-                                            icon: v['AX_Icon'],
-                                            id: v['AX_Id'],
-                                            code: v['AX_Id'],
-                                            parentCode:v['AX_ParentId'],
-                                            menuName:v['AX_FullName'],
-                                            createTime:v['AX_CreatorTime'],
-                                            menuSort: v['AX_SortCode'],
+                                            icon: v['AX_Icon']?v['AX_Icon']:'',
+                                            id: v['AX_Id']?v['AX_Id']:'',
+                                            code: v['AX_Id']?v['AX_Id']:'',
+                                            parentCode:v['AX_ParentId']?v['AX_ParentId']:undefined,
+                                            menuName:v['AX_FullName']?v['AX_FullName']:'',
+                                            createTime:v['AX_CreatorTime']?v['AX_CreatorTime']:'',
+                                            menuSort: v['AX_SortCode']?v['AX_SortCode']:0,
                                             isEnable: true,
-                                            api: v['AX_UrlAddress'],
+                                            api: v['AX_UrlAddress']?v['AX_UrlAddress']:'',
                                             viewPoint:arraifyStringWhosChildIsObj(v['AX_ViewPoint']),
                                             btnGroup:arraifyStringWhosChildIsObj(v['AX_BtnGroup']),
                                             modifyViewPoint:arraifyStringWhosChildIsObj(v['AX_ModifyViewPoint'])
@@ -183,7 +185,7 @@ export const normalTableGetData = (api,args,searchKey,searchVal)=>{
     }
     return createFetchPromise(api,(data, resolve, reject)=>{
         let resultData = {
-            tableData:data['UserList']?data['UserList']:[],
+            tableData:data['OrganizeList']?data['OrganizeList']:[],
             tablePagination:data['Pagination']? {
                 rows: data['Pagination'].rows,
                 page: data['Pagination'].page,
@@ -229,6 +231,24 @@ export const apiDeleteTableItem = (api,data)=>{
     },arr,'DELETE');
 }
 
+//修改菜单
+export const modifyTableMenu = menu=>{
+    let arg = {
+        AX_Id:menu.id,
+        AX_ParentId: menu.parentCode,
+        AX_FullName: menu.menuName,
+        AX_Icon: menu.icon,
+        AX_UrlAddress: menu.api,
+        AX_SortCode: menu.menuSort,
+        AX_CreatorTime: menu.createTime,
+        AX_ViewPoint: stringifyArrWhosChildIsObj(menu.viewPoint),
+        AX_BtnGroup: stringifyArrWhosChildIsObj(menu.btnGroup),
+        AX_ModifyViewPoint:stringifyArrWhosChildIsObj(menu.modifyViewPoint)
+    }
+    return createFetchPromise(apis.modifyMenu+=menu.id, (data, resolve, reject)=> {
+        resolve(data);
+    },arg,'PUT');
+}
 //增加菜单
 export const insertTableMenu = (menu)=>{
     let arg = {
@@ -247,6 +267,14 @@ export const insertTableMenu = (menu)=>{
         resolve(data);
     },arg,'POST');
 }
+//删除菜单
+export const apiDeleteMenu = (item)=>{
+    let arg = [item.id]
+    return createFetchPromise(apis.deleteMenu,(data, resolve, reject)=> {
+        resolve(data);
+    },arg,'DELETE');
+}
+
 //操作表格中开关式按钮
 export const apiOnClickToggleOptions = (api,item)=>{
     api+= item['AX_Id'];

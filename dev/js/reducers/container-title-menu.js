@@ -255,6 +255,9 @@ export default function (state = initState, action) {
             });
             return setActiveContentStatus(newState, 'setting', {status: {selectMenuSettingTableItem: {$set: undefined}}});
             break;
+        case Constants.CONTENT_SETTING_SETTING_MENU_SEND_ERROR:
+            return setActiveContentStatus(state, 'setting', {status: {error: {$set: action.error}}});
+            break;
         //---------------MenuSettingOption------------------------------
         case Constants.MENU_SETTING_OPTION_MENU_DID_MOUNT:
             let parentCode = action.target.targetMenu === '0' ? '0' : action.target.targetMenu.code;
@@ -290,7 +293,20 @@ export default function (state = initState, action) {
                 initMenuSettingOption.error = action.error;
                 return setActiveContentStatus(state, action.target.menuSort, {status: {$set: initMenuSettingOption}});
             }
-            return setActiveContentStatus(state, action.target.menuSort, {status: {$set: initMenuSettingOption}});
+            if (action.target.menuSort ==='menuSettingAddMenu') {
+                return setActiveContentStatus(state, action.target.menuSort, {status: {$set: initMenuSettingOption}});
+            } else {
+                let menuData = action.target.targetMenu;
+                if (menuData.viewPoint.length>0) {
+                    let viewPointConfigApi = menuData.api.split('api/')[1];
+                    menuData.viewPointConfigApi = 'sys_' + viewPointConfigApi.substring(0, viewPointConfigApi.indexOf('/'));
+                }else{
+                    menuData.viewPointConfigApi ='';
+                }
+                initMenuSettingOption.menuData = menuData;
+
+                return setActiveContentStatus(state, action.target.menuSort, {status: {$set: initMenuSettingOption}});
+            }
             break;
         case Constants.MENU_SETTING_OPTION_CHECK_IS_ROOT_MENU:
             return setActiveContentStatus(state, action.targetMenuSort, {status: {isRootMenu: {$set: action.payload}}});
@@ -374,6 +390,9 @@ export default function (state = initState, action) {
             return setActiveContentStatus(state, action.targetMenuSort, {status: {error: {$set: action.error}}});
             break;
         case Constants.SHIELD_ALERT_ON_OK_DELETE_ERROR_FLAG:
+            if(action.target==='setting'){
+                return setActiveContentStatus(state, action.target, {status: {error: {$set: undefined}}});
+            }
             if(action.targetType){
                 return setActiveContentStatus(state, action.target, {status: {error: {$set: undefined}}});
             }else{
@@ -385,6 +404,9 @@ export default function (state = initState, action) {
             return setActiveContentStatus(state, action.targetMenuSort, {status: {previewStatus: {$set: action.previewStatus}}});
             break;
         case Constants.MENU_SETTING_ADD_MENU_FINISH:
+            return setActiveContentStatus(state, action.targetMenuSort, {status: {error: {$set: action.error}}});
+            break;
+        case Constants.MENU_SETTING_MODIFY_MENU_FINISH:
             return setActiveContentStatus(state, action.targetMenuSort, {status: {error: {$set: action.error}}});
             break;
         //-----------------------------normal-table-----------------------------------
@@ -399,6 +421,7 @@ export default function (state = initState, action) {
                 toggleItem:[],
                 tableConfigArgs:action.initTableArgs
             }
+
             return setActiveContentStatusByID(state,action.targetID,{status:{$set:initStatus}});
             break;
         case Constants.NORMAL_TABLE_GET_DATA:

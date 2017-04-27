@@ -73,11 +73,11 @@ module.exports = {
             chunks:['logout','app']
         }),
         /* 压缩*/
-        /*new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        }),*/
+       /* new webpack.optimize.UglifyJsPlugin({
+         compress: {
+         warnings: false
+         }
+         }),*/
         /* 生成公共文件
          new webpack.optimize.CommonsChunkPlugin({
          name:'index', // 上面入口定义的节点组

@@ -5,6 +5,7 @@ import * as ActionCreators from '../../action/content-setting';
 //Component
 import Loader from 'react-loader';
 import {LoaderOption} from '../../config/config';
+import ShieldAlert from '../piecemeal-components/shield-alert';
 //JSON
 import SkinList from '../../../jsons/skin-list.json';
 import menuSettingOption from '../../../jsons/menu-setting-option.json';
@@ -157,7 +158,7 @@ class ContentSetting extends React.Component {
                             }
                         }.bind(this)()}</td>
                         <td ><i className={'fa ' + m.icon}></i></td>
-                        <td onClick={
+                       {/* <td onClick={
                             (e)=> {
                                 let obj = m;
                                 obj.isEnable = !m.isEnable;
@@ -170,8 +171,8 @@ class ContentSetting extends React.Component {
                             } else {
                                 return (<i className="fa fa-toggle-off"></i>);
                             }
-                        }.bind(this)()}</td>
-                        <td>{m.menuSort}</td>
+                        }.bind(this)()}</td>*/}
+                      {/*  <td>{m.menuSort}</td>*/}
                         <td></td>
                     </tr>);
                 }
@@ -267,8 +268,8 @@ class ContentSetting extends React.Component {
                             <th style={{width:'60px'}}></th>
                             <th style={{width:'300px'}}>名称</th>
                             <th style={{width:'60px'}}>图标</th>
-                            <th style={{width:'60px'}}>有效</th>
-                            <th style={{width:'100px'}}>菜单种类</th>
+                          {/*  <th style={{width:'60px'}}>有效</th>*/}
+                    {/*        <th style={{width:'100px'}}>菜单种类</th>*/}
                             <th>介绍</th>
                         </tr>
                         </thead>
@@ -326,6 +327,7 @@ class ContentSetting extends React.Component {
                     </div>
                     <div className="content-container animation-fadeInRight"
                          style={{width:'80%',float:'right',marginRight:'1%'}}>
+                        <ShieldAlert key={this.props.target.obj.menuSort+''+this.props.error} content={this.props.error} title={'警告'} onTargetMenuTarget={'setting'}></ShieldAlert>
                         <div className="content-container-inset" style={{height: tableHeight}}>
                             {this.createRightActiveContent(tableHeight)}
                         </div>
@@ -361,6 +363,7 @@ const state = state=> {
         useSkin: state.common.useSkin,
         defaultToggleStatus: state.common.defaultToggleStatus,
         currentMenu: state.sideBar.menu,
+        error:target.status.error
     });
 }
 

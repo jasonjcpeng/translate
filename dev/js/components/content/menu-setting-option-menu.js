@@ -636,11 +636,24 @@ class MenuSettingOptionAddMenu extends React.Component {
             <div className="standard-ul standard-ul-two-column">
                 <ul>
                     <li><span>上级菜单:</span><span><input type="text" disabled={true}
-                                                       value={this.props.target.obj.targetMenu === '0'?"根级菜单":this.props.target.obj.targetMenu.menuName}/></span>
+                                                       value={(()=>{
+                                                           if(this.props.targetMenuSort==='menuSettingAddMenu'){
+                                                               return this.props.target.obj.targetMenu === '0'?"根级菜单":this.props.target.obj.targetMenu.menuName;
+                                                           }else{
+                                                               return this.props.target.obj.targetMenu.parentCode ==='0'?"根级菜单":this.props.target.obj.targetMenu.parentCode;
+                                                           }
+                                                       })()}/></span>
                     </li>
                     {createIsRootMenuCheckBox()}
                     <li><span>上级菜单Code:</span><span><input type="text" disabled={true}
-                                                           value={this.props.target.obj.targetMenu === '0'?"0":this.props.target.obj.targetMenu.code}/></span>
+                                                           value={(()=>{
+                                                               if(this.props.targetMenuSort==='menuSettingAddMenu'){
+                                                                   return this.props.target.obj.targetMenu === '0'?"0":this.props.target.obj.targetMenu.code
+                                                               }else{
+                                                                   return this.props.target.obj.targetMenu.parentCode ==='0'?"0":this.props.target.obj.targetMenu.parentCode
+                                                               }
+                                                           })()}
+                                                        /></span>
                     </li>
                     <li><span>菜单名称:</span><span><input
                         defaultValue={this.props.menuData.menuName!==''?this.props.menuData.menuName:''} onChange={
@@ -652,7 +665,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                         if (!this.props.isRootMenu) {
                             return (<div>
                                 <li><span>菜单视图项API:</span><span><input
-                                    value={this.props.menuData.viewPointConfigApi} onChange={
+                                    defaultValue={this.props.menuData.viewPointConfigApi} onChange={
                                     e=>{
                                         this.props.changeMenuData(this.props.targetMenuSort,'viewPointConfigApi',e.target.value);
                                     }
@@ -816,7 +829,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                 let menuData = this.props.menuData;
                 switch (this.props.targetMenuSort) {
                     case 'menuSettingAddMenu':
-                        if (!isOnline) {
+                        if(!isOnline){
                             let allMenu = this.props.allMenu;
                             let createTime = getNowFormatDate();
                             let updateTime = getNowFormatDate();
@@ -841,6 +854,11 @@ class MenuSettingOptionAddMenu extends React.Component {
                             menuData.code = code;
                         }
                         this.props.clickFinish(this.props.targetMenuSort,menuData,this.props.activeContent,this.props.nowOnContentKey,this.props.target.obj);
+                        break;
+                    case 'menuSettingEditMenu':
+                        if(!isOnline){
+                        }
+                        this.props.clickFinish(this.props.targetMenuSort,menuData,this.props.activeContent,this.props.nowOnContentKey,this.props.target.obj,'modify');
                         break;
                 }
             }
@@ -970,25 +988,13 @@ const state = state=> {
         }
     });
 
-    if(target){
-        if(target.obj.menuSort==='menuSettingEditMenu'||target.obj.menuSort==='menuSettingDetailMenu'){
-            menuData = target.obj.targetMenu;
-            let viewPointConfigApi = menuData.api.split('api/')[1];
-            menuData.viewPointConfigApi = 'sys_'+viewPointConfigApi.substring(0,viewPointConfigApi.indexOf('/'));
-        }else if(target.obj.menuSort==='menuSettingAddMenu'){
-            menuData = target.status.menuData;
-        }
-    }else{
-        menuData = '';
-    }
-
     return ({
         allMenu: state.sideBar.menu,
         activeContent: state.containerTitleMenu.activeContent,
         //本选项卡头包含的选项卡内数据{obj:选项卡菜单，status：选项卡内状态，isActive:是否正使用}
         target: target,
         //视图层通过菜单视图项Api获取的表字段内容
-        viewPointConfigData: target.status&&target.status.viewPointConfigData?target.status.viewPointConfigData:'',
+        viewPointConfigData: target.status&&target.status.viewPointConfigData?target.status.viewPointConfigData:[],
         //是否开启预览遮罩层
         previewStatus: target.status?target.status.previewStatus:'',
         //当前选项卡所在数组的位置，用来关闭本选项卡
@@ -996,7 +1002,7 @@ const state = state=> {
         isRootMenu: target.status?target.status.isRootMenu:'',
         configApi: target.status?target.status.configApi:'',
         targetMenuSort: target.status?target.obj.menuSort:'',
-        menuData: menuData,
+        menuData: target.status?target.status.menuData:'',
         defaultToggleStatus: state.common.defaultToggleStatus
     });
 }
