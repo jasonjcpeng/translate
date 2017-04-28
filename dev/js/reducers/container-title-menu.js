@@ -201,31 +201,17 @@ export default function (state = initState, action) {
                     defaultMenuSettingTableToggleItem: {
                         $apply: arr=> {
                             let isPush = true;
-                            let newArr = [];
-                            let DelArr = [];
-                            let root = '';
-                            for (let i in arr) {
-                                if (arr[i] === action.payload) {
+                            let newArr = arr.filter((v)=>{
+                                if(v!==action.payload){
+                                    return v;
+                                }else{
                                     isPush = false;
-                                    root = action.payload;
-                                    DelArr.push(arr[i]);
                                 }
-                                if (root) {
-                                    if (arr[i] !== action.payload && arr[i].slice(0, root.length) === root) {
-                                        DelArr.push(arr[i]);
-                                        isPush = false;
-                                    }
-                                }
-                            }
-                            newArr = arr.filter(i=> {
-                                return DelArr.indexOf(i) < 0;
                             });
-                            if (isPush) {
+                            if(isPush){
                                 newArr.push(action.payload);
-                                return newArr;
-                            } else {
-                                return newArr;
                             }
+                            return newArr;
                         }
                     }
                 }

@@ -232,55 +232,92 @@ class ContentSetting extends React.Component {
 
     createMenuSettingTableBody(toggleCode) {
         let menu = this.quickSort(this.props.currentMenu);
-        return menu.map((m, k)=> {
-            for (let i in toggleCode) {
-                if (m.parentCode === toggleCode[i]) {
-                    let textIndent = 0;
-                    for (let space = 0; space < i; space++) {
-                        textIndent += 20;
+        let trIsHidden = (v)=>{
+            let toggleStateFlag = true;
+            if(v.parentCode==='0'){
+                toggleStateFlag = false;
+            }else{
+                for(let i in toggleCode){
+                    if(v.parentCode===toggleCode[i]){
+                        toggleStateFlag = false;
                     }
-                    return (<tr className={function(){
-                        if(this.props.target.status.selectMenuSettingTableItem&&this.props.target.status.selectMenuSettingTableItem.id===m.id){
-                            return 'active';
-                        }
-                    }.bind(this)()} onClick={(e)=>{
-                        this.props.selectSingleMenuItem(m);
-                        e.stopPropagation();
-                    }} key={m.id + '_' + k} style={{display: ''}}>
-                        <td>{k + 1}</td>
-                        <td style={{textAlign:'left',textIndent:textIndent}}>{m.menuName}{function () {
-                            if (this.isMenuHasChild(menu, m)) {
-                                return (<i style={{float:'right'}} onClick={
-                                    (e)=>{
-                                        this.props.toggleSingleMenuItem(m.code);
-                                        e.stopPropagation();
-                                    }
-                                }
-                                           className={this.isSingleMenuSettingTableToggle(toggleCode,m.code)? 'menu-toggle fa fa-caret-down' : 'menu-toggle fa fa-caret-right'}></i>)
-                            }
-                        }.bind(this)()}</td>
-                        <td ><i className={'fa ' + m.icon}></i></td>
-                       {/* <td onClick={
-                            (e)=> {
-                                let obj = m;
-                                obj.isEnable = !m.isEnable;
-                                this.props.changeMenuSetting(obj);
-                                e.stopPropagation();
-                            }
-                        }>{function () {
-                            if (m.isEnable) {
-                                return (<i className="fa fa-toggle-on"></i>);
-                            } else {
-                                return (<i className="fa fa-toggle-off"></i>);
-                            }
-                        }.bind(this)()}</td>*/}
-                      {/*  <td>{m.menuSort}</td>*/}
-                        <td></td>
-                    </tr>);
                 }
             }
-
+            return toggleStateFlag;
+        }
+        let createTrClassName = (v)=> {
+            if (this.props.target.status.selectMenuSettingTableItem&&v.code === this.props.target.status.selectMenuSettingTableItem.code) {
+                return 'active';
+            }
+        }
+        let arrowIconMargin = (v,margin)=>{
+            let localMargin = margin;
+            for(let i=0;i<this.props.currentMenu.length;i++){
+                if(v.parentCode===this.props.currentMenu[i].code){
+                    localMargin += arrowIconMargin(this.props.currentMenu[i],(margin+5));
+                }
+            }
+            return localMargin
+        }
+        let  isMenuHasChild =(newMenu, currentMenu)=>{
+            for (let i in newMenu) {
+                if (newMenu[i].parentCode === currentMenu.code) {
+                    return true;
+                    break;
+                }
+            }
+            return false;
+        }
+        let trToggleIconClassNames = (v)=>{
+            let toggleStateFlag = false;
+            for(let i in toggleCode){
+                if(v.code===toggleCode[i]){
+                    toggleStateFlag = true;
+                }
+            }
+            return toggleStateFlag?'menu-toggle fa fa-caret-down':'menu-toggle fa fa-caret-right';
+        }
+        return menu.map((v,k)=>{
+            return (<tr hidden={trIsHidden(v)} className={createTrClassName(v)} onClick={(e)=>{
+                this.props.selectSingleMenuItem(v);
+                e.stopPropagation();
+            }} key={k}>
+                <td>{ (()=>{
+                    return (<div style={{width:'40px',float:'left',paddingLeft:arrowIconMargin(v,5)+'px'}}>
+                        {(()=>{
+                            if (isMenuHasChild(menu, v)) {
+                                return (<i onClick={(e)=>{
+                                    this.props.toggleSingleMenuItem(v.code);
+                                    e.stopPropagation();
+                                }} className={trToggleIconClassNames(v)}></i>)
+                            }else{
+                                return (<i  className="menu-no-toggle"></i>)
+                            }
+                        })()}
+                        <span style={{marginLeft:'5px'}}>{k + 1}</span>
+                    </div>);
+                })()}</td>
+                <td>{v.menuName}</td>
+                <td ><i className={'fa ' + v.icon}></i></td>
+                {/*<td onClick={
+                    (e)=> {
+                        let obj = v;
+                        obj.isEnable = !v.isEnable;
+                        this.props.changeMenuSetting(obj);
+                        e.stopPropagation();
+                    }
+                }>{function () {
+                    if (v.isEnable) {
+                        return (<i className="fa fa-toggle-on"></i>);
+                    } else {
+                        return (<i className="fa fa-toggle-off"></i>);
+                    }
+                }.bind(this)()}</td>
+                 <td>{v.menuSort}</td>*/}
+                <td></td>
+            </tr>);
         });
+
     }
 
     judgeRenderSettingOption() {

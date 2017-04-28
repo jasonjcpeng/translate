@@ -246,7 +246,8 @@ class SideBar extends Component {
                                 let isNoView = this.isNoView(menu);
                                 if(menu.parentCode===v.code&&menu.isEnable){
                                     return (<li className='animation-flipInY' key={menu.parentCode+'_'+menu.id}
-                                                onMouseEnter={()=>{if(isHasChild||hoverMenu.length>1){this.props.miniMenuItemHover(menu);}}}
+                                                onMouseEnter={()=>{
+                                                    if(isHasChild||hoverMenu.length>1){this.props.miniMenuItemHover(menu);}}}
                                                 onClick={(e)=>{
                                                     this.props.meunItemToggle(menu, isNoView);
                                                  e.stopPropagation();
@@ -272,6 +273,10 @@ class SideBar extends Component {
                 this.props.miniMenuItemHover(v);
                 }} onMouseLeave={()=>{
                 this.props.miniMenuItemHover('');
+                }} onClick={(e)=>{
+                    let isNoView = this.isNoView(v);
+                    this.props.meunItemToggle(v, isNoView);
+                    e.stopPropagation();
                 }}
                 >{this.createItemIcon(v)}{this.createMiniToggleMenuItem(this.props.sideBar.miniHoverMenu,v)}</li>);
             }
