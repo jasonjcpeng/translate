@@ -53,6 +53,9 @@ const createFetchPromise = (api, callBack, args = '', method = 'GET')=> {
     });
 }
 
+const filterStringDataDontBeNull = (data)=> {
+    return data === null ? '' : data;
+}
 
 const apis = {
     login: 'api/Login/Login',
@@ -62,7 +65,10 @@ const apis = {
     deleteMenu:'/api/Module/Delete',
     getUserInfo: '/api/User/GetUser',
     getRole:'/api/Role/Get/',
-    getCols:'/api/Module/GetCols'
+    getOrganize: '/api/Organize/GetOrganize/',
+    getCols:'/api/Module/GetCols',
+    changeUserInfo:'/api/User/Put/',
+    resetPassWord:'/api/Account/RevisePassword'
 };
 
 export const login = (userName, pwd)=> {
@@ -81,14 +87,33 @@ export const appStart = ()=> {
         Promise.all([Fetch.Fetch(filterIsOnline(apis.getMenu)),Fetch.Fetch(filterIsOnline(apis.getUserInfo))]).then(
             res=> {
                 if(res[1].state===1&&res[1].data!==null){
-                    Fetch.Fetch(filterIsOnline(apis.getRole+'/'+res[1].data['AX_RoleId'])).then(getRoleResult=>{
-                        if(getRoleResult.state===1){
+                    Promise.all([createFetchPromise(filterIsOnline(apis.getRole + '/' + res[1].data['AX_RoleId']), (data, res, rej)=> {
+                        res(data)
+                    }),//arr[0]AX_RoleId角色信息
+                        createFetchPromise(filterIsOnline(apis.getOrganize + '/' + res[1].data['AX_OrganizeId']), (data, res, rej)=> {
+                            res(data)
+                        })])//arr[1]AX_DepartmentId部门信息
+                        .then(getAllDetail=> {
                             let userInfo = {
-                                name: res[1].data['AX_RealName'],
-                                power: getRoleResult.data['AX_FullName'],
-                                powerEnCode:getRoleResult.data['AX_EnCode'],
-                                imgUrl: './img/profile_small.jpg',
-                                useSkin: 'skin-1'
+                                id:res[1].data['AX_Id'],
+                                account:filterStringDataDontBeNull(res[1].data['AX_Account']),
+                                name: filterStringDataDontBeNull(res[1].data['AX_RealName']),
+                                powerId: filterStringDataDontBeNull(res[1].data['AX_RoleId"']),
+                                power: filterStringDataDontBeNull(getAllDetail[0]['AX_FullName']),
+                                powerEnCode: filterStringDataDontBeNull(getAllDetail[0]['AX_EnCode']),
+                                imgUrl: res[1].data['AX_HeadIcon']?res[1].data['AX_HeadIcon']:'./img/profile_small.jpg',
+                                useSkin: 'skin-1',
+                                nickName: filterStringDataDontBeNull(res[1].data['AX_NickName']),
+                                birthDay: filterStringDataDontBeNull(res[1].data['AX_Birthday']),
+                                mobilePhone: filterStringDataDontBeNull(res[1].data['AX_MobilePhone']),
+                                eMail: filterStringDataDontBeNull(res[1].data['AX_Email']),
+                                /*  departmentId: res[1].data['AX_DepartmentId'],
+                                 department: '部门',*/
+                                organizeId: filterStringDataDontBeNull(res[1].data['AX_OrganizeId']),
+                                organize: filterStringDataDontBeNull(getAllDetail[1]['AX_FullName']),
+                                isAdministrator: filterStringDataDontBeNull(res[1].data['AX_IsAdministrator']),
+                                description: filterStringDataDontBeNull(res[1].data['AX_Description']),
+                                createTime: filterStringDataDontBeNull(res[1].data['AX_CreatorTime']),
                             }
                             let menu = [];
                             if(res[0].state===1&&res[0].data!==null){
@@ -119,9 +144,6 @@ export const appStart = ()=> {
                                 userInfo: userInfo,
                                 menu: menu
                             });
-                        }else{
-                            reject("来自‘"+apis.getRole+"’的消息："+getRoleResult.message)
-                        }
                     }).catch(getRoleRej=>{
                         reject(getRoleRej)
                     })
@@ -185,7 +207,7 @@ export const normalTableGetData = (api,args,searchKey,searchVal)=>{
     }
     return createFetchPromise(api,(data, resolve, reject)=>{
         let resultData = {
-            tableData:data['OrganizeList']?data['OrganizeList']:[],
+            tableData:data['DataList']?data['DataList']:[],
             tablePagination:data['Pagination']? {
                 rows: data['Pagination'].rows,
                 page: data['Pagination'].page,
@@ -213,8 +235,7 @@ export const insertTableItem = (api,item,data)=>{
 }
 //修改菜单内容中的内容项
 export const apiModifyTableItem = (api,item)=>{
-    api+=''+item['AX_Id'];
-    return createFetchPromise(api,(resData,resolve,reject)=>{
+    return createFetchPromise((api+''+item['AX_Id']),(resData,resolve,reject)=>{
         resolve(resData);
     },item,'PUT');
 }
@@ -277,8 +298,30 @@ export const apiDeleteMenu = (item)=>{
 
 //操作表格中开关式按钮
 export const apiOnClickToggleOptions = (api,item)=>{
-    api+= item['AX_Id'];
-    return createFetchPromise(api, (data, resolve, reject)=> {
+    return createFetchPromise((api+item['AX_Id']), (data, resolve, reject)=> {
         resolve(data);
     },'');
+}
+
+//修改用户信息
+export const apiChangeUserInfo = (id,arg)=>{
+    let finalArg = {
+        AX_Id:id,
+        AX_RealName:arg.name,
+        AX_Birthday:arg.birthDay,
+        AX_NickName:arg.nickName,
+    }
+    return createFetchPromise(apis.changeUserInfo+id, (data, resolve, reject)=> {
+        resolve(data);
+    },finalArg,'PUT');
+}
+//修改用户密码
+export const apiResetPassWord = (account,data)=>{
+    let finalArg = {
+        UserName: account,
+        Pwd: Md5(data.oldPassWord)
+    }
+    return createFetchPromise(apis.resetPassWord+'?newPwd='+data.newPassWord, (data, resolve, reject)=> {
+        resolve(data);
+    },finalArg,'POST');
 }

@@ -6,6 +6,7 @@ import * as ActionCreators from '../../action/content-setting';
 import Loader from 'react-loader';
 import {LoaderOption} from '../../config/config';
 import ShieldAlert from '../piecemeal-components/shield-alert';
+import ShieldOk from '../piecemeal-components/shield-ok';
 //JSON
 import SkinList from '../../../jsons/skin-list.json';
 import menuSettingOption from '../../../jsons/menu-setting-option.json';
@@ -41,15 +42,42 @@ class ContentSetting extends React.Component {
     }
 
     createBaseInfo(rightActiveContent, tableHeight) {
+        this.protoBaseInfo = {
+            name:this.props.userInfo.name,
+            nickName:this.props.userInfo.nickName,
+            birthDay:this.props.userInfo.birthDay.substring(0,(this.props.userInfo.birthDay.indexOf('T')))
+        }
+
+        let handleOnChangeBaseInfo = (key,val)=>{
+            this.protoBaseInfo[key] = val;
+        }
+
         let height = tableHeight - 50;
         return (<div key={rightActiveContent.key} className="right-active-content animation-fadeInRight">
             {this.createActiveContentHeader(rightActiveContent)}
             <div style={{height: height}} className="content-setting-frame">
-                <div className="standard-ul">
-                    <ul>
-                        <li><span>姓名</span><input type="text"/></li>
-                        <li><span>权限</span><input type="text"/></li>
-                    </ul>
+                <div style={{height: height-80}}>
+                    <div className="standard-ul">
+                        <ul>
+                            <li><span>姓名</span><input onChange={e=>{
+                                handleOnChangeBaseInfo('name',e.target.value);
+                            }} type="text" defaultValue={this.protoBaseInfo.name}/></li>
+                            <li><span>昵称</span><input onChange={e=>{
+                                handleOnChangeBaseInfo('nickName',e.target.value);
+                            }} type="text" defaultValue={this.protoBaseInfo.nickName}/></li>
+                            <li><span>生日</span><input onChange={e=>{
+                                handleOnChangeBaseInfo('birthDay',e.target.value);
+                            }} type="date" defaultValue={this.protoBaseInfo.birthDay}/></li>
+                            <li><span>账户描述</span><input disabled="disabled" type="text" defaultValue={this.props.userInfo.description}/></li>
+                            <li><span>权限</span><input type="text" disabled="disabled" defaultValue={this.props.userInfo.power}/></li>
+                            <li><span>账户创建时间</span><input disabled="disabled" type="text" defaultValue={this.props.userInfo.createTime}/></li>
+                        </ul>
+                    </div>
+                </div>
+                <div className="content-setting-footer">
+                    <button onClick={e=>{
+                        this.props.actionChangeUserInfo(this.props.userInfo.id,this.protoBaseInfo);
+                    }} className="btn btn-finish">确认修改</button>
                 </div>
             </div>
         </div>);
@@ -57,10 +85,84 @@ class ContentSetting extends React.Component {
 
     createTel(rightActiveContent, tableHeight) {
         let height = tableHeight - 50;
+        this.protoTelInfo = {
+            mobilePhone:this.props.userInfo.mobilePhone,
+            eMail:this.props.userInfo.eMail,
+        }
+        let handleOnChangeTelInfo = (key,val)=>{
+            this.protoTelInfo[key] = val;
+        }
         return (<div key={rightActiveContent.key} className="right-active-content animation-fadeInRight">
+            {this.createActiveContentHeader(rightActiveContent)}
             <div style={{height: height}} className="content-setting-frame">
-                {this.createActiveContentHeader(rightActiveContent)}
+                <div style={{height: height-80}}>
+                    <div className="standard-ul">
+                        <ul>
+                            <li><span>手机号</span><input onChange={e=>{
+                                handleOnChangeTelInfo('mobilePhone',e.target.value);
+                            }} type="tel" defaultValue={this.protoTelInfo.mobilePhone}/></li>
+                            <li><span>E-Mail</span><input onChange={e=>{
+                                handleOnChangeTelInfo('eMail',e.target.value);
+                            }} type="email" defaultValue={this.protoTelInfo.eMail}/></li>
+                        </ul>
+                    </div>
+                </div>
+                <div className="content-setting-footer">
+                    <button onClick={e=>{
+                        this.props.actionChangeUserInfo(this.props.userInfo.id,this.protoTelInfo);
+                    }}  className="btn btn-finish">确认修改</button>
+                </div>
             </div>
+
+        </div>);
+    }
+
+    createResetPassWord(rightActiveContent, tableHeight){
+        let height = tableHeight - 50;
+        this.protoResetPassWord = {
+            oldPassWord:'',
+            newPassWord:'',
+            confirmPassWord:''
+        }
+        let handleOnChangeResetPassWordInfo = (key,val)=>{
+            this.protoResetPassWord[key] = val;
+        }
+        let handleOnFinishResetPassWord = ()=>{
+            if(this.protoResetPassWord.oldPassWord!==this.protoResetPassWord.newPassWord){
+                if(this.protoResetPassWord.newPassWord===this.protoResetPassWord.confirmPassWord){
+                    this.props.actionResetPassWord(this.props.userInfo.account,this.protoResetPassWord);
+                }else{
+                    this.props.actionSendError('两次输入的密码不同！');
+                }
+            }else{
+                this.props.actionSendError('新旧密码不能相同！');
+            }
+        }
+        return (<div key={rightActiveContent.key} className="right-active-content animation-fadeInRight">
+            {this.createActiveContentHeader(rightActiveContent)}
+            <div style={{height: height}} className="content-setting-frame">
+                <div style={{height: height-80}}>
+                    <div className="standard-ul">
+                        <ul>
+                            <li><span>原密码</span><input  onChange={e=>{
+                                handleOnChangeResetPassWordInfo('oldPassWord',e.target.value);
+                            }} type="password" /></li>
+                            <li><span>新密码</span><input  onChange={e=>{
+                                handleOnChangeResetPassWordInfo('newPassWord',e.target.value);
+                            }} type="password" /></li>
+                            <li><span>再次输入密码</span><input  onChange={e=>{
+                                handleOnChangeResetPassWordInfo('confirmPassWord',e.target.value);
+                            }} type="password" /></li>
+                        </ul>
+                    </div>
+                </div>
+                <div className="content-setting-footer">
+                    <button onClick={e=>{
+                        handleOnFinishResetPassWord();
+                    }} className="btn btn-finish">确认修改</button>
+                </div>
+            </div>
+
         </div>);
     }
 
@@ -292,6 +394,9 @@ class ContentSetting extends React.Component {
             case 'tel':
                 return this.createTel(rightActiveContent, tableHeight);
                 break;
+            case 'resetPassWord':
+                return this.createResetPassWord(rightActiveContent, tableHeight);
+                break;
             case 'skin':
                 return this.createSkin(rightActiveContent, tableHeight);
                 break;
@@ -306,7 +411,7 @@ class ContentSetting extends React.Component {
         let contentSettingNavBar = [{key: 'baseInfo', name: '基本信息'}, {key: 'tel', name: '联系方式'}, {
             key: 'headImg',
             name: '我的头像'
-        }, {key: 'password', name: '修改密码'}, {key: 'skin', name: '设置皮肤'}];
+        }, {key: 'resetPassWord', name: '修改密码'}, {key: 'skin', name: '设置皮肤'}];
         let contentSettingPowerNavBar = [{key: 'menuSetting', name: '编辑菜单'}];
         if (this.props.target.status) {
             return (
@@ -327,7 +432,8 @@ class ContentSetting extends React.Component {
                     </div>
                     <div className="content-container animation-fadeInRight"
                          style={{width:'80%',float:'right',marginRight:'1%'}}>
-                        <ShieldAlert key={this.props.target.obj.menuSort+''+this.props.error} content={this.props.error} title={'警告'} onTargetMenuTarget={'setting'}></ShieldAlert>
+                        <ShieldAlert key={this.props.target.obj.menuSort+'error'+this.props.error} content={this.props.error} title={'Alert'} onTargetMenuTarget={'setting'}></ShieldAlert>
+                        <ShieldOk key={this.props.target.obj.menuSort+'ok'+this.props.ok} content={this.props.ok} title={'Success'} onTargetMenuTarget={'setting'}></ShieldOk>
                         <div className="content-container-inset" style={{height: tableHeight}}>
                             {this.createRightActiveContent(tableHeight)}
                         </div>
@@ -360,10 +466,12 @@ const state = state=> {
     });
     return ({
         target: target,
+        userInfo:state.sideBar.userInfo,
         useSkin: state.common.useSkin,
         defaultToggleStatus: state.common.defaultToggleStatus,
         currentMenu: state.sideBar.menu,
-        error:target.status.error
+        error:target.status.error,
+        ok:target.status.ok
     });
 }
 

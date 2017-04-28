@@ -133,6 +133,16 @@ export default function (state = initState, action) {
                 return update(state, {menu: {$push: [action.payload]}});
             }
             break;
+        case Constants.CONTENT_SETTING_CHANGE_USER_INFO:
+            return update(state, {userInfo: {$apply:arr=>{
+                for(let i in arr){
+                    if(action.userInfo[i]){
+                        arr[i] = action.userInfo[i];
+                    }
+                }
+                return arr;
+            }}});
+            break;
     }
     return state;
 }

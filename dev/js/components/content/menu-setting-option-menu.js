@@ -372,10 +372,10 @@ class MenuSettingOptionAddMenu extends React.Component {
                         </div>
                     </td>
                     <td>{val.componentRemark}</td>
-                    <td><input key={val.componentName+''+k} type="text" onChange={e=>{
+                    <td><input key={'cnName'+val.componentName+''+k} type="text" onChange={e=>{
                         handleOnChange(k,val,'CNName',e.target.value);
                     }} value={val.CNName}/></td>
-                    <td><input key={val.componentName+''+k} type="text" onChange={e=>{
+                    <td><input key={'api'+val.componentName+''+k} type="text" onChange={e=>{
                         handleOnChange(k,val,'api',e.target.value);
                     }} value={val.api}/></td>
                     <td>{val.isNeedTarget ? "是" : ""}</td>
@@ -499,22 +499,22 @@ class MenuSettingOptionAddMenu extends React.Component {
                             </div>
                         </td>
                         <td>{v.name}</td>
-                        <td><input key={v.name+''+k} onChange={
+                        <td><input key={'CNName'+v.name+''+k} onChange={
                     e=>{
                         handleOnChange(k,v,'CNName',e.target.value);
                     }
                     } value={v.CNName} type="text"/></td>
-                        <td><input  key={v.name+k} disabled={v.api===undefined?true:false} onChange={
+                        <td><input  key={'api'+v.name+k} disabled={v.api===undefined?true:false} onChange={
                             e=>{
                                 handleOnChange(k,v,'api',e.target.value);
                             }
-                        } defaultValue={v.api} type="text"/></td>
-                        <td><input  key={v.name+k} disabled={v.bindField===undefined?true:false} onChange={
+                        } value={v.api} type="text"/></td>
+                        <td><input  key={'bindField'+v.name+k} disabled={v.bindField===undefined?true:false} onChange={
                             e=>{
                                 handleOnChange(k,v,'bindField',e.target.value);
                             }
-                        } defaultValue={v.api} type="text"/></td>
-                        <td><input key={v.name+''+k} onChange={
+                        } value={v.bindField} type="text"/></td>
+                        <td><input key={'delete'+v.name+''+k} onChange={
                     e=>{
                     let width = (()=>{
                        if(!e.target.value||e.target.value<0){
@@ -655,8 +655,8 @@ class MenuSettingOptionAddMenu extends React.Component {
                                                            })()}
                                                         /></span>
                     </li>
-                    <li><span>菜单名称:</span><span><input
-                        defaultValue={this.props.menuData.menuName!==''?this.props.menuData.menuName:''} onChange={
+                    <li><span>菜单名称:</span><span><input key={this.props.menuData.menuName}
+                        value={this.props.menuData.menuName!==''?this.props.menuData.menuName:''} onChange={
                         e=>{
                             this.props.changeMenuData(this.props.targetMenuSort,'menuName',e.target.value);
                         }
@@ -664,7 +664,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                     {(()=> {
                         if (!this.props.isRootMenu) {
                             return (<div>
-                                <li><span>菜单视图项API:</span><span><input
+                                <li><span>菜单视图项API:</span><span><input key=""
                                     defaultValue={this.props.menuData.viewPointConfigApi} onChange={
                                     e=>{
                                         this.props.changeMenuData(this.props.targetMenuSort,'viewPointConfigApi',e.target.value);
@@ -953,7 +953,7 @@ class MenuSettingOptionAddMenu extends React.Component {
             <div className="content-container animation-fadeInRight">
                 {this.createModifyShield()}
                 {this.createToggleIconSetting()}
-                <ShieldAlert key={this.props.targetMenuSort+''+this.props.target.status.error} title="警告" content={this.props.target.status.error} onTargetMenuTarget={this.props.targetMenuSort}></ShieldAlert>
+                <ShieldAlert key={this.props.targetMenuSort+''+this.props.target.status.error} title="Alert" content={this.props.target.status.error} onTargetMenuTarget={this.props.targetMenuSort}></ShieldAlert>
                 <div className="content-container-inset" style={{height: height}}>
                     <div style={{minWidth: 600}}>
                         {this.createOptionMenuProgress()}
@@ -994,7 +994,7 @@ const state = state=> {
         //本选项卡头包含的选项卡内数据{obj:选项卡菜单，status：选项卡内状态，isActive:是否正使用}
         target: target,
         //视图层通过菜单视图项Api获取的表字段内容
-        viewPointConfigData: target.status&&target.status.viewPointConfigData?target.status.viewPointConfigData:[],
+        viewPointConfigData: target&&target.status.viewPointConfigData?target.status.viewPointConfigData:[],
         //是否开启预览遮罩层
         previewStatus: target.status?target.status.previewStatus:'',
         //当前选项卡所在数组的位置，用来关闭本选项卡

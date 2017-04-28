@@ -1,55 +1,57 @@
-.shield-modify{
-  z-index: 1002;
-  position: absolute;
-  left:calc(50% - 35%);
-  top:calc(50% - 35%);
-  border-radius: 1px;
-  height: 70%;
-  width: 70%;
-  background-color: #fff;
-  .shield-modify-content{
-    overflow: auto;
-    height: calc(100% - 60px);
-    ul{
-      margin: 0;
-      padding: 5%;
-      li {
-        padding:1% 0;
-        height: 25px;
-        font-weight: 600;
-        line-height: 25px;
-        input {
-          width: 60%;
-          line-height: 23px;
-          margin: 0 0 0 10px;
-          text-align: center;
-          border: solid 1px;
-          border-radius: 2px;
-        }
-        select{
-          line-height: 23px;
-          margin: 0 0 0 10%;
-          text-align: center;
-        }
-        i{
-          cursor: pointer;
-          margin: 0 0 0 10%;
-          font-size: 25px;
+body{
+  .shield-modify{
+    z-index: 1002;
+    position: absolute;
+    left:calc(50% - 35%);
+    top:calc(50% - 35%);
+    border-radius: 1px;
+    height: 70%;
+    width: 70%;
+    background-color: #fff;
+    .shield-modify-content{
+      overflow: auto;
+      height: calc(100% - 60px);
+      ul{
+        margin: 0;
+        padding: 5%;
+        li {
+          padding:1% 0;
+          height: 25px;
+          font-weight: 600;
+          line-height: 25px;
+          input {
+            width: 60%;
+            line-height: 23px;
+            margin: 0 0 0 10px;
+            text-align: center;
+            border: solid 1px;
+            border-radius: 2px;
+          }
+          select{
+            line-height: 23px;
+            margin: 0 0 0 10%;
+            text-align: center;
+          }
+          i{
+            cursor: pointer;
+            margin: 0 0 0 10%;
+            font-size: 25px;
+          }
         }
       }
-    }
-    .single-item{
-    }
-    .multiple-item{
-      float: left;
+      .single-item{
+      }
+      .multiple-item{
+        float: left;
+      }
+
     }
 
-  }
-
-  .shield-modify-footer{
-    height: 60px;
-    width: 100%;
-    text-align: right;
-    line-height: 20%;
+    .shield-modify-footer{
+      height: 60px;
+      width: 100%;
+      text-align: right;
+      line-height: 20%;
+    }
   }
 }

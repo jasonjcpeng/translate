@@ -312,7 +312,8 @@ class NormalTable extends React.Component {
         let height = this.props.height;
         return (
             <div  className="content-container animation-fadeInRight">
-                <ShieldAlert key={this.props.targetID+''+this.props.error} content={this.props.error} title={'警告'} onTargetMenuTarget={this.props.targetID}></ShieldAlert>
+                {this.judgementOpenButtonGroupComponent()}
+                <ShieldAlert key={this.props.targetID+''+this.props.error} content={this.props.error} title={'Alert'} onTargetMenuTarget={this.props.targetID}></ShieldAlert>
                     <div onClick={
                     ()=>{
                             if(this.props.nowOnItem){
@@ -320,7 +321,6 @@ class NormalTable extends React.Component {
                             }
                         }
                     } className="content-container-inset" style={{height: height - 30}}>
-                        {this.judgementOpenButtonGroupComponent()}
                         <Loader options={LoaderOption} loaded={this.props.loaded}>
                         <div style={{minWidth: 600, height: '100%'}}>
                             {this.createOptionBar()}

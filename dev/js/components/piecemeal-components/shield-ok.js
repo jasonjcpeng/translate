@@ -23,13 +23,13 @@ class ShieldAlert extends React.Component {
     render() {
         if(this.state.content){
             return (<div className="shield">
-                <div className="shield-alert">
-                    <div className="alert-header">{this.state.title}</div>
-                    <div className="alert-content">
+                <div className="shield-ok">
+                    <div className="ok-header">{this.state.title}</div>
+                    <div className="ok-content">
                         {this.state.content}
                     </div>
-                    <div className="alert-footer">
-                        <button onClick={e=>{this.props.onOkDeleteErrorFlag(this.state.onTargetMenu,this.props.targetType);e.stopPropagation()}} className="btn btn-finish">OK</button>
+                    <div className="ok-footer">
+                        <button onClick={e=>{this.props.onOkDeleteOkFlag(this.state.onTargetMenu,this.props.targetType); e.stopPropagation()}} className="btn btn-finish">OK</button>
                     </div>
                 </div>
             </div>);
@@ -49,9 +49,9 @@ let state = (state)=>{
 
 let action = (dispatch)=>{
     let actions = {
-        onOkDeleteErrorFlag:(target,targetType)=>{
+        onOkDeleteOkFlag:(target,targetType)=>{
             return ({
-                type:Constants.SHIELD_ALERT_ON_OK_DELETE_ERROR_FLAG,
+                type:Constants.SHIELD_OK_ON_OK_DELETE_OK_FLAG,
                 target:target,
                 targetType:targetType
             });

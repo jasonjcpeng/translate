@@ -61,6 +61,20 @@ $table-item-active-color:#cbcdba;
     }
   }
 
+  .shield-ok{
+    border-color:$main-color;
+    background-color: $second-main-color;
+    .ok-header{
+      border-color: $main-color;
+      color: $main-color;
+    }
+    .ok-content{
+      color: $main-color;
+    }
+    .ok-footer{
+    }
+  }
+
   .standard-ul {
       li{
         input{

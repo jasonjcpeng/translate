@@ -163,6 +163,7 @@ export default function (state = initState, action) {
         case Constants.CONTENT_SETTING_INIT:
             let initContentSetting = {
                 error: undefined,
+                ok:undefined,
                 rightActiveContent: {key: 'baseInfo', name: '基本信息'},
                 defaultMenuSettingTableToggleItem: ['0'],
                 selectMenuSettingTableItem: undefined
@@ -258,12 +259,16 @@ export default function (state = initState, action) {
         case Constants.CONTENT_SETTING_SETTING_MENU_SEND_ERROR:
             return setActiveContentStatus(state, 'setting', {status: {error: {$set: action.error}}});
             break;
+        case Constants.CONTENT_SETTING_SETTING_IS_OK:
+            return setActiveContentStatus(state, 'setting', {status: {ok: {$set: action.ok}}});
+            break;
         //---------------MenuSettingOption------------------------------
         case Constants.MENU_SETTING_OPTION_MENU_DID_MOUNT:
             let parentCode = action.target.targetMenu === '0' ? '0' : action.target.targetMenu.code;
             let initMenuSettingOption = {
                 previewStatus:false,
                 error: undefined,
+                ok:undefined,
                 isRootMenu: undefined,
                 isToggleIconSetting: false,
                 progress: [{active: true, on: true}, {active: false, on: false}, {
@@ -397,6 +402,17 @@ export default function (state = initState, action) {
                 return setActiveContentStatus(state, action.target, {status: {error: {$set: undefined}}});
             }else{
                 return setActiveContentStatusByID(state,action.target,{status:{error: {$set: undefined}}});
+            }
+
+            break;
+        case Constants.SHIELD_OK_ON_OK_DELETE_OK_FLAG:
+            if(action.target==='setting'){
+                return setActiveContentStatus(state, action.target, {status: {ok: {$set: undefined}}});
+            }
+            if(action.targetType){
+                return setActiveContentStatus(state, action.target, {status: {ok: {$set: undefined}}});
+            }else{
+                return setActiveContentStatusByID(state,action.target,{status:{ok: {$set: undefined}}});
             }
 
             break;

@@ -1,7 +1,7 @@
 import * as Constants from './CONSTANTS';
 import {isOnline} from '../config/config';
 import {GetMount} from './menu-setting-option-menu';
-import {apiDeleteMenu} from '../services/api';
+import {apiDeleteMenu,apiChangeUserInfo,apiResetPassWord} from '../services/api';
 
 export const contentSettingGetMount = (target)=> {
     return ({
@@ -36,6 +36,7 @@ export const changeSkin = (v)=> {
 
 }
 
+/*//改变当前菜单的可用状态
 export const changeMenuSetting = (v)=>{
     //ToDo:Change menu!fetch to dataBase if success then return
     if(isOnline){
@@ -52,7 +53,7 @@ export const changeMenuSetting = (v)=>{
         });
     }
 
-}
+}*/
 
 export const toggleSingleMenuItem = v=>{
     return ({
@@ -88,7 +89,6 @@ export const openOption = v=>{
 }
 
 export const optionDeleteMenu = v=>{
-    //ToDo:Delete Menu!fetch to dataBase if success then return
     if(isOnline){
         return dispatch=>{
             apiDeleteMenu(v).then(resData=>{
@@ -110,4 +110,61 @@ export const optionDeleteMenu = v=>{
         });
     }
 
+}
+
+export const actionSendError = (errorMessage)=>{
+    return ({
+        type:Constants.CONTENT_SETTING_SETTING_MENU_SEND_ERROR,
+        error:errorMessage
+    });
+}
+
+export const actionIsOk = (okMessage)=>{
+    return ({
+        type:Constants.CONTENT_SETTING_SETTING_IS_OK,
+        ok:okMessage
+    });
+}
+
+export const actionChangeUserInfo = (userID,arg)=>{
+    if(isOnline){
+        return dispatch=>{
+            apiChangeUserInfo(userID,arg).then(resData=>{
+                dispatch(actionIsOk('修改成功！'));
+                return dispatch({
+                    type:Constants.CONTENT_SETTING_CHANGE_USER_INFO,
+                    userInfo:arg,
+                });
+            }).catch(rejData=>{
+                return dispatch({
+                    type:Constants.CONTENT_SETTING_SETTING_MENU_SEND_ERROR,
+                    error:rejData
+                });
+            });
+        }
+    }else{
+
+
+    }
+}
+
+export const actionResetPassWord = (account,userData)=>{
+    if(isOnline){
+        return dispatch=>{
+            apiResetPassWord(account,userData).then(resData=>{
+                dispatch(actionIsOk('修改成功！'));
+                return dispatch({
+                    type:Constants.CONTENT_SETTING_RESET_PASS_WORD,
+                });
+            }).catch(rejData=>{
+                return dispatch({
+                    type:Constants.CONTENT_SETTING_SETTING_MENU_SEND_ERROR,
+                    error:rejData
+                });
+            });
+        }
+    }else{
+
+
+    }
 }
