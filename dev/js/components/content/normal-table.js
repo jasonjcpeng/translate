@@ -179,9 +179,13 @@ class NormalTable extends React.Component {
                 })
             }
             let createOptionsInTD = (val,viewPointVal,k)=>{
-                return (<td key={k}><Checker key={val[viewPointVal.bindField]} checkState={val[viewPointVal.bindField]} funcOnClick={e=>{
-                    this.props.actionOnClickToggleOptions(this.props.targetID,viewPointVal.api,val,viewPointVal.bindField,e);
-                }}></Checker></td>);
+                if(val[viewPointVal.bindField]!==undefined){
+                    return (<td key={k}><Checker key={val[viewPointVal.bindField]} checkState={val[viewPointVal.bindField]} funcOnClick={e=>{
+                        this.props.actionOnClickToggleOptions(this.props.targetID,viewPointVal.api,val,viewPointVal.bindField,e);
+                    }}></Checker></td>);
+                }else{
+                    return (<td key={k}></td>)
+                }
             }
 
             let createTrClassName = (v)=> {
@@ -260,7 +264,7 @@ class NormalTable extends React.Component {
                             e.stopPropagation();
                         }} key={k}>
                             <td>{ (()=>{
-                                return (<div style={{width:'40px',float:'left',paddingLeft:arrowIconMargin(v,5)+'px'}}>
+                                return (<div style={{width:'40px',float:'left',paddingLeft:arrowIconMargin(v,15)+'px'}}>
                                     {(()=>{
                                         if (isMenuHasChild(menuData, v)) {
                                             return (<i onClick={

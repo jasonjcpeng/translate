@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 //json
 import ComponentType from '../../../jsons/modify-shield-component-type.json';
 
@@ -26,6 +27,7 @@ class ModifyShield extends React.Component{
         }
     }
 
+
     createFieldStructure(){
         let createItem = ()=>{
             let handleOnChange = (val,e)=>{
@@ -34,13 +36,20 @@ class ModifyShield extends React.Component{
                 this.state.onChange(newData);
             }
 
-            let choiceClassName = (isMultiColumns)=>{
-                return isMultiColumns?'multiple-item':'single-item';
+
+            let choiceClassName = (val)=>{
+                return classnames({
+                    'must-filling':val.isMustFilling,
+                    'multiple-item':val.isMultiColumns,
+                    'single-item':!val.isMultiColumns
+                })
             }
             let createNormalInput = (val,valData)=> {
-                return (<div>{val.CNName}:<input disabled={this.props.onChange?false:true}  onChange={(e)=>{
-                    handleOnChange(val,e);
-                }} style={{width: val.componentWidth + '%'}} value={valData}  type="text"/></div>);
+                return (<input disabled={val.isDisable} onChange={(e)=>{
+                    if(!val.isDisable){
+                        handleOnChange(val,e);
+                    }
+                }} style={{width: val.componentWidth + '%'}} value={valData}  type="text"/>);
             }
 
             let createItemComponent = (val,valData)=> {
@@ -66,21 +75,21 @@ class ModifyShield extends React.Component{
                             return (<div key={key}>
                                 <div style={{clear: 'both'}}></div>
                                 <li  style={style}
-                                    className={choiceClassName(val.isMultiColumns)}>{createItemComponent(val,valData)}</li>
+                                    className={choiceClassName(val)}><span >{val.CNName}:</span>{createItemComponent(val,valData)}</li>
                             </div>)
                         } else {
                             return (<li key={key} style={style}
-                                        className={choiceClassName(val.isMultiColumns)}>{createItemComponent(val,valData)}</li>);
+                                        className={choiceClassName(val)}><span>{val.CNName}:</span>{createItemComponent(val,valData)}</li>);
                         }
                     } else {
                         return (<li key={key} style={style}
-                                    className={choiceClassName(val.isMultiColumns)}>{createItemComponent(val,valData)}</li>);
+                                    className={choiceClassName(val)}><span>{val.CNName}:</span>{createItemComponent(val,valData)}</li>);
                     }
                 }
             });
         }
 
-        return (<div className="shield-modify-content">
+        return (<div  className="shield-modify-content">
             <ul>
                 {createItem()}
             </ul>

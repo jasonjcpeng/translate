@@ -78,6 +78,8 @@ class MenuSettingOptionAddMenu extends React.Component {
                 isEnable: val.isEnable,
                 CNName: val.CNName,
                 isMultiColumns: val.isMultiColumns,
+                isDisable:val.isDisable,
+                isMustFilling:val.isMustFilling,
                 componentType: val.componentType,
                 width: val.width,
                 componentWidth: val.componentWidth,
@@ -191,6 +193,12 @@ class MenuSettingOptionAddMenu extends React.Component {
                             handleOnChange(k,v,'CNName',e.target.value);
                         }
                     } value={v.CNName} type="text"/></td>
+                    <td><Checker key={v.isDisable} checkState={v.isDisable} funcOnClick={(callBackCheck)=>{
+                        handleOnChange(k,v,'isDisable',callBackCheck);
+                    }}></Checker></td>
+                    <td><Checker key={v.isMustFilling} checkState={v.isMustFilling} funcOnClick={(callBackCheck)=>{
+                        handleOnChange(k,v,'isMustFilling',callBackCheck);
+                    }}></Checker></td>
                     <td>{createComponentTypeSelector(k, v)}</td>
                     <td><input onChange={
                         e=>{
@@ -231,6 +239,8 @@ class MenuSettingOptionAddMenu extends React.Component {
                             isEnable: v.isEnable,
                             CNName: v.CNName,
                             isMultiColumns:false,
+                            isDisable:false,
+                            isMustFilling:false,
                             componentType:'input',
                             width: 100,
                             componentWidth:50,
@@ -251,6 +261,8 @@ class MenuSettingOptionAddMenu extends React.Component {
                     <th style={{width:"50px"}}>排序</th>
                     <th>Api字段名</th>
                     <th>匹配中文名</th>
+                    <th style={{width:"50px"}}>只可见</th>
+                    <th style={{width:"50px"}}>必填</th>
                     <th>组件类型</th>
                     <th>组件API</th>
                     <th style={{width:"90px"}}>并排显示</th>
@@ -994,7 +1006,7 @@ const state = state=> {
         //本选项卡头包含的选项卡内数据{obj:选项卡菜单，status：选项卡内状态，isActive:是否正使用}
         target: target,
         //视图层通过菜单视图项Api获取的表字段内容
-        viewPointConfigData: target&&target.status.viewPointConfigData?target.status.viewPointConfigData:[],
+        viewPointConfigData: target.status.viewPointConfigData?target.status.viewPointConfigData:[],
         //是否开启预览遮罩层
         previewStatus: target.status?target.status.previewStatus:'',
         //当前选项卡所在数组的位置，用来关闭本选项卡

@@ -608,6 +608,13 @@ $table-item-active-color:#cbcdba;
           }
         }
       }
+      .must-filling {
+        span{
+        }
+        span:before {
+          color: $alert-color;
+        }
+      }
     }
   }
 

@@ -283,7 +283,7 @@ class ContentSetting extends React.Component {
                 e.stopPropagation();
             }} key={k}>
                 <td>{ (()=>{
-                    return (<div style={{width:'40px',float:'left',paddingLeft:arrowIconMargin(v,5)+'px'}}>
+                    return (<div style={{width:'40px',float:'left',paddingLeft:arrowIconMargin(v,15)+'px'}}>
                         {(()=>{
                             if (isMenuHasChild(menu, v)) {
                                 return (<i onClick={(e)=>{
@@ -297,7 +297,7 @@ class ContentSetting extends React.Component {
                         <span style={{marginLeft:'5px'}}>{k + 1}</span>
                     </div>);
                 })()}</td>
-                <td>{v.menuName}</td>
+                <td style={{paddingLeft:arrowIconMargin(v,40)+'px'}}>{v.menuName}</td>
                 <td ><i className={'fa ' + v.icon}></i></td>
                 {/*<td onClick={
                     (e)=> {

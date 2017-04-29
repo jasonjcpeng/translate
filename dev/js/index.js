@@ -120,6 +120,7 @@ class LoginModel{
 
 
     confirmBindAction(){
+
         this.confirm.onclick = ()=>{
             let userName = this.userName.value;
             let passWord = this.passWord.value;
@@ -142,8 +143,22 @@ class LoginModel{
 }
 
 (()=>{
-    let loginModel = new LoginModel('userName','passWord','confirm','canvas');
-    loginModel.init();
+    if(window.localStorage.getItem('login')==='login'){
+        window.location.href='./app.html';
+    }else{
+        document.body.innerHTML = '<div><div><div class="login-content">'+
+            '<h1>综艺嘉后台管理系统</h1>'+
+            '<input id="userName" type="text" placeholder="用户名"/>'+
+            '<input id="passWord" type="password" placeholder="密码"/>'+
+            '<button class="login-content-btn" id="confirm">Login</button>'+
+            '</div>'+
+            '<div class="canvas-bg"></div>'+
+            '<canvas id="canvas"></canvas>'+
+            '</div>'+
+            '</div>';
+        let loginModel = new LoginModel('userName','passWord','confirm','canvas');
+        loginModel.init();
+    }
 })();
 
 

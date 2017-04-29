@@ -19,7 +19,17 @@ body{
           height: 25px;
           font-weight: 600;
           line-height: 25px;
+          display: inline-block;
+          span{
+            display: inline-block;
+            width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
           input {
+            display: inline-block;
+            vertical-align: top;
             width: 60%;
             line-height: 23px;
             margin: 0 0 0 10px;
@@ -53,5 +63,15 @@ body{
       text-align: right;
       line-height: 20%;
     }
+
+    .must-filling {
+      span{
+      }
+      span:before {
+        content: '(必填)';
+        font-size: 1px;
+      }
+    }
+
   }
 }
