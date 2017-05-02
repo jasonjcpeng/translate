@@ -202,3 +202,12 @@ export const actionOnClickToggleOptions = (targetID,api,item,bindField,nowOnStat
         );
     };
 }
+
+export const actionBatchSelectItem = (targetID,data)=>{
+    return ({
+        type:Constants.NORMAL_TABLE_BATCH_SELECT_ITEM,
+        targetID:targetID,
+        onBatchItem:data
+    });
+
+}

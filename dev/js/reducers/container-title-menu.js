@@ -421,7 +421,8 @@ export default function (state = initState, action) {
                 nowOnClickButton:undefined,
                 modifyViewData:undefined,
                 toggleItem:[],
-                tableConfigArgs:action.initTableArgs
+                tableConfigArgs: action.initTableArgs,
+                batchOnItem: []
             }
 
             return setActiveContentStatusByID(state,action.targetID,{status:{$set:initStatus}});
@@ -459,6 +460,13 @@ export default function (state = initState, action) {
                         return v;
                     }
                 });
+            }},batchOnItem:{$apply:(arr)=>{
+                return arr.filter((v,k)=>{
+                    if(action.data&&v[constID]===action.data[constID]){
+                    }else{
+                        return v;
+                    }
+                });
             }},error:{$set:action.error}}});
             break;
         case Constants.NORMAL_TABLE_TOGGLE_ITEM:
@@ -490,7 +498,7 @@ export default function (state = initState, action) {
                 return setActiveContentStatusByID(state,action.targetID,{status:{data:{$apply:(arr)=>{
                     return arr.map((v,k)=>{
                         if(v[constID]===action.item[constID]){
-                            v[action.bindField]=action.nowOnState
+                            v[action.bindField] = action.nowOnState;
                             return v;
                         }else{
                             return v;
@@ -498,6 +506,32 @@ export default function (state = initState, action) {
                     });
                 }},error:{$set:action.error}}});
             }
+            break;
+        case Constants.NORMAL_TABLE_BATCH_SELECT_ITEM:
+            return setActiveContentStatusByID(state, action.targetID, {
+                status: {
+                    batchOnItem: {
+                        $apply: (arr)=> {
+                            let resultArr = [];
+                            let originArr = arr;
+                            for (let i in action.onBatchItem) {
+                                let isPush = true;
+                                for (let l in arr) {
+                                    if (action.onBatchItem[i][constID] === arr[l][constID]) {
+                                        originArr.splice(l, 1);
+                                        isPush = false;
+                                    }
+                                }
+                                if (isPush) {
+                                    resultArr.push(action.onBatchItem[i]);
+                                }
+                            }
+                            return resultArr.concat(originArr);
+                        }
+                    }
+                }
+            });
+
             break;
     }
     return state;

@@ -148,8 +148,14 @@ class NormalTable extends React.Component {
     createTable() {
         //创造批量选择头
         let createBatchSelect = ()=>{
+            let value = (()=>{
+               return  this.props.data.length===this.props.batchOnItem.length?true:false;
+            })();
+
             if(this.isHasBatchToggle){
-                return (<th style={{width:30}}><input type="checkbox"/></th> );
+                return (<th style={{width:30}}><input onChange={e=>{
+                    this.props.actionBatchSelectItem(this.props.targetID,this.props.data);
+                }} checked={value} type="checkbox"/></th> );
             }
         }
 
@@ -186,9 +192,19 @@ class NormalTable extends React.Component {
 
         let createTableBody = ()=> {
             //创造批量选择框
-            let createBatchSelect = ()=>{
+            let createBatchSelect = (v)=>{
+                let value = (()=>{
+                    let result = false;
+                    this.props.batchOnItem.map(val=>{
+                        if(v[constID]===val[constID]){
+                            return result = true;
+                        }
+                    });
+                    return result
+                })();
                 if(this.isHasBatchToggle){
-                    return (<td><input type="checkbox"/></td> );
+                    return (<td><input onChange={e=>{
+                    }} checked={value} type="checkbox"/></td> );
                 }
             }
             let mapTd = (val)=> {
@@ -287,7 +303,7 @@ class NormalTable extends React.Component {
                             this.props.checkOnItem(this.props.targetID,v);
                             e.stopPropagation();
                         }} key={k}>
-                            {createBatchSelect()}
+                            {createBatchSelect(v)}
                             <td>{ (()=>{
                                 return (<div style={{width:'40px',float:'left',paddingLeft:arrowIconMargin(v,15)+'px'}}>
                                     {(()=>{
@@ -314,7 +330,7 @@ class NormalTable extends React.Component {
                             this.props.checkOnItem(this.props.targetID,v);
                             e.stopPropagation();
                         }} key={k}>
-                            {createBatchSelect()}
+                            {createBatchSelect(v)}
                             <td>{k + 1}</td>
                             {mapTd(v)}
                         </tr>);
@@ -379,7 +395,7 @@ class NormalTable extends React.Component {
 
 const state = state=> {
     let loaded, target, btnGroup, viewPoint, modifyViewPoint, targetID, api, data, nowOnItem, nowOnClickButton,
-        modifyViewData,toggleItem,tableConfigArgs,error;
+        modifyViewData,toggleItem,tableConfigArgs,error,batchOnItem;
     state.containerTitleMenu.activeContent.map(v=> {
             if (state.common.nowOnContentTarget&&v.obj.id === state.common.nowOnContentTarget.id) {
                 target = v;
@@ -398,7 +414,7 @@ const state = state=> {
     toggleItem=target ? target.status.toggleItem : [];
     tableConfigArgs = target ? target.status.tableConfigArgs : undefined;
     error = target ? target.status.error: undefined;
-
+    batchOnItem = target ? target.status.batchOnItem: [];
     return ({
         target: target,
         //读取状态
@@ -417,6 +433,8 @@ const state = state=> {
         data: data,
         //当前选中的项
         nowOnItem: nowOnItem,
+        //当前批量选中项
+        batchOnItem: batchOnItem,
         //当前选中的按钮
         nowOnClickButton: nowOnClickButton,
         //当前模态框中数据

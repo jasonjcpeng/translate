@@ -1,6 +1,7 @@
 .normal-table{
   width: 100%;
   .normal-table-header{
+    display: inline-block;
     height: 56px;
     width: 100%;
     line-height: 56px;
@@ -8,6 +9,7 @@
 
   .normal-table-content{
     overflow-y: auto !important;
+    text-align: center;
     table{
       width: 100%;
       tr{

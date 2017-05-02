@@ -163,6 +163,26 @@ body {
     }
   }
 
+  input[type=checkbox]{
+    position: relative;
+    top:3px;
+    appearance: none;
+    border-radius: 1px;
+    border: solid 2px;
+    background-color: transparent;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  input[type=checkbox]:active{
+    appearance: none;
+  }
+
+  input[type=checkbox]:checked{
+    border: solid 3px;
+   }
+
   .loader{
     .spinner{
       z-index: 1001 !important;

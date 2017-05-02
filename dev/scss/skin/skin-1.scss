@@ -13,6 +13,22 @@ $content-font-color:#6f6f6f;
 $default-option-hover-button:#6f6f6f;
 $table-item-active-color:#cbcdba;
 .skin-1{
+  input[type=checkbox]{
+    border-color:$default-option-toggle-color;
+  }
+
+  input[type=checkbox]:active{
+    background-color: $main-color;
+  }
+  input[type=checkbox]:hover{
+    background-color: $default-option-toggle-color;
+  }
+
+  input[type=checkbox]:checked{
+    border-color:$default-option-toggle-color;
+    background-color: $main-color;
+  }
+
   .fa-toggle-on{
     cursor: pointer;
     color: $main-color !important;
