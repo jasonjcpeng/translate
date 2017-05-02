@@ -497,7 +497,7 @@ class ContentSetting extends React.Component {
 const state = state=> {
     let target;
     state.containerTitleMenu.activeContent.map(v=> {
-        if (v.obj.id === state.common.nowOnContentTarget.id) {
+        if (state.common.nowOnContentTarget&&v.obj.id === state.common.nowOnContentTarget.id) {
             target = v;
         }
     });
@@ -507,8 +507,8 @@ const state = state=> {
         useSkin: state.common.useSkin,
         defaultToggleStatus: state.common.defaultToggleStatus,
         currentMenu: state.sideBar.menu,
-        error:target.status.error,
-        ok:target.status.ok
+        error:target?target.status.error:undefined,
+        ok:target?target.status.ok:undefined
     });
 }
 

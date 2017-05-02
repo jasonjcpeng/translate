@@ -1,6 +1,7 @@
 {
-  "add":{"remark":"表单内添加新内容","isNeedTarget":false},
-  "delete":{"remark":"删除选中的表单项内容","isNeedTarget":true},
-  "modify":{"remark":"打开模态框修改选中的表单项内容","isNeedTarget":true},
-  "check":{"remark":"打开模态框查看选中表单项的具体内容","isNeedTarget":true}
+  "add":{"remark":"表单内添加新内容","isNeedTarget":0},
+  "delete":{"remark":"删除选中的表单项内容","isNeedTarget":1},
+  "batchDelete":{"remark":"批量选中，删除选中的表单项内容","isNeedTarget":2},
+  "modify":{"remark":"打开模态框修改选中的表单项内容","isNeedTarget":1},
+  "check":{"remark":"打开模态框查看选中表单项的具体内容","isNeedTarget":1}
 }

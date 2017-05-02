@@ -96,14 +96,21 @@ class NormalTable extends React.Component {
 
             let isToggleGroup = [];
             let isNotToggleGroup = [];
+            let isBatchToggleGroup = [];
             this.props.btnGroup.map((v)=> {
-                if (v.isToggleGroup) {
-                    isToggleGroup.push(v);
-                } else {
-                    isNotToggleGroup.push(v);
+                switch(v.isToggleGroup){
+                    case 0:
+                        isNotToggleGroup.push(v);
+                        break;
+                    case 1:
+                        isToggleGroup.push(v);
+                        break;
+                    case 2:
+                        this.isHasBatchToggle = true;
+                        isBatchToggleGroup.push(v);
+                        break;
                 }
             });
-
             if (this.props.nowOnItem) {
                 return isToggleGroup.map((v, k)=> {
                     return (<li onClick={
@@ -113,7 +120,9 @@ class NormalTable extends React.Component {
                         }
                         } key={k} className={createLiClassName(v,k)}>{v.CNName}</li>);
                 });
-            } else {
+            } else if(false){
+                return isBatchToggleGroup;
+            }else {
                 return isNotToggleGroup.map((v, k)=> {
                     return (<li
                         onClick={
@@ -137,6 +146,13 @@ class NormalTable extends React.Component {
 
     //创造表格
     createTable() {
+        //创造批量选择头
+        let createBatchSelect = ()=>{
+            if(this.isHasBatchToggle){
+                return (<th style={{width:30}}><input type="checkbox"/></th> );
+            }
+        }
+
         //表单头
         let createTableHead = ()=> {
             let mapTh = ()=> {
@@ -153,12 +169,14 @@ class NormalTable extends React.Component {
                 if(this.props.data[0]&&this.props.data[0][constParentID]){
                     return (<thead>
                     <tr>
+                        {createBatchSelect()}
                         <th style={{borderRight:'0'}}></th>
                         {mapTh()}</tr>
                     </thead>)
                 }else{
                     return (<thead>
                     <tr>
+                        {createBatchSelect()}
                         <th style={{width:'20px',borderLeft:'0'}}></th>
                         {mapTh()}</tr>
                     </thead>)
@@ -167,6 +185,12 @@ class NormalTable extends React.Component {
         }
 
         let createTableBody = ()=> {
+            //创造批量选择框
+            let createBatchSelect = ()=>{
+                if(this.isHasBatchToggle){
+                    return (<td><input type="checkbox"/></td> );
+                }
+            }
             let mapTd = (val)=> {
                 return this.props.viewPoint.map((v, k)=> {
                     if (v.isEnable) {
@@ -263,6 +287,7 @@ class NormalTable extends React.Component {
                             this.props.checkOnItem(this.props.targetID,v);
                             e.stopPropagation();
                         }} key={k}>
+                            {createBatchSelect()}
                             <td>{ (()=>{
                                 return (<div style={{width:'40px',float:'left',paddingLeft:arrowIconMargin(v,15)+'px'}}>
                                     {(()=>{
@@ -289,6 +314,7 @@ class NormalTable extends React.Component {
                             this.props.checkOnItem(this.props.targetID,v);
                             e.stopPropagation();
                         }} key={k}>
+                            {createBatchSelect()}
                             <td>{k + 1}</td>
                             {mapTd(v)}
                         </tr>);
@@ -355,23 +381,24 @@ const state = state=> {
     let loaded, target, btnGroup, viewPoint, modifyViewPoint, targetID, api, data, nowOnItem, nowOnClickButton,
         modifyViewData,toggleItem,tableConfigArgs,error;
     state.containerTitleMenu.activeContent.map(v=> {
-            if (v&&v.obj.id === state.common.nowOnContentTarget.id) {
+            if (state.common.nowOnContentTarget&&v.obj.id === state.common.nowOnContentTarget.id) {
                 target = v;
             }
     });
-    targetID = target.obj.id ? target.obj.id : '';
-    api = target.obj.api ? target.obj.api : '';
-    btnGroup = target.obj.btnGroup ? target.obj.btnGroup : [];
-    viewPoint = target.obj.viewPoint ? target.obj.viewPoint : [];
-    modifyViewPoint = target.obj.modifyViewPoint ? target.obj.modifyViewPoint : [];
-    data = target.status? target.status.data : [];
-    nowOnItem = target.status ? target.status.checkOnItem : undefined;
-    nowOnClickButton = target.status ? target.status.nowOnClickButton : undefined;
-    modifyViewData = target.status ? target.status.modifyViewData : undefined;
-    loaded = target.status ? target.status.loaded : false;
-    toggleItem=target.status ? target.status.toggleItem : [];
-    tableConfigArgs = target.status ? target.status.tableConfigArgs : undefined;
-    error = target.status ? target.status.error: undefined;
+    targetID = target? target.obj.id : '';
+    api = target ? target.obj.api : '';
+    btnGroup = target ? target.obj.btnGroup : [];
+    viewPoint = target ? target.obj.viewPoint : [];
+    modifyViewPoint = target ? target.obj.modifyViewPoint : [];
+    data = target? target.status.data : [];
+    nowOnItem = target ? target.status.checkOnItem : undefined;
+    nowOnClickButton = target ? target.status.nowOnClickButton : undefined;
+    modifyViewData = target ? target.status.modifyViewData : undefined;
+    loaded = target? target.status.loaded : false;
+    toggleItem=target ? target.status.toggleItem : [];
+    tableConfigArgs = target ? target.status.tableConfigArgs : undefined;
+    error = target ? target.status.error: undefined;
+
     return ({
         target: target,
         //读取状态

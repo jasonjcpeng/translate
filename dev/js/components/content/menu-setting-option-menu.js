@@ -390,7 +390,19 @@ class MenuSettingOptionAddMenu extends React.Component {
                     <td><input key={'api'+val.componentName+''+k} type="text" onChange={e=>{
                         handleOnChange(k,val,'api',e.target.value);
                     }} value={val.api}/></td>
-                    <td>{val.isNeedTarget ? "是" : ""}</td>
+                    <td>{(()=>{
+                        switch (val.isNeedTarget){
+                            case 0:
+                                return ""
+                                break;
+                            case 1:
+                                return "是"
+                                break;
+                            case 2:
+                                return "多选"
+                                break;
+                        }
+                    })()}</td>
                     <td><Checker style={(()=>{
                         if(val.isNeedTarget){
                             return {cursor:"text"}
@@ -667,8 +679,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                                                            })()}
                                                         /></span>
                     </li>
-                    <li><span>菜单名称:</span><span><input key={this.props.menuData.menuName}
-                        value={this.props.menuData.menuName!==''?this.props.menuData.menuName:''} onChange={
+                    <li><span>菜单名称:</span><span><input value={this.props.menuData.menuName!==''?this.props.menuData.menuName:''} onChange={
                         e=>{
                             this.props.changeMenuData(this.props.targetMenuSort,'menuName',e.target.value);
                         }
@@ -676,8 +687,8 @@ class MenuSettingOptionAddMenu extends React.Component {
                     {(()=> {
                         if (!this.props.isRootMenu) {
                             return (<div>
-                                <li><span>菜单视图项API:</span><span><input key=""
-                                    defaultValue={this.props.menuData.viewPointConfigApi} onChange={
+                                <li><span>菜单视图项vAPI:</span><span><input
+                                    value={this.props.menuData.viewPointConfigApi} onChange={
                                     e=>{
                                         this.props.changeMenuData(this.props.targetMenuSort,'viewPointConfigApi',e.target.value);
                                     }

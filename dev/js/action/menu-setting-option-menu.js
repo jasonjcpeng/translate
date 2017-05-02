@@ -126,7 +126,12 @@ export const clickFinish = (targetMenuSort, menuData,activeContent, nowOnContent
             return dispatch=> {
                 modifyTableMenu(menuData).then(data=> {
                     dispatch(AppDidMount());
-                    return deleteActiveContent(nowOnContentKey, obj, activeContent, dispatch);
+                    deleteActiveContent(nowOnContentKey, obj, activeContent, dispatch);
+                    return dispatch({
+                        type: Constants.MENU_SETTING_MODIFY_MENU_FINISH,
+                        targetMenuSort: targetMenuSort,
+                        error: undefined
+                    })
                 }).catch(res=> {
                     return dispatch({
                         type: Constants.MENU_SETTING_MODIFY_MENU_FINISH,
