@@ -243,7 +243,9 @@ export const apiModifyTableItem = (api,item)=>{
 export const apiDeleteTableItem = (api,data)=>{
     let arr =[];
     if(Object.prototype.toString.call(data)==='[object Array]'){
-
+        data.map(v=>{
+            arr.push(v['AX_Id']);
+        });
     }else{
         arr.push(data['AX_Id']);
     }

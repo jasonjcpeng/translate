@@ -163,25 +163,32 @@ body {
     }
   }
 
-  input[type=checkbox]{
-    position: relative;
-    top:3px;
-    appearance: none;
-    border-radius: 1px;
-    border: solid 2px;
-    background-color: transparent;
-    width: 20px;
-    height: 20px;
+  .checkbox{
     cursor: pointer;
+    vertical-align: text-bottom;
+    text-align: center;
+    height: 18px;
+    width: 18px;
+    border:solid 2px;
+    display: inline-block;
   }
-
-  input[type=checkbox]:active{
-    appearance: none;
+  .checkbox:hover{
   }
-
-  input[type=checkbox]:checked{
-    border: solid 3px;
-   }
+  .checkbox-checked{
+    text-align: center;
+    line-height: 17px;
+  }
+  .checkbox-checked::before{
+    position: relative;
+    top:1px;
+    text-align: center;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    content: '√';
+    color: #fff;
+    font-weight: 600;
+  }
 
   .loader{
     .spinner{

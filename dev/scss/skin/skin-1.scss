@@ -13,20 +13,18 @@ $content-font-color:#6f6f6f;
 $default-option-hover-button:#6f6f6f;
 $table-item-active-color:#cbcdba;
 .skin-1{
-  input[type=checkbox]{
+  .checkbox{
+    background-color: transparent;
     border-color:$default-option-toggle-color;
   }
-
-  input[type=checkbox]:active{
-    background-color: $main-color;
+  .checkbox:hover{
+    background-color: $table-item-active-color;
   }
-  input[type=checkbox]:hover{
-    background-color: $default-option-toggle-color;
+  .checkbox-checked{
   }
-
-  input[type=checkbox]:checked{
-    border-color:$default-option-toggle-color;
+  .checkbox-checked::before{
     background-color: $main-color;
+    color: $second-main-color;
   }
 
   .fa-toggle-on{

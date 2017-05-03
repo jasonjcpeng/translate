@@ -38,18 +38,22 @@ export const onClickButton = (targetID,buttonName)=>{
 }
 
 //btn_delete
-export const submitDeleteData = (targetID,data,api)=>{
+export const submitDeleteData = (targetID,data,api,tableApi,tableArgs)=>{
     if(isOnline){
         //Todo:表格删除接后台
         return dispatch=>{
             apiDeleteTableItem(api,data).then(resData=>{
                 dispatch(onClickButton(targetID,undefined));
-                return dispatch({
-                    type:Constants.NORMAL_TABLE_SUBMIT_DELETE_DATA,
-                    targetID:targetID,
-                    data:data,
-                    error:undefined
-                })
+                if(Object.prototype.toString.call(data)==='[object Array]'){
+                    return dispatch(getData(targetID,tableApi,tableArgs));
+                }else{
+                    return dispatch({
+                        type:Constants.NORMAL_TABLE_SUBMIT_DELETE_DATA,
+                        targetID:targetID,
+                        data:data,
+                        error:undefined
+                    })
+                }
             }).catch(rejData=>{
                 dispatch(onClickButton(targetID,undefined));
                 return dispatch({
@@ -204,6 +208,9 @@ export const actionOnClickToggleOptions = (targetID,api,item,bindField,nowOnStat
 }
 
 export const actionBatchSelectItem = (targetID,data)=>{
+    if(Object.prototype.toString.apply(data)==='[object Object]'){
+        data = [data];
+    }
     return ({
         type:Constants.NORMAL_TABLE_BATCH_SELECT_ITEM,
         targetID:targetID,

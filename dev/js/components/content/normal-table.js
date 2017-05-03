@@ -7,6 +7,7 @@ import {LoaderOption} from '../../config/config';
 //piecemeal-components
 import ButtonGroupModifier from '../piecemeal-components/button-group-modifier';
 import ButtonGroupDeleter from '../piecemeal-components/button-group-deleter';
+import ButtonGroupBatchDeleter from '../piecemeal-components/button-group-batch-deleter';
 import ButtonGroupAdder from '../piecemeal-components/button-group-adder';
 import Pagination from '../piecemeal-components/pagination';
 import ShieldAlert from '../piecemeal-components/shield-alert';
@@ -79,6 +80,11 @@ class NormalTable extends React.Component {
                     }
                     }></ButtonGroupDeleter>;
                     break;
+                case 'batchDelete':
+                    return <ButtonGroupBatchDeleter isShow={isShow} deleteFunc={()=>{
+                        this.props.submitDeleteData(this.props.targetID,this.props.batchOnItem,api,this.props.api,this.props.tableConfigArgs);
+                    }}></ButtonGroupBatchDeleter>;
+                    break;
             }
         }
     }
@@ -111,17 +117,24 @@ class NormalTable extends React.Component {
                         break;
                 }
             });
-            if (this.props.nowOnItem) {
+            if(this.props.batchOnItem.length>0){
+                return isBatchToggleGroup.map((v, k)=> {
+                    return (<li onClick={
+                        e=>{
+                            this.props.onClickButton(this.props.targetID,v);
+                            e.stopPropagation();
+                        }
+                    } key={k} className={createLiClassName(v,k)}>{v.CNName}</li>);
+                });
+            } else if (this.props.nowOnItem) {
                 return isToggleGroup.map((v, k)=> {
                     return (<li onClick={
                         e=>{
-                        this.props.onClickButton(this.props.targetID,v);
-                        e.stopPropagation();
+                            this.props.onClickButton(this.props.targetID,v);
+                            e.stopPropagation();
                         }
-                        } key={k} className={createLiClassName(v,k)}>{v.CNName}</li>);
+                    } key={k} className={createLiClassName(v,k)}>{v.CNName}</li>);
                 });
-            } else if(false){
-                return isBatchToggleGroup;
             }else {
                 return isNotToggleGroup.map((v, k)=> {
                     return (<li
@@ -153,10 +166,16 @@ class NormalTable extends React.Component {
             })();
 
             if(this.isHasBatchToggle){
-                return (<th style={{width:30}}><input onChange={e=>{
+                let className = classnames({
+                    "checkbox":true,
+                    'checkbox-checked':value
+                });
+                return (<th style={{width:30}}><div onClick={e=>{
                     this.props.actionBatchSelectItem(this.props.targetID,this.props.data);
-                }} checked={value} type="checkbox"/></th> );
+                    e.stopPropagation();
+                }} className={className}></div></th> );
             }
+
         }
 
         //表单头
@@ -203,8 +222,14 @@ class NormalTable extends React.Component {
                     return result
                 })();
                 if(this.isHasBatchToggle){
-                    return (<td><input onChange={e=>{
-                    }} checked={value} type="checkbox"/></td> );
+                    let className = classnames({
+                        "checkbox":true,
+                        'checkbox-checked':value
+                    });
+                    return (<td><div onClick={e=>{
+                        this.props.actionBatchSelectItem(this.props.targetID,v);
+                        e.stopPropagation();
+                    }} className={className}></div></td> );
                 }
             }
             let mapTd = (val)=> {
@@ -406,15 +431,15 @@ const state = state=> {
     btnGroup = target ? target.obj.btnGroup : [];
     viewPoint = target ? target.obj.viewPoint : [];
     modifyViewPoint = target ? target.obj.modifyViewPoint : [];
-    data = target? target.status.data : [];
-    nowOnItem = target ? target.status.checkOnItem : undefined;
-    nowOnClickButton = target ? target.status.nowOnClickButton : undefined;
-    modifyViewData = target ? target.status.modifyViewData : undefined;
-    loaded = target? target.status.loaded : false;
-    toggleItem=target ? target.status.toggleItem : [];
-    tableConfigArgs = target ? target.status.tableConfigArgs : undefined;
-    error = target ? target.status.error: undefined;
-    batchOnItem = target ? target.status.batchOnItem: [];
+    data = target&&target.status? target.status.data : [];
+    nowOnItem = target&&target.status ? target.status.checkOnItem : undefined;
+    nowOnClickButton = target&&target.status ? target.status.nowOnClickButton : undefined;
+    modifyViewData = target&&target.status ? target.status.modifyViewData : undefined;
+    loaded = target&&target.status? target.status.loaded : false;
+    toggleItem=target&&target.status ? target.status.toggleItem : [];
+    tableConfigArgs = target&&target.status ? target.status.tableConfigArgs : undefined;
+    error = target&&target.status ? target.status.error: undefined;
+    batchOnItem = target&&target.status ? target.status.batchOnItem: [];
     return ({
         target: target,
         //读取状态

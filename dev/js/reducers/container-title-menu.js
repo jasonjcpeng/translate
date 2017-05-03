@@ -453,20 +453,30 @@ export default function (state = initState, action) {
             break;
         case Constants.NORMAL_TABLE_SUBMIT_DELETE_DATA:
             return setActiveContentStatusByID(state,action.targetID,{status:{data:{$apply:(arr)=>{
-                return arr.filter((v,k)=>{
-                    if(action.data&&v[constID]===action.data[constID]){
+                if(Object.prototype.toString.call(action.data)==='[object Array]'){
+                    //批量删除
+                    return arr;
+                }else{
+                    return arr.filter((v,k)=>{
+                        if(action.data&&v[constID]===action.data[constID]){
 
-                    }else{
-                        return v;
-                    }
-                });
+                        }else{
+                            return v;
+                        }
+                    });
+                }
             }},batchOnItem:{$apply:(arr)=>{
-                return arr.filter((v,k)=>{
-                    if(action.data&&v[constID]===action.data[constID]){
-                    }else{
-                        return v;
-                    }
-                });
+                if(Object.prototype.toString.call(action.data)==='[object Array]'){
+                    //批量删除
+                    return [];
+                }else{
+                    return arr.filter((v,k)=>{
+                        if(action.data&&v[constID]===action.data[constID]){
+                        }else{
+                            return v;
+                        }
+                    });
+                }
             }},error:{$set:action.error}}});
             break;
         case Constants.NORMAL_TABLE_TOGGLE_ITEM:
@@ -514,19 +524,29 @@ export default function (state = initState, action) {
                         $apply: (arr)=> {
                             let resultArr = [];
                             let originArr = arr;
-                            for (let i in action.onBatchItem) {
-                                let isPush = true;
-                                for (let l in arr) {
-                                    if (action.onBatchItem[i][constID] === arr[l][constID]) {
-                                        originArr.splice(l, 1);
-                                        isPush = false;
+                            if(action.onBatchItem.length>2){
+                                if(arr.length === action.onBatchItem.length){
+                                    resultArr = [];
+                                }else{
+                                    resultArr = action.onBatchItem;
+                                }
+                            }else{
+                                let tempResult = [];
+                                for (let i in action.onBatchItem) {
+                                    let isPush = true;
+                                    for (let l in arr) {
+                                        if (action.onBatchItem[i][constID] === arr[l][constID]) {
+                                            originArr.splice(l, 1);
+                                            isPush = false;
+                                        }
+                                    }
+                                    if (isPush) {
+                                        tempResult.push(action.onBatchItem[i]);
                                     }
                                 }
-                                if (isPush) {
-                                    resultArr.push(action.onBatchItem[i]);
-                                }
+                                resultArr = tempResult.concat(originArr);
                             }
-                            return resultArr.concat(originArr);
+                            return resultArr;
                         }
                     }
                 }
