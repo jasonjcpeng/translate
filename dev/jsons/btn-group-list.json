@@ -3,5 +3,6 @@
   "delete":{"remark":"删除选中的表单项内容","isNeedTarget":1},
   "batchDelete":{"remark":"批量选中，删除选中的表单项内容","isNeedTarget":2},
   "modify":{"remark":"打开模态框修改选中的表单项内容","isNeedTarget":1},
-  "check":{"remark":"打开模态框查看选中表单项的具体内容","isNeedTarget":1}
+  "check":{"remark":"打开模态框查看选中表单项的具体内容","isNeedTarget":1},
+  "roleAuthorize":{"remark":"角色权限分配组件","isNeedTarget":2}
 }

@@ -607,7 +607,7 @@ $table-item-active-color:#cbcdba;
         border-color: $border-color;
       }
       li:hover{
-        background-color:$content-background-color;
+        background-color:$table-item-active-color;
       }
     }
   }

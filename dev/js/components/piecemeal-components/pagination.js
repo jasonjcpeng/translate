@@ -19,9 +19,15 @@ class Pagination extends React.Component {
                     <li className="first-child">1</li>
                     <li>2</li>
                     <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
                 </ul>
                 <ul style={{float:'left'}}>
                     <li className="first-child">下一页</li>
+                </ul>
+                <ul style={{float:'left'}}>
+                    <li className="normal-content">跳转至第<input type="number"/>页</li>
+                    <li className="first-child">跳转</li>
                 </ul>
             </div>);
     }

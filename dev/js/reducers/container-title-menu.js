@@ -422,7 +422,8 @@ export default function (state = initState, action) {
                 modifyViewData:undefined,
                 toggleItem:[],
                 tableConfigArgs: action.initTableArgs,
-                batchOnItem: []
+                batchOnItem: [],
+                roleAuthorize:{}
             }
 
             return setActiveContentStatusByID(state,action.targetID,{status:{$set:initStatus}});

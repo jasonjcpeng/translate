@@ -9,6 +9,7 @@ import ButtonGroupModifier from '../piecemeal-components/button-group-modifier';
 import ButtonGroupDeleter from '../piecemeal-components/button-group-deleter';
 import ButtonGroupBatchDeleter from '../piecemeal-components/button-group-batch-deleter';
 import ButtonGroupAdder from '../piecemeal-components/button-group-adder';
+import ButtonGroupRoleAuthorize from '../piecemeal-components/button-group-role-authorize';
 import Pagination from '../piecemeal-components/pagination';
 import ShieldAlert from '../piecemeal-components/shield-alert';
 import Checker from '../piecemeal-components/checker';
@@ -85,6 +86,9 @@ class NormalTable extends React.Component {
                         this.props.submitDeleteData(this.props.targetID,this.props.batchOnItem,api,this.props.api,this.props.tableConfigArgs);
                     }}></ButtonGroupBatchDeleter>;
                     break;
+                case 'roleAuthorize':
+                    return  <ButtonGroupRoleAuthorize key={this.props.targetID}></ButtonGroupRoleAuthorize>
+                    break;
             }
         }
     }
@@ -148,7 +152,7 @@ class NormalTable extends React.Component {
             }
         }
         return (<div className="normal-table-header">
-            <div key={(()=>{return this.props.nowOnItem?'undefined':'onItem'})()}
+            <div key={(()=>{return this.props.nowOnItem||this.props.batchOnItem.length>0?'undefined':'onItem'})()}
                  className="animation-fadeInRight animation-fadeIn component-option-bar">
                 <ul style={{float:'left'}}>
                     {mapButton()}
@@ -162,7 +166,7 @@ class NormalTable extends React.Component {
         //创造批量选择头
         let createBatchSelect = ()=>{
             let value = (()=>{
-               return  this.props.data.length===this.props.batchOnItem.length?true:false;
+               return  (this.props.data.length>0)&&(this.props.data.length===this.props.batchOnItem.length)?true:false;
             })();
 
             if(this.isHasBatchToggle){
