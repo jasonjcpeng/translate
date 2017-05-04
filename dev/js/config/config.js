@@ -27,3 +27,7 @@ export const LoaderOption = {
     hwaccel: false,
     position: 'absolute'
 }
+//后台暗箱数据ID
+export const constID = 'AX_Id';
+//后台暗箱数据父级ID
+export const constParentID = 'AX_ParentId';

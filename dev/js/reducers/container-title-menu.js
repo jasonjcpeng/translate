@@ -423,10 +423,66 @@ export default function (state = initState, action) {
                 toggleItem:[],
                 tableConfigArgs: action.initTableArgs,
                 batchOnItem: [],
-                roleAuthorize:{}
+                roleAuthorize:{
+                    currentToggleItem:[],
+                    batchOnItem:[]
+                }
             }
 
             return setActiveContentStatusByID(state,action.targetID,{status:{$set:initStatus}});
+            break;
+        case Constants.SHIELD_BUTTON_GROUP_ROLE_AUTHORIZE_TOGGLE_STATUS:
+            return setActiveContentStatusByID(state,action.targetID,{status:{roleAuthorize:{currentToggleItem:{$apply:(arr)=>{
+                let isPushFlag = true;
+                let newArr = arr.filter(v=>{
+                    if(action.code===v){
+                        isPushFlag = false;
+                    }else{
+                        return v;
+                    }
+                });
+                if(isPushFlag){
+                    newArr.push(action.code);
+                }
+                return newArr;
+            }}}}});
+            break;
+        case Constants.SHIELD_BUTTON_GROUP_ROLE_AUTHORIZE_BATCH_SELECT_ITEM:
+            return setActiveContentStatusByID(state, action.targetID, {
+                status: {
+                    roleAuthorize: {
+                        batchOnItem: {
+                            $apply: (arr)=> {
+                                let resultArr = [];
+                                let originArr = arr;
+                                if (action.onBatchItem.length > 2) {
+                                    if (arr.length === action.onBatchItem.length) {
+                                        resultArr = [];
+                                    } else {
+                                        resultArr = action.onBatchItem;
+                                    }
+                                } else {
+                                    let tempResult = [];
+                                    for (let i in action.onBatchItem) {
+                                        let isPush = true;
+                                        for (let l in arr) {
+                                            if (action.onBatchItem[i].id === arr[l].id) {
+                                                originArr.splice(l, 1);
+                                                isPush = false;
+                                            }
+                                        }
+                                        if (isPush) {
+                                            tempResult.push(action.onBatchItem[i]);
+                                        }
+                                    }
+                                    resultArr = tempResult.concat(originArr);
+                                }
+                                return resultArr;
+                            }
+                        }
+                    }
+                }
+            });
             break;
         case Constants.NORMAL_TABLE_GET_DATA:
             let loaded = action.error?false:true;

@@ -17,8 +17,7 @@ import Checker from '../piecemeal-components/checker';
 import * as ActionCreators from '../../action/normal-table';
 import InitTableArgs from '../../../jsons/init-table-args.json';
 //全局变量
-const constID = 'AX_Id';
-const constParentID = 'AX_ParentId';
+import {constID,constParentID} from '../../config/config';
 
 class NormalTable extends React.Component {
     componentWillMount() {
@@ -87,7 +86,12 @@ class NormalTable extends React.Component {
                     }}></ButtonGroupBatchDeleter>;
                     break;
                 case 'roleAuthorize':
-                    return  <ButtonGroupRoleAuthorize key={this.props.targetID}></ButtonGroupRoleAuthorize>
+                    let roleAuthorizeIsShow = this.props.batchOnItem.length>0?true:false;
+                    return  <ButtonGroupRoleAuthorize
+                        selectedItem = {this.props.batchOnItem}
+                        isShow={roleAuthorizeIsShow} key={this.props.targetID} onCancel={e=>{
+                    this.props.onClickButton(this.props.targetID,undefined);
+                }}></ButtonGroupRoleAuthorize>
                     break;
             }
         }

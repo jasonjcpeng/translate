@@ -9,8 +9,8 @@ export const APP_DELETE_MENU_ITEM = 'APP_DELETE_MENU_ITEM';
 //----------------------------shield-alert
 export const SHIELD_ALERT_ON_OK_DELETE_ERROR_FLAG = 'SHIELD_ALERT_ON_OK_DELETE_ERROR_FLAG';
 export const SHIELD_OK_ON_OK_DELETE_OK_FLAG = 'SHIELD_OK_ON_OK_DELETE_OK_FLAG';
-
-
+export const SHIELD_BUTTON_GROUP_ROLE_AUTHORIZE_TOGGLE_STATUS = 'SHIELD_BUTTON_GROUP_ROLE_AUTHORIZE_TOGGLE_STATUS';
+export const SHIELD_BUTTON_GROUP_ROLE_AUTHORIZE_BATCH_SELECT_ITEM = 'SHIELD_BUTTON_GROUP_ROLE_AUTHORIZE_BATCH_SELECT_ITEM';
 
 //Components------------------------------------------------
 //----------------------------sidebar

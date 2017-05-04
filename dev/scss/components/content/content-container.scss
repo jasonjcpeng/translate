@@ -15,6 +15,44 @@
         margin:10px;
       }
     }
+    .shield-content-table{
+      overflow-x: hidden;
+      height: calc(100% - 70px);
+      margin: 0 auto;
+      width: calc(100% - 4px);
+      padding:0;
+      table{
+        border-spacing: 0px;
+        width: 100%;
+        border: solid 2px;
+        tr{
+          text-align: center;
+          th{
+            border:solid 2px;
+          }
+          td{
+            border-bottom:solid 2px;
+          }
+          td:first-child{
+             border-left:solid 2px;
+           }
+          td:last-child{
+            border-right:solid 2px;
+          }
+        }
+        .menu-toggle{
+          cursor: pointer;
+        }
+        .menu-toggle:hover{
+          color: #cecece;
+        }
+      }
+    }
+    .shield-content-footer{
+      height: 70px;
+      float: right;
+    }
+
   }
 
   .content-container-inset {

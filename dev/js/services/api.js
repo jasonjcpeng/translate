@@ -177,34 +177,16 @@ export const menuSettingOptionMenuFetchViewPointConfig = (args)=> {
     }, arg);
 }
 //表格获取数据
-export const normalTableGetData = (api,args,searchKey,searchVal)=>{
-    /*page	第几页	number	@mock=0
-     records	总条数	number	@mock=0
-     rows	每页显示多少行	number	@mock=0
-     sidx	排序字段1	string	@mock=string
-     sord	asc升序 desc倒序	string	@mock=string
-     total*/
-    let Key = '';
-    let Val = '';
-    let finalArgs = {
-        page:'',
-        rows:'',
-        sidx:'',
-        sord:'',
-        total:'',
-        records:''
-    }
-    for(let i in finalArgs){
-        args[i]?finalArgs[i]=args[i]:finalArgs[i]='';
-    }
-
-    if(searchKey){
-        Key = searchKey;
-        Val = searchVal;
-    }
-    if(isOnline){
-        api +="?key='"+Key+"'&value='"+Val+"'";
-    }
+export const normalTableGetData = (api,args)=>{
+    /* "rows": 10,
+     "page": 1,
+     "sidx": "Id",
+     "sord": "ASC",
+     "records": 51,
+     "total": 6,
+     "LastId": "66",
+     "dic": [],
+     "dateList": []*/
     return createFetchPromise(api,(data, resolve, reject)=>{
         let resultData = {
             tableData:data['DataList']?data['DataList']:[],
@@ -214,11 +196,14 @@ export const normalTableGetData = (api,args,searchKey,searchVal)=>{
                 sidx: data['Pagination'].sidx,
                 sord: data['Pagination'].sord,
                 records: data['Pagination'].records,
-                total: data['Pagination'].total
+                total: data['Pagination'].total,
+                LastId: data['Pagination'].LastId,
+                dic: data['Pagination'].dic,
+                dateList: data['Pagination'].dateList,
             }:{}
         }
         resolve(resultData);
-    },finalArgs,'POST')
+    },args,'POST')
 }
 //增加菜单内容中的内容项
 export const insertTableItem = (api,item,data)=>{
@@ -324,6 +309,12 @@ export const apiResetPassWord = (account,data)=>{
         Pwd: Md5(data.oldPassWord)
     }
     return createFetchPromise(apis.resetPassWord+'?newPwd='+data.newPassWord, (data, resolve, reject)=> {
+        resolve(data);
+    },finalArg,'POST');
+}
+//权限分配
+export const apiSetRoleAuthorize = (api,roles,modules)=>{
+    return createFetchPromise(api, (data, resolve, reject)=> {
         resolve(data);
     },finalArg,'POST');
 }

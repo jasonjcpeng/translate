@@ -420,6 +420,28 @@ $table-item-active-color:#cbcdba;
       color:$content-font-color;
       border-color:$border-color;
       background-color: $second-main-color;
+
+      .shield-content{
+        .shield-content-table{
+          table{
+            border-color:$border-color;
+            tr{
+              th{
+                border-color:$border-color;
+              }
+              td{
+                border-color:$border-color;
+              }
+              td:first-child{
+                border-color:$border-color;
+              }
+              td:last-child{
+                border-color:$border-color;
+              }
+            }
+          }
+        }
+      }
       .content-setting-header {
       }
       .content-container-inset::-webkit-scrollbar {
