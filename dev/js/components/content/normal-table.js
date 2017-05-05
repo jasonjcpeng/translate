@@ -107,7 +107,6 @@ class NormalTable extends React.Component {
                 });
             }
 
-
             let isToggleGroup = [];
             let isNotToggleGroup = [];
             let isBatchToggleGroup = [];
@@ -125,16 +124,7 @@ class NormalTable extends React.Component {
                         break;
                 }
             });
-            if(this.props.batchOnItem.length>0){
-                return isBatchToggleGroup.map((v, k)=> {
-                    return (<li onClick={
-                        e=>{
-                            this.props.onClickButton(this.props.targetID,v);
-                            e.stopPropagation();
-                        }
-                    } key={k} className={createLiClassName(v,k)}>{v.CNName}</li>);
-                });
-            } else if (this.props.nowOnItem) {
+            if (this.props.nowOnItem) {
                 return isToggleGroup.map((v, k)=> {
                     return (<li onClick={
                         e=>{
@@ -143,7 +133,16 @@ class NormalTable extends React.Component {
                         }
                     } key={k} className={createLiClassName(v,k)}>{v.CNName}</li>);
                 });
-            }else {
+            }else if(this.props.batchOnItem.length>0){
+                return isBatchToggleGroup.map((v, k)=> {
+                    return (<li onClick={
+                        e=>{
+                            this.props.onClickButton(this.props.targetID,v);
+                            e.stopPropagation();
+                        }
+                    } key={k} className={createLiClassName(v,k)}>{v.CNName}</li>);
+                });
+            } else {
                 return isNotToggleGroup.map((v, k)=> {
                     return (<li
                         onClick={
@@ -383,7 +382,7 @@ class NormalTable extends React.Component {
     //创造底栏
     createFooter() {
         return (<div className="normal-table-footer">
-            <Pagination></Pagination>
+            <Pagination api={this.props.api} targetID={this.props.targetID} key={this.props.tableConfigArgs.page} data={this.props.data} pagination={this.props.tableConfigArgs}></Pagination>
         </div>)
     }
 

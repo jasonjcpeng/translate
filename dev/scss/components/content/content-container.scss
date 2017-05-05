@@ -17,13 +17,16 @@
     }
     .shield-content-table{
       overflow-x: hidden;
-      height: calc(100% - 70px);
+      height: calc(100% - 90px);
       margin: 0 auto;
+      margin-top: 20px;
       width: calc(100% - 4px);
       padding:0;
+
       table{
+        margin: 0 auto;
         border-spacing: 0px;
-        width: 100%;
+        width: 96%;
         border: solid 2px;
         tr{
           text-align: center;
