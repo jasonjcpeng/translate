@@ -192,7 +192,7 @@ class SideBar extends Component {
                         src={this.props.sideBar.userInfo.imgUrl}/></div>
                     <div onClick={()=> {
                         this.props.selectSettingMenu();
-                    }} className="side-bar-title-name animation-fadeIn">{this.props.sideBar.userInfo.name}</div>
+                    }} className="side-bar-title-name animation-fadeIn">{this.props.sideBar.userInfo.nickName}</div>
                     <div onClick={()=> {
                         this.props.selectSettingMenu();
                     }} className="side-bar-title-power animation-fadeIn">{this.props.sideBar.userInfo.power} <i

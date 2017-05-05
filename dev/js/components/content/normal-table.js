@@ -372,7 +372,7 @@ class NormalTable extends React.Component {
         }
 
         return (<div style={{height: this.props.height - 150}} className="normal-table-content">
-            <table style={{width:'95%',margin:'0 auto'}}>
+            <table key={(this.props.tableConfigArgs?this.props.tableConfigArgs.page:'')+''+(this.props.tableConfigArgs?this.props.tableConfigArgs.rows:'')} className="animation-fadeIn" style={{width:'95%',margin:'0 auto'}}>
                 {createTableHead()}
                 {createTableBody()}
             </table>
@@ -382,7 +382,7 @@ class NormalTable extends React.Component {
     //创造底栏
     createFooter() {
         return (<div className="normal-table-footer">
-            <Pagination api={this.props.api} targetID={this.props.targetID} key={this.props.tableConfigArgs.page} data={this.props.data} pagination={this.props.tableConfigArgs}></Pagination>
+            <Pagination api={this.props.api} targetID={this.props.targetID} key={(this.props.tableConfigArgs?this.props.tableConfigArgs.page:'')+'pager'+(this.props.tableConfigArgs?this.props.tableConfigArgs.rows:'')}  data={this.props.data} pagination={this.props.tableConfigArgs}></Pagination>
         </div>)
     }
 

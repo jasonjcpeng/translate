@@ -59,18 +59,14 @@ class ContentSetting extends React.Component {
                 <div style={{height: height-80}}>
                     <div className="standard-ul">
                         <ul>
-                            <li><span>姓名</span><input onChange={e=>{
-                                handleOnChangeBaseInfo('name',e.target.value);
-                            }} type="text" defaultValue={this.protoBaseInfo.name}/></li>
                             <li><span>昵称</span><input onChange={e=>{
                                 handleOnChangeBaseInfo('nickName',e.target.value);
                             }} type="text" defaultValue={this.protoBaseInfo.nickName}/></li>
-                            <li><span>生日</span><input onChange={e=>{
-                                handleOnChangeBaseInfo('birthDay',e.target.value);
-                            }} type="date" defaultValue={this.protoBaseInfo.birthDay}/></li>
+                            <li><span>姓名</span><input disabled="disabled"type="text" defaultValue={this.protoBaseInfo.name}/></li>
+                            <li><span>生日</span><input disabled="disabled"  type="text" defaultValue={this.protoBaseInfo.birthDay}/></li>
                             <li><span>账户描述</span><input disabled="disabled" type="text" defaultValue={this.props.userInfo.description}/></li>
                             <li><span>权限</span><input type="text" disabled="disabled" defaultValue={this.props.userInfo.power}/></li>
-                            <li><span>账户创建时间</span><input disabled="disabled" type="text" defaultValue={this.props.userInfo.createTime}/></li>
+                            <li><span>账户创建时间</span><input disabled="disabled" type="text" defaultValue={this.props.userInfo.createTime.substring(0,this.props.userInfo.createTime.indexOf('T'))}/></li>
                         </ul>
                     </div>
                 </div>
