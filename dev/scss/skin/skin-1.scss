@@ -89,6 +89,38 @@ $table-item-active-color:#cbcdba;
     }
   }
 
+  .normal-table{
+    .sort{
+      .up{
+        border-bottom-color: $default-option-toggle-color !important;
+      }
+      .down{
+        border-top-color: $default-option-toggle-color !important;
+      }
+      .up-active{
+        background-color: transparent !important;
+        border-bottom-color: $main-color !important;
+      }
+      .down-active{
+        background-color: transparent !important;
+        border-top-color: $main-color !important;
+      }
+      .up:active{
+        background-color: transparent !important;
+        border-bottom-color: $shallow-than-main-color !important
+      }
+      .down:active{
+        background-color: transparent !important;
+        border-top-color: $shallow-than-main-color !important
+      }
+    }
+    .sort-active{
+      background-color: transparent !important;
+      color:$main-color;
+    }
+
+  }
+
   .standard-ul {
       li{
         input{

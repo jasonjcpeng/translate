@@ -426,7 +426,7 @@ export default function (state = initState, action) {
                 roleAuthorize:{
                     currentToggleItem:[],
                     batchOnItem:[]
-                }
+                },
             }
 
             return setActiveContentStatusByID(state,action.targetID,{status:{$set:initStatus}});

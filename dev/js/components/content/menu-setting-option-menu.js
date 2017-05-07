@@ -576,6 +576,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                         api:''
                     };
                     return [<li className="spacial" key={'options'} onClick={()=>{
+                        v.name='';
                         handleOnClick(v);
                     }}>{v.name}</li>]
                 }else{
