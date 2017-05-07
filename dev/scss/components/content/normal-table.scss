@@ -8,6 +8,7 @@
   }
 
   .normal-table-content{
+    min-width: 900px;
     overflow-y: auto !important;
     text-align: center;
     table{
@@ -32,6 +33,7 @@
     }
   }
   .normal-table-footer{
+    min-width: 900px;
     padding:0 3% 10px 3%;
     height: 50px;
     line-height: 40px;

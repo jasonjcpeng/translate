@@ -559,9 +559,10 @@ class MenuSettingOptionAddMenu extends React.Component {
             });
         }
         let createFieldList = ()=> {
+
             let handleOnClick = (viewPointItem)=> {
                 let viewPointGroup = this.props.menuData.viewPoint;
-                viewPointGroup.push(viewPointItem);
+                viewPointGroup.unshift(viewPointItem);
                 this.props.changeMenuData(this.props.targetMenuSort, 'viewPoint', viewPointGroup);
             }
             let createOptionsField = ()=>{
@@ -581,23 +582,18 @@ class MenuSettingOptionAddMenu extends React.Component {
                     return [];
                 }
             }
-            return createOptionsField().concat(this.props.viewPointConfigData.map((v, k)=> {
-                let flag = true;
+            return createOptionsField();
+                /*.concat(this.props.viewPointConfigData.map((v, k)=> {
                 for (let i in this.props.menuData.viewPoint) {
                     if (this.props.menuData.viewPoint[i].name === v.name) {
                         flag = false;
                     }
                 }
-                if(v.name==='AX_Id'||v.name==='AX_ParentId'){
-                    flag = false;
-                }
-                if (flag) {
                     return (<li onClick={()=> {
                         handleOnClick(v);
                     }
                     } key={k}>{v.name}</li>);
-                }
-            }));
+            }));*/
 
 
         }

@@ -11,7 +11,6 @@ class Header extends Component{
         window.localStorage.removeItem('store');
         window.localStorage.removeItem('login');
         var browserName=navigator.appName;
-        alert('该浏览器不支持关闭操作，请手动关闭');
         if (browserName=="Netscape") {
             window.open('','_self','');
             window.close();

@@ -551,6 +551,9 @@ $table-item-active-color:#cbcdba;
 
 
         table{
+          .active{
+            background-color: $table-item-active-color;
+          }
           border-color:$border-color;
           thead{
             tr{
@@ -570,9 +573,6 @@ $table-item-active-color:#cbcdba;
           }
         }
 
-        .active{
-          background-color:$table-item-active-color;
-        }
 
         .option-menu-progress{
           font-size: 100%;
@@ -586,15 +586,11 @@ $table-item-active-color:#cbcdba;
             }
 
             .active{
-              background-color: $second-main-color;
               color: #000;
               span{
                 color: $main-color;
               }
               border-bottom-color: $main-color;
-            }
-            .active:before{
-              border-left-color: $second-main-color;
             }
 
             .now-on{
@@ -630,6 +626,9 @@ $table-item-active-color:#cbcdba;
       }
       li:hover{
         background-color:$table-item-active-color;
+      }
+      .active{
+        background-color: $table-item-active-color;
       }
     }
   }

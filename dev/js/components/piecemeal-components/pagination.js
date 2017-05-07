@@ -29,6 +29,16 @@ class Pager {
         this.LastId = lastID;
     }
 
+    theFirst(){
+        this.page = 1;
+        return this.pagerNewPagination();
+    }
+
+    theLast(){
+        this.page = this.total
+        return this.pagerNewPagination();
+    }
+
     last() {
         if (this.page > 1) {
             this.page--;
@@ -54,6 +64,7 @@ class Pager {
 
     resetRows(newRows) {
         if (this.rows > 0) {
+            this.page = 1;
             this.rows = newRows;
         }
         return this.pagerNewPagination();
@@ -63,7 +74,7 @@ class Pager {
         this.pagination.rows = this.rows;
         this.pagination.page = this.page;
         this.pagination.records = this.records;
-        this.pagination.total = this.total;
+        this.pagination.total = null;
         this.pagination.LastId = this.LastId;
         return this.pagination;
     }
@@ -73,7 +84,7 @@ class Pager {
 class Pagination extends React.Component {
     constructor(props) {
         super();
-        let lastID = props.data.length;
+        let lastID = props.data[props.data.length-1]['Id'];
         this.state = {
             api: props.api,
             data: props.data,
@@ -84,7 +95,7 @@ class Pagination extends React.Component {
     }
 
     componentWillUpdate() {
-        let lastID = this.state.data.length;
+        let lastID = this.state.data[this.state.data.length-1]['Id'];
         this.Pager = new Pager(this.state.pagination, lastID);
     }
 
@@ -115,11 +126,18 @@ class Pagination extends React.Component {
         return <div>
             <ul style={{float:'left'}}>
                 <li onClick={e=>{
+                let pagination = this.Pager.theFirst();
+                pagination?this.props.actionSubmitChangePage(this.state.targetID,this.state.api,pagination):'';
+                e.stopPropagation();
+            }
+            } className="first-child">首页
+                </li>
+                <li onClick={e=>{
                 let pagination = this.Pager.last();
                 pagination?this.props.actionSubmitChangePage(this.state.targetID,this.state.api,pagination):'';
                 e.stopPropagation();
             }
-            } className="first-child">上一页
+            } >上一页
                 </li>
             </ul>
             <ul style={{float:'left'}}>
@@ -131,6 +149,12 @@ class Pagination extends React.Component {
                 pagination?this.props.actionSubmitChangePage(this.state.targetID,this.state.api,pagination):'';
                 e.stopPropagation();}
             } className="first-child">下一页
+                </li>
+                <li onClick={e=>{
+                let pagination = this.Pager.theLast();
+                pagination?this.props.actionSubmitChangePage(this.state.targetID,this.state.api,pagination):'';
+                e.stopPropagation();}
+            } className="first-child">末页
                 </li>
             </ul>
         </div>

@@ -87,10 +87,10 @@ export const appStart = ()=> {
         Promise.all([Fetch.Fetch(filterIsOnline(apis.getMenu)),Fetch.Fetch(filterIsOnline(apis.getUserInfo))]).then(
             res=> {
                 if(res[1].state===1&&res[1].data!==null){
-                    Promise.all([createFetchPromise(filterIsOnline(apis.getRole + '/' + res[1].data['AX_RoleId']), (data, res, rej)=> {
+                    Promise.all([createFetchPromise(apis.getRole + '/' + res[1].data['AX_RoleId'], (data, res, rej)=> {
                         res(data)
                     }),//arr[0]AX_RoleId角色信息
-                        createFetchPromise(filterIsOnline(apis.getOrganize + '/' + res[1].data['AX_OrganizeId']), (data, res, rej)=> {
+                        createFetchPromise(apis.getOrganize + '/' + res[1].data['AX_OrganizeId'], (data, res, rej)=> {
                             res(data)
                         })])//arr[1]AX_DepartmentId部门信息
                         .then(getAllDetail=> {
@@ -166,12 +166,14 @@ export const menuSettingOptionMenuFetchViewPointConfig = (args)=> {
     return createFetchPromise(apis.getCols, (data, resolve, reject)=>{
         let formatData = [];
         for (let i in data) {
-            formatData.push({
-                name:data[i],
-                isEnable: true,
-                CNName: '',
-                width: 0,
-            });
+            if(data[i]!=='AX_Id'&&data[i]!=='AX_ParentId'&&data[i]!=='Id'){
+                formatData.push({
+                    name:data[i],
+                    isEnable: true,
+                    CNName: '',
+                    width: 0,
+                });
+            }
         }
         resolve(formatData);
     }, arg);
