@@ -304,7 +304,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                     CNName: '',
                     api: ''
                 }
-                btnGroup.push(btnItem);
+                btnGroup.unshift(btnItem);
                 this.props.changeMenuData(this.props.targetMenuSort, 'btnGroup', btnGroup);
             }
             for (let componentName in btnGroupList) {
@@ -392,22 +392,24 @@ class MenuSettingOptionAddMenu extends React.Component {
                     }} value={val.api}/></td>
                     <td>{(()=>{
                         switch (val.isNeedTarget){
+                            case -1:
+                                return "否"
                             case 0:
                                 return ""
                                 break;
                             case 1:
-                                return "是"
+                                return "否"
                                 break;
                             case 2:
-                                return "多选"
+                                return "否"
                                 break;
                         }
                     })()}</td>
                     <td><Checker style={(()=>{
-                        if(val.isNeedTarget){
+                        if(val.isNeedTarget!==0){
                             return {cursor:"text"}
                         }
-                    })()} key={val.isToggleGroup} checkState={val.isToggleGroup} funcOnClick={(checkState)=>{
+                    })()} key={val.isToggleGroup} checkState={val.isToggleGroup>-1?val.isToggleGroup:false} funcOnClick={(checkState)=>{
                         if(!val.isNeedTarget){
                             handleOnChange(k,val,'isToggleGroup',checkState);
                         }
@@ -429,8 +431,8 @@ class MenuSettingOptionAddMenu extends React.Component {
                     <th>组件备注</th>
                     <th>匹配中文名</th>
                     <th>匹配API</th>
-                    <th>需要选中</th>
-                    <th style={{maxWidth:"120px"}}>作为内层按钮组</th>
+                    <th>是否可定义</th>
+                    <th style={{maxWidth:"120px"}}>内层选中按钮组</th>
                     <th style={{width:"50px"}}>删除</th>
                 </tr>
                 </thead>
@@ -823,7 +825,7 @@ class MenuSettingOptionAddMenu extends React.Component {
             if (!this.props.isRootMenu && nextStep < 4) {
                 return (<button onClick={()=>{
                 if(nextStep===1){
-                    this.props.getViewPointConfig(this.props.targetMenuSort,this.props.menuData.viewPointConfigApi,()=>{
+                    this.props.getViewPointConfig(this.props.targetMenuSort,this.props.menuData.viewPointConfigApi,this.props.target.obj.targetMenu,()=>{
                         this.props.clickNextStep(this.props.targetMenuSort, nextStep);
                     });
                 }else if(nextStep===3){

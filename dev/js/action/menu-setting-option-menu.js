@@ -173,13 +173,14 @@ export const clickFinish = (targetMenuSort, menuData,activeContent, nowOnContent
 }
 
 //callback 如果拿到数据就运行这个回调
-export const getViewPointConfig = (targetMenuSort, ViewPointConfigApi, callback)=> {
+export const getViewPointConfig = (targetMenuSort, ViewPointConfigApi, targetMenu,callback)=> {
     return dispatch=> {
         menuSettingOptionMenuFetchViewPointConfig(ViewPointConfigApi).then(
             res=> {
                 callback();
                 return dispatch({
                     type: Constants.MENU_SETTING_GET_VIEW_POINT_CONFIG,
+                    targetMenu:targetMenu,
                     targetMenuSort: targetMenuSort,
                     payload: res
                 });

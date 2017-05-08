@@ -1,8 +1,10 @@
 {
-  "add":{"remark":"表单内添加新内容","isNeedTarget":0},
+  "add":{"remark":"模态框:表单内添加新内容","isNeedTarget":0},
   "delete":{"remark":"删除选中的表单项内容","isNeedTarget":1},
   "batchDelete":{"remark":"批量选中，删除选中的表单项内容","isNeedTarget":2},
-  "modify":{"remark":"打开模态框修改选中的表单项内容","isNeedTarget":1},
-  "check":{"remark":"打开模态框查看选中表单项的具体内容","isNeedTarget":1},
+  "modify":{"remark":"模态框:打开模态框修改选中的表单项内容","isNeedTarget":1},
+  "check":{"remark":"模态框:打开模态框查看选中表单项的具体内容","isNeedTarget":1},
+  "search":{"remark":"级联搜索组件","isNeedTarget":-1},
+  "timeSearch":{"remark":"时间搜索组件","isNeedTarget":-1},
   "roleAuthorize":{"remark":"角色权限分配组件","isNeedTarget":2}
 }

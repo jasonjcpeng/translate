@@ -98,6 +98,7 @@ class NormalTable extends React.Component {
 
     //创造选项按钮组
     createOptionBar() {
+        let searchGroup = [];
         let mapButton = ()=> {
             let createLiClassName = (v, k)=> {
                 return classnames({
@@ -111,6 +112,9 @@ class NormalTable extends React.Component {
             let isBatchToggleGroup = [];
             this.props.btnGroup.map((v)=> {
                 switch (v.isToggleGroup) {
+                    case -1:
+                        isNotToggleGroup.push(v);
+                        break;
                     case 0:
                         isNotToggleGroup.push(v);
                         break;
@@ -142,23 +146,60 @@ class NormalTable extends React.Component {
                     } key={k} className={createLiClassName(v,k)}>{v.CNName}</li>);
                 });
             } else {
-                return isNotToggleGroup.map((v, k)=> {
-                    return (<li
-                        onClick={
-                        e=>{
-                        this.props.onClickButton(this.props.targetID,v);
-                        e.stopPropagation();
-                        }
-                        } key={k} className={createLiClassName(v,k)}>{v.CNName}</li>);
+                let isNotToggleButtonGroup = isNotToggleGroup.filter(v=>{
+                    if(v.isToggleGroup<0){
+                        searchGroup.push(v);
+                    }else{
+                        return v;
+                    }
+                });
+
+                return isNotToggleButtonGroup.map((v, k)=> {
+                    if(v.isToggleGroup<0){
+                        searchGroup.push(v);
+                    }else{
+                        return (<li
+                            onClick={
+                                e=>{
+                                    this.props.onClickButton(this.props.targetID,v);
+                                    e.stopPropagation();
+                                }
+                            } key={k} className={createLiClassName(v,k)}>{v.CNName}</li>);
+                    }
                 });
             }
         }
+
+        let createSearchGroup = ()=>{
+            let mapSearchGroup = ()=>{
+                return searchGroup.map((v,k)=>{
+                    if(v.componentName==='timeSearch'){
+                       return <li className={'select'+(k === 0?' first-child':'')}
+                            key={k} ><input type="date"/><span>至</span><input type="date"/></li>
+                    }else{
+                        return <li className={'select'+(k === 0?' first-child':'')}
+                                   key={k} ><select selected={''}>
+                            <option value={''}>{v.CNName}</option></select></li>
+                    }
+
+                });
+            }
+            if(searchGroup.length>0){
+                return (<ul className="search-group" style={{float:'right',marginRight:'3%'}}>
+                    {mapSearchGroup()}
+                    <li><input type="text" placeholder="在此输入查询内容"/></li>
+                    <li className="search-btn">查询</li>
+                </ul> );
+            }
+        }
+
         return (<div className="normal-table-header">
             <div key={(()=>{return this.props.nowOnItem||this.props.batchOnItem.length>0?'undefined':'onItem'})()}
                  className="animation-fadeInRight animation-fadeIn component-option-bar">
                 <ul style={{float:'left'}}>
                     {mapButton()}
                 </ul>
+                {createSearchGroup()}
             </div>
         </div>)
     }

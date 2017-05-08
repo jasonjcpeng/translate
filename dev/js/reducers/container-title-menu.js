@@ -374,7 +374,11 @@ export default function (state = initState, action) {
             if (action.error) {
                 return setActiveContentStatus(state, action.targetMenuSort, {status: {error: {$set: "来自菜单视图项API:" + action.error}}})
             } else {
-                return setActiveContentStatus(state, action.targetMenuSort, {status: {viewPointConfigData: {$set: action.payload},menuData:{viewPoint:{$set: action.payload}}}})
+                if(action.targetMenu.viewPoint.length>0){
+                    return setActiveContentStatus(state, action.targetMenuSort, {status: {viewPointConfigData: {$set: action.payload}}})
+                }else{
+                    return setActiveContentStatus(state, action.targetMenuSort, {status: {viewPointConfigData: {$set: action.payload},menuData:{viewPoint:{$set: action.payload},modifyViewData:{$set: action.payload}}}})
+                }
             }
             break;
         case Constants.MENU_SETTING_SEND_ERROR_MESSAGE:

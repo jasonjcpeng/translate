@@ -13,6 +13,30 @@ $content-font-color:#6f6f6f;
 $default-option-hover-button:#6f6f6f;
 $table-item-active-color:#cbcdba;
 .skin-1{
+  .search-group {
+    li:hover {
+    }
+    li{
+      input {
+
+      }
+      select{
+        color:$content-font-color;
+      }
+
+    }
+
+    .search-btn{
+      color:$second-main-color;
+      background-color: $main-color;
+    }
+    .search-btn:hover{
+      color:$main-color;
+      background-color: $default-option-hover-button;
+    }
+
+  }
+
   .checkbox{
     background-color: transparent;
     border-color:$default-option-toggle-color;
