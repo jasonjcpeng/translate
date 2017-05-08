@@ -1,6 +1,7 @@
 {
   "data": [
     {
+      "Id":0,
       "AX_CreatorTime": 1,
       "AX_CreatorUserId": 1,
       "AX_DeleteTime": 1,
@@ -26,6 +27,7 @@
       "AX_UrlAddress": "/SystemManage/Area/Index"
     },
     {
+      "Id":1,
       "AX_CreatorTime": 1,
       "AX_CreatorUserId": 1,
       "AX_DeleteTime": 1,
@@ -51,6 +53,7 @@
       "AX_UrlAddress": "/SystemManage/Duty/Index"
     },
     {
+      "Id":2,
       "AX_CreatorTime": 1,
       "AX_CreatorUserId": 1,
       "AX_DeleteTime": 1,
@@ -76,6 +79,7 @@
       "AX_UrlAddress": "/SystemManage/User/Index"
     },
     {
+      "Id":3,
       "AX_CreatorTime": 1,
       "AX_CreatorUserId": 1,
       "AX_DeleteTime": 1,
@@ -101,6 +105,7 @@
       "AX_UrlAddress": "/SystemManage/Organize/Index"
     },
     {
+      "Id":4,
       "AX_CreatorTime": 1,
       "AX_CreatorUserId": 1,
       "AX_DeleteTime": 1,
@@ -126,6 +131,7 @@
       "AX_UrlAddress": "/SystemManage/ItemsData/Index"
     },
     {
+      "Id":5,
       "AX_CreatorTime": 1,
       "AX_CreatorUserId": 1,
       "AX_DeleteTime": 1,
@@ -151,6 +157,7 @@
       "AX_UrlAddress": "/SystemManage/Module/Index"
     },
     {
+      "Id":6,
       "AX_CreatorTime": 1,
       "AX_CreatorUserId": 1,
       "AX_DeleteTime": 1,
@@ -176,6 +183,7 @@
       "AX_UrlAddress": "/SystemManage/Role/Index"
     },
     {
+      "Id":7,
       "AX_CreatorTime": 1,
       "AX_CreatorUserId": 1,
       "AX_DeleteTime": 1,
@@ -201,6 +209,7 @@
       "AX_UrlAddress": "undefined"
     },
     {
+      "Id":8,
       "AX_CreatorTime": 1,
       "AX_CreatorUserId": 1,
       "AX_DeleteTime": 1,

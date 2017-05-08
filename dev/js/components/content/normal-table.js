@@ -90,9 +90,7 @@ class NormalTable extends React.Component {
                     let roleAuthorizeIsShow = this.props.batchOnItem.length > 0 ? true : false;
                     return <ButtonGroupRoleAuthorize
                         selectedItem={this.props.batchOnItem}
-                        isShow={roleAuthorizeIsShow} key={this.props.targetID} onCancel={e=>{
-                    this.props.onClickButton(this.props.targetID,undefined);
-                }}></ButtonGroupRoleAuthorize>
+                        isShow={roleAuthorizeIsShow} key={this.props.targetID}></ButtonGroupRoleAuthorize>
                     break;
             }
         }

@@ -24,23 +24,27 @@ class Pager {
         this.pagination = pagination;
         this.rows = pagination.rows;
         this.page = pagination.page;
+        this.pageIndex = pagination.pageIndex;
         this.records = pagination.records;
         this.total = pagination.total;
         this.LastId = lastID;
     }
 
     theFirst(){
+        this.pageIndex = this.page;
         this.page = 1;
         return this.pagerNewPagination();
     }
 
     theLast(){
+        this.pageIndex = this.page;
         this.page = this.total
         return this.pagerNewPagination();
     }
 
     last() {
         if (this.page > 1) {
+            this.pageIndex = this.page;
             this.page--;
             return this.pagerNewPagination();
         } else {
@@ -50,6 +54,7 @@ class Pager {
 
     next() {
         if (this.page < this.total) {
+            this.pageIndex = this.page;
             this.page++;
             return this.pagerNewPagination();
         } else {
@@ -58,12 +63,14 @@ class Pager {
     }
 
     choicePage(num) {
+        this.pageIndex = this.page;
         this.page = num;
         return this.pagerNewPagination();
     }
 
     resetRows(newRows) {
         if (this.rows > 0) {
+            this.pageIndex = this.page;
             this.page = 1;
             this.rows = newRows;
         }

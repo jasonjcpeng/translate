@@ -610,6 +610,9 @@ export default function (state = initState, action) {
             });
 
             break;
+        case Constants.BUTTON_GROUP_ROLE_AUTHORIZE_CLOSE:
+            return setActiveContentStatusByID(state,action.targetID,{status:{nowOnClickButton:{$set:undefined}}});
+            break;
     }
     return state;
 }

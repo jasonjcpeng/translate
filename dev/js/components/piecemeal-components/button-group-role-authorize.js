@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import {connect} from 'react-redux';
 import * as Constants from '../../action/CONSTANTS';
 import {bindActionCreators} from 'redux';
+import {apiSetRoleAuthorize} from '../../services/api';
 /*
  * @param
  * onCancel:() 必填 关闭遮罩的回调，如没有则不显示取消按钮
@@ -12,7 +13,6 @@ class ShieldAlert extends React.Component {
         super();
         this.state = {
             selectedRole: props.selectedItem,
-            onCancel: props.onCancel
         }
     }
 
@@ -165,7 +165,7 @@ class ShieldAlert extends React.Component {
                 </div>
                 <div className="shield-content-footer">
                     <button onClick={e=>{
-                    this.state.onCancel();
+                    this.props.actionCloseThis(this.props.targetID);
                     e.stopPropagation();
                     }} className="btn">取消
                     </button>
@@ -220,10 +220,23 @@ let action = (dispatch)=> {
                 onBatchItem: data
             });
         },
+        actionCloseThis:(targetID)=>{
+            return {
+                type:Constants.BUTTON_GROUP_ROLE_AUTHORIZE_CLOSE,
+                targetID:targetID
+            }
+        },
         actionSubmitRoleAuthorize: (targetID,api, roles, modules)=> {
             return dispatch=>{
-                
+                apiSetRoleAuthorize(api,roles,modules).then(
+                    res=>{
+                        return dispatch(actions.actionCloseThis(targetID))
+                    }
+                ).catch(rej=>{
+                    console.log(rej)
+                })
             }
+
         }
     }
     return bindActionCreators(actions, dispatch);

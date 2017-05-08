@@ -180,6 +180,9 @@ export const menuSettingOptionMenuFetchViewPointConfig = (args)=> {
 }
 //表格获取数据
 export const normalTableGetData = (api,args)=>{
+    if(!isOnline){
+        api = api.substring(0,api.lastIndexOf('/'));
+    }
     /* "rows": 10,
      "page": 1,
      "sidx": "Id",
@@ -316,6 +319,19 @@ export const apiResetPassWord = (account,data)=>{
 }
 //权限分配
 export const apiSetRoleAuthorize = (api,roles,modules)=>{
+    let roleID =[];
+    let moduleID = [];
+    roles.map((v,k)=>{
+        roleID.push(v['AX_Id']);
+    });
+    modules.map((v,k)=>{
+        moduleID.push(v.id);
+    });
+    let finalArg = {
+        ModuleIds: moduleID,
+        RoleId: roleID
+    }
+
     return createFetchPromise(api, (data, resolve, reject)=> {
         resolve(data);
     },finalArg,'POST');

@@ -7,6 +7,7 @@ import {LoaderOption} from '../config/config';
 import SideBar from '../components/side-bar';
 import Header from '../components/header';
 import Container from '../components/container';
+import {isOnline} from '../config/config';
 
 class App extends React.Component{
     componentWillMount(){
@@ -26,7 +27,12 @@ class App extends React.Component{
         if(!flag){
             this.props.reloadFromLocalStorage(store);
         }
-        this.props.AppDidMount();
+        if(isOnline){
+            this.props.AppDidMount();
+        }else if(flag){
+            this.props.AppDidMount();
+        }
+
     }
 
     componentWillUnmount(){
