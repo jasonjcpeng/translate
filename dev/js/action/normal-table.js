@@ -45,7 +45,13 @@ export const submitDeleteData = (targetID,data,api,tableApi,tableArgs)=>{
             apiDeleteTableItem(api,data).then(resData=>{
                 dispatch(onClickButton(targetID,undefined));
                 if(Object.prototype.toString.call(data)==='[object Array]'){
-                    return dispatch(getData(targetID,tableApi,tableArgs));
+                    dispatch(getData(targetID,tableApi,tableArgs));
+                    return dispatch({
+                        type:Constants.NORMAL_TABLE_SUBMIT_DELETE_DATA,
+                        targetID:targetID,
+                        data:data,
+                        error:undefined
+                    })
                 }else{
                     return dispatch({
                         type:Constants.NORMAL_TABLE_SUBMIT_DELETE_DATA,
