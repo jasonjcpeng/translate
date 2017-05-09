@@ -36,7 +36,6 @@ class ModifyShield extends React.Component{
                 this.state.onChange(newData);
             }
 
-
             let choiceClassName = (val)=>{
                 return classnames({
                     'must-filling':val.isMustFilling,

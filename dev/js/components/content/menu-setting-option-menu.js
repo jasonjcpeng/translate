@@ -9,6 +9,7 @@ import classNames from 'classnames';
 import ShieldAlert from '../piecemeal-components/shield-alert';
 import Checker from '../piecemeal-components/checker';
 import ModifyShield from '../piecemeal-components/modifyShield';
+import ModifySearchGroupConfig from '../piecemeal-components/modify-search-group-config';
 //json
 import IconList from '../../../jsons/icon-list.json';
 import BtnGroupList from '../../../jsons/btn-group-list.json';
@@ -290,7 +291,7 @@ class MenuSettingOptionAddMenu extends React.Component {
     }
 
     //渲染按钮组设置
-    createButtonGroupSetting() {
+    createButtonGroupSetting(){
         let createBtnGroupList = ()=> {
             let btnGroupList = BtnGroupList;
             let render = [];
@@ -302,7 +303,8 @@ class MenuSettingOptionAddMenu extends React.Component {
                     isNeedTarget: btnGroupItem.isNeedTarget,
                     isToggleGroup: btnGroupItem.isNeedTarget,
                     CNName: '',
-                    api: ''
+                    api: '',
+                    btnConfig: []
                 }
                 btnGroup.unshift(btnItem);
                 this.props.changeMenuData(this.props.targetMenuSort, 'btnGroup', btnGroup);
@@ -326,7 +328,8 @@ class MenuSettingOptionAddMenu extends React.Component {
                     isNeedTarget: val.isNeedTarget,
                     isToggleGroup: val.isToggleGroup,
                     CNName: val.CNName,
-                    api: val.api
+                    api: val.api,
+                    btnConfig: val.btnConfig
                 };
                 singleItem[itemKey] = itemVal;
                 let newValue = [];
@@ -384,27 +387,32 @@ class MenuSettingOptionAddMenu extends React.Component {
                         </div>
                     </td>
                     <td>{val.componentRemark}</td>
-                    <td><input key={'cnName'+val.componentName+''+k} type="text" onChange={e=>{
+                    <td><input key={'CNName'+val.componentName+''+k} type="text" onChange={e=>{
                         handleOnChange(k,val,'CNName',e.target.value);
                     }} value={val.CNName}/></td>
-                    <td><input key={'api'+val.componentName+''+k} type="text" onChange={e=>{
-                        handleOnChange(k,val,'api',e.target.value);
-                    }} value={val.api}/></td>
-                    <td>{(()=>{
-                        switch (val.isNeedTarget){
-                            case -1:
-                                return "否"
-                            case 0:
-                                return ""
-                                break;
-                            case 1:
-                                return "否"
-                                break;
-                            case 2:
-                                return "否"
-                                break;
+                    {(()=> {
+                        if (val.isNeedTarget > -1) {
+                            return <td><input key={'api' + val.componentName + '' + k} type="text" onChange={e=> {
+                                handleOnChange(k, val, 'api', e.target.value);
+                            }} value={val.api}/></td>
+                        } else {
+                            return <td>
+                                <button onClick={e=> {
+                                    let args = {
+                                        key:k,
+                                        value:val,
+                                        btnGroup:this.props.menuData.btnGroup
+                                    }
+
+                                    this.props.actionChangeButtonConfigPreviewStatus(this.props.targetMenuSort,args);
+                                    e.stopPropagation();
+                                }
+                                }>详细配置
+                                </button>
+                            </td>
+
                         }
-                    })()}</td>
+                    })()}
                     <td><Checker style={(()=>{
                         if(val.isNeedTarget!==0){
                             return {cursor:"text"}
@@ -430,8 +438,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                     <th style={{width:"50px"}}>排序</th>
                     <th>组件备注</th>
                     <th>匹配中文名</th>
-                    <th>匹配API</th>
-                    <th>是否可定义</th>
+                    <th>匹配参数</th>
                     <th style={{maxWidth:"120px"}}>内层选中按钮组</th>
                     <th style={{width:"50px"}}>删除</th>
                 </tr>
@@ -966,6 +973,13 @@ class MenuSettingOptionAddMenu extends React.Component {
                                   fieldData={this.props.target.status.menuData.modifyViewPoint}></ModifyShield>);
         }
     }
+    //渲染级联搜索按钮详细配置遮罩层
+    createSearchButtonModify(){
+        if(this.props.target.status.menuData){
+            return (<ModifySearchGroupConfig tableData={this.props.viewPointConfigData} target={this.props.targetMenuSort} config={this.props.O_buttonConfigPreviewStatus}></ModifySearchGroupConfig>);
+        }
+    }
+
 
 
     renderPC() {
@@ -973,6 +987,7 @@ class MenuSettingOptionAddMenu extends React.Component {
         let bodyHeight = height - 150;
         return (
             <div className="content-container animation-fadeInRight">
+                {this.createSearchButtonModify()}
                 {this.createModifyShield()}
                 {this.createToggleIconSetting()}
                 <ShieldAlert key={this.props.targetMenuSort+''+this.props.target.status.error} title="Alert" content={this.props.target.status.error} onTargetMenuTarget={this.props.targetMenuSort}></ShieldAlert>
@@ -1019,6 +1034,8 @@ const state = state=> {
         viewPointConfigData: target.status.viewPointConfigData?target.status.viewPointConfigData:[],
         //是否开启预览遮罩层
         previewStatus: target.status?target.status.previewStatus:'',
+        //是否开启按钮详细配置遮罩层
+        O_buttonConfigPreviewStatus: target.status ? target.status.O_buttonConfigPreviewStatus : '',
         //当前选项卡所在数组的位置，用来关闭本选项卡
         nowOnContentKey: nowOnContentKey,
         isRootMenu: target.status?target.status.isRootMenu:'',

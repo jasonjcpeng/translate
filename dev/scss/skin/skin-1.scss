@@ -515,6 +515,15 @@ $table-item-active-color:#cbcdba;
       .content-container-inset {
         .content-setting-frame{
           .setting-table{
+            tr{
+              td{
+                button{
+                  background-color: $main-color;
+                  color: $second-main-color;
+                }
+              }
+            }
+
             .delete{
               cursor: pointer;
               color: $alert-color;
@@ -704,6 +713,17 @@ $table-item-active-color:#cbcdba;
         }
         span:before {
           color: $alert-color;
+        }
+      }
+    }
+    .shield-modify-content-search-group{
+      .field-list{
+        ul{
+          li{
+            border-color: $main-color;
+            background-color: $main-color;
+            color: $second-main-color;
+          }
         }
       }
     }

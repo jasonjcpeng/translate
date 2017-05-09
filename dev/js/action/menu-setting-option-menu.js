@@ -212,5 +212,12 @@ export const sendError = (targetMenuSort, message)=> {
     });
 }
 
+export const actionChangeButtonConfigPreviewStatus = (targetMenuSort,args)=>{
+    return ({
+        type: Constants.MENU_SETTING_CHANGE_BUTTON_CONFIG_PREVIEW_STATUS,
+        target: targetMenuSort,
+        nowOnButtonConfig: args
+    });
+}
 
 

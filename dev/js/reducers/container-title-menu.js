@@ -253,6 +253,7 @@ export default function (state = initState, action) {
             let parentCode = action.target.targetMenu === '0' ? '0' : action.target.targetMenu.code;
             let initMenuSettingOption = {
                 previewStatus:false,
+                O_buttonConfigPreviewStatus:undefined,
                 error: undefined,
                 ok:undefined,
                 isRootMenu: undefined,
@@ -374,7 +375,7 @@ export default function (state = initState, action) {
             if (action.error) {
                 return setActiveContentStatus(state, action.targetMenuSort, {status: {error: {$set: "来自菜单视图项API:" + action.error}}})
             } else {
-                if(action.targetMenu.viewPoint.length>0){
+                if(action.targetMenu.viewPoint&&action.targetMenu.viewPoint.length>0){
                     return setActiveContentStatus(state, action.targetMenuSort, {status: {viewPointConfigData: {$set: action.payload}}})
                 }else{
                     return setActiveContentStatus(state, action.targetMenuSort, {status: {viewPointConfigData: {$set: action.payload},menuData:{viewPoint:{$set: action.payload},modifyViewData:{$set: action.payload}}}})
@@ -414,6 +415,9 @@ export default function (state = initState, action) {
             break;
         case Constants.MENU_SETTING_MODIFY_MENU_FINISH:
             return setActiveContentStatus(state, action.targetMenuSort, {status: {error: {$set: action.error}}});
+            break;
+        case Constants.MENU_SETTING_CHANGE_BUTTON_CONFIG_PREVIEW_STATUS:
+            return setActiveContentStatus(state, action.target, {status: {O_buttonConfigPreviewStatus: {$set: action.nowOnButtonConfig}}});
             break;
         //-----------------------------normal-table-----------------------------------
         case Constants.NORMAL_TABLE_INIT:

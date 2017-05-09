@@ -86,6 +86,9 @@ class Pager {
         return this.pagination;
     }
 
+    getPage() {
+        return this.page;
+    }
 }
 
 class Pagination extends React.Component {
@@ -101,9 +104,15 @@ class Pagination extends React.Component {
         this.Pager = new Pager(props.pagination, lastID);
     }
 
-    componentWillUpdate() {
-        let lastID = this.state.data[this.state.data.length-1]['Id'];
-        this.Pager = new Pager(this.state.pagination, lastID);
+    componentWillReceiveProps(props) {
+        let lastID = props.data[props.data.length - 1]['Id'];
+        this.state = {
+            api: props.api,
+            data: props.data,
+            targetID: props.targetID,
+            pagination: props.pagination,
+        }
+        this.Pager = new Pager(props.pagination, lastID);
     }
 
     createScrollPage() {
@@ -172,14 +181,17 @@ class Pagination extends React.Component {
             <ul style={{float:'left'}}>
                 <li className="normal-content">跳转至第<input onBlur={e=>{
                 let pagination;
+                    let flag = true;
                     if(e.target.value===''||e.target.value<0){
-                         pagination = this.Pager.choicePage(1);
+                        flag = false;
                     }else if(e.target.value>this.state.pagination.total){
                         pagination = this.Pager.choicePage(this.state.pagination.total);
                     }else{
                         pagination = this.Pager.choicePage(e.target.value);
                     }
-                    this.props.actionSubmitChangePage(this.state.targetID,this.state.api,pagination);
+                    if(flag){
+                        this.props.actionSubmitChangePage(this.state.targetID,this.state.api,pagination);
+                    }
                   }
                 } type="number"/>页 共<span style={{fontSize:18}}>{this.state.pagination.total}</span>页
                 </li>
