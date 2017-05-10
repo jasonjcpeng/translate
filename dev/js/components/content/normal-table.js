@@ -106,7 +106,6 @@ class NormalTable extends React.Component {
                     'active': this.props.nowOnClickButton === v
                 });
             }
-
             let isToggleGroup = [];
             let isNotToggleGroup = [];
             let isBatchToggleGroup = [];
@@ -136,7 +135,7 @@ class NormalTable extends React.Component {
                         }
                     } key={k} className={createLiClassName(v,k)}>{v.CNName}</li>);
                 });
-            } else if (this.props.batchOnItem.length > 0) {
+            } else if (this.props.isBatchOptionOpen) {
                 return isBatchToggleGroup.map((v, k)=> {
                     return (<li onClick={
                         e=>{
@@ -153,20 +152,28 @@ class NormalTable extends React.Component {
                         return v;
                     }
                 });
+                if(this.isHasBatchToggle){
+                    isNotToggleButtonGroup.unshift({componentName:'batchOption',CNName:'批量操作'});
+                }
 
-                return isNotToggleButtonGroup.map((v, k)=> {
+                let mapResultIsNotToggleButtonGroup = isNotToggleButtonGroup.map((v, k)=> {
                     if(v.isToggleGroup<0){
                         searchGroup.push(v);
                     }else{
                         return (<li
                             onClick={
                                 e=>{
-                                    this.props.onClickButton(this.props.targetID,v);
+                                    if(v.componentName==='batchOption'){
+                                        this.props.actionOpenBatchOption(this.props.targetID,true);
+                                    }else{
+                                        this.props.onClickButton(this.props.targetID,v);
+                                    }
                                     e.stopPropagation();
                                 }
                             } key={k} className={createLiClassName(v,k)}>{v.CNName}</li>);
                     }
                 });
+                return mapResultIsNotToggleButtonGroup;
             }
         }
 
@@ -199,7 +206,7 @@ class NormalTable extends React.Component {
                 <ul style={{float:'left'}}>
                     {mapButton()}
                 </ul>
-                {createSearchGroup()}
+                {/*createSearchGroup()*/}
             </div>
         </div>)
     }
@@ -212,7 +219,7 @@ class NormalTable extends React.Component {
                 return (this.props.data.length > 0) && (this.props.data.length === this.props.batchOnItem.length) ? true : false;
             })();
 
-            if (this.isHasBatchToggle) {
+            if (this.props.isBatchOptionOpen) {
                 let className = classnames({
                     "checkbox": true,
                     'checkbox-checked': value
@@ -337,7 +344,7 @@ class NormalTable extends React.Component {
                     });
                     return result
                 })();
-                if (this.isHasBatchToggle) {
+                if (this.props.isBatchOptionOpen) {
                     let className = classnames({
                         "checkbox": true,
                         'checkbox-checked': value
@@ -514,6 +521,8 @@ class NormalTable extends React.Component {
                     ()=>{
                             if(this.props.nowOnItem){
                                 this.props.checkOnItem(this.props.targetID,undefined);
+                            }else if(this.props.isBatchOptionOpen){
+                                this.props.actionOpenBatchOption(this.props.targetID,false);
                             }
                         }
                     } className="content-container-inset" style={{height: height - 30}}>
@@ -545,7 +554,7 @@ class NormalTable extends React.Component {
 
 const state = state=> {
     let loaded, target, btnGroup, viewPoint, modifyViewPoint, targetID, api, data, nowOnItem, nowOnClickButton,
-        modifyViewData, toggleItem, tableConfigArgs, error, batchOnItem;
+        modifyViewData, toggleItem, tableConfigArgs, error, batchOnItem,isBatchOptionOpen;
     state.containerTitleMenu.activeContent.map(v=> {
         if (state.common.nowOnContentTarget && v.obj.id === state.common.nowOnContentTarget.id) {
             target = v;
@@ -559,6 +568,7 @@ const state = state=> {
     data = target && target.status ? target.status.data : [];
     nowOnItem = target && target.status ? target.status.checkOnItem : undefined;
     nowOnClickButton = target && target.status ? target.status.nowOnClickButton : undefined;
+    isBatchOptionOpen = target && target.status ? target.status.isBatchOptionOpen : false;
     modifyViewData = target && target.status ? target.status.modifyViewData : undefined;
     loaded = target && target.status ? target.status.loaded : false;
     toggleItem = target && target.status ? target.status.toggleItem : [];
@@ -587,6 +597,8 @@ const state = state=> {
         batchOnItem: batchOnItem,
         //当前选中的按钮
         nowOnClickButton: nowOnClickButton,
+        //当前批量操作功能是否打开
+        isBatchOptionOpen:isBatchOptionOpen,
         //当前模态框中数据
         modifyViewData: modifyViewData,
         //当前折叠展开状态的折叠窗：

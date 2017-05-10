@@ -1,18 +1,18 @@
 /**
- * 
+ *
  * Created by JasonPeng on 2017/3/30.
  */
 import {login} from './services/api';
 
-class LoginModel{
-    constructor(DomUserName,DomPsw,DomLogin,DomCanvas){
+class LoginModel {
+    constructor(DomUserName, DomPsw, DomLogin, DomCanvas) {
         this.userName = window.document.getElementById(DomUserName);
         this.passWord = window.document.getElementById(DomPsw);
         this.confirm = window.document.getElementById(DomLogin);
-        this.canvas=window.document.getElementById(DomCanvas);
+        this.canvas = window.document.getElementById(DomCanvas);
     }
 
-    universialAniamtion(){
+    universialAniamtion() {
         //宇宙特效
         "use strict";
         var canvas = this.canvas,
@@ -65,7 +65,7 @@ class LoginModel{
             //星星移动范围，值越大范围越小，
         }
 
-        var Star = function() {
+        var Star = function () {
 
             this.orbitRadius = random(maxOrbit(w, h));
             this.radius = random(60, this.orbitRadius) / 8;
@@ -81,7 +81,7 @@ class LoginModel{
             stars[count] = this;
         }
 
-        Star.prototype.draw = function() {
+        Star.prototype.draw = function () {
             var x = Math.sin(this.timePassed) * this.orbitRadius + this.orbitX,
                 y = Math.cos(this.timePassed) * this.orbitRadius + this.orbitY,
                 twinkle = random(10);
@@ -110,7 +110,8 @@ class LoginModel{
             ctx.globalCompositeOperation = 'lighter';
             for (var i = 1, l = stars.length; i < l; i++) {
                 stars[i].draw();
-            };
+            }
+            ;
 
             window.requestAnimationFrame(animation);
         }
@@ -118,45 +119,57 @@ class LoginModel{
         animation();
     }
 
+    loginAction(){
+        let userName = this.userName.value;
+        let passWord = this.passWord.value;
+        login(userName, passWord).then((data)=> {
+            if (data) {
+                window.localStorage.setItem('login', 'login');
+                window.location.href = './app.html';
+            }
+        }).catch(e=> {
+            console.log(e);
+        });
+    }
 
-    confirmBindAction(){
+    confirmBindAction() {
 
-        this.confirm.onclick = ()=>{
-            let userName = this.userName.value;
-            let passWord = this.passWord.value;
-            login(userName,passWord).then((data)=>{
-                if(data){
-                    window.localStorage.setItem('login','login');
-                    window.location.href='./app.html';
-                }
-            }).catch(e=>{
-                console.log(e);
-            });
+        this.confirm.onclick = ()=> {
+            this.loginAction();
         }
     }
 
-    init(){
+    bindEnterListener() {
+        document.body.addEventListener('keypress',(e)=>{
+            if(e.keyCode===13){
+                this.loginAction();
+            }
+        });
+    }
+
+    init() {
         this.confirmBindAction();
         this.universialAniamtion();
+        this.bindEnterListener();
     }
 
 }
 
-(()=>{
-    if(window.localStorage.getItem('login')==='login'){
-        window.location.href='./app.html';
-    }else{
-        document.body.innerHTML = '<div><div><div class="login-content">'+
-            '<h1>综艺嘉后台管理系统</h1>'+
-            '<input id="userName" type="text" placeholder="用户名"/>'+
-            '<input id="passWord" type="password" placeholder="密码"/>'+
-            '<button class="login-content-btn" id="confirm">Login</button>'+
-            '</div>'+
-            '<div class="canvas-bg"></div>'+
-            '<canvas id="canvas"></canvas>'+
-            '</div>'+
+(()=> {
+    if (window.localStorage.getItem('login') === 'login') {
+        window.location.href = './app.html';
+    } else {
+        document.body.innerHTML = '<div><div><div class="login-content">' +
+            '<h1>综艺嘉后台管理系统</h1>' +
+            '<input id="userName" type="text" placeholder="用户名"/>' +
+            '<input id="passWord" type="password" placeholder="密码"/>' +
+            '<button class="login-content-btn" id="confirm">Login</button>' +
+            '</div>' +
+            '<div class="canvas-bg"></div>' +
+            '<canvas id="canvas"></canvas>' +
+            '</div>' +
             '</div>';
-        let loginModel = new LoginModel('userName','passWord','confirm','canvas');
+        let loginModel = new LoginModel('userName', 'passWord', 'confirm', 'canvas');
         loginModel.init();
     }
 })();

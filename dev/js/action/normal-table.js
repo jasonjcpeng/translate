@@ -224,3 +224,12 @@ export const actionBatchSelectItem = (targetID,data)=>{
     });
 
 }
+//打开批量操作
+export const actionOpenBatchOption = (targetId,isOpen)=>{
+    return ({
+        type:Constants.NORMAL_TABLE_BATCH_OPTION_IS_OPEN,
+        targetID:targetId,
+        isOpen:isOpen
+    });
+
+}

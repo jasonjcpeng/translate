@@ -313,7 +313,7 @@ export const apiResetPassWord = (account,data)=>{
         UserName: account,
         Pwd: Md5(data.oldPassWord)
     }
-    return createFetchPromise(apis.resetPassWord+'?newPwd='+Md5(data.newPassWord), (data, resolve, reject)=> {
+    return createFetchPromise(apis.resetPassWord+'?newPwd='+data.newPassWord, (data, resolve, reject)=> {
         resolve(data);
     },finalArg,'POST');
 }

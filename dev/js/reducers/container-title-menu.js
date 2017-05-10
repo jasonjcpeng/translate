@@ -427,6 +427,7 @@ export default function (state = initState, action) {
                 data:[],
                 checkOnItem:undefined,
                 nowOnClickButton:undefined,
+                isBatchOptionOpen:false,
                 modifyViewData:undefined,
                 toggleItem:[],
                 tableConfigArgs: action.initTableArgs,
@@ -494,7 +495,7 @@ export default function (state = initState, action) {
             break;
         case Constants.NORMAL_TABLE_GET_DATA:
             let loaded = action.error?false:true;
-            return setActiveContentStatusByID(state,action.targetID,{status:{tableConfigArgs:{$set:action.data?action.data.tablePagination:undefined},data:{$set:action.data?action.data.tableData:undefined},loaded:{$set:loaded},error:{$set:action.error}}});
+            return setActiveContentStatusByID(state,action.targetID,{status:{tableConfigArgs:{$set:action.data?action.data.tablePagination:undefined},data:{$set:action.data?action.data.tableData:undefined},loaded:{$set:loaded},batchOnItem:{$set:[]},error:{$set:action.error}}});
             break;
         case Constants.NORMAL_TABLE_CHECK_ON_ITEM:
             return setActiveContentStatusByID(state,action.targetID,{status:{checkOnItem:{$set:action.item}}});
@@ -620,6 +621,9 @@ export default function (state = initState, action) {
             break;
         case Constants.BUTTON_GROUP_ROLE_AUTHORIZE_CLOSE:
             return setActiveContentStatusByID(state,action.targetID,{status:{nowOnClickButton:{$set:undefined}}});
+            break;
+        case Constants.NORMAL_TABLE_BATCH_OPTION_IS_OPEN:
+            return setActiveContentStatusByID(state,action.targetID,{status:{isBatchOptionOpen:{$set:action.isOpen}}})
             break;
     }
     return state;

@@ -29,7 +29,8 @@ export const AppDidMount = ()=>{
                 payload:e
             });
         }).catch(e=>{
-            console.log(e)
+            window.localStorage.removeItem('store');
+            window.localStorage.removeItem('login');
             return dispatch({
                 type:Constants.INIT_CONTAINER_APP_DID_MOUNT,
                 error:e
