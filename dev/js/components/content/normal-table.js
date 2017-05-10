@@ -201,7 +201,7 @@ class NormalTable extends React.Component {
         }
 
         return (<div className="normal-table-header">
-            <div key={(()=>{return this.props.nowOnItem||this.props.batchOnItem.length>0?'undefined':'onItem'})()}
+            <div key={(()=>{return (this.props.nowOnItem?1:0)+this.props.isBatchOptionOpen})()}
                  className="animation-fadeInRight animation-fadeIn component-option-bar">
                 <ul style={{float:'left'}}>
                     {mapButton()}

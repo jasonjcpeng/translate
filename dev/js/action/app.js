@@ -26,11 +26,10 @@ export const AppDidMount = ()=>{
         return appStart().then(e=>{
             return dispatch({
                 type:Constants.INIT_CONTAINER_APP_DID_MOUNT,
-                payload:e
+                payload:e,
+                error:undefined
             });
         }).catch(e=>{
-            window.localStorage.removeItem('store');
-            window.localStorage.removeItem('login');
             return dispatch({
                 type:Constants.INIT_CONTAINER_APP_DID_MOUNT,
                 error:e

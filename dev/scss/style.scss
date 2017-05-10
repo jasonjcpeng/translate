@@ -44,7 +44,85 @@ body {
     margin: 10px;
     border-radius: 3px;
   }
+  .standard-table{
+    margin: 0 20px;
+    padding: 0px;
+    border:solid 2px #000;
+    border-spacing: 0px;
+    font-size: 14px;
+    width:calc(100% - 44px) ;
+    tr{
+      .sort{
+        height: 30px;
+        .up{
+          cursor: pointer;
+          position: relative;
+          top:4px;
+          display: block;
+          margin: 0 auto;
+          width: 0;
+          height: 0;
+          border-left:10px solid transparent;
+          border-right: 10px solid transparent;
+          border-bottom: 10px solid;
+        }
+        .up:hover{
+        }
+        .down{
+          cursor: pointer;
+          position: relative;
+          top:8px;
+          display: block;
+          margin: 0 auto;
+          width: 0;
+          height: 0;
+          border-left:10px solid transparent;
+          border-right: 10px solid transparent;
+          border-top: 10px solid;
+        }
+        .down:hover{
+        }
+      }
+      display: table-row;
+      vertical-align: inherit;
+      height: 35px;
+      th:first-child{
+        border-left:0;
+        border-bottom:2px solid #000;
+        text-align: center;
+      }
+      th{
+        border-left: 2px solid #000;
+        border-bottom:2px solid #000;
+        text-align: center;
+      }
+      td{
+        text-align: center;
+        border-bottom:2px solid #000;
+      }
+      input[type=text]{
+        text-align: center;
+        height: 30px;
+        width: 100%;
+        line-height: 30px;
+        border: 0px;
+      }
+      i{
+        line-height: 30px;
+        font-size: 25px;
+      }
+      .delete{
+        cursor: pointer;
+      }
+    }
+    tr:last-child{
+      td{
+        text-align: center;
+        border-bottom:0;
+      }
+    }
 
+  }
   .standard-ul {
     padding: 0;
     li {

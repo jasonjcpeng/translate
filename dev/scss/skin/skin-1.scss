@@ -13,6 +13,44 @@ $content-font-color:#6f6f6f;
 $default-option-hover-button:#6f6f6f;
 $table-item-active-color:#cbcdba;
 .skin-1{
+  .standard-table{
+    border-color: $default-option-toggle-color;
+    tr{
+      .sort{
+        .up{
+          border-bottom-color: $main-color;
+        }
+        .up:hover{
+        }
+        .down{
+          border-top-color: $main-color;
+        }
+        .down:hover{
+        }
+      }
+      th:first-child{
+        border-color: $default-option-toggle-color;
+      }
+      th{
+        border-color: $default-option-toggle-color;
+      }
+      td{
+        border-color: $default-option-toggle-color;
+      }
+      input[type=text]{
+      }
+      i{
+      }
+      .delete{
+        color:$alert-color
+      }
+    }
+    tr:last-child{
+      td{
+      }
+    }
+
+  }
   .search-group {
     li:hover {
     }

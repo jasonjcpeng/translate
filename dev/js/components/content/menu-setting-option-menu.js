@@ -396,8 +396,15 @@ class MenuSettingOptionAddMenu extends React.Component {
                                 handleOnChange(k, val, 'api', e.target.value);
                             }} value={val.api}/></td>
                         } else {
-                            return <td>
-                                <button onClick={e=> {
+                            if(val.componentName==='timeSearch'){
+                                return <td>
+                                    <input key={'api' + val.componentName + '' + k} type="text" onChange={e=> {
+                                handleOnChange(k, val, 'api', e.target.value);
+                            }} value={val.api}/>
+                                </td>
+                            }else{
+                                return <td>
+                                    <button onClick={e=> {
                                     let args = {
                                         key:k,
                                         value:val,
@@ -408,9 +415,9 @@ class MenuSettingOptionAddMenu extends React.Component {
                                     e.stopPropagation();
                                 }
                                 }>详细配置
-                                </button>
-                            </td>
-
+                                    </button>
+                                </td>
+                            }
                         }
                     })()}
                     <td><Checker style={(()=>{
@@ -975,8 +982,10 @@ class MenuSettingOptionAddMenu extends React.Component {
     }
     //渲染级联搜索按钮详细配置遮罩层
     createSearchButtonModify(){
-        if(this.props.target.status.menuData){
-            return (<ModifySearchGroupConfig tableData={this.props.viewPointConfigData} target={this.props.targetMenuSort} config={this.props.O_buttonConfigPreviewStatus}></ModifySearchGroupConfig>);
+        if(this.props.O_buttonConfigPreviewStatus){
+            return (<ModifySearchGroupConfig onOk={e=>{
+                this.props.changeMenuData(this.props.targetMenuSort, 'btnGroup', e);
+            }} tableData={this.props.viewPointConfigData} target={this.props.targetMenuSort} config={this.props.O_buttonConfigPreviewStatus}></ModifySearchGroupConfig>);
         }
     }
 

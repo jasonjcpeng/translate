@@ -1,6 +1,6 @@
 //配置文件
 //请求域名
-export const isOnline= true;
+export const isOnline= false;
 export const Host = 'http://adm1napi.chinacloudsites.cn/';
 export const Location = './jsons/apiData/';
 //超时限制时长

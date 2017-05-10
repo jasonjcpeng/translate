@@ -20,6 +20,12 @@ class ShieldAlert extends React.Component {
         }
     }
 
+    componentWillReceiveProps(props){
+        this.state ={
+            content:props.content,
+        }
+    }
+
     render() {
         if(this.state.content){
             return (<div className="shield">

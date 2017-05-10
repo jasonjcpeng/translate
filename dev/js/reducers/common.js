@@ -21,10 +21,11 @@ export default function (state = initState, action) {
         case Constants.APP_RELOAD_FROM_LOCAL_STORAGE:
             return action.payload.common;
         case Constants.INIT_CONTAINER_APP_DID_MOUNT:
-            if (action.error) {
+            if(action.error){
                 return update(state, {loaded: {$set: true}, error: {$set: action.error}});
+            }else{
+                return update(state, {loaded: {$set: true}, error: {$set: action.error},useSkin: {$set: action.payload.userInfo.useSkin}});
             }
-            return update(state, {loaded: {$set: true}, error: {$set: action.error},useSkin: {$set: action.payload.userInfo.useSkin}});
             break;
         case Constants.HEADER_TOGGLE:
             let newStatus = update(state, {lastToggleStatus: {$set: action.toggleStatus}});
@@ -112,6 +113,13 @@ export default function (state = initState, action) {
                     return update(state, {lastOnContentTarget:{$set:state.nowOnContentTarget},nowOnContentTarget: {$set: action.payload}});
                 }
             }
+            break;
+        case Constants.SHIELD_ALERT_ON_OK_DELETE_ERROR_FLAG:
+            if(action.target==='app'){
+                window.localStorage.clear();
+                window.location.reload();
+            }
+            return state;
             break;
     }
     return state;

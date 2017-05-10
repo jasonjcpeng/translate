@@ -8,6 +8,7 @@ import SideBar from '../components/side-bar';
 import Header from '../components/header';
 import Container from '../components/container';
 import {isOnline} from '../config/config';
+import ShieldAlert from '../components/piecemeal-components/shield-alert';
 
 class App extends React.Component{
     componentWillMount(){
@@ -42,7 +43,8 @@ class App extends React.Component{
 
     renderInit(){
         if(this.props.error){
-            return (<div>{this.props.error}</div>);
+
+            return (<ShieldAlert targetType="app" onTargetMenuTarget="" content={this.props.error} title="哇！崩溃啦！去找后台小哥吧！"></ShieldAlert>);
         }else{
             this.screenHeightListen = setInterval(()=>{
                 let windowHeight = window.innerHeight;

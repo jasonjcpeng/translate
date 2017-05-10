@@ -148,6 +148,8 @@ class LoginModel {
     }
 
     init() {
+        window.localStorage.removeItem('store');
+        window.localStorage.removeItem('login');
         this.confirmBindAction();
         this.universialAniamtion();
         this.bindEnterListener();
