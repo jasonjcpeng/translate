@@ -8,12 +8,16 @@ import {apiSetRoleAuthorize} from '../../services/api';
  * @param
  * onCancel:() 必填 关闭遮罩的回调，如没有则不显示取消按钮
  * */
-class ShieldAlert extends React.Component {
+class ButtonGroupRoleAuthorize extends React.Component {
     constructor(props) {
         super();
         this.state = {
             selectedRole: props.selectedItem,
         }
+    }
+
+    componentWillUnmount(){
+        
     }
 
     createMenuSettingTableBody(toggleCode) {
@@ -34,7 +38,7 @@ class ShieldAlert extends React.Component {
             });
             return (<td>
                 <div onClick={e=>{
-                        this.props.actionBatchSelectItem(this.props.targetID,v);
+                        this.props.actionBatchSelectItem(this.props.targetID,v,this.props.currentMenu);
                         e.stopPropagation();
                     }} className={className}></div>
             </td> );
@@ -140,7 +144,7 @@ class ShieldAlert extends React.Component {
             });
             return (<th style={{width:30}}>
                 <div onClick={e=>{
-                    this.props.actionBatchSelectItem(this.props.targetID,this.props.currentMenu);
+                    this.props.actionBatchSelectItem(this.props.targetID,this.props.currentMenu,this.props.currentMenu);
                     e.stopPropagation();
                 }} className={className}></div>
             </th> );
@@ -183,7 +187,7 @@ class ShieldAlert extends React.Component {
     }
 }
 
-ShieldAlert.defaultProps = {}
+ButtonGroupRoleAuthorize.defaultProps = {}
 
 let state = (state)=> {
     let target, currentToggleItem, batchOnItem;
@@ -210,14 +214,15 @@ let action = (dispatch)=> {
                 code: code
             });
         },
-        actionBatchSelectItem: (targetID, data)=> {
+        actionBatchSelectItem: (targetID, data,allItem)=> {
             if (Object.prototype.toString.apply(data) === '[object Object]') {
                 data = [data];
             }
             return ({
                 type: Constants.SHIELD_BUTTON_GROUP_ROLE_AUTHORIZE_BATCH_SELECT_ITEM,
                 targetID: targetID,
-                onBatchItem: data
+                onBatchItem: data,
+                allItem:allItem
             });
         },
         actionCloseThis:(targetID)=>{
@@ -243,4 +248,4 @@ let action = (dispatch)=> {
 }
 
 
-export default connect(state, action)(ShieldAlert);
+export default connect(state, action)(ButtonGroupRoleAuthorize);

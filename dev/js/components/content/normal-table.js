@@ -89,7 +89,7 @@ class NormalTable extends React.Component {
                 case 'roleAuthorize':
                     let roleAuthorizeIsShow = this.props.batchOnItem.length > 0 ? true : false;
                     return <ButtonGroupRoleAuthorize
-                        selectedItem={this.props.batchOnItem}
+                        selectedItem={this.props.nowOnItem}
                         isShow={roleAuthorizeIsShow} key={this.props.targetID}></ButtonGroupRoleAuthorize>
                     break;
             }
@@ -460,7 +460,7 @@ class NormalTable extends React.Component {
                                 return (<div style={{width:'40px',float:'left',paddingLeft:arrowIconMargin(v,15)+'px'}}>
                                     {(()=> {
                                         if (isMenuHasChild(menuData, v)) {
-                                            return (<i onClick={
+                                            return (<i style={{float:'left'}} onClick={
                                                 e=>{
                                                     this.props.actionToggleItem(this.props.targetID,v);
                                                     e.stopPropagation();

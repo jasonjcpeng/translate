@@ -457,6 +457,25 @@ export default function (state = initState, action) {
             }}}}});
             break;
         case Constants.SHIELD_BUTTON_GROUP_ROLE_AUTHORIZE_BATCH_SELECT_ITEM:
+            let allItem = action.allItem;
+            let findAllChild = (item,allItem)=>{
+                let TempChild = [];
+                if(allItem.length>0){
+                    let newAllItem = allItem.filter((v,k)=>{
+                        if(v.parentCode===item.code){
+                            TempChild.push(v);
+                        }else{
+                            return v;
+                        }
+                    });
+                    for(let i in TempChild){
+                        TempChild.concat(findAllChild(TempChild[i],newAllItem))
+                    }
+                }
+                return TempChild;
+
+            }
+
             return setActiveContentStatusByID(state, action.targetID, {
                 status: {
                     roleAuthorize: {
@@ -476,12 +495,13 @@ export default function (state = initState, action) {
                                         let isPush = true;
                                         for (let l in arr) {
                                             if (action.onBatchItem[i].id === arr[l].id) {
-                                                originArr.splice(l, 1);
+                                                originArr.splice(l,(Number.parseInt(l)+findAllChild(action.onBatchItem[i],allItem).length+1));
                                                 isPush = false;
                                             }
                                         }
                                         if (isPush) {
                                             tempResult.push(action.onBatchItem[i]);
+                                            tempResult = tempResult.concat(findAllChild(action.onBatchItem[i],allItem))
                                         }
                                     }
                                     resultArr = tempResult.concat(originArr);
@@ -620,7 +640,8 @@ export default function (state = initState, action) {
 
             break;
         case Constants.BUTTON_GROUP_ROLE_AUTHORIZE_CLOSE:
-            return setActiveContentStatusByID(state,action.targetID,{status:{nowOnClickButton:{$set:undefined}}});
+            return setActiveContentStatusByID(state,action.targetID,{status:{nowOnClickButton:{$set:undefined},roleAuthorize:{$set:{currentToggleItem:[],
+                batchOnItem:[]}}}});
             break;
         case Constants.NORMAL_TABLE_BATCH_OPTION_IS_OPEN:
             return setActiveContentStatusByID(state,action.targetID,{status:{isBatchOptionOpen:{$set:action.isOpen}}})

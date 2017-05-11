@@ -321,9 +321,7 @@ export const apiResetPassWord = (account,data)=>{
 export const apiSetRoleAuthorize = (api,roles,modules)=>{
     let roleID =[];
     let moduleID = [];
-    roles.map((v,k)=>{
-        roleID.push(v['AX_Id']);
-    });
+    roleID.push(roles['AX_Id']);
     modules.map((v,k)=>{
         moduleID.push(v.id);
     });
