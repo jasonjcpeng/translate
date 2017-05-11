@@ -17,7 +17,6 @@ class ButtonGroupRoleAuthorize extends React.Component {
     }
 
     componentWillUnmount(){
-        
     }
 
     createMenuSettingTableBody(toggleCode) {

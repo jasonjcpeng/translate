@@ -166,7 +166,9 @@ export default function (state = initState, action) {
                 ok:undefined,
                 rightActiveContent: {key: 'baseInfo', name: '基本信息'},
                 defaultMenuSettingTableToggleItem: ['0'],
-                selectMenuSettingTableItem: undefined
+                selectMenuSettingTableItem: undefined,
+                currentToggleItem:[]
+
             }
             if (action.error) {
                 initContentSetting.error = action.error;
@@ -175,6 +177,22 @@ export default function (state = initState, action) {
             break;
         case Constants.CONTENT_SETTING_CHECK_RIGHT_ACTIVE_CONTAINER:
             return setActiveContentStatus(state, action.menuSort, {status: {rightActiveContent: {$set: action.payload}}});
+            break;
+        case Constants.CONTENT_SETTING_QUICK_BUTTON_TABLE_TOGGLE:
+            return setActiveContentStatus(state,action.menuSort,{status:{currentToggleItem:{$apply:(arr)=>{
+                let isPushFlag = true;
+                let newArr = arr.filter(v=>{
+                    if(action.code===v){
+                        isPushFlag = false;
+                    }else{
+                        return v;
+                    }
+                });
+                if(isPushFlag){
+                    newArr.push(action.code);
+                }
+                return newArr;
+            }}}});
             break;
         case Constants.CONTENT_SETTING_CHANGE_MENU:
             /*修改菜单内容

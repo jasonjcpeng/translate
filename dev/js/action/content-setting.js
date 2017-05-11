@@ -164,7 +164,20 @@ export const actionResetPassWord = (account,userData)=>{
             });
         }
     }else{
-
-
     }
+}
+
+export const actionToggleItem=(menuSort, code)=> {
+    return ({
+        type: Constants.CONTENT_SETTING_QUICK_BUTTON_TABLE_TOGGLE,
+        menuSort: menuSort,
+        code: code
+    });
+}
+
+export const actionChangeQuickButton = (quickButton)=>{
+    return ({
+        type: Constants.CONTENT_SETTING_CHANGE_QUICK_BUTTON,
+        quickButton: quickButton
+    });
 }

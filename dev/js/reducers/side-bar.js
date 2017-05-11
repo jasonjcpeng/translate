@@ -143,6 +143,23 @@ export default function (state = initState, action) {
                 return arr;
             }}});
             break;
+        case Constants.CONTENT_SETTING_CHANGE_QUICK_BUTTON:
+            return update(state,{userInfo:{quickButton:{$apply:arr=>{
+                let flag = true
+                let orign = arr.filter(v=>{
+                    if(v.id===action.quickButton.id){
+                        flag = false;
+                    }else{
+                        return v;
+                    }
+                });
+                if(flag){
+                    orign.push(action.quickButton);
+                }
+                return orign;
+
+            }}}});
+            break;
     }
     return state;
 }

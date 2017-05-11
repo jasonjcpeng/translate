@@ -7,6 +7,9 @@ import Loader from 'react-loader';
 import {LoaderOption} from '../../config/config';
 import ShieldAlert from '../piecemeal-components/shield-alert';
 import ShieldOk from '../piecemeal-components/shield-ok';
+import classnames from 'classnames';
+//Tools
+import {FormatDataInfo} from '../../config/tools';
 //JSON
 import SkinList from '../../../jsons/skin-list.json';
 import menuSettingOption from '../../../jsons/menu-setting-option.json';
@@ -21,6 +24,7 @@ class ContentSetting extends React.Component {
             this.props.contentSettingGetMount(this.props.nowOnContentTarget);
         }
     }
+
 
     createContentSettingNavBar(arr) {
         return arr.map((v)=> {
@@ -43,12 +47,12 @@ class ContentSetting extends React.Component {
 
     createBaseInfo(rightActiveContent, tableHeight) {
         this.protoBaseInfo = {
-            name:this.props.userInfo.name,
-            nickName:this.props.userInfo.nickName,
-            birthDay:this.props.userInfo.birthDay.substring(0,(this.props.userInfo.birthDay.indexOf('T')))
+            name: this.props.userInfo.name,
+            nickName: this.props.userInfo.nickName,
+            birthDay: this.props.userInfo.birthDay.substring(0, (this.props.userInfo.birthDay.indexOf('T')))
         }
 
-        let handleOnChangeBaseInfo = (key,val)=>{
+        let handleOnChangeBaseInfo = (key, val)=> {
             this.protoBaseInfo[key] = val;
         }
 
@@ -62,18 +66,25 @@ class ContentSetting extends React.Component {
                             <li><span>昵称</span><input onChange={e=>{
                                 handleOnChangeBaseInfo('nickName',e.target.value);
                             }} type="text" defaultValue={this.protoBaseInfo.nickName}/></li>
-                            <li><span>姓名</span><input disabled="disabled"type="text" defaultValue={this.protoBaseInfo.name}/></li>
-                            <li><span>生日</span><input disabled="disabled"  type="text" defaultValue={this.protoBaseInfo.birthDay}/></li>
-                            <li><span>账户描述</span><input disabled="disabled" type="text" defaultValue={this.props.userInfo.description}/></li>
-                            <li><span>权限</span><input type="text" disabled="disabled" defaultValue={this.props.userInfo.power}/></li>
-                            <li><span>账户创建时间</span><input disabled="disabled" type="text" defaultValue={this.props.userInfo.createTime.substring(0,this.props.userInfo.createTime.indexOf('T'))}/></li>
+                            <li><span>姓名</span><input disabled="disabled" type="text"
+                                                      defaultValue={this.protoBaseInfo.name}/></li>
+                            <li><span>生日</span><input disabled="disabled" type="text"
+                                                      defaultValue={this.protoBaseInfo.birthDay}/></li>
+                            <li><span>账户描述</span><input disabled="disabled" type="text"
+                                                        defaultValue={this.props.userInfo.description}/></li>
+                            <li><span>权限</span><input type="text" disabled="disabled"
+                                                      defaultValue={this.props.userInfo.power}/></li>
+                            <li><span>账户创建时间</span><input disabled="disabled" type="text"
+                                                          defaultValue={FormatDataInfo(this.props.userInfo.createTime)}/>
+                            </li>
                         </ul>
                     </div>
                 </div>
                 <div className="content-setting-footer">
                     <button onClick={e=>{
                         this.props.actionChangeUserInfo(this.props.userInfo.id,this.protoBaseInfo);
-                    }} className="btn btn-finish">确认修改</button>
+                    }} className="btn btn-finish">确认修改
+                    </button>
                 </div>
             </div>
         </div>);
@@ -82,10 +93,10 @@ class ContentSetting extends React.Component {
     createTel(rightActiveContent, tableHeight) {
         let height = tableHeight - 50;
         this.protoTelInfo = {
-            mobilePhone:this.props.userInfo.mobilePhone,
-            eMail:this.props.userInfo.eMail,
+            mobilePhone: this.props.userInfo.mobilePhone,
+            eMail: this.props.userInfo.eMail,
         }
-        let handleOnChangeTelInfo = (key,val)=>{
+        let handleOnChangeTelInfo = (key, val)=> {
             this.protoTelInfo[key] = val;
         }
         return (<div key={rightActiveContent.key} className="right-active-content animation-fadeInRight">
@@ -106,31 +117,32 @@ class ContentSetting extends React.Component {
                 <div className="content-setting-footer">
                     <button onClick={e=>{
                         this.props.actionChangeUserInfo(this.props.userInfo.id,this.protoTelInfo);
-                    }}  className="btn btn-finish">确认修改</button>
+                    }} className="btn btn-finish">确认修改
+                    </button>
                 </div>
             </div>
 
         </div>);
     }
 
-    createResetPassWord(rightActiveContent, tableHeight){
+    createResetPassWord(rightActiveContent, tableHeight) {
         let height = tableHeight - 50;
         this.protoResetPassWord = {
-            oldPassWord:'',
-            newPassWord:'',
-            confirmPassWord:''
+            oldPassWord: '',
+            newPassWord: '',
+            confirmPassWord: ''
         }
-        let handleOnChangeResetPassWordInfo = (key,val)=>{
+        let handleOnChangeResetPassWordInfo = (key, val)=> {
             this.protoResetPassWord[key] = val;
         }
-        let handleOnFinishResetPassWord = ()=>{
-            if(this.protoResetPassWord.oldPassWord!==this.protoResetPassWord.newPassWord){
-                if(this.protoResetPassWord.newPassWord===this.protoResetPassWord.confirmPassWord){
-                    this.props.actionResetPassWord(this.props.userInfo.account,this.protoResetPassWord);
-                }else{
+        let handleOnFinishResetPassWord = ()=> {
+            if (this.protoResetPassWord.oldPassWord !== this.protoResetPassWord.newPassWord) {
+                if (this.protoResetPassWord.newPassWord === this.protoResetPassWord.confirmPassWord) {
+                    this.props.actionResetPassWord(this.props.userInfo.account, this.protoResetPassWord);
+                } else {
                     this.props.actionSendError('两次输入的密码不同！');
                 }
-            }else{
+            } else {
                 this.props.actionSendError('新旧密码不能相同！');
             }
         }
@@ -140,22 +152,23 @@ class ContentSetting extends React.Component {
                 <div style={{height: height-80}}>
                     <div className="standard-ul">
                         <ul>
-                            <li><span>原密码</span><input  onChange={e=>{
+                            <li><span>原密码</span><input onChange={e=>{
                                 handleOnChangeResetPassWordInfo('oldPassWord',e.target.value);
-                            }} type="password" /></li>
-                            <li><span>新密码</span><input  onChange={e=>{
+                            }} type="password"/></li>
+                            <li><span>新密码</span><input onChange={e=>{
                                 handleOnChangeResetPassWordInfo('newPassWord',e.target.value);
-                            }} type="password" /></li>
-                            <li><span>再次输入密码</span><input  onChange={e=>{
+                            }} type="password"/></li>
+                            <li><span>再次输入密码</span><input onChange={e=>{
                                 handleOnChangeResetPassWordInfo('confirmPassWord',e.target.value);
-                            }} type="password" /></li>
+                            }} type="password"/></li>
                         </ul>
                     </div>
                 </div>
                 <div className="content-setting-footer">
                     <button onClick={e=>{
                         handleOnFinishResetPassWord();
-                    }} className="btn btn-finish">确认修改</button>
+                    }} className="btn btn-finish">确认修改
+                    </button>
                 </div>
             </div>
 
@@ -187,6 +200,161 @@ class ContentSetting extends React.Component {
         </div>);
     }
 
+    createQuickButtonSetting(rightActiveContent, tableHeight) {
+        let height = tableHeight - 50;
+        let createMenuSettingTableBody = (toggleCode) => {
+            //创造批量选择框
+            let createBatchSelectBody = (v)=> {
+                let value = (()=> {
+                    let result = false;
+                    this.props.batchOnItem.map(val=> {
+                        if (v.id === val.id) {
+                            return result = true;
+                        }
+                    });
+                    return result
+                })();
+                let className = classnames({
+                    "checkbox": true,
+                    'checkbox-checked': value
+                });
+                return (<td>
+                    <div onClick={e=>{
+                        let isAdding= true;
+                        for(let i in this.props.batchOnItem){
+                            if(this.props.batchOnItem[i].id===v.id){
+                                isAdding = false;
+                            }
+                        }
+                        if(this.props.batchOnItem.length>5&&isAdding){
+                            this.props.actionSendError('快捷菜单不得多于6个！');
+                        }else if(!v.icon){
+                            this.props.actionSendError('只能选择具有图标的菜单作为快捷菜单！');
+                        }else{
+                            this.props.actionChangeQuickButton(v);
+                        }
+                        e.stopPropagation();
+                    }} className={className}></div>
+                </td> );
+            }
+
+            let quickSort = (arr, root = {code: '0'}, result = [])=> {
+                let menu = [];
+                if (arr.length > 0) {
+                    let newArr = arr.filter(v=> {
+                        if (v.parentCode === root.code) {
+                            menu.push(v);
+                        } else {
+                            return v;
+                        }
+                    });
+                    if (menu.length > 0) {
+                        for (let i in menu) {
+                            result.push(menu[i]);
+                            quickSort(newArr, menu[i], result);
+                        }
+                    }
+                }
+                return result;
+            }
+            let menu = quickSort(this.props.currentMenu);
+            let trIsHidden = (v)=> {
+                let toggleStateFlag = true;
+                if (v.parentCode === '0') {
+                    toggleStateFlag = false;
+                } else {
+                    for (let i in toggleCode) {
+                        if (v.parentCode === toggleCode[i]) {
+                            toggleStateFlag = false;
+                        }
+                    }
+                }
+                return toggleStateFlag;
+            }
+            let arrowIconMargin = (v, margin)=> {
+                let localMargin = margin;
+                for (let i = 0; i < this.props.currentMenu.length; i++) {
+                    if (v.parentCode === this.props.currentMenu[i].code) {
+                        localMargin += arrowIconMargin(this.props.currentMenu[i], (margin + 5));
+                    }
+                }
+                return localMargin
+            }
+            let isMenuHasChild = (newMenu, currentMenu)=> {
+                for (let i in newMenu) {
+                    if (newMenu[i].parentCode === currentMenu.code) {
+                        return true;
+                        break;
+                    }
+                }
+                return false;
+            }
+            let trToggleIconClassNames = (v)=> {
+                let toggleStateFlag = false;
+                for (let i in toggleCode) {
+                    if (v.code === toggleCode[i]) {
+                        toggleStateFlag = true;
+                    }
+                }
+                return toggleStateFlag ? 'menu-toggle fa fa-caret-down' : 'menu-toggle fa fa-caret-right';
+            }
+            return menu.map((v, k)=> {
+                return (<tr hidden={trIsHidden(v)} key={k}>
+                    {createBatchSelectBody(v)}
+                    <td>{ (()=> {
+                        return (<div style={{width: '40px', float: 'left', paddingLeft: arrowIconMargin(v, 15) + 'px'}}>
+                            {(()=> {
+                                if (isMenuHasChild(menu, v)) {
+                                    return (<i onClick={(e)=> {
+                                    this.props.actionToggleItem(this.props.target.obj.menuSort,v.code);
+                                    e.stopPropagation();
+                                }} className={trToggleIconClassNames(v)}></i>)
+                                } else {
+                                    return (<i className="menu-no-toggle"></i>)
+                                }
+                            })()}
+                            <span style={{marginLeft: '5px'}}>{k + 1}</span>
+                        </div>);
+                    })()}</td>
+                    <td style={{paddingLeft: arrowIconMargin(v, 40) + 'px'}}>{v.menuName}</td>
+                    <td ><i className={'fa ' + v.icon}></i></td>
+                    <td></td>
+                </tr>);
+            });
+
+        }
+
+
+        return (<div key={rightActiveContent.key} className="right-active-content animation-fadeInRight">
+            {this.createActiveContentHeader(rightActiveContent)}
+            <div style={{height: height}} className="content-setting-frame">
+                <div style={{overflow:'auto',height: height-80}}>
+                    <table >
+                        <thead>
+                        <tr>
+                            <th style={{width: '30px'}}></th>
+                            <th style={{width: '60px'}}></th>
+                            <th style={{width: '300px'}}>名称</th>
+                            <th style={{width: '60px'}}>图标</th>
+                            <th>介绍</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {createMenuSettingTableBody(this.props.currentToggleItem)}
+                        </tbody>
+                    </table>
+                </div>
+                <div className="content-setting-footer">
+                    <button onClick={e=>{
+                    this.props.actionChangeUserInfo(this.props.userInfo.id,{quickButton:this.props.batchOnItem});
+                    e.stopPropagation();
+                    }} className="btn btn-finish">确认修改
+                    </button>
+                </div>
+            </div>
+        </div>);
+    }
+
     isMenuHasChild(newMenu, currentMenu) {
         for (let i in newMenu) {
             if (newMenu[i].parentCode === currentMenu.code) {
@@ -197,7 +365,7 @@ class ContentSetting extends React.Component {
         return false;
     }
 
-    quickSort(arr, root = {code: '0'}, result=[]) {
+    quickSort(arr, root = {code: '0'}, result = []) {
         let menu = [];
         if (arr.length > 0) {
             let newArr = arr.filter(v=> {
@@ -228,13 +396,13 @@ class ContentSetting extends React.Component {
 
     createMenuSettingTableBody(toggleCode) {
         let menu = this.quickSort(this.props.currentMenu);
-        let trIsHidden = (v)=>{
+        let trIsHidden = (v)=> {
             let toggleStateFlag = true;
-            if(v.parentCode==='0'){
+            if (v.parentCode === '0') {
                 toggleStateFlag = false;
-            }else{
-                for(let i in toggleCode){
-                    if(v.parentCode===toggleCode[i]){
+            } else {
+                for (let i in toggleCode) {
+                    if (v.parentCode === toggleCode[i]) {
                         toggleStateFlag = false;
                     }
                 }
@@ -242,20 +410,20 @@ class ContentSetting extends React.Component {
             return toggleStateFlag;
         }
         let createTrClassName = (v)=> {
-            if (this.props.target.status.selectMenuSettingTableItem&&v.code === this.props.target.status.selectMenuSettingTableItem.code) {
+            if (this.props.target.status.selectMenuSettingTableItem && v.code === this.props.target.status.selectMenuSettingTableItem.code) {
                 return 'active';
             }
         }
-        let arrowIconMargin = (v,margin)=>{
+        let arrowIconMargin = (v, margin)=> {
             let localMargin = margin;
-            for(let i=0;i<this.props.currentMenu.length;i++){
-                if(v.parentCode===this.props.currentMenu[i].code){
-                    localMargin += arrowIconMargin(this.props.currentMenu[i],(margin+5));
+            for (let i = 0; i < this.props.currentMenu.length; i++) {
+                if (v.parentCode === this.props.currentMenu[i].code) {
+                    localMargin += arrowIconMargin(this.props.currentMenu[i], (margin + 5));
                 }
             }
             return localMargin
         }
-        let  isMenuHasChild =(newMenu, currentMenu)=>{
+        let isMenuHasChild = (newMenu, currentMenu)=> {
             for (let i in newMenu) {
                 if (newMenu[i].parentCode === currentMenu.code) {
                     return true;
@@ -264,30 +432,30 @@ class ContentSetting extends React.Component {
             }
             return false;
         }
-        let trToggleIconClassNames = (v)=>{
+        let trToggleIconClassNames = (v)=> {
             let toggleStateFlag = false;
-            for(let i in toggleCode){
-                if(v.code===toggleCode[i]){
+            for (let i in toggleCode) {
+                if (v.code === toggleCode[i]) {
                     toggleStateFlag = true;
                 }
             }
-            return toggleStateFlag?'menu-toggle fa fa-caret-down':'menu-toggle fa fa-caret-right';
+            return toggleStateFlag ? 'menu-toggle fa fa-caret-down' : 'menu-toggle fa fa-caret-right';
         }
-        return menu.map((v,k)=>{
+        return menu.map((v, k)=> {
             return (<tr hidden={trIsHidden(v)} className={createTrClassName(v)} onClick={(e)=>{
                 this.props.selectSingleMenuItem(v);
                 e.stopPropagation();
             }} key={k}>
-                <td>{ (()=>{
+                <td>{ (()=> {
                     return (<div style={{width:'40px',float:'left',paddingLeft:arrowIconMargin(v,15)+'px'}}>
-                        {(()=>{
+                        {(()=> {
                             if (isMenuHasChild(menu, v)) {
                                 return (<i onClick={(e)=>{
                                     this.props.toggleSingleMenuItem(v.code);
                                     e.stopPropagation();
                                 }} className={trToggleIconClassNames(v)}></i>)
-                            }else{
-                                return (<i  className="menu-no-toggle"></i>)
+                            } else {
+                                return (<i className="menu-no-toggle"></i>)
                             }
                         })()}
                         <span style={{marginLeft:'5px'}}>{k + 1}</span>
@@ -296,19 +464,19 @@ class ContentSetting extends React.Component {
                 <td style={{paddingLeft:arrowIconMargin(v,40)+'px'}}>{v.menuName}</td>
                 <td ><i className={'fa ' + v.icon}></i></td>
                 {/*<td onClick={
-                    (e)=> {
-                        let obj = v;
-                        obj.isEnable = !v.isEnable;
-                        this.props.changeMenuSetting(obj);
-                        e.stopPropagation();
-                    }
-                }>{function () {
-                    if (v.isEnable) {
-                        return (<i className="fa fa-toggle-on"></i>);
-                    } else {
-                        return (<i className="fa fa-toggle-off"></i>);
-                    }
-                }.bind(this)()}</td>
+                 (e)=> {
+                 let obj = v;
+                 obj.isEnable = !v.isEnable;
+                 this.props.changeMenuSetting(obj);
+                 e.stopPropagation();
+                 }
+                 }>{function () {
+                 if (v.isEnable) {
+                 return (<i className="fa fa-toggle-on"></i>);
+                 } else {
+                 return (<i className="fa fa-toggle-off"></i>);
+                 }
+                 }.bind(this)()}</td>
                  <td>{v.menuSort}</td>*/}
                 <td></td>
             </tr>);
@@ -403,8 +571,8 @@ class ContentSetting extends React.Component {
                             <th style={{width:'60px'}}></th>
                             <th style={{width:'300px'}}>名称</th>
                             <th style={{width:'60px'}}>图标</th>
-                          {/*  <th style={{width:'60px'}}>有效</th>*/}
-                    {/*        <th style={{width:'100px'}}>菜单种类</th>*/}
+                            {/*  <th style={{width:'60px'}}>有效</th>*/}
+                            {/*        <th style={{width:'100px'}}>菜单种类</th>*/}
                             <th>介绍</th>
                         </tr>
                         </thead>
@@ -436,6 +604,8 @@ class ContentSetting extends React.Component {
             case 'menuSetting':
                 return this.createMenuSetting(rightActiveContent, tableHeight);
                 return
+            case 'quickButton':
+                return this.createQuickButtonSetting(rightActiveContent, tableHeight);
         }
     }
 
@@ -446,6 +616,7 @@ class ContentSetting extends React.Component {
             name: '我的头像'
         }, {key: 'resetPassWord', name: '修改密码'}, {key: 'skin', name: '设置皮肤'}];
         let contentSettingPowerNavBar = [{key: 'menuSetting', name: '编辑菜单'}];
+        let contentBesideSettingNavBar = [{key: 'quickButton', name: '快捷菜单'}];
         if (this.props.target.status) {
             return (
                 <div>
@@ -458,15 +629,25 @@ class ContentSetting extends React.Component {
                                 </ul>
                                 <div className="br-line"></div>
                                 <ul>
-                                    {this.createContentSettingNavBar(contentSettingPowerNavBar)}
+                                    {this.createContentSettingNavBar(contentBesideSettingNavBar)}
+                                    {
+                                        (()=> {
+                                            if (this.props.userInfo.powerEnCode === "administrators") {
+                                                return this.createContentSettingNavBar(contentSettingPowerNavBar);
+                                            }
+                                        })()
+                                    }
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div className="content-container animation-fadeInRight"
                          style={{width:'80%',float:'right',marginRight:'1%'}}>
-                        <ShieldAlert key={this.props.target.obj.menuSort+'error'+this.props.error} content={this.props.error} title={'Alert'} onTargetMenuTarget={'setting'}></ShieldAlert>
-                        <ShieldOk key={this.props.target.obj.menuSort+'ok'+this.props.ok} content={this.props.ok} title={'Success'} onTargetMenuTarget={'setting'}></ShieldOk>
+                        <ShieldAlert key={this.props.target.obj.menuSort+'error'+this.props.error}
+                                     content={this.props.error} title={'Alert'}
+                                     onTargetMenuTarget={'setting'}></ShieldAlert>
+                        <ShieldOk key={this.props.target.obj.menuSort+'ok'+this.props.ok} content={this.props.ok}
+                                  title={'Success'} onTargetMenuTarget={'setting'}></ShieldOk>
                         <div className="content-container-inset" style={{height: tableHeight}}>
                             {this.createRightActiveContent(tableHeight)}
                         </div>
@@ -491,20 +672,23 @@ class ContentSetting extends React.Component {
 }
 
 const state = state=> {
-    let target;
+    let target, quickButton;
     state.containerTitleMenu.activeContent.map(v=> {
-        if (state.common.nowOnContentTarget&&v.obj.id === state.common.nowOnContentTarget.id) {
+        if (state.common.nowOnContentTarget && v.obj.id === state.common.nowOnContentTarget.id) {
             target = v;
         }
     });
+
     return ({
         target: target,
-        userInfo:state.sideBar.userInfo,
+        userInfo: state.sideBar.userInfo,
         useSkin: state.common.useSkin,
         defaultToggleStatus: state.common.defaultToggleStatus,
+        batchOnItem: state.sideBar.userInfo.quickButton,
         currentMenu: state.sideBar.menu,
-        error:target?target.status.error:undefined,
-        ok:target?target.status.ok:undefined
+        error: target ? target.status.error : undefined,
+        ok: target ? target.status.ok : undefined,
+        currentToggleItem: target ? target.status.currentToggleItem : [],
     });
 }
 

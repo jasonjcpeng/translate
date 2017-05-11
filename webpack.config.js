@@ -2,7 +2,8 @@ var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var autoprefixer = require('autoprefixer');
-
+var LoginTitle = '综艺嘉登陆';
+var Tittle = '综艺嘉';
 module.exports = {
     //不打包的基本库，可以做CDN加速
    /* externals: {
@@ -59,14 +60,14 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: '综艺嘉登陆',
+            title: LoginTitle,
             template: 'dev/index.html',
             filename: 'index.html',
             inject: 'body',
             chunks:['index','app']
         }),
         new HtmlWebpackPlugin({
-            title: '综艺嘉',
+            title: Tittle,
             template: 'dev/app.html',
             filename: 'app.html',
             inject: 'body',

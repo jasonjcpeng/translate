@@ -95,3 +95,9 @@ export const arraifyStringWhosChildIsObj = (viewPointString)=>{
     }
     return result
 }
+
+export const FormatDataInfo = (data)=>{
+    let Data = data.split("T")[0].replace(/-/g,'/');
+    let Time = data.split("T")[1];
+    return Data+' '+Time;
+}

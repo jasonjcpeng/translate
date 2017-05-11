@@ -102,7 +102,8 @@ export const appStart = ()=> {
                                 power: filterStringDataDontBeNull(getAllDetail[0]['AX_FullName']),
                                 powerEnCode: filterStringDataDontBeNull(getAllDetail[0]['AX_EnCode']),
                                 imgUrl: res[1].data['AX_HeadIcon']?res[1].data['AX_HeadIcon']:'./img/profile_small.jpg',
-                                useSkin: 'skin-1',
+                                useSkin: res[1].data['Theme']?res[1].data['Theme']:'skin-1',
+                                quickButton:arraifyStringWhosChildIsObj(res[1].data['Shortcutbutton']),
                                 nickName: filterStringDataDontBeNull(res[1].data['AX_NickName']),
                                 birthDay: filterStringDataDontBeNull(res[1].data['AX_Birthday']),
                                 mobilePhone: filterStringDataDontBeNull(res[1].data['AX_MobilePhone']),
@@ -302,6 +303,7 @@ export const apiChangeUserInfo = (id,arg)=>{
         AX_RealName:arg.name,
         AX_Birthday:arg.birthDay,
         AX_NickName:arg.nickName,
+        Shortcutbutton:arg.quickButton
     }
     return createFetchPromise(apis.changeUserInfo+id, (data, resolve, reject)=> {
         resolve(data);

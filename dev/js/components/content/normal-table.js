@@ -13,6 +13,8 @@ import ButtonGroupRoleAuthorize from '../piecemeal-components/button-group-role-
 import Pagination from '../piecemeal-components/pagination';
 import ShieldAlert from '../piecemeal-components/shield-alert';
 import Checker from '../piecemeal-components/checker';
+//Tool
+import {FormatDataInfo} from '../../config/tools';
 
 import * as ActionCreators from '../../action/normal-table';
 import InitTableArgs from '../../../jsons/init-table-args.json';
@@ -362,6 +364,8 @@ class NormalTable extends React.Component {
                     if (v.isEnable) {
                         if (v.api) {
                             return createOptionsInTD(val, v, k);
+                        }else if(v.name.indexOf('Time')>0){
+                            return (<td key={k}>{val[v.name] ? FormatDataInfo(val[v.name]): ''}</td>);
                         } else {
                             return (<td key={k}>{val[v.name] ? val[v.name] : ''}</td>);
                         }
