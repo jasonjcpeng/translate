@@ -211,9 +211,9 @@ class MenuSettingOptionAddMenu extends React.Component {
                     }}></Checker></td>
                     <td>{createMultiColumnsOnChecker(k, v)}</td>
                     <td>{createItemComponentWidthOnChecker(k, v)}</td>
-                    <td><i onClick={()=>{
-                        handleDelete(k);
-                    }} className="fa fa-times-circle delete"></i></td>
+                    {<td><i onClick={()=>{
+                     handleDelete(k);
+                     }} className="fa fa-times-circle delete"></i></td>}
                 </tr>
             });
         }
@@ -223,7 +223,9 @@ class MenuSettingOptionAddMenu extends React.Component {
                 viewPointGroup.push(viewPointItem);
                 this.props.changeMenuData(this.props.targetMenuSort, 'modifyViewPoint', viewPointGroup);
             }
-            return this.props.viewPointConfigData.map((v, k)=> {
+
+            return '';
+            /*return this.props.viewPointConfigData.map((v, k)=> {
                 let flag = true;
                 for (let i in this.props.menuData.modifyViewPoint) {
                     if (this.props.menuData.modifyViewPoint[i].name === v.name) {
@@ -251,7 +253,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                     }
                     } key={k}>{v.name}</li>);
                 }
-            });
+            });*/
         }
 
         let table = ()=> {
@@ -568,9 +570,9 @@ class MenuSettingOptionAddMenu extends React.Component {
                             handleOnChange(k,v,'width',width);
                         }
                     } value={v.width} min="0" max="100" type="number"/></td>
-                        <td><i onClick={()=>{
-                    handleDelete(k);
-                    }} className="fa fa-times-circle delete"></i></td>
+                        {/*<td><i onClick={()=>{
+                         handleDelete(k);
+                         }} className="fa fa-times-circle delete"></i></td>*/}
                     </tr>
             });
         }
@@ -626,7 +628,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                     <th>匹配Api</th>
                     <th>绑定布尔字段</th>
                     <th style={{width:"90px"}}>宽度设置(%)</th>
-                    <th style={{width:"50px"}}>删除</th>
+                    {/*<th style={{width:"50px"}}>删除</th>*/}
                 </tr>
                 </thead>
                 <tbody>

@@ -375,10 +375,25 @@ export default function (state = initState, action) {
             if (action.error) {
                 return setActiveContentStatus(state, action.targetMenuSort, {status: {error: {$set: "来自菜单视图项API:" + action.error}}})
             } else {
+                console.log(action.targetMenu.viewPoint&&action.targetMenu.viewPoint.length>0);
                 if(action.targetMenu.viewPoint&&action.targetMenu.viewPoint.length>0){
-                    return setActiveContentStatus(state, action.targetMenuSort, {status: {viewPointConfigData: {$set: action.payload}}})
+                    return setActiveContentStatus(state, action.targetMenuSort, {status: {viewPointConfigData: {$set: action.payload}}});
                 }else{
-                    return setActiveContentStatus(state, action.targetMenuSort, {status: {viewPointConfigData: {$set: action.payload},menuData:{viewPoint:{$set: action.payload},modifyViewData:{$set: action.payload}}}})
+                    let reLoadModifyViewPoint = (()=>{
+                        return action.payload.map(v=>{
+                            return {name:v.name,
+                                isEnable: v.isEnable,
+                                CNName: v.CNName,
+                                isMultiColumns:false,
+                                isDisable:false,
+                                isMustFilling:false,
+                                componentType:'input',
+                                width: 100,
+                                componentWidth:50,
+                                api:''}
+                        });
+                    });
+                    return setActiveContentStatus(state, action.targetMenuSort, {status: {viewPointConfigData: {$set: action.payload},menuData:{viewPoint:{$set: action.payload},modifyViewPoint:{$set: reLoadModifyViewPoint()}}}})
                 }
             }
             break;

@@ -8,7 +8,7 @@ class ModifySearchGroupConfig extends React.Component{
         super();
         this.state ={
             targetObject:props.targetObject,
-            dataHasCreated:props.dataHasCreated,
+            dataHasCreated:props.dataHasCreated?props.dataHasCreated:[],
             onOkCallBack:props.onOk,
             target:props.target,
             allData:props.config,
