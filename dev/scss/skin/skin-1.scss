@@ -222,6 +222,20 @@ $table-item-active-color:#cbcdba;
     border-right: solid 2px $border-color;
     background-color: $side-bar-menu-color;
     .side-bar-title{
+      .side-bar-quick-button{
+        ul{
+          li{
+            border-color:$second-main-color;
+            background-color: $shallow-than-main-color;
+            i{
+              color: $second-main-color;
+            }
+
+          }
+        }
+
+      }
+
       background-color: $main-color;
       .side-bar-title-name{
         color: $reverse-font-color;

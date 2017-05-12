@@ -154,6 +154,22 @@ class SideBar extends Component {
         }
     }
 
+    createQuickButton(){
+        let createLi = ()=>{
+            return this.props.sideBar.userInfo.quickButton.map((v,k)=>{
+                let isNoView = this.isNoView(v);
+                let className ='fa '+v.icon;
+                return <li onClick={e=> {
+                    this.props.meunItemToggle(v, isNoView);
+                    e.stopPropagation();
+                }} key={k}><i className={className}></i></li>
+            });
+        }
+        return (<ul>
+            {createLi()}
+        </ul>);
+    }
+
     renderNormal() {
         let MenuScroll = {
             top: this.props.sideBar.menuScrollY + 'px'
@@ -186,17 +202,23 @@ class SideBar extends Component {
             }}>
 
                 <div className="side-bar-title ">
-                    <div onClick={()=> {
-                        this.props.selectSettingMenu();
-                    }} className="side-bar-title-head-img animation-fadeIn"><img
-                        src={this.props.sideBar.userInfo.imgUrl}/></div>
-                    <div onClick={()=> {
-                        this.props.selectSettingMenu();
-                    }} className="side-bar-title-name animation-fadeIn">{this.props.sideBar.userInfo.nickName}</div>
-                    <div onClick={()=> {
-                        this.props.selectSettingMenu();
-                    }} className="side-bar-title-power animation-fadeIn">{this.props.sideBar.userInfo.power} <i
-                        className="fa fa-cog"></i></div>
+                    <div className="side-bar-tittle-info">
+                        <div onClick={()=> {
+                            this.props.selectSettingMenu();
+                        }} className="side-bar-title-head-img animation-fadeIn"><img
+                            src={this.props.sideBar.userInfo.imgUrl}/></div>
+                        <div onClick={()=> {
+                            this.props.selectSettingMenu();
+                        }} className="side-bar-title-name animation-fadeIn">{this.props.sideBar.userInfo.nickName}</div>
+                        <div onClick={()=> {
+                            this.props.selectSettingMenu();
+                        }} className="side-bar-title-power animation-fadeIn">{this.props.sideBar.userInfo.power} <i
+                            className="fa fa-cog"></i></div>
+                    </div>
+                    <div className="side-bar-quick-button">
+                            {this.createQuickButton()}
+                    </div>
+
                     <ul className="bg-bubbles">
                         <li></li>
                         <li></li>

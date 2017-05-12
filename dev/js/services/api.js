@@ -303,7 +303,7 @@ export const apiChangeUserInfo = (id,arg)=>{
         AX_RealName:arg.name,
         AX_Birthday:arg.birthDay,
         AX_NickName:arg.nickName,
-        Shortcutbutton:arg.quickButton
+        Shortcutbutton:stringifyArrWhosChildIsObj(arg.quickButton)
     }
     return createFetchPromise(apis.changeUserInfo+id, (data, resolve, reject)=> {
         resolve(data);

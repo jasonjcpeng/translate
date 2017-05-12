@@ -509,10 +509,32 @@ export default function (state = initState, action) {
 
             }
 
+            let reverseAddParentItem = (item,allItem)=>{
+                return allItem.filter((v,k)=>{
+                    if(item.parentCode===v.code){
+                        return v;
+                    }
+                });
+            }
+
+            let reverseDeleteParentItem = (nowOnAllItem)=>{
+                return nowOnAllItem.filter((v,k)=>{
+                       let isSave = false;
+                       for(let i in nowOnAllItem){
+                            if(v.parentCode === nowOnAllItem[i].code){
+                                isSave = true;
+                                console.log(1)
+                            }
+                       }
+                       if(isSave){
+                           return v;
+                       }
+                })
+            }
+
             let DeleteAllChild = (originArr,item,allItem)=>{
                 let child = findAllChild(item,allItem);
-
-                return originArr.filter((v,k)=>{
+                let result = originArr.filter((v,k)=>{
                     let isNotDelete = true;
                     for(let i in child){
                         if(child[i].id === v.id){
@@ -523,6 +545,7 @@ export default function (state = initState, action) {
                         return v;
                     }
                 });
+                return result
             }
 
 
@@ -547,12 +570,24 @@ export default function (state = initState, action) {
                                             if (action.onBatchItem[i].id === arr[l].id) {
                                                 originArr.splice(l,1);
                                                 originArr = DeleteAllChild(originArr,action.onBatchItem[i],allItem);
+                                                originArr = reverseDeleteParentItem(originArr);
                                                 isPush = false;
                                             }
                                         }
                                         if (isPush) {
-                                            tempResult.push(action.onBatchItem[i]);
-                                            tempResult = tempResult.concat(findAllChild(action.onBatchItem[i],allItem))
+                                                tempResult.push(action.onBatchItem[i]);
+                                                let ParentItem = [];
+                                                let ParentItemFlag = true;
+                                                for(let m in originArr){
+                                                    if(originArr[m].code===action.onBatchItem[i].parentCode){
+                                                        ParentItemFlag = false;
+                                                    }
+                                                }
+                                                if(ParentItemFlag){
+                                                    ParentItem =  reverseAddParentItem(action.onBatchItem[i],allItem)
+                                                }
+
+                                                tempResult = tempResult.concat(findAllChild(action.onBatchItem[i],allItem)).concat(ParentItem);
                                         }
                                     }
                                     resultArr = tempResult.concat(originArr);

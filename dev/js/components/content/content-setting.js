@@ -296,10 +296,11 @@ class ContentSetting extends React.Component {
                         toggleStateFlag = true;
                     }
                 }
-                return toggleStateFlag ? 'menu-toggle fa fa-caret-down' : 'menu-toggle fa fa-caret-right';
+               // return toggleStateFlag ? 'menu-toggle fa fa-caret-down' : 'menu-toggle fa fa-caret-right';
+                return 'menu-toggle fa fa-caret-down'
             }
             return menu.map((v, k)=> {
-                return (<tr hidden={trIsHidden(v)} key={k}>
+                return (<tr  key={k}>{/*hidden={trIsHidden(v)}*/}
                     {createBatchSelectBody(v)}
                     <td>{ (()=> {
                         return (<div style={{width: '40px', float: 'left', paddingLeft: arrowIconMargin(v, 15) + 'px'}}>
