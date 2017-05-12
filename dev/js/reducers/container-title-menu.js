@@ -509,6 +509,23 @@ export default function (state = initState, action) {
 
             }
 
+            let DeleteAllChild = (originArr,item,allItem)=>{
+                let child = findAllChild(item,allItem);
+
+                return originArr.filter((v,k)=>{
+                    let isNotDelete = true;
+                    for(let i in child){
+                        if(child[i].id === v.id){
+                            isNotDelete = false;
+                        }
+                    }
+                    if(isNotDelete){
+                        return v;
+                    }
+                });
+            }
+
+
             return setActiveContentStatusByID(state, action.targetID, {
                 status: {
                     roleAuthorize: {
@@ -528,7 +545,8 @@ export default function (state = initState, action) {
                                         let isPush = true;
                                         for (let l in arr) {
                                             if (action.onBatchItem[i].id === arr[l].id) {
-                                                originArr.splice(l,(Number.parseInt(l)+findAllChild(action.onBatchItem[i],allItem).length+1));
+                                                originArr.splice(l,1);
+                                                originArr = DeleteAllChild(originArr,action.onBatchItem[i],allItem);
                                                 isPush = false;
                                             }
                                         }
