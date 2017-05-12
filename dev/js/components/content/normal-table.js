@@ -212,7 +212,7 @@ class NormalTable extends React.Component {
                 <ul style={{float:'left'}}>
                     {mapButton()}
                 </ul>
-                {/*createSearchGroup()*/}
+                {createSearchGroup()}
             </div>
         </div>)
     }

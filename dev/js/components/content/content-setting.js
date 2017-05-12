@@ -25,7 +25,6 @@ class ContentSetting extends React.Component {
         }
     }
 
-
     createContentSettingNavBar(arr) {
         return arr.map((v)=> {
             return (<li className={function(){
@@ -83,8 +82,7 @@ class ContentSetting extends React.Component {
                 <div className="content-setting-footer">
                     <button onClick={e=>{
                         this.props.actionChangeUserInfo(this.props.userInfo.id,this.protoBaseInfo);
-                    }} className="btn btn-finish">确认修改
-                    </button>
+                    }} className="btn btn-finish">确认修改</button>
                 </div>
             </div>
         </div>);
@@ -195,6 +193,116 @@ class ContentSetting extends React.Component {
             <div style={{height: height}} className="content-setting-frame">
                 <div className="skin-group">
                     {this.createSkinItem(arr)}
+                </div>
+            </div>
+        </div>);
+    }
+
+    //创造数据字典
+    createDataBabel(rightActiveContent, tableHeight) {
+        let height = tableHeight - 50;
+        let createMenuSettingTableBody = (toggleCode) => {
+            let quickSort = (arr, root = {code: '0'}, result = [])=> {
+                let menu = [];
+                if (arr.length > 0) {
+                    let newArr = arr.filter(v=> {
+                        if (v.parentCode === root.code) {
+                            menu.push(v);
+                        } else {
+                            return v;
+                        }
+                    });
+                    if(menu.length > 0){
+                        for (let i in menu) {
+                            result.push(menu[i]);
+                            quickSort(newArr, menu[i], result);
+                        }
+                    }
+                }
+                return result;
+            }
+            let menu = quickSort(this.props.dataBabel);
+            let trIsHidden = (v)=> {
+                let toggleStateFlag = true;
+                if (v.parentCode === '0') {
+                    toggleStateFlag = false;
+                } else {
+                    for (let i in toggleCode) {
+                        if (v.parentCode === toggleCode[i]) {
+                            toggleStateFlag = false;
+                        }
+                    }
+                }
+                return toggleStateFlag;
+            }
+            let arrowIconMargin = (v, margin)=> {
+                let localMargin = margin;
+                for (let i = 0; i < this.props.dataBabel.length; i++) {
+                    if (v.parentCode === this.props.dataBabel[i].code) {
+                        localMargin += arrowIconMargin(this.props.dataBabel[i], (margin + 5));
+                    }
+                }
+                return localMargin
+            }
+            let isMenuHasChild = (newMenu, currentMenu)=> {
+                for (let i in newMenu) {
+                    if (newMenu[i].parentCode === currentMenu.code) {
+                        return true;
+                        break;
+                    }
+                }
+                return false;
+            }
+            let trToggleIconClassNames = (v)=> {
+                let toggleStateFlag = false;
+                for (let i in toggleCode) {
+                    if (v.code === toggleCode[i]) {
+                        toggleStateFlag = true;
+                    }
+                }
+               return toggleStateFlag ? 'menu-toggle fa fa-caret-down' : 'menu-toggle fa fa-caret-right';
+            }
+            return menu.map((v, k)=> {
+                return (<tr  hidden={trIsHidden(v)} key={k}>
+                    <td>{ (()=> {
+                        return (<div style={{width: '40px', float: 'left', paddingLeft: arrowIconMargin(v, 15) + 'px'}}>
+                            {(()=> {
+                                if (isMenuHasChild(menu, v)) {
+                                    return (<i onClick={(e)=> {
+                                        this.props.actionToggleItem(this.props.target.obj.menuSort,v.code);
+                                        e.stopPropagation();
+                                    }} className={trToggleIconClassNames(v)}></i>)
+                                } else {
+                                    return (<i className="menu-no-toggle"></i>)
+                                }
+                            })()}
+                            <span style={{marginLeft: '5px'}}>{k + 1}</span>
+                        </div>);
+                    })()}</td>
+                    <td style={{cursor:'text',paddingLeft: arrowIconMargin(v, 40) + 'px'}}>{v.name}</td>
+                    <td style={{cursor:'text'}}>{v.encode}</td>
+                </tr>);
+            });
+
+        }
+
+
+        return (<div key={rightActiveContent.key} className="right-active-content animation-fadeInRight">
+            {this.createActiveContentHeader(rightActiveContent)}
+            <div style={{height: height}} className="content-setting-frame">
+                <div>
+                    <table >
+                        <thead>
+                        <tr>
+                            <th style={{width: '60px'}}></th>
+                            <th style={{width: '300px'}}>中文名称</th>
+                            <th style={{width: '300px'}}>字段名</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {createMenuSettingTableBody(this.props.currentToggleItem)}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>);
@@ -356,16 +464,6 @@ class ContentSetting extends React.Component {
         </div>);
     }
 
-    isMenuHasChild(newMenu, currentMenu) {
-        for (let i in newMenu) {
-            if (newMenu[i].parentCode === currentMenu.code) {
-                return true;
-                break;
-            }
-        }
-        return false;
-    }
-
     quickSort(arr, root = {code: '0'}, result = []) {
         let menu = [];
         if (arr.length > 0) {
@@ -384,15 +482,6 @@ class ContentSetting extends React.Component {
             }
         }
         return result;
-    }
-
-    isSingleMenuSettingTableToggle(toggleCode, menuCode) {
-        for (let i in toggleCode) {
-            if (menuCode === toggleCode[i]) {
-                return true;
-            }
-        }
-        return false;
     }
 
     createMenuSettingTableBody(toggleCode) {
@@ -604,9 +693,13 @@ class ContentSetting extends React.Component {
                 break;
             case 'menuSetting':
                 return this.createMenuSetting(rightActiveContent, tableHeight);
-                return
+                break;
             case 'quickButton':
                 return this.createQuickButtonSetting(rightActiveContent, tableHeight);
+                break;
+            case 'DataBabel':
+                return this.createDataBabel(rightActiveContent, tableHeight);
+                break;
         }
     }
 
@@ -616,7 +709,7 @@ class ContentSetting extends React.Component {
             key: 'headImg',
             name: '我的头像'
         }, {key: 'resetPassWord', name: '修改密码'}, {key: 'skin', name: '设置皮肤'}];
-        let contentSettingPowerNavBar = [{key: 'menuSetting', name: '编辑菜单'}];
+        let contentSettingPowerNavBar = [{key: 'DataBabel', name: '数据字典'},{key: 'menuSetting', name: '编辑菜单'}];
         let contentBesideSettingNavBar = [{key: 'quickButton', name: '快捷菜单'}];
         if (this.props.target.status) {
             return (
@@ -683,6 +776,7 @@ const state = state=> {
     return ({
         target: target,
         userInfo: state.sideBar.userInfo,
+        dataBabel:state.sideBar.dataBabel,
         useSkin: state.common.useSkin,
         defaultToggleStatus: state.common.defaultToggleStatus,
         batchOnItem: state.sideBar.userInfo.quickButton,

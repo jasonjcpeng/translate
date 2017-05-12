@@ -232,6 +232,12 @@ $table-item-active-color:#cbcdba;
             }
 
           }
+          li:hover{
+            background-color: $second-main-color;
+            i{
+              color: $main-color;
+            }
+          }
         }
 
       }
@@ -708,6 +714,10 @@ $table-item-active-color:#cbcdba;
                 color: $main-color;
               }
               border-bottom-color: $main-color;
+            }
+
+            .active:before{
+              border-left-color: $main-color;
             }
 
             .now-on{

@@ -69,7 +69,8 @@ const apis = {
     getCols:'/api/Module/GetCols',
     changeUserInfo:'/api/User/Put/',
     resetPassWord: '/api/Account/RevisePassword',
-    getModuleByRoleID: '/api/RoleAuthorize/GetAuthByRoleId'
+    getModuleByRoleID: '/api/RoleAuthorize/GetAuthByRoleId',
+    getDataBabel:'/api/Data/Get'
 };
 
 export const login = (userName, pwd)=> {
@@ -88,12 +89,18 @@ export const appStart = ()=> {
         Promise.all([Fetch.Fetch(filterIsOnline(apis.getMenu)),Fetch.Fetch(filterIsOnline(apis.getUserInfo))]).then(
             res=> {
                 if(res[1].state===1&&res[1].data!==null){
+                    //arr[0]AX_RoleId角色信息
                     Promise.all([createFetchPromise(apis.getRole + '/' + res[1].data['AX_RoleId'], (data, res, rej)=> {
                         res(data)
-                    }),//arr[0]AX_RoleId角色信息
+                    }),//arr[1]AX_DepartmentId部门信息
                         createFetchPromise(apis.getOrganize + '/' + res[1].data['AX_OrganizeId'], (data, res, rej)=> {
                             res(data)
-                        })])//arr[1]AX_DepartmentId部门信息
+                        }),
+                        //arr[2]数据字典信息
+                        createFetchPromise(apis.getDataBabel, (data, res, rej)=> {
+                            res(data)
+                        })
+                    ])
                         .then(getAllDetail=> {
                             let userInfo = {
                                 id:res[1].data['AX_Id'],
@@ -117,6 +124,25 @@ export const appStart = ()=> {
                                 description: filterStringDataDontBeNull(res[1].data['AX_Description']),
                                 createTime: filterStringDataDontBeNull(res[1].data['AX_CreatorTime']),
                             }
+                            let dataBabel = getAllDetail[2];
+                            let formatDataBabel = dataBabel.map(v=>{
+                                let Obj = {};
+                                for(let i in v){
+                                    if(i==='AX_Id'){
+                                        Obj['id']=v[i];
+                                        Obj['code']=v[i];
+                                    }else if(i==='AX_ParentId'){
+                                        Obj['parentCode']=v[i];
+                                    }else if(i==='AX_EnCode'){
+                                        Obj['encode']=v[i];
+                                    }else if(i==='AX_FullName'){
+                                        Obj['name']=v[i];
+                                    }else{
+                                        Obj[i] = v[i];
+                                    }
+                                }
+                                return Obj;
+                            });
                             let menu = [];
                             if(res[0].state===1&&res[0].data!==null){
                                 for(let i in res[0].data){
@@ -144,7 +170,8 @@ export const appStart = ()=> {
                             }
                             resolve({
                                 userInfo: userInfo,
-                                menu: menu
+                                menu: menu,
+                                babelData:formatDataBabel
                             });
                     }).catch(getRoleRej=>{
                         reject(getRoleRej)

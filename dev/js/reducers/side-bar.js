@@ -9,6 +9,7 @@ const initState = {
         imgUrl: '',
         powerEnCode:''
     },
+    dataBabel:[],
     menu: [],
     menuScrollY: 0,
     activeMenu: [],
@@ -25,7 +26,8 @@ export default function (state = initState, action) {
             if(action.payload){
                 return update(state, {
                     userInfo: {$set: action.payload.userInfo},
-                    menu: {$set: action.payload.menu}
+                    menu: {$set: action.payload.menu},
+                    dataBabel:{$set:action.payload.babelData}
                 });
             }
             break;
