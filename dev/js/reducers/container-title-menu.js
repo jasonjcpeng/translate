@@ -467,7 +467,8 @@ export default function (state = initState, action) {
                 batchOnItem: [],
                 roleAuthorize:{
                     currentToggleItem:[],
-                    batchOnItem:[]
+                    batchOnItem:[],
+                    loaded:false
                 },
             }
 
@@ -489,64 +490,94 @@ export default function (state = initState, action) {
                 return newArr;
             }}}}});
             break;
+        case Constants.SHIELD_BUTTON_GROUP_ROLE_AUTHORIZE_INIT_ITEM:
+            return setActiveContentStatusByID(state,action.targetID,{status:{roleAuthorize:{batchOnItem:{$set:action.batchOnItem},loaded:{$set:action.loaded}}}});
+            break;
         case Constants.SHIELD_BUTTON_GROUP_ROLE_AUTHORIZE_BATCH_SELECT_ITEM:
-            let allItem = action.allItem;
-            let findAllChild = (item,allItem)=>{
-                let TempChild = [];
-                if(allItem.length>0){
-                    let newAllItem = allItem.filter((v,k)=>{
-                        if(v.parentCode===item.code){
-                            TempChild.push(v);
-                        }else{
+            let batchOptionReducerDataOption = (OriginArr,itemBatched,allMenu)=>{
+                let findAllChild = (item,allMenu)=>{
+                    let TempChild = [];
+                    if(allMenu.length>0){
+                        let newAllItem = allMenu.filter((v,k)=>{
+                            if(v.parentCode===item.code){
+                                TempChild.push(v);
+                            }else{
+                                return v;
+                            }
+                        });
+                        for(let i in TempChild){
+                            TempChild.concat(findAllChild(TempChild[i],newAllItem))
+                        }
+                    }
+                    return TempChild;
+
+                }
+
+                let reverseAddParentItem = (item,allMenu)=>{
+                    return allMenu.filter((v,k)=>{
+                        if(item.parentCode===v.code){
                             return v;
                         }
                     });
-                    for(let i in TempChild){
-                        TempChild.concat(findAllChild(TempChild[i],newAllItem))
-                    }
                 }
-                return TempChild;
 
-            }
-
-            let reverseAddParentItem = (item,allItem)=>{
-                return allItem.filter((v,k)=>{
-                    if(item.parentCode===v.code){
-                        return v;
-                    }
-                });
-            }
-
-            let reverseDeleteParentItem = (nowOnAllItem)=>{
-                return nowOnAllItem.filter((v,k)=>{
-                       let isSave = false;
-                       for(let i in nowOnAllItem){
-                            if(v.parentCode === nowOnAllItem[i].code){
-                                isSave = true;
-                                console.log(1)
+                let DeleteAllChild = (originArr,item,allMenu)=>{
+                    let child = findAllChild(item,allMenu);
+                    let result = originArr.filter((v,k)=>{
+                        let isNotDelete = true;
+                        for(let i in child){
+                            if(child[i].id === v.id){
+                                isNotDelete = false;
                             }
-                       }
-                       if(isSave){
-                           return v;
-                       }
-                })
-            }
+                        }
+                        if(isNotDelete){
+                            return v;
+                        }
+                    });
+                    return result
+                }
+                let resultArr = [];
+                let originArr = OriginArr;
+                if (itemBatched.length > 2) {
+                    if (OriginArr.length === itemBatched.length) {
+                        resultArr = [];
+                    } else {
+                        resultArr = itemBatched;
+                    }
+                } else {
+                    let tempResult = [];
+                    for (let i in itemBatched) {
+                        let isPush = true;
+                        for (let l in OriginArr) {
+                            if (itemBatched[i].id === OriginArr[l].id) {
+                                originArr.splice(l,1);
+                                originArr = DeleteAllChild(originArr,itemBatched[i],allMenu);
+                                isPush = false;
+                            }
+                        }
+                        if (isPush) {
+                            tempResult.push(itemBatched[i]);
+                            let ParentItem = [];
+                            let ParentItemFlag = true;
+                            for(let m in originArr){
+                                if(originArr[m].code===itemBatched[i].parentCode){
+                                    ParentItemFlag = false;
+                                }
+                            }
+                            if(ParentItemFlag){
+                                ParentItem =  reverseAddParentItem(itemBatched[i],allMenu)
+                            }
 
-            let DeleteAllChild = (originArr,item,allItem)=>{
-                let child = findAllChild(item,allItem);
-                let result = originArr.filter((v,k)=>{
-                    let isNotDelete = true;
-                    for(let i in child){
-                        if(child[i].id === v.id){
-                            isNotDelete = false;
+                            tempResult = tempResult.concat(findAllChild(itemBatched[i],allMenu)).concat(ParentItem);
                         }
                     }
-                    if(isNotDelete){
-                        return v;
-                    }
-                });
-                return result
+                    resultArr = tempResult.concat(originArr);
+                }
+                return resultArr;
             }
+
+
+            let allItem = action.allItem;
 
 
             return setActiveContentStatusByID(state, action.targetID, {
@@ -554,45 +585,7 @@ export default function (state = initState, action) {
                     roleAuthorize: {
                         batchOnItem: {
                             $apply: (arr)=> {
-                                let resultArr = [];
-                                let originArr = arr;
-                                if (action.onBatchItem.length > 2) {
-                                    if (arr.length === action.onBatchItem.length) {
-                                        resultArr = [];
-                                    } else {
-                                        resultArr = action.onBatchItem;
-                                    }
-                                } else {
-                                    let tempResult = [];
-                                    for (let i in action.onBatchItem) {
-                                        let isPush = true;
-                                        for (let l in arr) {
-                                            if (action.onBatchItem[i].id === arr[l].id) {
-                                                originArr.splice(l,1);
-                                                originArr = DeleteAllChild(originArr,action.onBatchItem[i],allItem);
-                                                originArr = reverseDeleteParentItem(originArr);
-                                                isPush = false;
-                                            }
-                                        }
-                                        if (isPush) {
-                                                tempResult.push(action.onBatchItem[i]);
-                                                let ParentItem = [];
-                                                let ParentItemFlag = true;
-                                                for(let m in originArr){
-                                                    if(originArr[m].code===action.onBatchItem[i].parentCode){
-                                                        ParentItemFlag = false;
-                                                    }
-                                                }
-                                                if(ParentItemFlag){
-                                                    ParentItem =  reverseAddParentItem(action.onBatchItem[i],allItem)
-                                                }
-
-                                                tempResult = tempResult.concat(findAllChild(action.onBatchItem[i],allItem)).concat(ParentItem);
-                                        }
-                                    }
-                                    resultArr = tempResult.concat(originArr);
-                                }
-                                return resultArr;
+                                return batchOptionReducerDataOption(arr,action.onBatchItem,allItem);
                             }
                         }
                     }

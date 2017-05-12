@@ -1,9 +1,11 @@
 import React from 'react';
 import classnames from 'classnames';
+import Loader from 'react-loader';
+import {LoaderOption} from '../../config/config';
 import {connect} from 'react-redux';
 import * as Constants from '../../action/CONSTANTS';
 import {bindActionCreators} from 'redux';
-import {apiSetRoleAuthorize} from '../../services/api';
+import {apiSetRoleAuthorize,apiGetModuleByRoleID} from '../../services/api';
 /*
  * @param
  * onCancel:() 必填 关闭遮罩的回调，如没有则不显示取消按钮
@@ -11,11 +13,12 @@ import {apiSetRoleAuthorize} from '../../services/api';
 class ButtonGroupRoleAuthorize extends React.Component {
     constructor(props) {
         super();
+        props.actionGetCurrentRoleAuthorize(props.targetID,props.selectedItem);
         this.state = {
             selectedRole: props.selectedItem,
         }
     }
-
+    
     componentWillUnmount(){
     }
 
@@ -129,7 +132,7 @@ class ButtonGroupRoleAuthorize extends React.Component {
 
     }
 
-    render() {
+    createShield(){
         //创造批量选择头
         let createBatchSelect = ()=> {
             let value = (()=> {
@@ -168,13 +171,13 @@ class ButtonGroupRoleAuthorize extends React.Component {
                 </div>
                 <div className="shield-content-footer">
                     <button onClick={e=>{
-                    this.props.actionCloseThis(this.props.targetID);
-                    e.stopPropagation();
+                        this.props.actionCloseThis(this.props.targetID);
+                        e.stopPropagation();
                     }} className="btn">取消
                     </button>
                     <button onClick={
                         e=>{
-                         this.props.actionSubmitRoleAuthorize(this.props.targetID,this.props.target.status.nowOnClickButton.api,this.state.selectedRole,this.props.batchOnItem);
+                            this.props.actionSubmitRoleAuthorize(this.props.targetID,this.props.target.status.nowOnClickButton.api,this.state.selectedRole,this.props.batchOnItem);
                             e.stopPropagation();
                         }
                     } className="btn btn-finish">确认
@@ -183,6 +186,14 @@ class ButtonGroupRoleAuthorize extends React.Component {
             </div>
 
         </div>)
+    }
+
+    render() {
+        if(this.props.loaded){
+            return this.createShield();
+        }else{
+            return (<Loader loaded={false} options={LoaderOption}></Loader>);
+        }
     }
 }
 
@@ -200,12 +211,30 @@ let state = (state)=> {
         targetID: target ? target.obj.id : '',
         currentMenu: state.sideBar.menu,
         currentToggleItem: target ? target.status.roleAuthorize.currentToggleItem : [],
-        batchOnItem: target ? target.status.roleAuthorize.batchOnItem : []
-    });
+        batchOnItem: target ? target.status.roleAuthorize.batchOnItem : [],
+        loaded:target ? target.status.roleAuthorize.loaded:false
+});
 }
 
 let action = (dispatch)=> {
     let actions = {
+        //读取当前身份的所拥有的菜单内容
+        actionGetCurrentRoleAuthorize:(targetID,role)=>{
+            return dispatch=>{
+                apiGetModuleByRoleID(role).then(
+                    res=>{
+                        return dispatch({
+                            type:Constants.SHIELD_BUTTON_GROUP_ROLE_AUTHORIZE_INIT_ITEM,
+                            targetID:targetID,
+                            batchOnItem: res,
+                            loaded:true
+                        });
+                    }
+                ).catch(rej=>{
+                    console.log(rej)
+                });
+            }
+        },
         actionToggleItem: (targetID, code)=> {
             return ({
                 type: Constants.SHIELD_BUTTON_GROUP_ROLE_AUTHORIZE_TOGGLE_STATUS,

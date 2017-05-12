@@ -156,7 +156,14 @@ class SideBar extends Component {
 
     createQuickButton(){
         let createLi = ()=>{
-            return this.props.sideBar.userInfo.quickButton.map((v,k)=>{
+            let quickMenu = this.props.sideBar.userInfo.quickButton.map((v,k)=>{
+                for(let i in this.props.sideBar.menu){
+                    if(v.id === this.props.sideBar.menu[i].id){
+                        return v;
+                    }
+                }
+            });
+            return quickMenu.map((v,k)=>{
                 let isNoView = this.isNoView(v);
                 let className ='fa '+v.icon;
                 return <li onClick={e=> {

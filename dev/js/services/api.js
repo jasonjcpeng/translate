@@ -34,12 +34,12 @@ const createFetchPromise = (api, callBack, args = '', method = 'GET')=> {
         Fetch.Fetch(filterIsOnline(api), finalArgs, method).then(
             res=> {
                 if(res){
-                    if (Number.parseInt(res.state) !== 1) {
+                    if (Number.parseInt(res.state) === 1) {
+                        callBack(res.data, resolve, reject);
+                    }else{
                         if(res.message){
                             reject(res.message);
                         }
-                    } else {
-                        callBack(res.data, resolve, reject);
                     }
                 }else{
                     reject("来自API返回值的错误！请联系管理员");
@@ -68,7 +68,8 @@ const apis = {
     getOrganize: '/api/Organize/GetOrganize/',
     getCols:'/api/Module/GetCols',
     changeUserInfo:'/api/User/Put/',
-    resetPassWord:'/api/Account/RevisePassword'
+    resetPassWord: '/api/Account/RevisePassword',
+    getModuleByRoleID: '/api/RoleAuthorize/GetAuthByRoleId'
 };
 
 export const login = (userName, pwd)=> {
@@ -335,4 +336,22 @@ export const apiSetRoleAuthorize = (api,roles,modules)=>{
     return createFetchPromise(api, (data, resolve, reject)=> {
         resolve(data);
     },finalArg,'POST');
+}
+//根据当前角色ID获取当前角色所拥有的菜单项
+export const apiGetModuleByRoleID = (Role)=> {
+    let api = apis.getModuleByRoleID + '?roleId=' + Role['AX_Id'];
+    return createFetchPromise(api, (data, resolve, reject)=> {
+        let formatData =[];
+        if(data){
+            formatData = data.map((v, k)=> {
+                return {
+                    id: v['AX_id'],
+                    code: v['AX_id'],
+                    parentCode:v['AX_Parentid'],
+                    name:v['AX_FullName']
+                }
+            });
+        }
+        resolve(formatData);
+    }, '', 'POST');
 }
