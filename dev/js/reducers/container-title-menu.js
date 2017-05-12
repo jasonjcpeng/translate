@@ -1,6 +1,7 @@
 import update from 'react-addons-update';
 import * as Constants from '../action/CONSTANTS';
 import {isOnline} from '../config/config';
+import {batchOptionReducerDataOption} from '../config/tools';
 
 const initState = {
     menuScrollX: 0,
@@ -494,91 +495,7 @@ export default function (state = initState, action) {
             return setActiveContentStatusByID(state,action.targetID,{status:{roleAuthorize:{batchOnItem:{$set:action.batchOnItem},loaded:{$set:action.loaded}}}});
             break;
         case Constants.SHIELD_BUTTON_GROUP_ROLE_AUTHORIZE_BATCH_SELECT_ITEM:
-            let batchOptionReducerDataOption = (OriginArr,itemBatched,allMenu)=>{
-                let findAllChild = (item,allMenu)=>{
-                    let TempChild = [];
-                    if(allMenu.length>0){
-                        let newAllItem = allMenu.filter((v,k)=>{
-                            if(v.parentCode===item.code){
-                                TempChild.push(v);
-                            }else{
-                                return v;
-                            }
-                        });
-                        for(let i in TempChild){
-                            TempChild.concat(findAllChild(TempChild[i],newAllItem))
-                        }
-                    }
-                    return TempChild;
-
-                }
-
-                let reverseAddParentItem = (item,allMenu)=>{
-                    return allMenu.filter((v,k)=>{
-                        if(item.parentCode===v.code){
-                            return v;
-                        }
-                    });
-                }
-
-                let DeleteAllChild = (originArr,item,allMenu)=>{
-                    let child = findAllChild(item,allMenu);
-                    let result = originArr.filter((v,k)=>{
-                        let isNotDelete = true;
-                        for(let i in child){
-                            if(child[i].id === v.id){
-                                isNotDelete = false;
-                            }
-                        }
-                        if(isNotDelete){
-                            return v;
-                        }
-                    });
-                    return result
-                }
-                let resultArr = [];
-                let originArr = OriginArr;
-                if (itemBatched.length > 2) {
-                    if (OriginArr.length === itemBatched.length) {
-                        resultArr = [];
-                    } else {
-                        resultArr = itemBatched;
-                    }
-                } else {
-                    let tempResult = [];
-                    for (let i in itemBatched) {
-                        let isPush = true;
-                        for (let l in OriginArr) {
-                            if (itemBatched[i].id === OriginArr[l].id) {
-                                originArr.splice(l,1);
-                                originArr = DeleteAllChild(originArr,itemBatched[i],allMenu);
-                                isPush = false;
-                            }
-                        }
-                        if (isPush) {
-                            tempResult.push(itemBatched[i]);
-                            let ParentItem = [];
-                            let ParentItemFlag = true;
-                            for(let m in originArr){
-                                if(originArr[m].code===itemBatched[i].parentCode){
-                                    ParentItemFlag = false;
-                                }
-                            }
-                            if(ParentItemFlag){
-                                ParentItem =  reverseAddParentItem(itemBatched[i],allMenu)
-                            }
-
-                            tempResult = tempResult.concat(findAllChild(itemBatched[i],allMenu)).concat(ParentItem);
-                        }
-                    }
-                    resultArr = tempResult.concat(originArr);
-                }
-                return resultArr;
-            }
-
-
             let allItem = action.allItem;
-
 
             return setActiveContentStatusByID(state, action.targetID, {
                 status: {
