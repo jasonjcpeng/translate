@@ -163,6 +163,16 @@ class SideBar extends Component {
                     }
                 }
             });
+            if(quickMenu.length!=6){
+                let fixNum = 6-quickMenu.length;
+                for(let i=0;i<fixNum;i++){
+                    quickMenu.push({
+                        icon:''
+                    });
+                }
+
+            }
+
             return quickMenu.map((v,k)=>{
                 let isNoView = this.isNoView(v);
                 let className ='fa '+v.icon;

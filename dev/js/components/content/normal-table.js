@@ -84,9 +84,13 @@ class NormalTable extends React.Component {
                     }></ButtonGroupDeleter>;
                     break;
                 case 'batchDelete':
-                    return <ButtonGroupBatchDeleter isShow={isShow} deleteFunc={()=>{
-                        this.props.submitDeleteData(this.props.targetID,this.props.batchOnItem,api,this.props.api,this.props.tableConfigArgs);
-                    }}></ButtonGroupBatchDeleter>;
+                    if(this.props.batchOnItem.length>0){
+                        return <ButtonGroupBatchDeleter isShow={isShow} deleteFunc={()=>{
+                            this.props.submitDeleteData(this.props.targetID,this.props.batchOnItem,api,this.props.api,this.props.tableConfigArgs);
+                        }}></ButtonGroupBatchDeleter>;
+                    }else{
+                        this.props.onClickButton(this.props.targetID,undefined);
+                    }
                     break;
                 case 'roleAuthorize':
                     let roleAuthorizeIsShow = this.props.batchOnItem.length > 0 ? true : false;

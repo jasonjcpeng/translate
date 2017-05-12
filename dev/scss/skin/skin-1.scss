@@ -223,10 +223,10 @@ $table-item-active-color:#cbcdba;
     background-color: $side-bar-menu-color;
     .side-bar-title{
       .side-bar-quick-button{
+        background-color:$second-main-color;
         ul{
           li{
-            border-color:$second-main-color;
-            background-color: $shallow-than-main-color;
+            background-color: $main-color;
             i{
               color: $second-main-color;
             }
