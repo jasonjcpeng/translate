@@ -168,8 +168,9 @@ export default function (state = initState, action) {
                 rightActiveContent: {key: 'baseInfo', name: '基本信息'},
                 defaultMenuSettingTableToggleItem: ['0'],
                 selectMenuSettingTableItem: undefined,
-                currentToggleItem:[]
-
+                currentToggleItem:[],
+                dataBabelTableSelectedItem:undefined,
+                dataBabelDetail:[],
             }
             if (action.error) {
                 initContentSetting.error = action.error;
@@ -246,6 +247,13 @@ export default function (state = initState, action) {
             break;
         case Constants.CONTENT_SETTING_SETTING_MENU_SELECT_TABLE_MENU_ITEM:
             return setActiveContentStatus(state, 'setting', {status: {selectMenuSettingTableItem: {$set: action.payload}}});
+            break;
+        case Constants.CONTENT_SETTING_SELECT_DATA_BABEL_ITEM:
+            if(action.dataBabelDetail){
+                return setActiveContentStatus(state, 'setting', {status: {dataBabelTableSelectedItem: {$set: action.item},dataBabelDetail:{$set:action.dataBabelDetail}}});
+            }else{
+                return setActiveContentStatus(state, 'setting', {status: {dataBabelTableSelectedItem: {$set: action.item}}});
+            }
             break;
         case Constants.APP_DELETE_MENU_ITEM:
             let newState = update(state, {

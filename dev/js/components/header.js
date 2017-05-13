@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as ActionCreators from '../action/header';
-import * as IMG from '../config/img-base64';
+import * as IMG from '../config/logo-img-base64';
 
 
 

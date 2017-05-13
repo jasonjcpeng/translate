@@ -70,7 +70,8 @@ const apis = {
     changeUserInfo:'/api/User/Put/',
     resetPassWord: '/api/Account/RevisePassword',
     getModuleByRoleID: '/api/RoleAuthorize/GetAuthByRoleId',
-    getDataBabel:'/api/Data/Get'
+    getDataBabel:'/api/Data/Get',
+    getDataBabelDetail:'/api/Data/GetDetail'
 };
 
 export const login = (userName, pwd)=> {
@@ -331,7 +332,8 @@ export const apiChangeUserInfo = (id,arg)=>{
         AX_RealName:arg.name,
         AX_Birthday:arg.birthDay,
         AX_NickName:arg.nickName,
-        Shortcutbutton:stringifyArrWhosChildIsObj(arg.quickButton)
+        Shortcutbutton:arg.quickButton?stringifyArrWhosChildIsObj(arg.quickButton):undefined,
+        Theme:arg.useSkin
     }
     return createFetchPromise(apis.changeUserInfo+id, (data, resolve, reject)=> {
         resolve(data);
@@ -381,4 +383,29 @@ export const apiGetModuleByRoleID = (Role)=> {
         }
         resolve(formatData);
     }, '', 'POST');
+}
+//根据当前数据字典ID获取具体数据
+export const apiGetDataBabelDetail = (item)=>{
+    let arg = {
+        encode:item.encode
+    }
+    return createFetchPromise(apis.getDataBabelDetail, (data, resolve, reject)=> {
+        let formatData =[];
+        if(data){
+            formatData = data.map(v=>{
+                let Obj = {};
+                for(let i in v){
+                    if(i==='AX_ItemCode'){
+                        Obj['encode']=v[i];
+                    }else if(i==='AX_ItemName'){
+                        Obj['name']=v[i];
+                    }else{
+                        Obj[i] = v[i];
+                    }
+                }
+                return Obj;
+            });
+        }
+        resolve(formatData);
+    }, arg, 'GET');
 }

@@ -1,18 +1,18 @@
-$main-color: #3399cc;
-$shallow-than-main-color: rgba(53, 173, 226, 0.64);
+$main-color: #393a38;
+$shallow-than-main-color: #585957;
 $second-main-color:#fff;
 $side-bar-menu-color:#ebebec;
-$side-bar-menu-font-color: #2b78a3;
-$border-color:#eee;
+$side-bar-menu-font-color: #777876;
+$border-color:#585957;
 $reverse-font-color:#F5F5F5;
 $content-background-color:#F5F5F5;
 $spacial-color: #67b94b;
-$alert-color:#c00;
+$alert-color: #d0231b;
 $default-option-toggle-color:#ddd;
 $content-font-color:#6f6f6f;
 $default-option-hover-button:#6f6f6f;
 $table-item-active-color:#cbcdba;
-.skin-1{
+.skin-4{
   .standard-table{
     border-color: $default-option-toggle-color;
     tr{
@@ -663,22 +663,6 @@ $table-item-active-color:#cbcdba;
               border-left-color:$main-color;
               background-color: $content-background-color;
             }
-          }
-        }
-        .half-left{
-          i[class='fa fa-edit']{
-            color:$main-color;
-          }
-          i[class='fa fa-edit']:hover{
-            color:$shallow-than-main-color;
-          }
-        }
-        .half-right{
-          i[class='fa fa-edit']{
-            color:$main-color;
-          }
-          i[class='fa fa-edit']:hover{
-            color:$shallow-than-main-color;
           }
         }
         .right-active-content{
