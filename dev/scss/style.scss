@@ -267,71 +267,20 @@ body {
     color: #fff;
     font-weight: 600;
   }
+  .cutting{
+    width: 100%;
+  }
+
+  .cutBt{
+    position: relative !important;
+    width: 300px !important;
+  }
 
   .loader{
     .spinner{
       z-index: 1001 !important;
     }
   }
-
-  .search-group {
-    li:hover {
-      background-color: transparent !important;
-    }
-    li {
-      input {
-        width: 150px !important;
-        position: relative;
-        bottom: 3px;
-        text-align: left !important;
-        padding-left: 5px;
-        height: 25px !important;
-        border: 0;
-
-      }
-      .search-btn {
-
-      }
-    }
-    .select {
-      padding: 0 !important;
-      height: 30px;
-      line-height: 35px;
-      select {
-        padding: 0px 15px;
-        width: 100%;
-        cursor: pointer;
-        position: relative;
-        bottom: 2px;
-        font-size: 14px;
-        font-weight: 600;
-        text-align: center;
-        height: 25px;
-        border: 0;
-      }
-      span{
-        position: relative;
-        bottom: 2px;
-        text-align: center;
-        font-size: 14px;
-        font-weight: 600;
-      }
-      input[type=date] {
-        text-align: right !important;
-        cursor: pointer;
-        width: 150px !important;
-        position: relative;
-        bottom: 6px;
-        text-align: left !important;
-        padding-left: 5px;
-        height: 25px !important;
-        border: 0;
-
-      }
-    }
-
-  }
-
 }
 
 @import './components/content/normal-table';
@@ -342,6 +291,7 @@ body {
 @import './components/content.scss';
 @import './components/content/content-container';
 @import './components/content/component-option-bar';
+@import './components/search-group';
 
 @import './skin/skin-1';
 @import './skin/skin-2';

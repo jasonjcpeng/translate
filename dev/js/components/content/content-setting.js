@@ -8,6 +8,7 @@ import {LoaderOption} from '../../config/config';
 import ShieldAlert from '../piecemeal-components/shield-alert';
 import ShieldOk from '../piecemeal-components/shield-ok';
 import classnames from 'classnames';
+import Cut from 'react-cut'
 //Tools
 import {FormatDataInfo} from '../../config/tools';
 //JSON
@@ -384,7 +385,36 @@ class ContentSetting extends React.Component {
         </div>);
     }
 
-    //创造快捷按钮设置的侧边内容
+    //创造头像设置内容
+    createHeadImgSetting(rightActiveContent, tableHeight){
+        let height = tableHeight - 50;
+        let config = {
+            url:'https://img.dev.tusoapp.com/896d71e4-6b1f-403f-84a1-9eacf82a4438.jpg', // the image you want to cut
+            imgScale:true,	//	if true ,user can scale image
+            frameScale:true,	// if true , user can scale the cutting frame
+            frameWidth:200,		// the cutting frame's default width
+            frameHeight:200,	// the cutting frame's default height
+            minW:200,	//	the cutting frame's min width
+            minH:200,	//	the cutting frame's min height
+            width:200  //Cut's component's width
+        }
+        return (<div key={rightActiveContent.key} className="right-active-content animation-fadeInRight">
+            {this.createActiveContentHeader(rightActiveContent)}
+            <div style={{marginTop:10,height: height}} className="content-setting-frame">
+                <div style={{height: height-80}}>
+                    <Cut config={config} getCutImage={(e,v)=>{console.log(e);}}></Cut>
+                </div>
+                <div className="content-setting-footer">
+                    <button onClick={e=>{
+                    }} className="btn btn-finish">确认修改
+                    </button>
+                </div>
+            </div>
+
+        </div>);
+    }
+
+    //创造快捷按钮设置的设置内容
     createQuickButtonSetting(rightActiveContent, tableHeight) {
         let height = tableHeight - 50;
         let createMenuSettingTableBody = (toggleCode) => {
@@ -764,6 +794,9 @@ class ContentSetting extends React.Component {
                 break;
             case 'resetPassWord':
                 return this.createResetPassWord(rightActiveContent, tableHeight);
+                break;
+            case 'headImg':
+                return this.createHeadImgSetting(rightActiveContent, tableHeight);
                 break;
             case 'skin':
                 return this.createSkin(rightActiveContent, tableHeight);

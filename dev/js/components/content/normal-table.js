@@ -4,6 +4,10 @@ import {connect} from 'react-redux';
 import classnames from 'classnames';
 import Loader from 'react-loader';
 import {LoaderOption} from '../../config/config';
+//data-pick component
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import 'react-datepicker/dist/react-datepicker.css';
 //piecemeal-components
 import ButtonGroupModifier from '../piecemeal-components/button-group-modifier';
 import ButtonGroupDeleter from '../piecemeal-components/button-group-deleter';
@@ -22,6 +26,7 @@ import InitTableArgs from '../../../jsons/init-table-args.json';
 import {constID, constParentID} from '../../config/config';
 
 class NormalTable extends React.Component {
+
     componentWillMount() {
         if (!this.props.target.status) {
             this.props.GetMount(this.props.targetID, InitTableArgs);
@@ -187,8 +192,23 @@ class NormalTable extends React.Component {
             let mapSearchGroup = ()=>{
                 return searchGroup.map((v,k)=>{
                     if(v.componentName==='timeSearch'){
+                        //时间搜索
                        return <li className={'select'+(k === 0?' first-child':'')}
-                            key={k} ><input type="date"/><span>至</span><input type="date"/></li>
+                            key={k} >
+                           <DatePicker
+                               selected={moment()}
+                               onChange={e=>{
+                               console.log(e.format());
+                               }
+                               }
+                           />
+                           <span>至</span><DatePicker
+                           selected={moment()}
+                           onChange={e=>{
+                               console.log(e.format());
+                               }
+                               }
+                       /></li>
                     }else{
                         return <li className={'select'+(k === 0?' first-child':'')}
                                    key={k} ><select selected={''}>
@@ -502,7 +522,7 @@ class NormalTable extends React.Component {
         return (<div style={{height: this.props.height - 150}} className="normal-table-content">
             <table
                 key={(this.props.tableConfigArgs?this.props.tableConfigArgs.page:'')+''+(this.props.tableConfigArgs?this.props.tableConfigArgs.rows:'')}
-                className="animation-fadeIn" style={{width:'95%',margin:'0 auto'}}>
+                style={{width:'95%',margin:'0 auto'}}>
                 {createTableHead()}
                 {createTableBody()}
             </table>

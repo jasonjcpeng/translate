@@ -49,13 +49,13 @@ class SideBar extends Component {
     }
 
     //传入单个菜单,返回这个菜单是否处于激活状态的ClassName
-    createItemActive(v) {
+    createItemActive(v,isNoView) {
         let active = this.props.sideBar.activeMenu.filter(val=> {
             if (v === val) {
                 return val;
             }
         });
-        return active.length > 0 ? 'active' : '';
+        return (active.length > 0&&isNoView) ? 'active' : '';
     }
 
     //这个生成拉伸动画的方法很蠢，但暂时没有别的办法了
@@ -122,17 +122,17 @@ class SideBar extends Component {
                             let isHasChild = this.isHasChild(menu, v.code);
                             let isNoView = this.isNoView(v);
                             if(v.isEnable){
-                                return (<li className={'toggleOutLv_' + this.createToggleAnimationLv(v) + ' ' + this.createItemActive(v)}
+                                return (<li className={'toggleOutLv_' + this.createToggleAnimationLv(v) + ' ' + this.createItemActive(v,isNoView)}
                                             onClick={e=> {
                                                 this.props.meunItemToggle(v, isNoView);
                                                 e.stopPropagation();
                                             }} key={v.id}>{this.createItemIcon(v)}
                                     {v.menuName}
                                     {isHasChild ? (
-                                        <i className={this.createItemActive(v) ? 'side-bar-menu-arr fa fa-angle-down' : 'side-bar-menu-arr fa fa-angle-left'}></i>) : ''}
+                                        <i className={this.createItemActive(v,isNoView) ? 'side-bar-menu-arr fa fa-angle-down' : 'side-bar-menu-arr fa fa-angle-left'}></i>) : ''}
                                     {
                                         function () {
-                                            if (that.createItemActive(v) && isHasChild) {
+                                            if (that.createItemActive(v,isNoView) && isHasChild) {
                                                 return that.createNormalMenuItem(newMenu, newParentCode);
                                             }
                                         }()
