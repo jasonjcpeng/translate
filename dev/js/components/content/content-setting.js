@@ -25,6 +25,7 @@ class ContentSetting extends React.Component {
         }
     }
 
+    //创造设置页面左边的单元选择标签
     createContentSettingNavBar(arr) {
         return arr.map((v)=> {
             return (<li className={function(){
@@ -36,14 +37,14 @@ class ContentSetting extends React.Component {
             }} key={v.key}>{v.name}</li>)
         })
     }
-
+    //创造当前处于活跃状态的设置页的标题头
     createActiveContentHeader(rightActiveContent) {
         return (<div className="right-active-content-header">
             {rightActiveContent.name}
             <div className="br-line"></div>
         </div>);
     }
-
+    //创造基础个人信息设置页面
     createBaseInfo(rightActiveContent, tableHeight) {
         this.protoBaseInfo = {
             name: this.props.userInfo.name,
@@ -87,7 +88,7 @@ class ContentSetting extends React.Component {
             </div>
         </div>);
     }
-
+    //创造联系方式修改页面
     createTel(rightActiveContent, tableHeight) {
         let height = tableHeight - 50;
         this.protoTelInfo = {
@@ -122,7 +123,7 @@ class ContentSetting extends React.Component {
 
         </div>);
     }
-
+    //创造修改密码页面
     createResetPassWord(rightActiveContent, tableHeight) {
         let height = tableHeight - 50;
         this.protoResetPassWord = {
@@ -172,7 +173,7 @@ class ContentSetting extends React.Component {
 
         </div>);
     }
-
+    //创造皮肤设置页面中的皮肤内容
     createSkinItem(arr) {
         return arr.map(v=> {
             return ( <div key={v.key} className={function(){
@@ -184,7 +185,7 @@ class ContentSetting extends React.Component {
             }} style={{backgroundColor:v.img}}></div>);
         });
     }
-
+    //创造皮肤设置页面
     createSkin(rightActiveContent, tableHeight) {
         let height = tableHeight - 50;
         let arr = SkinList.skinList;
@@ -307,7 +308,7 @@ class ContentSetting extends React.Component {
             </div>
         </div>);
     }
-
+    //创造快捷按钮设置页面
     createQuickButtonSetting(rightActiveContent, tableHeight) {
         let height = tableHeight - 50;
         let createMenuSettingTableBody = (toggleCode) => {
@@ -463,7 +464,7 @@ class ContentSetting extends React.Component {
             </div>
         </div>);
     }
-
+    //依据code与parentCode的关系对菜单快速排序
     quickSort(arr, root = {code: '0'}, result = []) {
         let menu = [];
         if (arr.length > 0) {
@@ -483,7 +484,7 @@ class ContentSetting extends React.Component {
         }
         return result;
     }
-
+    //创造菜单编辑表格表内容
     createMenuSettingTableBody(toggleCode) {
         let menu = this.quickSort(this.props.currentMenu);
         let trIsHidden = (v)=> {
@@ -573,7 +574,7 @@ class ContentSetting extends React.Component {
         });
 
     }
-
+    //判断渲染哪种设置内容
     judgeRenderSettingOption() {
         if (this.props.target.status.selectMenuSettingTableItem) {
             return this.createMenuSettingOption();
