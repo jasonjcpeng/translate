@@ -8,7 +8,7 @@ import {LoaderOption} from '../../config/config';
 import ShieldAlert from '../piecemeal-components/shield-alert';
 import ShieldOk from '../piecemeal-components/shield-ok';
 import classnames from 'classnames';
-import Cut from 'react-cut'
+import HeaderUpload from '../piecemeal-components/header-upload';
 //Tools
 import {FormatDataInfo} from '../../config/tools';
 //JSON
@@ -176,7 +176,6 @@ class ContentSetting extends React.Component {
                     </button>
                 </div>
             </div>
-
         </div>);
     }
 
@@ -388,24 +387,33 @@ class ContentSetting extends React.Component {
     //创造头像设置内容
     createHeadImgSetting(rightActiveContent, tableHeight){
         let height = tableHeight - 50;
-        let config = {
-            url:'https://img.dev.tusoapp.com/896d71e4-6b1f-403f-84a1-9eacf82a4438.jpg', // the image you want to cut
-            imgScale:true,	//	if true ,user can scale image
-            frameScale:true,	// if true , user can scale the cutting frame
-            frameWidth:200,		// the cutting frame's default width
-            frameHeight:200,	// the cutting frame's default height
-            minW:200,	//	the cutting frame's min width
-            minH:200,	//	the cutting frame's min height
-            width:200  //Cut's component's width
-        }
+        let callBackUrlDataPromise;
+
         return (<div key={rightActiveContent.key} className="right-active-content animation-fadeInRight">
             {this.createActiveContentHeader(rightActiveContent)}
             <div style={{marginTop:10,height: height}} className="content-setting-frame">
                 <div style={{height: height-80}}>
-                    <Cut config={config} getCutImage={(e,v)=>{console.log(e);}}></Cut>
+                    <HeaderUpload key={this.props.error} callBackUrlData={(e)=>{
+                        callBackUrlDataPromise = e;
+                    }} actionSendError={this.props.actionSendError}  style={{height: height-160}}></HeaderUpload>
                 </div>
                 <div className="content-setting-footer">
                     <button onClick={e=>{
+                        if(callBackUrlDataPromise){
+                            callBackUrlDataPromise.then(
+                                res=>{
+                                    let arg = {
+                                        headIcon: res,
+                                    }
+                                    this.props.actionChangeUserInfo(this.props.userInfo.id,arg);
+                                }
+                            ).catch(rej=>{
+                                console.log(rej);
+                            });
+                        }else{
+                            this.props.actionSendError('请先上传并剪裁图片');
+                        }
+
                     }} className="btn btn-finish">确认修改
                     </button>
                 </div>

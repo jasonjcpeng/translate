@@ -19,7 +19,6 @@
     "qs": "^6.4.0",
     "react": "^15.5.4",
     "react-addons-update": "^15.4.1",
-    "react-cut": "^1.0.2",
     "react-datepicker": "^0.46.0",
     "react-dom": "^15.5.4",
     "react-loader": "^2.4.0",

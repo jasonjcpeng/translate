@@ -16,6 +16,21 @@ body {
   margin: 0px;
   font-family: $font;
   font-weight: 600;
+  .file-upload{
+    position: relative;
+    display: inline-block;
+    width: 80px;
+    overflow: hidden;
+    input[type=file]{
+      cursor: pointer;
+      height: 41px;
+      width: 50px;
+      position: absolute;
+      left:10px;
+      top:10px;
+      opacity: 0;
+    }
+  }
 
   li {
     list-style: none;
@@ -267,15 +282,6 @@ body {
     color: #fff;
     font-weight: 600;
   }
-  .cutting{
-    width: 100%;
-  }
-
-  .cutBt{
-    position: relative !important;
-    width: 300px !important;
-  }
-
   .loader{
     .spinner{
       z-index: 1001 !important;
@@ -292,6 +298,7 @@ body {
 @import './components/content/content-container';
 @import './components/content/component-option-bar';
 @import './components/search-group';
+@import 'components/content/header-cut';
 
 @import './skin/skin-1';
 @import './skin/skin-2';
