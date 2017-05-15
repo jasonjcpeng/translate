@@ -43,7 +43,6 @@ class App extends React.Component{
 
     renderInit(){
         if(this.props.error){
-
             return (<ShieldAlert targetType="app" onTargetMenuTarget="" content={this.props.error} title="哇！崩溃啦！去找后台小哥吧！"></ShieldAlert>);
         }else{
             this.screenHeightListen = setInterval(()=>{

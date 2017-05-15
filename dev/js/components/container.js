@@ -78,7 +78,6 @@ class Container extends Component {
                     return (<MenuSettingOptionMenu key='detail' height={height}/>);
                     break;
                 case 0:
-
                     return (<NormalTable key={this.props.nowOnContentTarget.id} height={height}></NormalTable>);
                     break
             }

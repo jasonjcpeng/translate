@@ -1,7 +1,7 @@
 import * as Constants from './CONSTANTS';
 import {isOnline} from '../config/config';
 import {GetMount} from './menu-setting-option-menu';
-import {apiDeleteMenu,apiChangeUserInfo,apiResetPassWord} from '../services/api';
+import {apiDeleteMenu,apiChangeUserInfo,apiResetPassWord,apiGetDataBabelDetail} from '../services/api';
 
 export const contentSettingGetMount = (target)=> {
     return ({
@@ -180,4 +180,25 @@ export const actionChangeQuickButton = (quickButton)=>{
         type: Constants.CONTENT_SETTING_CHANGE_QUICK_BUTTON,
         quickButton: quickButton
     });
+}
+
+export const actionSelectDataBabelItem = (item)=>{
+    if(item){
+        return dispatch=>{
+            apiGetDataBabelDetail(item).then(res=>{
+                return dispatch({
+                    type: Constants.CONTENT_SETTING_SELECT_DATA_BABEL_ITEM,
+                    dataBabelDetail:res,
+                    item: item
+                });
+            }).catch(rej=>{
+                return dispatch(actionSendError(rej));
+            });
+        }
+    }else{
+        return ({
+            type: Constants.CONTENT_SETTING_SELECT_DATA_BABEL_ITEM,
+            item: item
+        });
+    }
 }

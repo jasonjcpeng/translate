@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import * as ActionCreators from '../action/side-bar';
 
 class SideBar extends Component {
+    //根据当前状态判断使用哪种动画类
     getToggleAnimation() {
         switch (this.props.lastToggleStatus) {
             case 'full':
@@ -40,22 +41,24 @@ class SideBar extends Component {
         return '';
     }
 
+    //传入单个菜单，返回这个菜单的图标元素
     createItemIcon(item) {
         if (item.icon) {
             return (<i className={'fa '+item.icon}></i> );
         }
     }
 
-    createItemActive(v) {
+    //传入单个菜单,返回这个菜单是否处于激活状态的ClassName
+    createItemActive(v,isNoView) {
         let active = this.props.sideBar.activeMenu.filter(val=> {
             if (v === val) {
                 return val;
             }
         });
-        return active.length > 0 ? 'active' : '';
+        return (active.length > 0&&isNoView) ? 'active' : '';
     }
 
-    //这个生成动画的方法很蠢，但暂时没有别的办法了
+    //这个生成拉伸动画的方法很蠢，但暂时没有别的办法了
     createToggleAnimationLv(v) {
         let menu = this.props.sideBar.menu;
         let isActive = this.props.sideBar.activeMenu.filter(val=> {
@@ -102,6 +105,7 @@ class SideBar extends Component {
         return true;
     }
 
+    //创造PC状态下的菜单内容
     createNormalMenuItem(menu, parentCode) {
         return (
             <ul className="animation-fadeIn">
@@ -118,17 +122,17 @@ class SideBar extends Component {
                             let isHasChild = this.isHasChild(menu, v.code);
                             let isNoView = this.isNoView(v);
                             if(v.isEnable){
-                                return (<li className={'toggleOutLv_' + this.createToggleAnimationLv(v) + ' ' + this.createItemActive(v)}
+                                return (<li className={'toggleOutLv_' + this.createToggleAnimationLv(v) + ' ' + this.createItemActive(v,isNoView)}
                                             onClick={e=> {
                                                 this.props.meunItemToggle(v, isNoView);
                                                 e.stopPropagation();
                                             }} key={v.id}>{this.createItemIcon(v)}
                                     {v.menuName}
                                     {isHasChild ? (
-                                        <i className={this.createItemActive(v) ? 'side-bar-menu-arr fa fa-angle-down' : 'side-bar-menu-arr fa fa-angle-left'}></i>) : ''}
+                                        <i className={this.createItemActive(v,isNoView) ? 'side-bar-menu-arr fa fa-angle-down' : 'side-bar-menu-arr fa fa-angle-left'}></i>) : ''}
                                     {
                                         function () {
-                                            if (that.createItemActive(v) && isHasChild) {
+                                            if (that.createItemActive(v,isNoView) && isHasChild) {
                                                 return that.createNormalMenuItem(newMenu, newParentCode);
                                             }
                                         }()
@@ -142,18 +146,21 @@ class SideBar extends Component {
         );
     }
 
+    //菜单栏向上滚动
     upScroll(e) {
         if (this.refs.menu.clientHeight > (this.props.windowHeight - 205) && this.refs.menu.clientHeight + this.props.sideBar.menuScrollY > (this.props.windowHeight - 230)) {
             this.props.menuScroll(this.props.sideBar.menuScrollY + e);
         }
     }
 
+    //菜单栏向下滚动
     downScroll(e) {
         if (this.props.sideBar.menuScrollY < 0) {
             this.props.menuScroll(this.props.sideBar.menuScrollY + e);
         }
     }
 
+    //创造快捷菜单按钮组
     createQuickButton(){
         let createLi = ()=>{
             let quickMenu = this.props.sideBar.userInfo.quickButton.map((v,k)=>{
@@ -187,6 +194,7 @@ class SideBar extends Component {
         </ul>);
     }
 
+    //渲染PC状态的页面布局
     renderNormal() {
         let MenuScroll = {
             top: this.props.sideBar.menuScrollY + 'px'
@@ -305,8 +313,16 @@ class SideBar extends Component {
         });
     }
 
+    //创造收起状态的菜单栏
     createMiniItemList() {
-        return (this.props.sideBar.menu.map(v=> {
+        let quickMenu = this.props.sideBar.userInfo.quickButton.map((v,k)=>{
+            for(let i in this.props.sideBar.menu){
+                if(v.id === this.props.sideBar.menu[i].id){
+                    return v;
+                }
+            }
+        });
+        return (quickMenu.map(v=> {
             if (v.parentCode === '0'&&v.isEnable) {
                 return (<li key={v.id} onMouseEnter={()=> {
                 this.props.miniMenuItemHover(v);
@@ -317,11 +333,11 @@ class SideBar extends Component {
                     this.props.meunItemToggle(v, isNoView);
                     e.stopPropagation();
                 }}
-                >{this.createItemIcon(v)}{this.createMiniToggleMenuItem(this.props.sideBar.miniHoverMenu,v)}</li>);
+                >{this.createItemIcon(v)}{/*this.createMiniToggleMenuItem(this.props.sideBar.miniHoverMenu,v)*/}</li>);
             }
         }));
     }
-
+    //根据分辨率判断是否渲染收起状态的内容
     renderMini() {
         return (
             <div className={"side-bar-toggle " + this.getToggleAnimation()}>

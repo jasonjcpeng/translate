@@ -8,6 +8,7 @@ import {LoaderOption} from '../../config/config';
 import ShieldAlert from '../piecemeal-components/shield-alert';
 import ShieldOk from '../piecemeal-components/shield-ok';
 import classnames from 'classnames';
+import Cut from 'react-cut'
 //Tools
 import {FormatDataInfo} from '../../config/tools';
 //JSON
@@ -25,7 +26,7 @@ class ContentSetting extends React.Component {
         }
     }
 
-    //创造设置页面左边的单元选择标签
+    //创造设置的侧边栏
     createContentSettingNavBar(arr) {
         return arr.map((v)=> {
             return (<li className={function(){
@@ -37,14 +38,16 @@ class ContentSetting extends React.Component {
             }} key={v.key}>{v.name}</li>)
         })
     }
-    //创造当前处于活跃状态的设置页的标题头
+
+    //创造当前内容的标题头
     createActiveContentHeader(rightActiveContent) {
         return (<div className="right-active-content-header">
             {rightActiveContent.name}
             <div className="br-line"></div>
         </div>);
     }
-    //创造基础个人信息设置页面
+
+    //创造个人信息设置内容
     createBaseInfo(rightActiveContent, tableHeight) {
         this.protoBaseInfo = {
             name: this.props.userInfo.name,
@@ -83,12 +86,14 @@ class ContentSetting extends React.Component {
                 <div className="content-setting-footer">
                     <button onClick={e=>{
                         this.props.actionChangeUserInfo(this.props.userInfo.id,this.protoBaseInfo);
-                    }} className="btn btn-finish">确认修改</button>
+                    }} className="btn btn-finish">确认修改
+                    </button>
                 </div>
             </div>
         </div>);
     }
-    //创造联系方式修改页面
+
+    //创造练习方式设置内容
     createTel(rightActiveContent, tableHeight) {
         let height = tableHeight - 50;
         this.protoTelInfo = {
@@ -123,7 +128,8 @@ class ContentSetting extends React.Component {
 
         </div>);
     }
-    //创造修改密码页面
+
+    //创造修改密码的内容
     createResetPassWord(rightActiveContent, tableHeight) {
         let height = tableHeight - 50;
         this.protoResetPassWord = {
@@ -173,7 +179,8 @@ class ContentSetting extends React.Component {
 
         </div>);
     }
-    //创造皮肤设置页面中的皮肤内容
+
+    //创造当前皮肤列表内容
     createSkinItem(arr) {
         return arr.map(v=> {
             return ( <div key={v.key} className={function(){
@@ -185,24 +192,38 @@ class ContentSetting extends React.Component {
             }} style={{backgroundColor:v.img}}></div>);
         });
     }
-    //创造皮肤设置页面
+
+    //创造皮肤设置的内容
     createSkin(rightActiveContent, tableHeight) {
         let height = tableHeight - 50;
         let arr = SkinList.skinList;
         return (<div key={rightActiveContent.key} className="right-active-content animation-fadeInRight">
             {this.createActiveContentHeader(rightActiveContent)}
-            <div style={{height: height}} className="content-setting-frame">
-                <div className="skin-group">
-                    {this.createSkinItem(arr)}
+            <div style={{marginTop:10,height: height}} className="content-setting-frame">
+                <div style={{height: height-80}}>
+                    <div className="skin-group">
+                        {this.createSkinItem(arr)}
+                    </div>
+                </div>
+                <div className="content-setting-footer">
+                    <button onClick={e=>{
+                    let arg = {
+            useSkin: this.props.useSkin,
+        }
+                        this.props.actionChangeUserInfo(this.props.userInfo.id,arg);
+                    }} className="btn btn-finish">确认修改
+                    </button>
                 </div>
             </div>
+
         </div>);
     }
 
     //创造数据字典
     createDataBabel(rightActiveContent, tableHeight) {
         let height = tableHeight - 50;
-        let createMenuSettingTableBody = (toggleCode) => {
+        //创造数据字典表格
+        let createDataBabelTableBody = (toggleCode) => {
             let quickSort = (arr, root = {code: '0'}, result = [])=> {
                 let menu = [];
                 if (arr.length > 0) {
@@ -213,7 +234,7 @@ class ContentSetting extends React.Component {
                             return v;
                         }
                     });
-                    if(menu.length > 0){
+                    if (menu.length > 0) {
                         for (let i in menu) {
                             result.push(menu[i]);
                             quickSort(newArr, menu[i], result);
@@ -223,6 +244,7 @@ class ContentSetting extends React.Component {
                 return result;
             }
             let menu = quickSort(this.props.dataBabel);
+            //判断本行是否隐藏
             let trIsHidden = (v)=> {
                 let toggleStateFlag = true;
                 if (v.parentCode === '0') {
@@ -236,6 +258,7 @@ class ContentSetting extends React.Component {
                 }
                 return toggleStateFlag;
             }
+            //箭头标记与边缘的距离
             let arrowIconMargin = (v, margin)=> {
                 let localMargin = margin;
                 for (let i = 0; i < this.props.dataBabel.length; i++) {
@@ -245,6 +268,7 @@ class ContentSetting extends React.Component {
                 }
                 return localMargin
             }
+            //判断本项是否含有子项
             let isMenuHasChild = (newMenu, currentMenu)=> {
                 for (let i in newMenu) {
                     if (newMenu[i].parentCode === currentMenu.code) {
@@ -254,6 +278,13 @@ class ContentSetting extends React.Component {
                 }
                 return false;
             }
+            //判断本行是否被选中，返回被选中状态的className
+            let createTrClassName = (v)=> {
+                if (v === this.props.dataBabelTableSelectedItem) {
+                    return 'active';
+                }
+            }
+            //根据当前展开状态判断返回哪种箭头的className
             let trToggleIconClassNames = (v)=> {
                 let toggleStateFlag = false;
                 for (let i in toggleCode) {
@@ -261,11 +292,11 @@ class ContentSetting extends React.Component {
                         toggleStateFlag = true;
                     }
                 }
-               return toggleStateFlag ? 'menu-toggle fa fa-caret-down' : 'menu-toggle fa fa-caret-right';
+                return toggleStateFlag ? 'menu-toggle fa fa-caret-down' : 'menu-toggle fa fa-caret-right';
             }
             return menu.map((v, k)=> {
-                return (<tr  hidden={trIsHidden(v)} key={k}>
-                    <td>{ (()=> {
+                return (<tr  className={createTrClassName(v)}   hidden={trIsHidden(v)} key={k}>
+                    <td >{ (()=> {
                         return (<div style={{width: '40px', float: 'left', paddingLeft: arrowIconMargin(v, 15) + 'px'}}>
                             {(()=> {
                                 if (isMenuHasChild(menu, v)) {
@@ -280,35 +311,110 @@ class ContentSetting extends React.Component {
                             <span style={{marginLeft: '5px'}}>{k + 1}</span>
                         </div>);
                     })()}</td>
-                    <td style={{cursor:'text',paddingLeft: arrowIconMargin(v, 40) + 'px'}}>{v.name}</td>
+                    <td onClick={e=>{
+                         this.props.actionSelectDataBabelItem(v);
+                         e.stopPropagation();
+                    }} style={{textAlign:'center',paddingLeft: arrowIconMargin(v, 20) + 'px'}}>{v.name}</td>
                     <td style={{cursor:'text'}}>{v.encode}</td>
+                    <td ><i className="fa fa-edit"></i></td>
                 </tr>);
             });
 
         }
+        //创造数据字典选中后的细节数据表
+        let createDataBabelDetailBody = (allData)=>{
+            return allData.map((v,k)=>{
+                return <tr key={k}>
+                    <td>{k+1}</td>
+                    <td>{v.name}</td>
+                    <td>{v.encode}</td>
+                    <td><i className="fa fa-edit"></i></td>
+                </tr>
+            })
+        }
 
 
-        return (<div key={rightActiveContent.key} className="right-active-content animation-fadeInRight">
+        return (<div ><div  key={rightActiveContent.key} className="right-active-content animation-fadeInRight">
             {this.createActiveContentHeader(rightActiveContent)}
-            <div style={{height: height}} className="content-setting-frame">
-                <div>
+            <div style={{height: height}} className="content-setting-frame  half-left">
+                <div style={{overflow:'auto',height:height-80}}>
                     <table >
                         <thead>
                         <tr>
                             <th style={{width: '60px'}}></th>
-                            <th style={{width: '300px'}}>中文名称</th>
-                            <th style={{width: '300px'}}>字段名</th>
+                            <th >中文名称</th>
+                            <th >字段名</th>
+                            <th style={{width: '50px'}}> 编辑</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {createMenuSettingTableBody(this.props.currentToggleItem)}
+                        {createDataBabelTableBody(this.props.currentToggleItem)}
                         </tbody>
                     </table>
                 </div>
+                <div className="content-setting-footer">
+                    <button onClick={e=>{
+                   }} className="btn">添加
+                    </button>
+                </div>
             </div>
+            <div style={{height: height}} className="content-setting-frame half-right">
+                <div style={{overflow:'auto',height:height-80}}>
+                    <table >
+                        <thead>
+                        <tr>
+                            <th style={{width: '30px'}}></th>
+                            <th >中文名称</th>
+                            <th >字段名</th>
+                            <th style={{width: '50px'}}>编辑</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {createDataBabelDetailBody(this.props.dataBabelDetail)}
+                        </tbody>
+                    </table>
+                </div>
+                <div className="content-setting-footer">
+                    <button onClick={e=>{
+                   }} className="btn">添加
+                    </button>
+                </div>
+            </div>
+
+        </div>
         </div>);
     }
-    //创造快捷按钮设置页面
+
+    //创造头像设置内容
+    createHeadImgSetting(rightActiveContent, tableHeight){
+        let height = tableHeight - 50;
+        let config = {
+            url:'https://img.dev.tusoapp.com/896d71e4-6b1f-403f-84a1-9eacf82a4438.jpg', // the image you want to cut
+            imgScale:true,	//	if true ,user can scale image
+            frameScale:true,	// if true , user can scale the cutting frame
+            frameWidth:200,		// the cutting frame's default width
+            frameHeight:200,	// the cutting frame's default height
+            minW:200,	//	the cutting frame's min width
+            minH:200,	//	the cutting frame's min height
+            width:200  //Cut's component's width
+        }
+        return (<div key={rightActiveContent.key} className="right-active-content animation-fadeInRight">
+            {this.createActiveContentHeader(rightActiveContent)}
+            <div style={{marginTop:10,height: height}} className="content-setting-frame">
+                <div style={{height: height-80}}>
+                    <Cut config={config} getCutImage={(e,v)=>{console.log(e);}}></Cut>
+                </div>
+                <div className="content-setting-footer">
+                    <button onClick={e=>{
+                    }} className="btn btn-finish">确认修改
+                    </button>
+                </div>
+            </div>
+
+        </div>);
+    }
+
+    //创造快捷按钮设置的设置内容
     createQuickButtonSetting(rightActiveContent, tableHeight) {
         let height = tableHeight - 50;
         let createMenuSettingTableBody = (toggleCode) => {
@@ -405,11 +511,11 @@ class ContentSetting extends React.Component {
                         toggleStateFlag = true;
                     }
                 }
-               // return toggleStateFlag ? 'menu-toggle fa fa-caret-down' : 'menu-toggle fa fa-caret-right';
+                // return toggleStateFlag ? 'menu-toggle fa fa-caret-down' : 'menu-toggle fa fa-caret-right';
                 return 'menu-toggle fa fa-caret-down'
             }
             return menu.map((v, k)=> {
-                return (<tr  key={k}>{/*hidden={trIsHidden(v)}*/}
+                return (<tr key={k}>{/*hidden={trIsHidden(v)}*/}
                     {createBatchSelectBody(v)}
                     <td>{ (()=> {
                         return (<div style={{width: '40px', float: 'left', paddingLeft: arrowIconMargin(v, 15) + 'px'}}>
@@ -437,7 +543,7 @@ class ContentSetting extends React.Component {
 
         return (<div key={rightActiveContent.key} className="right-active-content animation-fadeInRight">
             {this.createActiveContentHeader(rightActiveContent)}
-            <div style={{height: height}} className="content-setting-frame">
+            <div style={{marginTop:10,height: height}} className="content-setting-frame">
                 <div style={{overflow:'auto',height: height-80}}>
                     <table >
                         <thead>
@@ -689,6 +795,9 @@ class ContentSetting extends React.Component {
             case 'resetPassWord':
                 return this.createResetPassWord(rightActiveContent, tableHeight);
                 break;
+            case 'headImg':
+                return this.createHeadImgSetting(rightActiveContent, tableHeight);
+                break;
             case 'skin':
                 return this.createSkin(rightActiveContent, tableHeight);
                 break;
@@ -710,7 +819,7 @@ class ContentSetting extends React.Component {
             key: 'headImg',
             name: '我的头像'
         }, {key: 'resetPassWord', name: '修改密码'}, {key: 'skin', name: '设置皮肤'}];
-        let contentSettingPowerNavBar = [{key: 'DataBabel', name: '数据字典'},{key: 'menuSetting', name: '编辑菜单'}];
+        let contentSettingPowerNavBar = [{key: 'DataBabel', name: '数据字典'}, {key: 'menuSetting', name: '编辑菜单'}];
         let contentBesideSettingNavBar = [{key: 'quickButton', name: '快捷菜单'}];
         if (this.props.target.status) {
             return (
@@ -743,7 +852,12 @@ class ContentSetting extends React.Component {
                                      onTargetMenuTarget={'setting'}></ShieldAlert>
                         <ShieldOk key={this.props.target.obj.menuSort+'ok'+this.props.ok} content={this.props.ok}
                                   title={'Success'} onTargetMenuTarget={'setting'}></ShieldOk>
-                        <div className="content-container-inset" style={{height: tableHeight}}>
+                        <div onClick={e=>{
+                        if(this.props.dataBabelTableSelectedItem){
+                        this.props.actionSelectDataBabelItem(undefined);
+                        }
+                          e.stopPropagation();
+                    }} className="content-container-inset" style={{height: tableHeight}}>
                             {this.createRightActiveContent(tableHeight)}
                         </div>
                     </div>
@@ -777,7 +891,7 @@ const state = state=> {
     return ({
         target: target,
         userInfo: state.sideBar.userInfo,
-        dataBabel:state.sideBar.dataBabel,
+        dataBabel: state.sideBar.dataBabel,
         useSkin: state.common.useSkin,
         defaultToggleStatus: state.common.defaultToggleStatus,
         batchOnItem: state.sideBar.userInfo.quickButton,
@@ -785,6 +899,8 @@ const state = state=> {
         error: target ? target.status.error : undefined,
         ok: target ? target.status.ok : undefined,
         currentToggleItem: target ? target.status.currentToggleItem : [],
+        dataBabelTableSelectedItem:target?target.status.dataBabelTableSelectedItem:undefined,
+        dataBabelDetail:target?target.status.dataBabelDetail:[],
     });
 }
 

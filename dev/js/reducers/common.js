@@ -115,7 +115,7 @@ export default function (state = initState, action) {
             }
             break;
         case Constants.SHIELD_ALERT_ON_OK_DELETE_ERROR_FLAG:
-            if(action.target==='app'){
+            if(action.targetType==='app'){
                 window.localStorage.clear();
                 window.location.reload();
             }
