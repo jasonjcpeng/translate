@@ -130,6 +130,7 @@ export const clickFinish = (targetMenuSort, menuData,activeContent, nowOnContent
                     return dispatch({
                         type: Constants.MENU_SETTING_MODIFY_MENU_FINISH,
                         targetMenuSort: targetMenuSort,
+                        payload: menuData,
                         error: undefined
                     })
                 }).catch(res=> {

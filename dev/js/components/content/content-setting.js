@@ -757,7 +757,7 @@ class ContentSetting extends React.Component {
             </div>);
         }
     }
-
+    //创建编辑菜单功能
     createMenuSetting(rightActiveContent, tableHeight) {
         let height = tableHeight - 100;
         return (<div onClick={

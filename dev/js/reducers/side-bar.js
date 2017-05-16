@@ -147,7 +147,7 @@ export default function (state = initState, action) {
             break;
         case Constants.CONTENT_SETTING_CHANGE_QUICK_BUTTON:
             return update(state,{userInfo:{quickButton:{$apply:arr=>{
-                let flag = true
+                let flag = true;
                 let orign = arr.filter(v=>{
                     if(v.id===action.quickButton.id){
                         flag = false;
@@ -159,8 +159,23 @@ export default function (state = initState, action) {
                     orign.push(action.quickButton);
                 }
                 return orign;
-
             }}}});
+            break;
+        case Constants.MENU_SETTING_MODIFY_MENU_FINISH:
+            if(action.payload){
+                return update(state,{menu:{$apply:arr=>{
+                    return arr.map((v,k)=>{
+                        if(v.id===action.payload.id){
+                            return action.payload;
+                        }else{
+                            return v;
+                        }
+                    });
+                }}});
+            }else{
+                return state;
+            }
+
             break;
     }
     return state;

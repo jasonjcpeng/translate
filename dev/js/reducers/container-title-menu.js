@@ -455,7 +455,11 @@ export default function (state = initState, action) {
             return setActiveContentStatus(state, action.targetMenuSort, {status: {error: {$set: action.error}}});
             break;
         case Constants.MENU_SETTING_MODIFY_MENU_FINISH:
-            return setActiveContentStatus(state, action.targetMenuSort, {status: {error: {$set: action.error}}});
+            let modifyState = state;
+            if(action.payload){
+                modifyState = setActiveContentStatus(state, 'setting', {status: {selectMenuSettingTableItem:{$set:action.payload}}});
+            }
+            return setActiveContentStatus(modifyState, action.targetMenuSort, {status: {error: {$set: action.error}}});
             break;
         case Constants.MENU_SETTING_CHANGE_BUTTON_CONFIG_PREVIEW_STATUS:
             return setActiveContentStatus(state, action.target, {status: {O_buttonConfigPreviewStatus: {$set: action.nowOnButtonConfig}}});
