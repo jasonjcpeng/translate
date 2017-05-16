@@ -402,7 +402,6 @@ export default function (state = initState, action) {
             if (action.error) {
                 return setActiveContentStatus(state, action.targetMenuSort, {status: {error: {$set: "来自菜单视图项API:" + action.error}}})
             } else {
-                console.log(action.targetMenu.viewPoint&&action.targetMenu.viewPoint.length>0);
                 if(action.targetMenu.viewPoint&&action.targetMenu.viewPoint.length>0){
                     return setActiveContentStatus(state, action.targetMenuSort, {status: {viewPointConfigData: {$set: action.payload}}});
                 }else{

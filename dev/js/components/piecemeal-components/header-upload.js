@@ -39,7 +39,7 @@ class HeaderUpload extends React.Component {
         let config = {
          dataURL:this.state.dataURL, // the image you want to cut
          imgScale:true,	//	if true ,user can scale image
-         frameScale:false,	// if true , user can scale the cutting frame
+         frameScale:true,	// if true , user can scale the cutting frame
          frameWidth:150,		// the cutting frame's default width
          frameHeight:150,	// the cutting frame's default height
          minW:150,	//	the cutting frame's min width
@@ -66,6 +66,7 @@ class HeaderUpload extends React.Component {
 export default HeaderUpload;
 
 
+//引用别人的图片截取组件
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -285,7 +286,7 @@ var Cutting = _react2.default.createClass({
         canvas.style.width = this.state.frameWidth + 'px';
         canvas.style.height = this.state.frameHeight + 'px';
         ctx.drawImage(img, this.state.positionX, this.state.positionY, this.state.frameWidth, this.state.frameHeight, 0, 0, this.state.frameWidth, this.state.frameHeight);
-        this.props.getCutImage(canvas.toDataURL("image/jpeg",1.0), this.convertBase64UrlToBlob(canvas.toDataURL("image/jpeg",1.0)));
+        this.props.getCutImage(canvas.toDataURL("image/jpeg",0.5), this.convertBase64UrlToBlob(canvas.toDataURL("image/jpeg",0.5)));
     },
     copyImageToFixSize: function copyImageToFixSize(url) {
         var Images = new Image(),
@@ -301,7 +302,7 @@ var Cutting = _react2.default.createClass({
             canvas.width = that.refs.bgImg.clientWidth;
             ctx.drawImage(img, 0, 0, that.refs.bgImg.clientWidth, that.refs.bgImg.clientHeight);
             that.setState({
-                realImage: canvas.toDataURL("image/jpeg",1.0)
+                realImage: canvas.toDataURL("image/jpeg",0.5)
             });
             that.initCut();
         };

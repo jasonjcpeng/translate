@@ -393,7 +393,7 @@ class ContentSetting extends React.Component {
             {this.createActiveContentHeader(rightActiveContent)}
             <div style={{marginTop:10,height: height}} className="content-setting-frame">
                 <div style={{height: height-80}}>
-                    <HeaderUpload key={this.props.error} callBackUrlData={(e)=>{
+                    <HeaderUpload key={this.props.error+this.props.ok} callBackUrlData={(e)=>{
                         callBackUrlDataPromise = e;
                     }} actionSendError={this.props.actionSendError}  style={{height: height-160}}></HeaderUpload>
                 </div>

@@ -1,6 +1,7 @@
 import * as Constants from './CONSTANTS';
 import {isOnline} from '../config/config';
 import {GetMount} from './menu-setting-option-menu';
+import {AppDidMount} from './app';
 import {apiDeleteMenu,apiChangeUserInfo,apiResetPassWord,apiGetDataBabelDetail} from '../services/api';
 
 export const contentSettingGetMount = (target)=> {
@@ -131,6 +132,7 @@ export const actionChangeUserInfo = (userID,arg)=>{
         return dispatch=>{
             apiChangeUserInfo(userID,arg).then(resData=>{
                 dispatch(actionIsOk('修改成功！'));
+                dispatch(AppDidMount());
                 return dispatch({
                     type:Constants.CONTENT_SETTING_CHANGE_USER_INFO,
                     userInfo:arg,

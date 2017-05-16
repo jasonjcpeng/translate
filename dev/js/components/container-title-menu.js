@@ -28,7 +28,6 @@ class ContainerTittleMenu extends Component {
             }
             this.props.setLimitAndCursor(limit, left);
         }
-
     }
 
     getContainerTittleMenuLeft(){
