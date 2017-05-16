@@ -1,5 +1,11 @@
 import React from 'react';
 import classnames from 'classnames';
+import {apiFormatModifyShieldFieldDataFromApi} from '../../services/api';
+import Loader from 'react-loader';
+import {LoaderOption} from '../../config/config';
+//
+import CheckBox from './modify-shield-check-box';
+import Radio from './modify-shield-radio-box';
 //json
 import ComponentType from '../../../jsons/modify-shield-component-type.json';
 
@@ -12,8 +18,8 @@ import ComponentType from '../../../jsons/modify-shield-component-type.json';
 * onChange:() 可选 菜单内修改事件响应回调，用以转传入Redux。
 * onCancel:() 可选 关闭遮罩的回调，如没有则不显示取消按钮
 * onFinish:() 可选 完成修改的回调，如没有则不显示确定按钮
-*
 * */
+
 class ModifyShield extends React.Component{
     constructor(props){
         super();
@@ -26,13 +32,23 @@ class ModifyShield extends React.Component{
             onChange:props.onChange?props.onChange:()=>{}
         }
     }
-
-
+    componentWillMount() {
+        apiFormatModifyShieldFieldDataFromApi(this.props.fieldData).then(
+            res=> {
+                this.setState({
+                    loaded:true,
+                    fieldData: res,
+                });
+            }
+        ).catch(rej=> {
+            console.log(rej)
+        });
+    }
     createFieldStructure(){
         let createItem = ()=>{
             let handleOnChange = (val,e)=>{
                 let newData = this.state.data;
-                newData[val.name] = e.target.value;
+                newData[val.name] = e;
                 this.state.onChange(newData);
             }
 
@@ -46,7 +62,7 @@ class ModifyShield extends React.Component{
             let createNormalInput = (val,valData)=> {
                 return (<input disabled={val.isDisable} onChange={(e)=>{
                     if(!val.isDisable){
-                        handleOnChange(val,e);
+                        handleOnChange(val,e.target.value);
                     }
                 }} style={{width: val.componentWidth + '%'}} value={valData}  type="text"/>);
             }
@@ -57,11 +73,25 @@ class ModifyShield extends React.Component{
                         return (createNormalInput(val,valData));
                         break;
                     case 'checkBox':
-                        return <div></div>;
+                        return <CheckBox onChange={
+                            e=>{
+                                if(!val.isDisable){
+                                    handleOnChange(val,e);
+                                }
+                            }
+                        } itemFieldData={val} data={valData}></CheckBox>;
+                        break;
+                    case 'radio':
+                        return <Radio onChange={
+                            e=>{
+                                if(!val.isDisable){
+                                    handleOnChange(val,e);
+                                }
+                            }
+                        } itemFieldData={val} data={valData}></Radio>
                         break;
                 }
             }
-
             return this.state.fieldData.map((val,key)=>{
                 let style ={
                     width: (val.width + '%')
@@ -120,12 +150,14 @@ class ModifyShield extends React.Component{
 
     render(){
         if(this.state.isShow){
-            return (<div onClick={e=>{
-            e.stopPropagation();
+            return ( <div onClick={e=> {
+                e.stopPropagation();
             }} className="shield">
                 <div key={this.state.data} className="shield-modify">
-                    {this.createFieldStructure()}
-                    {this.createFooter()}
+                    <Loader loaded={this.state.loaded} options={LoaderOption}>
+                        {this.createFieldStructure()}
+                        {this.createFooter()}
+                    </Loader>
                 </div>
             </div>)
         }else{

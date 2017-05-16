@@ -88,6 +88,20 @@ $table-item-active-color:#cbcdba;
     background-color: $main-color;
     color: $second-main-color;
   }
+  .radio{
+    background-color: transparent;
+    border-color:$default-option-toggle-color;
+  }
+  .radio:hover{
+    background-color: $table-item-active-color;
+  }
+  .radio-checked{
+  }
+  .radio-checked::before{
+    background-color: $main-color;
+    color: $second-main-color;
+  }
+
 
   .fa-toggle-on{
     cursor: pointer;

@@ -282,6 +282,35 @@ body {
     color: #fff;
     font-weight: 600;
   }
+
+  .radio{
+    border-radius: 50px;
+    cursor: pointer;
+    vertical-align: text-bottom;
+    text-align: center;
+    height: 18px;
+    width: 18px;
+    border:solid 2px;
+    display: inline-block;
+  }
+  .radio:hover{
+  }
+  .radio-checked{
+    text-align: center;
+    line-height: 17px;
+  }
+  .radio-checked::before{
+    border-radius: 50px;
+    position: relative;
+    top:1px;
+    text-align: center;
+    display: inline-block;
+    height: 14px;
+    width: 14px;
+    content: '';
+    color: #fff;
+    font-weight: 600;
+  }
   .loader{
     .spinner{
       z-index: 1001 !important;

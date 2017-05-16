@@ -71,7 +71,7 @@ const apis = {
     resetPassWord: '/api/Account/RevisePassword',
     getModuleByRoleID: '/api/RoleAuthorize/GetAuthByRoleId',
     getDataBabel:'/api/Data/Get',
-    getDataBabelDetail:'/api/Data/GetDetail'
+    getDataBabelDetail:'/api/Data/GetDetail',
 };
 
 export const login = (userName, pwd)=> {
@@ -409,4 +409,52 @@ export const apiGetDataBabelDetail = (item)=>{
         }
         resolve(formatData);
     }, arg, 'GET');
+}
+//根据当前添加修改框中的数据标本中的API获取相应的数据字典值并重新填充进数据标本中
+export const apiFormatModifyShieldFieldDataFromApi = (data)=>{
+    let fieldDataHasApi = data.filter((v,k)=>{
+        if(v.api){
+            return v;
+        }
+    });
+    let promiseAll = fieldDataHasApi.map(v=>{
+        let arg = {
+            encode:v.api
+        }
+        return Fetch.Fetch(filterIsOnline(apis.getDataBabelDetail),arg)
+    })
+    return new Promise((resolve,reject)=>{
+        Promise.all(promiseAll).then(res=>{
+            fieldDataHasApi = fieldDataHasApi.map((v,k)=>{
+                if(res[k].state===1){
+                    v['apiData'] = res[k].data.map((v,k)=>{
+                        let resData = {
+                            id:v['AX_Id'],
+                            higherId:v['AX_ItemId'],
+                            encode:v['AX_ItemCode'],
+                            name:v['AX_ItemName']
+                        };
+                        return resData;
+                    });
+                }else{
+                    reject(res[k].message);
+                }
+                return v;
+            })
+            let apiData = data.map(v=>{
+                let result = v;
+                for(let i=0;i<fieldDataHasApi.length;i++){
+                    if(fieldDataHasApi[i].name===v.name){
+                        result = fieldDataHasApi[i];
+                        break;
+                    }
+                }
+                return result;
+            })
+            resolve(apiData);
+        }).catch(rej=>{
+            reject(rej)
+        });
+    })
+
 }

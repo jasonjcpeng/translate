@@ -27,6 +27,20 @@ body{
             overflow: hidden;
             text-overflow: ellipsis;
           }
+          .check-box-group{
+            display: inline-block;
+            .check-box{
+              label{
+                cursor: pointer;
+                font-weight: 300;
+                margin: 0 2px 0 10px;
+              }
+              display: inline-block;
+              vertical-align: top;
+              float: left;
+            }
+          }
+
           input {
             display: inline-block;
             vertical-align: top;

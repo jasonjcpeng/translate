@@ -110,7 +110,7 @@ export const clickFinish = (targetMenuSort, menuData,activeContent, nowOnContent
         });
     }
     //modifyViewPoint的Api判断增加"/"
-    if(menuData.modifyViewPoint.length>0){
+    /*if(menuData.modifyViewPoint.length>0){
         menuData.modifyViewPoint = menuData.modifyViewPoint.map(v=>{
             if(v.api&&v.api.lastIndexOf('/')!==(v.api.length-1)){
                 v.api+='/';
@@ -119,7 +119,7 @@ export const clickFinish = (targetMenuSort, menuData,activeContent, nowOnContent
                 return v
             }
         });
-    }
+    }*/
     if (isOnline) {
         if(modifyFlag){
                 //修改菜单

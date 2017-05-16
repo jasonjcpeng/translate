@@ -143,12 +143,12 @@ class MenuSettingOptionAddMenu extends React.Component {
         }
 
         let createComponentTypeSelector = (k, v)=> {
-            let mapOption = ComponentType.componentType.map((v, k)=> {
-                return (<option key={k} value={v.type}>{v.remark}</option>);
+            let mapOption = ComponentType.componentType.map((val, k)=> {
+                return (<option key={k}  value={val.type}>{val.remark}</option>);
             })
             return (<select onChange={(e)=>{
                 handleOnChange(k,v,'componentType',e.target.value);
-            }} selected={v.componentType}>
+            }} value={v.componentType}>
                 {mapOption}
             </select>);
         }
@@ -267,7 +267,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                     <th style={{width:"50px"}}>只可见</th>
                     <th style={{width:"50px"}}>必填</th>
                     <th>组件类型</th>
-                    <th>组件API</th>
+                    <th>来自数据字典</th>
                     <th style={{width:"90px"}}>并排显示</th>
                     <th style={{width:"120px"}}>总体宽度设置(%)</th>
                     <th style={{width:"120px"}}>组件宽度设置(%)</th>
