@@ -84,6 +84,9 @@ $table-item-active-color:#cbcdba;
   }
   .checkbox-checked{
   }
+  .checkbox-disable{
+    background-color: $default-option-toggle-color;
+  }
   .checkbox-checked::before{
     background-color: $main-color;
     color: $second-main-color;
@@ -91,6 +94,9 @@ $table-item-active-color:#cbcdba;
   .radio{
     background-color: transparent;
     border-color:$default-option-toggle-color;
+  }
+  .radio-disable{
+    background-color: $default-option-toggle-color;
   }
   .radio:hover{
     background-color: $table-item-active-color;
@@ -792,22 +798,37 @@ $table-item-active-color:#cbcdba;
 
 
   .shield-modify {
-    .shield-modify-content {
-      ul {
-        li {
-          input {
-            border-color: $default-option-toggle-color;
+    .shield-modify-container{
+      .shield-modify-content {
+        ul {
+          li {
+            .check-box-group{
+              select{
+                border-color: $default-option-toggle-color;
+              }
+              select[disabled]{
+                background-color: $default-option-toggle-color;
+                border-color: $default-option-toggle-color;
+              }
+            }
+            input {
+              border-color: $default-option-toggle-color;
+            }
+            input[disabled] {
+              background-color: $default-option-toggle-color;
+            }
+          }
+        }
+        .must-filling {
+          span{
+          }
+          span:before {
+            color: $alert-color;
           }
         }
       }
-      .must-filling {
-        span{
-        }
-        span:before {
-          color: $alert-color;
-        }
-      }
     }
+
     .shield-modify-content-search-group{
       .field-list{
         ul{

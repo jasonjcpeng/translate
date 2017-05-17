@@ -8,7 +8,8 @@ class ModifyShieldCheckBox extends React.Component{
             itemFieldData:props.itemFieldData,
             apiData:props.itemFieldData.apiData,
             data:props.data,
-            onChange:props.onChange
+            onChange:props.onChange,
+            disabled:props.itemFieldData.isDisable
         }
     }
 
@@ -17,15 +18,19 @@ class ModifyShieldCheckBox extends React.Component{
             itemFieldData:props.itemFieldData,
             apiData:props.itemFieldData.apiData,
             data:props.data,
-            onChange:props.onChange
+            onChange:props.onChange,
+            disabled:props.itemFieldData.isDisable
         }
     }
 
     createCheckBox(){
-        if(!this.state.data||Object.prototype.toString.call(this.state.data)==='[object Array]'){
+        if(!this.state.apiData){
+            return <div className="check-box"><label style={{cursor:'default',color:'red'}}>多选组件未设置数据字典</label></div>
+        }else if(!this.state.data||Object.prototype.toString.call(this.state.data)==='[object Array]'){
             return this.state.apiData.map((v,k)=>{
                 let isChecked = false;
                 let checkBoxClassName =classnames({
+                    'checkbox-disable':this.state.disabled,
                     'checkbox':true,
                     'checkbox-checked':(()=>{
                         for(let i=0;i<this.state.data.length;i++){

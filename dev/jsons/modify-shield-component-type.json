@@ -1,4 +1,5 @@
 {
-  "componentType":[{"type":"input","remark":"输入框"},{"type":"radio","remark":"单选框"},{"type":"checkBox","remark":"多选框"},{"type":"select","remark":"下拉选择框"}
+  "componentType":[{"type":"input","remark":"输入框"},{"type":"radio","remark":"单选框"},{"type":"checkBox","remark":"多选框"},
+    {"type":"select","remark":"下拉选择框"},{"type":"timer","remark":"时间选择框"}
   ,{"type":"uEditor","remark":"文本编辑控件"},{"type":"webUpload","remark":"文件上传控件"}]
 }

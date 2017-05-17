@@ -50,7 +50,6 @@ export const IsObjEmpty = (obj)=>{
     }
     return true;
 }
-
 export const getNowFormatDate=()=>{
     var date = new Date();
     var seperator1 = "-";
@@ -78,16 +77,16 @@ export const stringifyArrWhosChildIsObj = (viewPoint)=>{
 }
 
 //这里如果来的数据不是JSON的string会报错
-export const arraifyStringWhosChildIsObj = (viewPointString)=>{
+export const arraifyStringWhosChildIsObj = (viewPointString)=> {
     let viewPointArr = [];
     let result = [];
-    if(viewPointString){
+    if (viewPointString) {
         viewPointArr = viewPointString.split('@#');
-        if(viewPointArr.length>0){
-            result = viewPointArr.map(v=>{
-                if(v.indexOf('{')>=0){
+        if (viewPointArr.length > 0) {
+            result = viewPointArr.map(v=> {
+                if (v.indexOf('{') >= 0) {
                     return (JSON.parse(v));
-                }else{
+                } else {
                     return '';
                 }
             });
@@ -95,10 +94,11 @@ export const arraifyStringWhosChildIsObj = (viewPointString)=>{
     }
     return result
 }
-
+//将YYYY-MM-DDTh:mm:ss的格式转换成YYYY/MM/DD h:mm:ss的格式。
+// todo:因为无法判断来源数据的数据格式。目前只能强行要求后台将时间类型字段以Time关键词结尾。希望有更好的解决方法
 export const FormatDataInfo = (data)=>{
     let Data = data.split("T")[0].replace(/-/g,'/');
-    let Time = data.split("T")[1];
+    let Time = (data.split("T")[1].split("."))[0];
     return Data+' '+Time;
 }
 

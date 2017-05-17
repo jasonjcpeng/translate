@@ -4,10 +4,6 @@ import {connect} from 'react-redux';
 import classnames from 'classnames';
 import Loader from 'react-loader';
 import {LoaderOption} from '../../config/config';
-//data-pick component
-import DatePicker from 'react-datepicker';
-import moment from 'moment';
-import 'react-datepicker/dist/react-datepicker.css';
 //piecemeal-components
 import ButtonGroupModifier from '../piecemeal-components/button-group-modifier';
 import ButtonGroupDeleter from '../piecemeal-components/button-group-deleter';
@@ -195,20 +191,7 @@ class NormalTable extends React.Component {
                         //时间搜索
                        return <li className={'select'+(k === 0?' first-child':'')}
                             key={k} >
-                           <DatePicker
-                               selected={moment()}
-                               onChange={e=>{
-                               console.log(e.format());
-                               }
-                               }
-                           />
-                           <span>至</span><DatePicker
-                           selected={moment()}
-                           onChange={e=>{
-                               console.log(e.format());
-                               }
-                               }
-                       /></li>
+                           </li>
                     }else{
                         return <li className={'select'+(k === 0?' first-child':'')}
                                    key={k} ><select selected={''}>

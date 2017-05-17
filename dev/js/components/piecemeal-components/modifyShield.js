@@ -3,9 +3,11 @@ import classnames from 'classnames';
 import {apiFormatModifyShieldFieldDataFromApi} from '../../services/api';
 import Loader from 'react-loader';
 import {LoaderOption} from '../../config/config';
-//
+//遮罩层操作组件
 import CheckBox from './modify-shield-check-box';
 import Radio from './modify-shield-radio-box';
+import Select from './modify-shield-select-box';
+import Timer from './modify-shield-timer-box';
 //json
 import ComponentType from '../../../jsons/modify-shield-component-type.json';
 
@@ -90,6 +92,24 @@ class ModifyShield extends React.Component{
                             }
                         } itemFieldData={val} data={valData}></Radio>
                         break;
+                    case 'select':
+                        return <Select onChange={
+                            e=>{
+                                if(!val.isDisable){
+                                    handleOnChange(val,e);
+                                }
+                            }
+                        } itemFieldData={val} data={valData}></Select>
+                        break;
+                    case 'timer':
+                        return <Timer onChange={
+                            e=>{
+                                if(!val.isDisable){
+                                    handleOnChange(val,e);
+                                }
+                            }
+                        } itemFieldData={val} data={valData}></Timer>
+                        break;
                 }
             }
             return this.state.fieldData.map((val,key)=>{
@@ -153,12 +173,15 @@ class ModifyShield extends React.Component{
             return ( <div onClick={e=> {
                 e.stopPropagation();
             }} className="shield">
+                <Loader loaded={this.state.loaded} options={LoaderOption}>
                 <div key={this.state.data} className="shield-modify">
-                    <Loader loaded={this.state.loaded} options={LoaderOption}>
-                        {this.createFieldStructure()}
+
+                        <div className="shield-modify-container">
+                            {this.createFieldStructure()}
+                        </div>
                         {this.createFooter()}
-                    </Loader>
                 </div>
+                </Loader>
             </div>)
         }else{
             return (<div></div>);

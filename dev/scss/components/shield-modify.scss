@@ -8,68 +8,93 @@ body{
     height: 90%;
     width: 90%;
     background-color: #fff;
-    .shield-modify-content{
-      overflow: auto;
+    .shield-modify-container{
       height: calc(100% - 60px);
-      ul{
-        margin: 0;
-        padding: 5%;
-        li {
-          padding:1% 0;
-          height: 25px;
-          font-weight: 600;
-          line-height: 25px;
-          display: inline-block;
-          span{
+      width: 100%;
+      overflow: auto;
+      .shield-modify-content{
+        ul{
+          margin: 0;
+          padding: 5%;
+          li {
+            padding:1% 0;
+            height: 25px;
+            font-weight: 600;
+            line-height: 25px;
             display: inline-block;
-            width: 150px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-          .check-box-group{
-            display: inline-block;
-            .check-box{
-              label{
-                cursor: pointer;
-                font-weight: 300;
-                margin: 0 2px 0 10px;
+            span{
+              display: inline-block;
+              width: 150px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+            .check-box-group{
+              position: relative;
+              display: inline-block;
+              input{
+                display: inline-block;
+                vertical-align: super;
+                line-height: 23px;
               }
+              .check-box{
+                label{
+                  cursor: pointer;
+                  font-weight: 300;
+                  margin: 0 2px 0 10px;
+                }
+                display: inline-block;
+                vertical-align: top;
+                float: left;
+              }
+              select{
+                vertical-align: super;
+                text-align: center;
+                line-height: 23px;
+                font-size: 16px;
+                cursor: pointer;
+                margin: 0 0 0 10px;
+                padding: 0 0 0 10px;
+                border: solid 2px;
+                border-radius: 1px;
+                background-color: inherit;
+                width: 100%;
+                height: 30px;
+              }
+              .react-datepicker__input-container{
+                vertical-align: super;
+
+              }
+            }
+
+            input {
               display: inline-block;
               vertical-align: top;
-              float: left;
+              width: 60%;
+              line-height: 23px;
+              margin: 0 0 0 10px;
+              text-align: center;
+              border: solid 2px;
+              border-radius: 1px;
+            }
+
+            i{
+              cursor: pointer;
+              margin: 0 0 0 10%;
+              font-size: 25px;
             }
           }
-
-          input {
-            display: inline-block;
-            vertical-align: top;
-            width: 60%;
-            line-height: 23px;
-            margin: 0 0 0 10px;
-            text-align: center;
-            border: solid 1px;
-            border-radius: 2px;
-          }
-          select{
-            line-height: 23px;
-            margin: 0 0 0 10%;
-            text-align: center;
-          }
-          i{
-            cursor: pointer;
-            margin: 0 0 0 10%;
-            font-size: 25px;
-          }
         }
-      }
-      .single-item{
-      }
-      .multiple-item{
-        float: left;
+        .single-item{
+        }
+        .multiple-item{
+          float: left;
+        }
+
       }
 
     }
+
 
     .shield-modify-footer{
       height: 60px;

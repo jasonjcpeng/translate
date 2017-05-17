@@ -57,6 +57,15 @@ const filterStringDataDontBeNull = (data)=> {
     return data === null ? '' : data;
 }
 
+const filterObjectDataDontBeNull = (data)=>{
+    return data.map((v,k)=>{
+        for(let i in v){
+            v[i] = filterStringDataDontBeNull(v[i]);
+        }
+        return v;
+    });
+}
+
 const apis = {
     login: 'api/Login/Login',
     getMenu: 'api/Module/GetMenu',
@@ -224,7 +233,7 @@ export const normalTableGetData = (api,args)=>{
      "dateList": []*/
     return createFetchPromise(api,(data, resolve, reject)=>{
         let resultData = {
-            tableData:data['DataList']?data['DataList']:[],
+            tableData:data['DataList']?filterObjectDataDontBeNull(data['DataList']):[],
             tablePagination:data['Pagination']? {
                 rows: data['Pagination'].rows,
                 page: data['Pagination'].page,
