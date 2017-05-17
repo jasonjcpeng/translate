@@ -198,6 +198,17 @@
   }
 }
 
+@keyframes flipTop {
+  0% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  70% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 @keyframes fadeInRight {
   0% {
     opacity: 0;

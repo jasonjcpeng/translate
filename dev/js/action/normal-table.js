@@ -233,3 +233,11 @@ export const actionOpenBatchOption = (targetId,isOpen)=>{
     });
 
 }
+//控制搜索组组件展开状态
+export const actionToggleSearchGroup = (targetID,toggleStatus)=>{
+    return ({
+        type:Constants.NORMAL_TABLE_TOGGLE_SEARCH_GROUP,
+        targetID:targetID,
+        toggleStatus:toggleStatus
+    });
+}

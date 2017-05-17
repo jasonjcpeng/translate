@@ -52,27 +52,50 @@ $table-item-active-color:#cbcdba;
 
   }
   .search-group {
-    li:hover {
-    }
-    li{
-      input {
-
+    overflow: hidden;
+    ul {
+      overflow: hidden;
+      padding: 0px 30px 10px 40px;
+      margin: 0;
+      li {
+        height: 30px;
+        margin-right: 20px;
+        float: left;
+        span{
+          font-weight: 600;
+          line-height: 30px;
+          font-size: 16px;
+          margin-right: 5px;
+        }
       }
-      select{
-        color:$content-font-color;
+      .select{
+        select{
+          border-color: $default-option-toggle-color;
+        }
       }
-
+      .date{
+        input{
+          border-color: $default-option-toggle-color;
+        }
+      }
+      .input{
+        input{
+          border-color: $default-option-toggle-color;
+        }
+      }
+      .search-btn{
+        background-color: $main-color;
+        color: #fff;
+      }
+      .search-btn:hover{
+        background-color: $shallow-than-main-color;
+        color: #fff;
+      }
+      .search-btn:active{
+        background-color: $main-color;
+        color: #fff;
+      }
     }
-
-    .search-btn{
-      color:$second-main-color;
-      background-color: $main-color;
-    }
-    .search-btn:hover{
-      color:$main-color;
-      background-color: $default-option-hover-button;
-    }
-
   }
 
   .checkbox{

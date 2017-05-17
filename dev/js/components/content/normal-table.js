@@ -1,6 +1,7 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import * as ActionCreators from '../../action/normal-table';
 import classnames from 'classnames';
 import Loader from 'react-loader';
 import {LoaderOption} from '../../config/config';
@@ -13,13 +14,18 @@ import ButtonGroupRoleAuthorize from '../piecemeal-components/button-group-role-
 import Pagination from '../piecemeal-components/pagination';
 import ShieldAlert from '../piecemeal-components/shield-alert';
 import Checker from '../piecemeal-components/checker';
+//search-group
+import SearchGroupDefault from '../search-group/search-group-default';
+
 //Tool
 import {FormatDataInfo} from '../../config/tools';
-
-import * as ActionCreators from '../../action/normal-table';
-import InitTableArgs from '../../../jsons/init-table-args.json';
 //全局变量
 import {constID, constParentID} from '../../config/config';
+//配置信息
+//初始化表单分页参数
+import InitTableArgs from '../../../jsons/init-table-args.json';
+//项目中所有搜索组件的配置文件
+import SearchGroupConfigList from '../../../jsons/search-group-config-list.json'
 
 class NormalTable extends React.Component {
 
@@ -183,7 +189,7 @@ class NormalTable extends React.Component {
                 return mapResultIsNotToggleButtonGroup;
             }
         }
-
+        //已废弃:通用搜索组件
         let createSearchGroup = ()=>{
             let mapSearchGroup = ()=>{
                 return searchGroup.map((v,k)=>{
@@ -208,14 +214,35 @@ class NormalTable extends React.Component {
                 </ul> );
             }
         }
+        console.info('当前菜单ID:' + this.props.targetID);
+        let createSearchGroupToggleBtn = ()=> {
+            let createFlag = false;
+            for (let i in SearchGroupConfigList) {
+                if (SearchGroupConfigList[i].targetID === this.props.targetID) {
+                    createFlag = true;
+                }
+            }
+            if (createFlag) {
+                let icon =this.props.searchGroupToggleStatus?<i style={{fontSize:14}} className="fa fa-angle-double-down" ></i>:<i style={{fontSize:14}}  className="fa fa-angle-double-right" ></i>;
+
+                return <ul style={{float: 'right', paddingRight: '40px'}}>
+                    <li  onClick={e=> {
+                        this.props.actionToggleSearchGroup(this.props.targetID, !this.props.searchGroupToggleStatus);
+                    }
+                    } className={'first-child'}>高级搜索&nbsp;{icon}
+                    </li>
+                </ul>;
+            }
+        }
 
         return (<div className="normal-table-header">
-            <div key={(()=>{return (this.props.nowOnItem?1:0)+this.props.isBatchOptionOpen})()}
-                 className="animation-fadeInRight animation-fadeIn component-option-bar">
-                <ul style={{float:'left'}}>
+            <div
+                 className="component-option-bar">
+                <ul key={(()=>{return (this.props.nowOnItem?1:0)+this.props.isBatchOptionOpen})()} className="animation-fadeInRight animation-fadeIn" style={{float:'left'}}>
                     {mapButton()}
                 </ul>
-                {createSearchGroup()}
+                {/* {createSearchGroup()}*/}
+                {createSearchGroupToggleBtn()}
             </div>
         </div>)
     }
@@ -503,6 +530,7 @@ class NormalTable extends React.Component {
         }
 
         return (<div style={{height: this.props.height - 150}} className="normal-table-content">
+            {this.createSearchGroup()}
             <table
                 key={(this.props.tableConfigArgs?this.props.tableConfigArgs.page:'')+''+(this.props.tableConfigArgs?this.props.tableConfigArgs.rows:'')}
                 style={{width:'95%',margin:'0 auto'}}>
@@ -512,6 +540,23 @@ class NormalTable extends React.Component {
         </div>);
     }
 
+    //创造级联搜索组件
+    createSearchGroup(){
+        if(this.props.searchGroupToggleStatus){
+            let componentName = '';
+            for (let i in SearchGroupConfigList) {
+                if (SearchGroupConfigList[i].targetID === this.props.targetID) {
+                    componentName = SearchGroupConfigList[i].componentName;
+                }
+            }
+            switch (componentName){
+                case 'SearchGroupDefault':
+                    return <SearchGroupDefault targetID={this.props.targetID} api={this.props.api} tableConfigArgs={this.props.tableConfigArgs}/>
+                    break;
+
+            }
+        }
+    }
     //创造底栏
     createFooter() {
         return (<div className="normal-table-footer">
@@ -520,7 +565,7 @@ class NormalTable extends React.Component {
                         data={this.props.data} pagination={this.props.tableConfigArgs}></Pagination>
         </div>)
     }
-
+    //渲染PC端
     renderPC() {
         let height = this.props.height;
         return (
@@ -565,7 +610,7 @@ class NormalTable extends React.Component {
 
 const state = state=> {
     let loaded, target, btnGroup, viewPoint, modifyViewPoint, targetID, api, data, nowOnItem, nowOnClickButton,
-        modifyViewData, toggleItem, tableConfigArgs, error, batchOnItem,isBatchOptionOpen;
+        modifyViewData, toggleItem, tableConfigArgs, error, batchOnItem, isBatchOptionOpen, searchGroupToggleStatus;
     state.containerTitleMenu.activeContent.map(v=> {
         if (state.common.nowOnContentTarget && v.obj.id === state.common.nowOnContentTarget.id) {
             target = v;
@@ -586,6 +631,7 @@ const state = state=> {
     tableConfigArgs = target && target.status ? target.status.tableConfigArgs : undefined;
     error = target && target.status ? target.status.error : undefined;
     batchOnItem = target && target.status ? target.status.batchOnItem : [];
+    searchGroupToggleStatus = target && target.status ? target.status.searchGroupToggleStatus : false;
     return ({
         target: target,
         //读取状态
@@ -612,6 +658,8 @@ const state = state=> {
         isBatchOptionOpen:isBatchOptionOpen,
         //当前模态框中数据
         modifyViewData: modifyViewData,
+        //当前折叠的搜索组组件状态
+        searchGroupToggleStatus: searchGroupToggleStatus,
         //当前折叠展开状态的折叠窗：
         toggleItem: toggleItem,
         //当前表格的Api请求参数。决定表格呈现方式，以及排序的字段依据、排序方式等选项

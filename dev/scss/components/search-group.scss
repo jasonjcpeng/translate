@@ -1,67 +1,60 @@
 .search-group {
-  li:hover {
-    background-color: transparent !important;
-  }
-  li {
-    .react-datepicker__input-container{
-      input {
-        cursor: pointer;
-        position: relative;
-        width: 150px !important;
-        bottom: 6px;
-        padding-left: 5px;
-        height: 25px !important;
-        border: 0;
+  overflow: hidden;
+  ul {
+    overflow: hidden;
+    padding: 0px 30px 10px 40px;
+    margin: 0;
+    li {
+      height: 30px;
+      margin-right: 10px;
+      float: left;
+      span{
+        font-weight: 600;
+        line-height: 30px;
+        font-size: 16px;
+        margin-right: 5px;
       }
     }
-    input {
-      display: inline-block;
-      position: relative;
-      bottom: 2px;
-      width: 150px !important;
-      padding-left: 5px;
-      height: 25px !important;
-      border: 0;
+    .select{
+      select{
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 1px;
+        padding: 0 0 0 10px;
+        border:solid 2px;
+        line-height: 30px;
+        height: 30px;
+      }
     }
-    .search-btn {
-
+    .date{
+      input{
+        font-size: 16px;
+        border-radius: 1px;
+        padding: 0 0 0 10px;
+        border:solid 2px;
+        line-height: 26px;
+        height: 26px;
+      }
+    }
+    .input{
+      input{
+        font-size: 16px;
+        border-radius: 1px;
+        padding: 0 0 0 10px;
+        border:solid 2px;
+        line-height: 26px;
+        height: 26px;
+      }
+    }
+    .search-btn{
+      user-select: none;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      border-radius: 1px;
+      padding:0 10px 0 10px;
+      line-height: 30px;
+      height: 30px;
     }
   }
-  .select {
-    padding: 0 !important;
-    height: 30px;
-    line-height: 35px;
-    select {
-      padding: 0px 15px;
-      width: 100%;
-      cursor: pointer;
-      position: relative;
-      bottom: 2px;
-      font-size: 14px;
-      font-weight: 600;
-      text-align: center;
-      height: 25px;
-      border: 0;
-    }
-    span{
-      position: relative;
-      bottom: 2px;
-      text-align: center;
-      font-size: 14px;
-      font-weight: 600;
-    }
-    input[type=date] {
-      text-align: right !important;
-      cursor: pointer;
-      width: 150px !important;
-      position: relative;
-      bottom: 6px;
-      text-align: left !important;
-      padding-left: 5px;
-      height: 25px !important;
-      border: 0;
-
-    }
-  }
-
 }

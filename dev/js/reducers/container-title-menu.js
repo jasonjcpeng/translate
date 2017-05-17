@@ -477,6 +477,7 @@ export default function (state = initState, action) {
                 toggleItem:[],
                 tableConfigArgs: action.initTableArgs,
                 batchOnItem: [],
+                searchGroupToggleStatus:false,
                 roleAuthorize:{
                     currentToggleItem:[],
                     batchOnItem:[],
@@ -651,7 +652,10 @@ export default function (state = initState, action) {
                 batchOnItem:[]}}}});
             break;
         case Constants.NORMAL_TABLE_BATCH_OPTION_IS_OPEN:
-            return setActiveContentStatusByID(state,action.targetID,{status:{isBatchOptionOpen:{$set:action.isOpen}}})
+            return setActiveContentStatusByID(state,action.targetID,{status:{isBatchOptionOpen:{$set:action.isOpen}}});
+            break;
+        case Constants.NORMAL_TABLE_TOGGLE_SEARCH_GROUP:
+            return setActiveContentStatusByID(state,action.targetID,{status:{searchGroupToggleStatus:{$set:action.toggleStatus}}});
             break;
     }
     return state;
