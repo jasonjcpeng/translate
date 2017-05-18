@@ -9,7 +9,7 @@ class ModifyShieldRadioBox extends React.Component{
             apiData:props.itemFieldData.apiData,
             data:props.data,
             onChange:props.onChange,
-            disabled:props.itemFieldData.isDisable
+            disabled:props.itemFieldData.isDisable||props.disabled
         }
     }
 
@@ -19,7 +19,7 @@ class ModifyShieldRadioBox extends React.Component{
             apiData:props.itemFieldData.apiData,
             data:props.data,
             onChange:props.onChange,
-            disabled:props.itemFieldData.isDisable
+            disabled:props.itemFieldData.isDisable||props.disabled
         }
     }
 

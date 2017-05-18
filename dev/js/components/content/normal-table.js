@@ -16,7 +16,6 @@ import ShieldAlert from '../piecemeal-components/shield-alert';
 import Checker from '../piecemeal-components/checker';
 //search-group
 import SearchGroupDefault from '../search-group/search-group-default';
-
 //Tool
 import {FormatDataInfo} from '../../config/tools';
 //全局变量
@@ -45,7 +44,7 @@ class NormalTable extends React.Component {
         if (this.props.nowOnClickButton) {
             switch (this.props.nowOnClickButton.componentName) {
                 case 'add':
-                    return (<ButtonGroupAdder isShow={isShow} reduxSaveData={this.props.modifyViewData}
+                    return (<ButtonGroupAdder targetID={this.props.targetID}   isShow={isShow} initData={this.props.nowOnItem}
                                               fieldData={this.props.modifyViewPoint}
                                               onCancel={e=>{
                     this.props.onClickButton(this.props.targetID,undefined);
@@ -61,7 +60,7 @@ class NormalTable extends React.Component {
                     ></ButtonGroupAdder>);
                     break;
                 case 'check':
-                    return <ButtonGroupModifier isShow={isShow} reduxSaveData={this.props.modifyViewData}
+                    return <ButtonGroupModifier targetID={this.props.targetID}  isShow={isShow} disabled={true}
                                                 initData={this.props.nowOnItem} fieldData={this.props.modifyViewPoint}
                                                 onCancel={e=>{
                     this.props.onClickButton(this.props.targetID,undefined);
@@ -69,15 +68,11 @@ class NormalTable extends React.Component {
                     ></ButtonGroupModifier>
                     break;
                 case 'modify':
-                    return (<ButtonGroupModifier isShow={isShow} reduxSaveData={this.props.modifyViewData}
+                    return (<ButtonGroupModifier targetID={this.props.targetID}  isShow={isShow} disabled={false}
                                                  initData={this.props.nowOnItem} fieldData={this.props.modifyViewPoint}
                                                  onCancel={e=>{
                     this.props.onClickButton(this.props.targetID,undefined);
-                }} onChange={
-                    data=>{
-                    this.props.saveModifyViewData(this.props.targetID,data);
-                    }}
-                                                 onFinish={
+                }}                                                  onFinish={
                         data=>{
                         this.props.submitModifyData(this.props.targetID,data,api);
                         }
@@ -214,7 +209,6 @@ class NormalTable extends React.Component {
                 </ul> );
             }
         }
-        console.info('当前菜单ID:' + this.props.targetID);
         let createSearchGroupToggleBtn = ()=> {
             let createFlag = false;
             for (let i in SearchGroupConfigList) {

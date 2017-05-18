@@ -975,7 +975,7 @@ class MenuSettingOptionAddMenu extends React.Component {
     //渲染添加修改预览遮罩层
     createModifyShield() {
         if (this.props.target.status.menuData) {
-            return (<ModifyShield onCancel={()=>{
+            return (<ModifyShield disabled={false} targetID={this.props.targetMenuSort} onCancel={()=>{
                 this.props.changePreviewStatus(this.props.targetMenuSort,this.props.previewStatus);
             }
             } key={this.props.previewStatus} isShow={this.props.previewStatus}

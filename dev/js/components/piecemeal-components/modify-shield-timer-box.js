@@ -13,7 +13,7 @@ class ModifyShieldTimerBox extends React.Component{
             apiData:props.itemFieldData.apiData,
             data:props.data,
             onChange:props.onChange,
-            disabled:props.itemFieldData.isDisable
+            disabled:props.itemFieldData.isDisable||props.disabled
         }
     }
 
@@ -23,7 +23,7 @@ class ModifyShieldTimerBox extends React.Component{
             apiData:props.itemFieldData.apiData,
             data:props.data,
             onChange:props.onChange,
-            disabled:props.itemFieldData.isDisable
+            disabled:props.itemFieldData.isDisable||props.disabled
         }
     }
 

@@ -18,6 +18,11 @@ export const SHIELD_BUTTON_GROUP_ROLE_AUTHORIZE_INIT_ITEM = 'SHIELD_BUTTON_GROUP
 //----------------------------shield-modify-search-group-config
 export const MODIFY_SEARCH_GROUP_CONFIG_INIT_STATE = 'MODIFY_SEARCH_GROUP_CONFIG_INIT_STATE';
 export const MODIFY_SEARCH_GROUP_CONFIG_SAVE_DATA_HAS_CREATED = 'MODIFY_SEARCH_GROUP_CONFIG_SAVE_DATA_HAS_CREATED';
+//----------------------------shield-modify-------------------
+export const SHIELD_MODIFY_DID_MOUNT = 'SHIELD_MODIFY_DID_MOUNT';
+export const SHIELD_MODIFY_CLOSE_THIS = 'SHIELD_MODIFY_CLOSE_THIS';
+export const SHIELD_MODIFY_ON_CHANGE = 'SHIELD_MODIFY_ON_CHANGE';
+
 //Components------------------------------------------------
 //----------------------------sidebar
 export const SIDE_BAR_MENU_ITEM_TOGGLE = 'SIDE_BAR_MENU_ITEM_TOGGLE';

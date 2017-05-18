@@ -10,6 +10,7 @@ class Header extends Component{
     handleExitApp(){
         window.localStorage.removeItem('store');
         window.localStorage.removeItem('login');
+        window.localStorage.removeItem('ueditor_preference');
         var browserName=navigator.appName;
         if (browserName=="Netscape") {
             window.open('','_self','');

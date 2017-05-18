@@ -19,24 +19,13 @@ import ModifyShield from '../piecemeal-components/modifyShield';
 class ButtonGroupModifier extends React.Component {
     constructor(props) {
         super();
-        let reduxSaveData = (()=> {
-            if (props.reduxSaveData) {
-                return props.reduxSaveData;
-            } else {
-                let temp = {};
-                for (let i in props.initData) {
-                    temp[i] = props.initData[i];
-                }
-                return temp;
-            }
-        })();
-
         this.state = {
+            targetID:props.targetID,
             isShow: props.isShow,
             fieldData: props.fieldData,
             onCancel: props.onCancel,
             onFinish: props.onFinish,
-            reduxSaveData: reduxSaveData,
+            initData: props.initData,
             onChange: props.onChange
         }
     }
@@ -44,24 +33,14 @@ class ButtonGroupModifier extends React.Component {
 
     render() {
         return (
-            <ModifyShield isShow={this.state.isShow} data={this.state.reduxSaveData} fieldData={this.state.fieldData}
+            <ModifyShield disabled={this.props.disabled} targetID={this.state.targetID} isShow={this.state.isShow} data={this.state.initData} fieldData={this.state.fieldData}
                           onCancel={e=>{
                     this.state.onCancel(e);
                 }}
-                          onChange={((data)=>{
-                    if(this.state.onChange){
-                    return ()=>{
-                            this.state.onChange(data);
-                        }
-                    }else{
-                    return undefined
-                    }
-                    })()
-                    }
                           onFinish={(()=>{
                     if(this.state.onFinish){
-                    return ()=>{
-                            this.state.onFinish(this.state.reduxSaveData);
+                    return (e)=>{
+                            this.state.onFinish(e);
                         }
                     }else{
                     return undefined

@@ -317,6 +317,10 @@ body {
       z-index: 1001 !important;
     }
   }
+
+  .edui-editor-messageholder{
+    opacity: 0 !important;
+  }
 }
 
 @import './components/content/normal-table';

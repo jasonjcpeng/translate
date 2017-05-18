@@ -22,19 +22,12 @@ body{
             font-weight: 600;
             line-height: 25px;
             display: inline-block;
-            span{
-              display: inline-block;
-              width: 150px;
-              white-space: nowrap;
-              overflow: hidden;
-              text-overflow: ellipsis;
-            }
             .check-box-group{
               position: relative;
               display: inline-block;
               input{
                 display: inline-block;
-                vertical-align: super;
+                vertical-align: middle;
                 line-height: 23px;
               }
               .check-box{
@@ -44,11 +37,11 @@ body{
                   margin: 0 2px 0 10px;
                 }
                 display: inline-block;
-                vertical-align: top;
+                vertical-align: middle;
                 float: left;
               }
               select{
-                vertical-align: super;
+                vertical-align: middle;
                 text-align: center;
                 line-height: 23px;
                 font-size: 16px;
@@ -62,14 +55,12 @@ body{
                 height: 30px;
               }
               .react-datepicker__input-container{
-                vertical-align: super;
-
               }
             }
 
             input {
               display: inline-block;
-              vertical-align: top;
+              vertical-align: middle;
               width: 60%;
               line-height: 23px;
               margin: 0 0 0 10px;

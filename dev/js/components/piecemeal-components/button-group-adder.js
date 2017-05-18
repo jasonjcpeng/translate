@@ -20,36 +20,27 @@ class ButtonGroupModifier extends React.Component {
     constructor(props) {
         super();
         this.state = {
+            targetID:props.targetID,
             isShow: props.isShow,
             fieldData: props.fieldData,
             onCancel: props.onCancel,
             onFinish: props.onFinish,
-            reduxSaveData: props.reduxSaveData ? props.reduxSaveData : {},
-            onChange: props.onChange
+            onChange: props.onChange,
+            initData: props.initData
         }
     }
 
 
     render() {
         return (
-            <ModifyShield isShow={this.state.isShow} data={this.state.reduxSaveData} fieldData={this.state.fieldData}
+            <ModifyShield disabled={false} targetID={this.state.targetID} isShow={this.state.isShow} data={this.state.initData} fieldData={this.state.fieldData}
                           onCancel={e=>{
                     this.state.onCancel(e);
                 }}
-                          onChange={((data)=>{
-                    if(this.state.onChange){
-                    return ()=>{
-                            this.state.onChange(data);
-                        }
-                    }else{
-                    return undefined
-                    }
-                    })()
-                    }
                           onFinish={(()=>{
                     if(this.state.onFinish){
-                    return ()=>{
-                            this.state.onFinish(this.state.reduxSaveData);
+                    return (e)=>{
+                            this.state.onFinish(e);
                         }
                     }else{
                     return undefined

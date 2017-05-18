@@ -82,7 +82,7 @@ class SearchGroupDefault extends React.Component {
             console.log(this.state.selector_1_value);
             //此处对this.state.tableConfigArgs传入重置后的搜索参数
                 this.reLoadTableWithSearchArgs(this.state.tableConfigArgs);
-                this.toggleOverSearchGroup();
+               {/* this.toggleOverSearchGroup();*/}
             e.stopPropagation();
         }} className="search-btn">
             查询

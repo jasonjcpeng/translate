@@ -3,6 +3,8 @@ import update from 'react-addons-update';
 /**
  *
  * Created by Jason on 2017/5/9.
+ * 存储通用级联搜索框配置
+ * 已废弃
  */
 const initState = {
     activeContent:[]
@@ -41,6 +43,9 @@ export default (state=initState,action)=>{
             break;
         case Constants.MODIFY_SEARCH_GROUP_CONFIG_SAVE_DATA_HAS_CREATED:
             return setActiveContentStatusByTarget(state,action.target,{dataHasCreated:{$set:action.dataHasCreated}});
+            break;
+        case Constants.CONTAINER_TITTLE_MENU_DELETE_ACTIVE_CONTENT:
+            return update(state,{activeContent: {$splice: [[action.key, 1]]}});
             break;
 
     }
