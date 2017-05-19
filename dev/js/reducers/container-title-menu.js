@@ -487,6 +487,9 @@ export default function (state = initState, action) {
 
             return setActiveContentStatusByID(state,action.targetID,{status:{$set:initStatus}});
             break;
+        case Constants.NORMAL_TABLE_SEND_ERROR:
+            return setActiveContentStatusByID(state,action.targetID,{status:{error:{$set:action.error}}});
+            break;
         case Constants.SHIELD_BUTTON_GROUP_ROLE_AUTHORIZE_TOGGLE_STATUS:
             return setActiveContentStatusByID(state,action.targetID,{status:{roleAuthorize:{currentToggleItem:{$apply:(arr)=>{
                 let isPushFlag = true;

@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as Constants from '../../action/CONSTANTS';
 
+import {actionSendError} from '../../action/normal-table';
+
 import classnames from 'classnames';
 import {apiFormatModifyShieldFieldDataFromApi} from '../../services/api';
 import Loader from 'react-loader';
@@ -13,6 +15,7 @@ import Radio from './modify-shield-radio-box';
 import Select from './modify-shield-select-box';
 import Timer from './modify-shield-timer-box';
 import UEditor from './modify-shield-ueditor-box';
+import Upload from './modify-shield-upload-box';
 //json
 import ComponentType from '../../../jsons/modify-shield-component-type.json';
 
@@ -134,6 +137,16 @@ class ModifyShield extends React.Component{
                             }
                         } disabled={val.isDisable||this.props.disabled} targetID={this.props.targetID} itemFieldData={val} data={valData}></UEditor>
                         break;
+                    case 'webUpload':
+                        return <Upload disabled={val.isDisable||this.props.disabled}  targetID={this.props.targetID} sendError={e=>{
+                            this.props.actionSendError(this.props.targetID,e)}} onChange={
+                            e=>{
+                                if(!val.isDisable){
+                                    handleOnChange(val,e);
+                                }
+                            }
+                        } itemFieldData={val} data={valData}></Upload>
+                        break;
                 }
             }
             return this.state.fieldData.map((val,key)=>{
@@ -247,6 +260,9 @@ let action = (dispatch)=>{
                 targetID:targetID,
                 data:newData
             });
+        },
+        actionSendError:(targetID,msg)=>{
+           return dispatch(actionSendError(targetID,msg));
         }
 
     }

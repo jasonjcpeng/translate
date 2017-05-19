@@ -57,7 +57,39 @@ body{
               .react-datepicker__input-container{
               }
             }
+            .drop{
+              position: relative;
+              width: 100% !important;
+              .upload{
+                display: inline-block;
+                width: 70%;
+              }
+              .img{
+                vertical-align: top;
+                width: calc(30% - 40px);
+                display: inline-block;
+                padding: 0px 20px 0px 20px;
+                img{
 
+                  cursor: pointer;
+                  height: 340px;
+                }
+              }
+              .img:hover::before{
+                cursor: pointer;
+                padding: 0px 20px 0px 20px;
+                height: 340px;
+                width: 100px;
+                opacity: 0.5;
+                background-color: #000;
+                position: absolute;
+                display: block;
+                font-weight: 600;
+                font-size: 30px;
+                line-height: 340px;
+                content: 'Delete';
+              }
+            }
             input {
               display: inline-block;
               vertical-align: middle;

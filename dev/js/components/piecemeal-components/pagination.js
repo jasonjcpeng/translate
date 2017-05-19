@@ -146,14 +146,14 @@ class Pagination extends React.Component {
                 pagination?this.props.actionSubmitChangePage(this.state.targetID,this.state.api,pagination):'';
                 e.stopPropagation();
             }
-            } className="first-child">首页
+            } className="first-child">First
                 </li>
                 <li onClick={e=>{
                 let pagination = this.Pager.last();
                 pagination?this.props.actionSubmitChangePage(this.state.targetID,this.state.api,pagination):'';
                 e.stopPropagation();
             }
-            } >上一页
+            } >{'<< Previous'}
                 </li>
             </ul>
             <ul style={{float:'left'}}>
@@ -164,13 +164,13 @@ class Pagination extends React.Component {
                 let pagination = this.Pager.next();
                 pagination?this.props.actionSubmitChangePage(this.state.targetID,this.state.api,pagination):'';
                 e.stopPropagation();}
-            } className="first-child">下一页
+            } className="first-child">{'Next >>'}
                 </li>
                 <li onClick={e=>{
                 let pagination = this.Pager.theLast();
                 pagination?this.props.actionSubmitChangePage(this.state.targetID,this.state.api,pagination):'';
                 e.stopPropagation();}
-            } className="first-child">末页
+            } className="first-child">Last
                 </li>
             </ul>
         </div>
@@ -179,11 +179,14 @@ class Pagination extends React.Component {
     createJumpPage() {
         return <div>
             <ul style={{float:'left'}}>
-                <li className="normal-content">跳转至第<input onBlur={e=>{
+                <li className="normal-content"><input onClick={e=>{
+                    e.target.select();
+                }} defaultValue={this.state.pagination.page} onBlur={e=>{
                 let pagination;
                     let flag = true;
-                    if(e.target.value===''||e.target.value<0){
+                    if(isNaN(e.target.value)||e.target.value===''||e.target.value<0){
                         flag = false;
+                        e.target.value = this.state.pagination.page;
                     }else if(e.target.value>this.state.pagination.total){
                         pagination = this.Pager.choicePage(this.state.pagination.total);
                     }else{
@@ -193,7 +196,7 @@ class Pagination extends React.Component {
                         this.props.actionSubmitChangePage(this.state.targetID,this.state.api,pagination);
                     }
                   }
-                } type="number"/>页 共<span style={{fontSize:18}}>{this.state.pagination.total}</span>页
+                } type="text"/>/<span style={{fontSize:18}}>{this.state.pagination.total}</span>
                 </li>
             </ul>
         </div>
@@ -202,11 +205,22 @@ class Pagination extends React.Component {
     createShowLimit() {
         return <div>
             <ul style={{float:'left'}}>
-                <li className="normal-content">每页显示<input onBlur={e=>{
-                    let pagination = this.Pager.resetRows(e.target.value);
-                    this.props.actionSubmitChangePage(this.state.targetID,this.state.api,pagination);
+                <li className="normal-content"><input onClick={e=>{
+                    e.target.select();
+                }} onBlur={e=>{
+                    let pagination;
+                    let flag = true;
+                    if(isNaN(e.target.value)||e.target.value===''||e.target.value<0){
+                        flag = false;
+                        e.target.value = this.state.pagination.rows;
+                    }else{
+                        pagination = this.Pager.resetRows(e.target.value);;
+                    }
+                    if(flag){
+                        this.props.actionSubmitChangePage(this.state.targetID,this.state.api,pagination);
+                    }
                   }
-                } defaultValue={this.state.pagination.rows} type="number"/>条
+                } defaultValue={this.state.pagination.rows} type="text"/>/<span style={{fontSize:18}}>Lines</span>
                 </li>
             </ul>
         </div>

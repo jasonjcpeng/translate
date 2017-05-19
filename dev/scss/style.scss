@@ -317,7 +317,14 @@ body {
       z-index: 1001 !important;
     }
   }
-
+  .drop-zone{
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+    width: 100px;
+    height: 100px;
+    border:solid 2px #eee;
+  }
   .edui-editor-messageholder{
     opacity: 0 !important;
   }

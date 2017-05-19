@@ -735,7 +735,6 @@ class MenuSettingOptionAddMenu extends React.Component {
                                                 break;
                                         }
                                     }
-
                                     return allSort.map((v, k)=> {
                                         return (<option key={k} value={v}>{writeContent(v)}</option>);
                                     });

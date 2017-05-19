@@ -21,18 +21,20 @@ class HeaderUpload extends React.Component {
 
     handleFileInputOnChange(e) {
         let file = e.target.files[0];
-        if (!/image\/\w+/.test(file.type)) {
-            this.props.actionSendError('文件必须为图片！');
-            return false;
-        }
-        let reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = function (e) {
+        if(file){
+            if (!/image\/\w+/.test(file.type)) {
+                this.props.actionSendError('文件必须为图片！');
+                return false;
+            }
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function (e) {
 
-            this.setState({
-                dataURL:e.target.result
-            });
-        }.bind(this);
+                this.setState({
+                    dataURL:e.target.result
+                });
+            }.bind(this);
+        }
     }
 
     render() {
@@ -342,7 +344,6 @@ var Cutting = _react2.default.createClass({
     render: function render() {
         let bgImg = this.props.config.dataURL?{ src: this.props.config.dataURL, className: 'bg-img', ref: 'bgImg',style: { width: this.props.config.width} }:{className: 'bg-img', ref: 'bgImg' };
         let img = this.props.config.dataURL?{ src: this.props.config.dataURL, style: { width: this.props.config.width, left: -this.state.positionX, top: -this.state.positionY } }:{style: { width: this.props.config.width, left: -this.state.positionX, top: -this.state.positionY } };
-        let isCanvasDisplay = this.props.config.dataURL?{ ref: 'canvas'}:{ ref: 'canvas', style:{display:'none'} };
         let isCreateCutBt = this.props.config.dataURL?_react2.default.createElement(
             'div',
             { className: 'cutBt btn', onClick: this.cutting },
@@ -367,7 +368,7 @@ var Cutting = _react2.default.createClass({
                     _react2.default.createElement('div', null)
                 )
             ),
-            _react2.default.createElement('canvas', isCanvasDisplay),
+            _react2.default.createElement('canvas', { ref: 'canvas'}),
             isCreateCutBt
         );
     }

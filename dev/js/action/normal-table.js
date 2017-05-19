@@ -241,3 +241,11 @@ export const actionToggleSearchGroup = (targetID,toggleStatus)=>{
         toggleStatus:toggleStatus
     });
 }
+//发送错误信息
+export const actionSendError = (targetID,errorMessage)=>{
+    return ({
+        type:Constants.NORMAL_TABLE_SEND_ERROR,
+        targetID:targetID,
+        error:errorMessage
+    });
+}
