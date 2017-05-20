@@ -83,44 +83,44 @@ export const clickFinish = (targetMenuSort, menuData,activeContent, nowOnContent
         }
         result ? dispatch(selectActiveContent(result)) : '';
     }
-    //api判断增加"/"
-    if(menuData.api&&menuData.api.lastIndexOf('/')!==(menuData.api.length-1)){
-        menuData.api+='/';
-    }
-    //viewPoint的Api判断增加"/"
-    if(menuData.viewPoint.length>0){
-        menuData.viewPoint = menuData.viewPoint.map(v=>{
-            if(v.api&&v.api.lastIndexOf('/')!==(v.api.length-1)){
-                v.api+='/';
-                return v
-            }else{
-                return v
-            }
-        });
-    }
-    //btnGroup的Api判断增加"/"
-    if(menuData.btnGroup.length>0){
-        menuData.btnGroup = menuData.btnGroup.map(v=>{
-            if(v.api&&v.api.lastIndexOf('/')!==(v.api.length-1)){
-                v.api+='/';
-                return v
-            }else{
-                return v
-            }
-        });
-    }
-    //modifyViewPoint的Api判断增加"/"
-    /*if(menuData.modifyViewPoint.length>0){
-        menuData.modifyViewPoint = menuData.modifyViewPoint.map(v=>{
-            if(v.api&&v.api.lastIndexOf('/')!==(v.api.length-1)){
-                v.api+='/';
-                return v
-            }else{
-                return v
-            }
-        });
-    }*/
-    if (isOnline) {
+    if (isOnline){
+        //api判断增加"/"
+        if(menuData.api&&menuData.api.lastIndexOf('/')!==(menuData.api.length-1)){
+            menuData.api+='/';
+        }
+        //viewPoint的Api判断增加"/"
+        if(menuData.viewPoint.length>0){
+            menuData.viewPoint = menuData.viewPoint.map(v=>{
+                if(v.api&&v.api.lastIndexOf('/')!==(v.api.length-1)){
+                    v.api+='/';
+                    return v
+                }else{
+                    return v
+                }
+            });
+        }
+        //btnGroup的Api判断增加"/"
+        if(menuData.btnGroup.length>0){
+            menuData.btnGroup = menuData.btnGroup.map(v=>{
+                if(v.api&&v.api.lastIndexOf('/')!==(v.api.length-1)){
+                    v.api+='/';
+                    return v
+                }else{
+                    return v
+                }
+            });
+        }
+        //modifyViewPoint的Api判断增加"/"
+        /*if(menuData.modifyViewPoint.length>0){
+         menuData.modifyViewPoint = menuData.modifyViewPoint.map(v=>{
+         if(v.api&&v.api.lastIndexOf('/')!==(v.api.length-1)){
+         v.api+='/';
+         return v
+         }else{
+         return v
+         }
+         });
+         }*/
         if(modifyFlag){
                 //修改菜单
             return dispatch=> {
@@ -173,7 +173,7 @@ export const clickFinish = (targetMenuSort, menuData,activeContent, nowOnContent
     }
 }
 
-//callback 如果拿到数据就运行这个回调
+//@param callback 本函数then时运行这个回调
 export const getViewPointConfig = (targetMenuSort, ViewPointConfigApi, targetMenu,callback)=> {
     return dispatch=> {
         menuSettingOptionMenuFetchViewPointConfig(ViewPointConfigApi).then(

@@ -661,14 +661,12 @@ class MenuSettingOptionAddMenu extends React.Component {
             if (this.props.menuData.icon !== '') {
                 return 'fa ' + this.props.menuData.icon;
             } else {
-                return '';
+                return ' ';
             }
         })();
         let iContent = (()=> {
             if (this.props.menuData.icon === '') {
-                return '空';
-            } else {
-                return '';
+                return '未设置';
             }
         })();
         return (
@@ -702,7 +700,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                     {(()=> {
                         if (!this.props.isRootMenu) {
                             return (<div>
-                                <li><span>菜单视图项vAPI:</span><span><input
+                                <li><span>菜单视图项API:</span><span><input
                                     value={this.props.menuData.viewPointConfigApi} onChange={
                                     e=>{
                                         this.props.changeMenuData(this.props.targetMenuSort,'viewPointConfigApi',e.target.value);
@@ -893,8 +891,6 @@ class MenuSettingOptionAddMenu extends React.Component {
                         this.props.clickFinish(this.props.targetMenuSort,menuData,this.props.activeContent,this.props.nowOnContentKey,this.props.target.obj);
                         break;
                     case 'menuSettingEditMenu':
-                        if(!isOnline){
-                        }
                         this.props.clickFinish(this.props.targetMenuSort,menuData,this.props.activeContent,this.props.nowOnContentKey,this.props.target.obj,'modify');
                         break;
                 }
@@ -954,13 +950,12 @@ class MenuSettingOptionAddMenu extends React.Component {
                                 (()=> {
                                     return IconList.IconList.map((e, k)=> {
                                         if (e.name === '') {
+                                            return ('');
+                                        }else{
                                             return (<li key={k}><i onClick={()=>{
-                                                this.props.toggleIconSetting(this.props.targetMenuSort,e.name)
-                                            }} style={{fontStyle:'normal'}}>空</i></li> );
-                                        }
-                                        return (<li key={k}><i onClick={()=>{
                                             this.props.toggleIconSetting(this.props.targetMenuSort,e.name)
                                         }} className={'fa '+e.name}></i></li> );
+                                        }
                                     });
                                 })()
                             }

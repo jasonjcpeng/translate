@@ -219,9 +219,6 @@ export const menuSettingOptionMenuFetchViewPointConfig = (args)=> {
 }
 //表格获取数据
 export const normalTableGetData = (api,args)=>{
-    if(!isOnline){
-        api = api.substring(0,api.lastIndexOf('/'));
-    }
     /* "rows": 10,
      "page": 1,
      "sidx": "Id",

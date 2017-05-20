@@ -301,8 +301,8 @@ export default function (state = initState, action) {
                     isEnable: true,
                     createtime: '',
                     updatetime: '',
-                    api: isOnline?'':'api/module/getmenu',
-                    viewPointConfigApi:isOnline?'':'api/configApi2',
+                    api: isOnline?'':'api/user/getList',
+                    viewPointConfigApi:isOnline?'':'sys_user',
                     viewPoint: [],
                     btnGroup: [],
                     modifyViewPoint: []

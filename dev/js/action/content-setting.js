@@ -145,8 +145,11 @@ export const actionChangeUserInfo = (userID,arg)=>{
             });
         }
     }else{
-
-
+        console.log(arg);
+        return ({
+            type:Constants.CONTENT_SETTING_CHANGE_USER_INFO,
+            userInfo:arg,
+        });
     }
 }
 

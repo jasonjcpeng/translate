@@ -7,7 +7,8 @@ const initState = {
         name: '',
         power: '',
         imgUrl: '',
-        powerEnCode:''
+        powerEnCode:'',
+        quickButton:''
     },
     dataBabel:[],
     menu: [],
@@ -132,7 +133,22 @@ export default function (state = initState, action) {
             break;
         case Constants.MENU_SETTING_ADD_MENU_TO_SIDE_BAR:
             if(action.payload){
-                return update(state, {menu: {$push: [action.payload]}});
+                return update(state, {menu:{$apply:(arr)=>{
+                    let flag = true;
+                    let newArr = arr.map((v,k)=>{
+                        console.log();
+                        if(action.payload.id === v.id){
+                            flag = false;
+                            return action.payload;
+                        }else{
+                            return v;
+                        }
+                    });
+                    if(flag){
+                        newArr.push(action.payload);
+                    }
+                    return newArr;
+                }}});
             }
             break;
         case Constants.CONTENT_SETTING_CHANGE_USER_INFO:
