@@ -11,7 +11,7 @@ export const Fetch = (url,args,method='GET')=> {
         'Content-Type': 'application/json'
     }
     if (opts.method === 'GET') {
-        Url = Url + '?' + qs.stringify(args);
+        Url =qs.stringify(args)?(Url + '?' + qs.stringify(args)):Url;
         delete opts.body;
         headers['Content-Type'] = 'application/json'
     }
