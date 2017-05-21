@@ -1,6 +1,6 @@
 import update from 'react-addons-update';
 import * as Constants from '../action/CONSTANTS';
-
+import {isOnline} from '../config/config';
 const initState = {
     userInfo: {
         userID:'',
@@ -152,10 +152,24 @@ export default function (state = initState, action) {
             }
             break;
         case Constants.CONTENT_SETTING_CHANGE_USER_INFO:
+            let userInfo = action.userInfo;
+            if(!isOnline){
+                let newUserInfo = {};
+                for(let i in userInfo){
+                    switch(i){
+                        case 'headIcon':
+                            newUserInfo['imgUrl'] = userInfo[i]
+                            break;
+                        default:
+                            newUserInfo[i] = userInfo[i];
+                    }
+                }
+                userInfo = newUserInfo;
+            }
             return update(state, {userInfo: {$apply:arr=>{
                 for(let i in arr){
-                    if(action.userInfo[i]){
-                        arr[i] = action.userInfo[i];
+                    if(userInfo[i]){
+                        arr[i] = userInfo[i];
                     }
                 }
                 return arr;

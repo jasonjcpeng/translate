@@ -26,7 +26,7 @@ class MenuSettingOptionAddMenu extends React.Component {
         }
     }
 
-    componentWillUpdate(){
+    componentWillUpdate() {
         let deleteActiveContent = (k, v)=> {
             this.props.closeMenuSetting(k, v);
             let result = null;
@@ -37,7 +37,7 @@ class MenuSettingOptionAddMenu extends React.Component {
             }
             result ? this.props.selectActiveContent(result) : '';
         }
-        if(this.props.isFinish){
+        if (this.props.isFinish) {
             this.props.AppDidMount();
             deleteActiveContent();
 
@@ -79,8 +79,8 @@ class MenuSettingOptionAddMenu extends React.Component {
                 isEnable: val.isEnable,
                 CNName: val.CNName,
                 isMultiColumns: val.isMultiColumns,
-                isDisable:val.isDisable,
-                isMustFilling:val.isMustFilling,
+                isDisable: val.isDisable,
+                isMustFilling: val.isMustFilling,
                 componentType: val.componentType,
                 width: val.width,
                 componentWidth: val.componentWidth,
@@ -144,7 +144,7 @@ class MenuSettingOptionAddMenu extends React.Component {
 
         let createComponentTypeSelector = (k, v)=> {
             let mapOption = ComponentType.componentType.map((val, k)=> {
-                return (<option key={k}  value={val.type}>{val.remark}</option>);
+                return (<option key={k} value={val.type}>{val.remark}</option>);
             })
             return (<select onChange={(e)=>{
                 handleOnChange(k,v,'componentType',e.target.value);
@@ -226,34 +226,34 @@ class MenuSettingOptionAddMenu extends React.Component {
 
             return '';
             /*return this.props.viewPointConfigData.map((v, k)=> {
-                let flag = true;
-                for (let i in this.props.menuData.modifyViewPoint) {
-                    if (this.props.menuData.modifyViewPoint[i].name === v.name) {
-                        flag = false;
-                    }
-                }
-                if(v.name==='AX_Id'||v.name==='AX_ParentId'){
-                    flag = false;
-                }
-                if (flag) {
-                    return (<li onClick={()=>{
-                        let singleItem = {
-                            name:v.name,
-                            isEnable: v.isEnable,
-                            CNName: v.CNName,
-                            isMultiColumns:false,
-                            isDisable:false,
-                            isMustFilling:false,
-                            componentType:'input',
-                            width: 100,
-                            componentWidth:50,
-                            api:''
-                        };
-                        handleOnClick(singleItem);
-                    }
-                    } key={k}>{v.name}</li>);
-                }
-            });*/
+             let flag = true;
+             for (let i in this.props.menuData.modifyViewPoint) {
+             if (this.props.menuData.modifyViewPoint[i].name === v.name) {
+             flag = false;
+             }
+             }
+             if(v.name==='AX_Id'||v.name==='AX_ParentId'){
+             flag = false;
+             }
+             if (flag) {
+             return (<li onClick={()=>{
+             let singleItem = {
+             name:v.name,
+             isEnable: v.isEnable,
+             CNName: v.CNName,
+             isMultiColumns:false,
+             isDisable:false,
+             isMustFilling:false,
+             componentType:'input',
+             width: 100,
+             componentWidth:50,
+             api:''
+             };
+             handleOnClick(singleItem);
+             }
+             } key={k}>{v.name}</li>);
+             }
+             });*/
         }
 
         let table = ()=> {
@@ -293,7 +293,7 @@ class MenuSettingOptionAddMenu extends React.Component {
     }
 
     //渲染按钮组设置
-    createButtonGroupSetting(){
+    createButtonGroupSetting() {
         let createBtnGroupList = ()=> {
             let btnGroupList = BtnGroupList;
             let render = [];
@@ -398,13 +398,13 @@ class MenuSettingOptionAddMenu extends React.Component {
                                 handleOnChange(k, val, 'api', e.target.value);
                             }} value={val.api}/></td>
                         } else {
-                            if(val.componentName==='timeSearch'){
+                            if (val.componentName === 'timeSearch') {
                                 return <td>
                                     <input key={'api' + val.componentName + '' + k} type="text" onChange={e=> {
                                 handleOnChange(k, val, 'api', e.target.value);
                             }} value={val.api}/>
                                 </td>
-                            }else{
+                            } else {
                                 return <td>
                                     <button onClick={e=> {
                                     let args = {
@@ -469,18 +469,18 @@ class MenuSettingOptionAddMenu extends React.Component {
     //渲染表格视图设置
     createViewPointSetting() {
         let handleOnChange = (key, val, itemKey, itemVal)=> {
-            let singleItem = val.api===undefined?{
+            let singleItem = val.api === undefined ? {
                 name: val.name,
                 isEnable: val.isEnable,
                 CNName: val.CNName,
                 width: val.width,
-            }:{
+            } : {
                 name: val.name,
                 isEnable: val.isEnable,
                 CNName: val.CNName,
                 width: val.width,
-                bindField:val.bindField,
-                api:val.api
+                bindField: val.bindField,
+                api: val.api
             };
             singleItem[itemKey] = itemVal;
             let newValue = [];
@@ -507,13 +507,13 @@ class MenuSettingOptionAddMenu extends React.Component {
 
         let tBody = ()=> {
             return this.props.menuData.viewPoint.map((v, k)=> {
-                    return <tr key={k}>
-                        <td><Checker key={v.isEnable} checkState={v.isEnable} funcOnClick={(callBackCheck)=>{
+                return <tr key={k}>
+                    <td><Checker key={v.isEnable} checkState={v.isEnable} funcOnClick={(callBackCheck)=>{
                              handleOnChange(k,v,'isEnable',callBackCheck);
                         }}></Checker></td>
-                        <td>
-                            <div className="sort">
-                                <div onClick={()=>{
+                    <td>
+                        <div className="sort">
+                            <div onClick={()=>{
                         let newValue = this.props.menuData.viewPoint;
                         for(let i=0;i<newValue.length;i++){
                             if(k>0&&k===i){
@@ -526,7 +526,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                         this.props.changeMenuData(this.props.targetMenuSort, 'viewPoint', newValue);
                        }
                     } className="up"></div>
-                                <div onClick={()=>{
+                            <div onClick={()=>{
                         let newValue = this.props.menuData.viewPoint;
                         for(let i=0;i<newValue.length;i++){
                             if(k<newValue.length-1&&k===i){
@@ -537,26 +537,26 @@ class MenuSettingOptionAddMenu extends React.Component {
                         }
 
                         this.props.changeMenuData(this.props.targetMenuSort, 'viewPoint', newValue);}}
-                                     className="down"></div>
-                            </div>
-                        </td>
-                        <td>{v.name}</td>
-                        <td><input key={'CNName'+v.name+''+k} onChange={
+                                 className="down"></div>
+                        </div>
+                    </td>
+                    <td>{v.name}</td>
+                    <td><input key={'CNName'+v.name+''+k} onChange={
                     e=>{
                         handleOnChange(k,v,'CNName',e.target.value);
                     }
                     } value={v.CNName} type="text"/></td>
-                        <td><input  key={'api'+v.name+k} disabled={v.api===undefined?true:false} onChange={
+                    <td><input key={'api'+v.name+k} disabled={v.api===undefined?true:false} onChange={
                             e=>{
                                 handleOnChange(k,v,'api',e.target.value);
                             }
                         } value={v.api} type="text"/></td>
-                        <td><input  key={'bindField'+v.name+k} disabled={v.bindField===undefined?true:false} onChange={
+                    <td><input key={'bindField'+v.name+k} disabled={v.bindField===undefined?true:false} onChange={
                             e=>{
                                 handleOnChange(k,v,'bindField',e.target.value);
                             }
                         } value={v.bindField} type="text"/></td>
-                        <td><input key={'delete'+v.name+''+k} onChange={
+                    <td><input key={'delete'+v.name+''+k} onChange={
                     e=>{
                     let width = (()=>{
                        if(!e.target.value||e.target.value<0){
@@ -570,12 +570,19 @@ class MenuSettingOptionAddMenu extends React.Component {
                             handleOnChange(k,v,'width',width);
                         }
                     } value={v.width} min="0" max="100" type="number"/></td>
-                        {/*<td><i onClick={()=>{
-                         handleDelete(k);
-                         }} className="fa fa-times-circle delete"></i></td>*/}
-                    </tr>
+                    {(()=> {
+                        if (typeof(v.bindField)!=='undefined') {
+                            return (<td><i onClick={()=>{
+                                  handleDelete(k);
+                     }} className="fa fa-times-circle delete"></i></td>);
+                        }else{
+                            return <td></td>
+                        }
+                    })()}
+                </tr>
             });
         }
+        //创造额外操作功能字段
         let createFieldList = ()=> {
 
             let handleOnClick = (viewPointItem)=> {
@@ -583,36 +590,35 @@ class MenuSettingOptionAddMenu extends React.Component {
                 viewPointGroup.unshift(viewPointItem);
                 this.props.changeMenuData(this.props.targetMenuSort, 'viewPoint', viewPointGroup);
             }
-            let createOptionsField = ()=>{
-                if(this.props.viewPointConfigData[0]){
+            let createOptionsField = ()=> {
+                if (this.props.viewPointConfigData[0]) {
                     let v = {
-                        name: '开关式操作器',
-                        isEnable:true,
-                        CNName:'',
+                        name: "开关式操作器",
+                        isEnable: true,
+                        CNName: '',
                         width: 0,
-                        bindField:'',
-                        api:''
+                        bindField: '',
+                        api: ''
                     };
                     return [<li className="spacial" key={'options'} onClick={()=>{
-                        v.name='';
                         handleOnClick(v);
                     }}>{v.name}</li>]
-                }else{
+                } else {
                     return [];
                 }
             }
             return createOptionsField();
-                /*.concat(this.props.viewPointConfigData.map((v, k)=> {
-                for (let i in this.props.menuData.viewPoint) {
-                    if (this.props.menuData.viewPoint[i].name === v.name) {
-                        flag = false;
-                    }
-                }
-                    return (<li onClick={()=> {
-                        handleOnClick(v);
-                    }
-                    } key={k}>{v.name}</li>);
-            }));*/
+            /*.concat(this.props.viewPointConfigData.map((v, k)=> {
+             for (let i in this.props.menuData.viewPoint) {
+             if (this.props.menuData.viewPoint[i].name === v.name) {
+             flag = false;
+             }
+             }
+             return (<li onClick={()=> {
+             handleOnClick(v);
+             }
+             } key={k}>{v.name}</li>);
+             }));*/
 
 
         }
@@ -628,7 +634,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                     <th>匹配Api</th>
                     <th>绑定布尔字段</th>
                     <th style={{width:"90px"}}>宽度设置(%)</th>
-                    {/*<th style={{width:"50px"}}>删除</th>*/}
+                    <th style={{width:"50px"}}>删除</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -690,9 +696,10 @@ class MenuSettingOptionAddMenu extends React.Component {
                                                                    return this.props.target.obj.targetMenu.parentCode ==='0'?"0":this.props.target.obj.targetMenu.parentCode
                                                                }
                                                            })()}
-                                                        /></span>
+                    /></span>
                     </li>
-                    <li><span>菜单名称:</span><span><input value={this.props.menuData.menuName!==''?this.props.menuData.menuName:''} onChange={
+                    <li><span>菜单名称:</span><span><input
+                        value={this.props.menuData.menuName!==''?this.props.menuData.menuName:''} onChange={
                         e=>{
                             this.props.changeMenuData(this.props.targetMenuSort,'menuName',e.target.value);
                         }
@@ -711,33 +718,33 @@ class MenuSettingOptionAddMenu extends React.Component {
                                         this.props.changeMenuData(this.props.targetMenuSort,'api',e.target.value);
                                     }
                                 } type="text"/></span></li>
-                               {/* <li><span>视图类型:</span><span><select value={this.props.menuData.menuSort} onChange={e=>{
-                                    this.props.changeMenuData(this.props.targetMenuSort,'menuSort',e.target.value);
-                                }}>
-                                {(()=> {
-                                    let allSort = [0, 1, 2, 3];
+                                {/* <li><span>视图类型:</span><span><select value={this.props.menuData.menuSort} onChange={e=>{
+                                 this.props.changeMenuData(this.props.targetMenuSort,'menuSort',e.target.value);
+                                 }}>
+                                 {(()=> {
+                                 let allSort = [0, 1, 2, 3];
 
-                                    function writeContent(sort) {
-                                        switch (sort) {
-                                            case 0:
-                                                return '普通表格';
-                                                break;
-                                            case 1:
-                                                return '一般表格';
-                                                break;
-                                            case 2:
-                                                return '高级表格';
-                                                break;
-                                            case 3:
-                                                return '超级表格';
-                                                break;
-                                        }
-                                    }
-                                    return allSort.map((v, k)=> {
-                                        return (<option key={k} value={v}>{writeContent(v)}</option>);
-                                    });
-                                }).apply(this)}
-                            </select></span></li>*/}
+                                 function writeContent(sort) {
+                                 switch (sort) {
+                                 case 0:
+                                 return '普通表格';
+                                 break;
+                                 case 1:
+                                 return '一般表格';
+                                 break;
+                                 case 2:
+                                 return '高级表格';
+                                 break;
+                                 case 3:
+                                 return '超级表格';
+                                 break;
+                                 }
+                                 }
+                                 return allSort.map((v, k)=> {
+                                 return (<option key={k} value={v}>{writeContent(v)}</option>);
+                                 });
+                                 }).apply(this)}
+                                 </select></span></li>*/}
                             </div>);
                         }
                     })()}
@@ -864,7 +871,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                 let menuData = this.props.menuData;
                 switch (this.props.targetMenuSort) {
                     case 'menuSettingAddMenu':
-                        if(!isOnline){
+                        if (!isOnline) {
                             let allMenu = this.props.allMenu;
                             let createTime = getNowFormatDate();
                             let updateTime = getNowFormatDate();
@@ -888,10 +895,10 @@ class MenuSettingOptionAddMenu extends React.Component {
                             menuData.id = id;
                             menuData.code = code;
                         }
-                        this.props.clickFinish(this.props.targetMenuSort,menuData,this.props.activeContent,this.props.nowOnContentKey,this.props.target.obj);
+                        this.props.clickFinish(this.props.targetMenuSort, menuData, this.props.activeContent, this.props.nowOnContentKey, this.props.target.obj);
                         break;
                     case 'menuSettingEditMenu':
-                        this.props.clickFinish(this.props.targetMenuSort,menuData,this.props.activeContent,this.props.nowOnContentKey,this.props.target.obj,'modify');
+                        this.props.clickFinish(this.props.targetMenuSort, menuData, this.props.activeContent, this.props.nowOnContentKey, this.props.target.obj, 'modify');
                         break;
                 }
             }
@@ -904,7 +911,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                     }
                 }
             }();
-            if(this.props.targetMenuSort!=='menuSettingDetailMenu'){
+            if (this.props.targetMenuSort !== 'menuSettingDetailMenu') {
                 if (this.props.isRootMenu || Step === '3') {
                     return (<button onClick={()=>{
                 handleFinishButton();
@@ -951,7 +958,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                                     return IconList.IconList.map((e, k)=> {
                                         if (e.name === '') {
                                             return ('');
-                                        }else{
+                                        } else {
                                             return (<li key={k}><i onClick={()=>{
                                             this.props.toggleIconSetting(this.props.targetMenuSort,e.name)
                                         }} className={'fa '+e.name}></i></li> );
@@ -976,15 +983,16 @@ class MenuSettingOptionAddMenu extends React.Component {
                                   fieldData={this.props.target.status.menuData.modifyViewPoint}></ModifyShield>);
         }
     }
+
     //渲染级联搜索按钮详细配置遮罩层
-    createSearchButtonModify(){
-        if(this.props.O_buttonConfigPreviewStatus){
+    createSearchButtonModify() {
+        if (this.props.O_buttonConfigPreviewStatus) {
             return (<ModifySearchGroupConfig onOk={e=>{
                 this.props.changeMenuData(this.props.targetMenuSort, 'btnGroup', e);
-            }} tableData={this.props.viewPointConfigData} target={this.props.targetMenuSort} config={this.props.O_buttonConfigPreviewStatus}></ModifySearchGroupConfig>);
+            }} tableData={this.props.viewPointConfigData} target={this.props.targetMenuSort}
+                                             config={this.props.O_buttonConfigPreviewStatus}></ModifySearchGroupConfig>);
         }
     }
-
 
 
     renderPC() {
@@ -995,7 +1003,9 @@ class MenuSettingOptionAddMenu extends React.Component {
                 {this.createSearchButtonModify()}
                 {this.createModifyShield()}
                 {this.createToggleIconSetting()}
-                <ShieldAlert key={this.props.targetMenuSort+''+this.props.target.status.error} title="Alert" content={this.props.target.status.error} onTargetMenuTarget={this.props.targetMenuSort}></ShieldAlert>
+                <ShieldAlert key={this.props.targetMenuSort+''+this.props.target.status.error} title="Alert"
+                             content={this.props.target.status.error}
+                             onTargetMenuTarget={this.props.targetMenuSort}></ShieldAlert>
                 <div className="content-container-inset" style={{height: height}}>
                     <div style={{minWidth: 600}}>
                         {this.createOptionMenuProgress()}
@@ -1022,7 +1032,7 @@ class MenuSettingOptionAddMenu extends React.Component {
 }
 
 const state = state=> {
-    let target, nowOnContentKey,menuData;
+    let target, nowOnContentKey, menuData;
     state.containerTitleMenu.activeContent.map((v, k)=> {
         if (v.obj.id === state.common.nowOnContentTarget.id) {
             target = v;
@@ -1036,17 +1046,17 @@ const state = state=> {
         //本选项卡头包含的选项卡内数据{obj:选项卡菜单，status：选项卡内状态，isActive:是否正使用}
         target: target,
         //视图层通过菜单视图项Api获取的表字段内容
-        viewPointConfigData: target.status.viewPointConfigData?target.status.viewPointConfigData:[],
+        viewPointConfigData: target.status.viewPointConfigData ? target.status.viewPointConfigData : [],
         //是否开启预览遮罩层
-        previewStatus: target.status?target.status.previewStatus:'',
+        previewStatus: target.status ? target.status.previewStatus : '',
         //是否开启按钮详细配置遮罩层
         O_buttonConfigPreviewStatus: target.status ? target.status.O_buttonConfigPreviewStatus : '',
         //当前选项卡所在数组的位置，用来关闭本选项卡
         nowOnContentKey: nowOnContentKey,
-        isRootMenu: target.status?target.status.isRootMenu:'',
-        configApi: target.status?target.status.configApi:'',
-        targetMenuSort: target.status?target.obj.menuSort:'',
-        menuData: target.status?target.status.menuData:'',
+        isRootMenu: target.status ? target.status.isRootMenu : '',
+        configApi: target.status ? target.status.configApi : '',
+        targetMenuSort: target.status ? target.obj.menuSort : '',
+        menuData: target.status ? target.status.menuData : '',
         defaultToggleStatus: state.common.defaultToggleStatus
     });
 }
