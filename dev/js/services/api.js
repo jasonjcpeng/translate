@@ -74,7 +74,7 @@ const apis = {
     deleteMenu:'/api/Module/Delete',
     getUserInfo: '/api/User/GetUser',
     getRole:'/api/Role/Get/',
-    getOrganize: '/api/Organize/GetOrganize/',
+    getOrganize: '/api/Organize/GetOrganize',
     getCols:'/api/Module/GetCols',
     changeUserInfo:'/api/User/Put/',
     resetPassWord: '/api/Account/RevisePassword',
