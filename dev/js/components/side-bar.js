@@ -164,10 +164,16 @@ class SideBar extends Component {
     createQuickButton(){
         let createLi = ()=>{
             let quickMenu = this.props.sideBar.userInfo.quickButton.map((v,k)=>{
+                let isDeleteQuickButton = true;
                 for(let i in this.props.sideBar.menu){
                     if(v.id === this.props.sideBar.menu[i].id){
+                        isDeleteQuickButton = false;
                         return v;
                     }
+                }
+                if(isDeleteQuickButton){
+                    this.props.deleteQuickButton(this.props.sideBar.userInfo,v.id);
+                    return [];
                 }
             });
             if(quickMenu.length!=6){
@@ -313,13 +319,19 @@ class SideBar extends Component {
         });
     }
 
-    //创造收起状态的菜单栏
+    //创造收起状态的快捷菜单栏
     createMiniItemList() {
         let quickMenu = this.props.sideBar.userInfo.quickButton.map((v,k)=>{
+            let isDeleteQuickButton = true;
             for(let i in this.props.sideBar.menu){
                 if(v.id === this.props.sideBar.menu[i].id){
+                    isDeleteQuickButton = false;
                     return v;
                 }
+            }
+            if(isDeleteQuickButton){
+                this.props.deleteQuickButton(this.props.sideBar.userInfo,v.id);
+                return [];
             }
         });
         return (quickMenu.map(v=> {
