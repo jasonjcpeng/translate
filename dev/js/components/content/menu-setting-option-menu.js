@@ -474,13 +474,15 @@ class MenuSettingOptionAddMenu extends React.Component {
                 isEnable: val.isEnable,
                 CNName: val.CNName,
                 width: val.width,
+                dataType:val.dataType
             } : {
                 name: val.name,
                 isEnable: val.isEnable,
                 CNName: val.CNName,
                 width: val.width,
                 bindField: val.bindField,
-                api: val.api
+                api: val.api,
+                dataType:val.dataType
             };
             singleItem[itemKey] = itemVal;
             let newValue = [];
@@ -546,6 +548,16 @@ class MenuSettingOptionAddMenu extends React.Component {
                         handleOnChange(k,v,'CNName',e.target.value);
                     }
                     } value={v.CNName} type="text"/></td>
+                    <td><select onChange={
+                        e=>{
+                            handleOnChange(k,v,'dataType',e.target.value);
+                        }
+                    } disabled={v.bindField===undefined?false:true} key={'dataType'+v.dataType+''+k} value={v.dataType}>
+                        <option value="String">默认</option>
+                        <option value="Date">时间</option>
+                        <option value="Img">图片</option>
+                        <option value="Boolean">布尔</option>
+                    </select></td>
                     <td><input key={'api'+v.name+k} disabled={v.api===undefined?true:false} onChange={
                             e=>{
                                 handleOnChange(k,v,'api',e.target.value);
@@ -598,7 +610,8 @@ class MenuSettingOptionAddMenu extends React.Component {
                         CNName: '',
                         width: 0,
                         bindField: '',
-                        api: ''
+                        api: '',
+                        dataType:'Boolean'
                     };
                     return [<li className="spacial" key={'options'} onClick={()=>{
                         handleOnClick(v);
@@ -631,6 +644,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                     <th style={{width:"50px"}}>排序</th>
                     <th>Api字段名</th>
                     <th>匹配中文名</th>
+                    <th>数据类型</th>
                     <th>匹配Api</th>
                     <th>绑定布尔字段</th>
                     <th style={{width:"90px"}}>宽度设置(%)</th>

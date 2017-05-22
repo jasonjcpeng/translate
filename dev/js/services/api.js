@@ -211,6 +211,7 @@ export const menuSettingOptionMenuFetchViewPointConfig = (args)=> {
                     isEnable: true,
                     CNName: '',
                     width: 0,
+                    dataType:'String'
                 });
             }
         }

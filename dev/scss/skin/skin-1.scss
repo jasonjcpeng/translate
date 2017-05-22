@@ -248,15 +248,16 @@ $table-item-active-color:#cbcdba;
       color: $main-color;
       background-color: #fff;
     }
-
     .header-exit{
+      border-color: $border-color;
       color: $main-color;
     }
     .header-exit:hover{
-      color: $alert-color;
+      color: $shallow-than-main-color;
     }
     .header-exit:active{
-      color: red;
+      background-color: $main-color;
+      color: $alert-color;
     }
 
   }

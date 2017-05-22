@@ -387,15 +387,35 @@ class NormalTable extends React.Component {
                     </td> );
                 }
             }
+            let formatTdContent = (k,v,val)=>{
+                let createImg =()=>{
+                    if(val[v.name]){
+                        return <img style={{verticalAlign:'bottom',height:'80px'}} src={val[v.name]} alt={v.name}/>
+                    }else{
+                        return '暂无';
+                    }
+                }
+                switch(v.dataType){
+                    case 'String':
+                        return (<td key={k}>{val[v.name] ? val[v.name] : ''}</td>);
+                    break;
+                    case 'Date':
+                        return (<td key={k}>{val[v.name] ? FormatDataInfo(val[v.name]): ''}</td>);
+                    break;
+                    case 'Img':
+                        return (<td key={k}>{createImg()}</td>);
+                        break;
+
+                }
+            }
+
             let mapTd = (val)=> {
                 return this.props.viewPoint.map((v, k)=> {
                     if (v.isEnable) {
                         if (v.api) {
                             return createOptionsInTD(val, v, k);
-                        }else if(v.name.indexOf('Time')>0){
-                            return (<td key={k}>{val[v.name] ? FormatDataInfo(val[v.name]): ''}</td>);
-                        } else {
-                            return (<td key={k}>{val[v.name] ? val[v.name] : ''}</td>);
+                        }else{
+                            return formatTdContent(k,v,val);
                         }
                     }
                 })

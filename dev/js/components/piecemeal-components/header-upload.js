@@ -278,17 +278,17 @@ var Cutting = _react2.default.createClass({
         return img;
     },
     cutting: function cutting() {
-        var Images = new Image(),
-            img = this.cacheExternalImage(this.state.realImage),
-            that = this,
+        var img = this.cacheExternalImage(this.state.realImage),
             canvas = this.refs.canvas,
             ctx = canvas.getContext('2d');
         canvas.width = this.state.frameWidth;
         canvas.height = this.state.frameHeight;
         canvas.style.width = this.state.frameWidth + 'px';
         canvas.style.height = this.state.frameHeight + 'px';
-        ctx.drawImage(img, this.state.positionX, this.state.positionY, this.state.frameWidth, this.state.frameHeight, 0, 0, this.state.frameWidth, this.state.frameHeight);
-        this.props.getCutImage(canvas.toDataURL("image/jpeg",0.5), this.convertBase64UrlToBlob(canvas.toDataURL("image/jpeg",0.5)));
+        window.setTimeout(()=>{
+            ctx.drawImage(img, this.state.positionX, this.state.positionY, this.state.frameWidth, this.state.frameHeight, 0, 0, this.state.frameWidth, this.state.frameHeight);
+            this.props.getCutImage(canvas.toDataURL("image/jpeg",0.5), this.convertBase64UrlToBlob(canvas.toDataURL("image/jpeg",0.5)));
+        },0);
     },
     copyImageToFixSize: function copyImageToFixSize(url) {
         var Images = new Image(),
@@ -335,7 +335,8 @@ var Cutting = _react2.default.createClass({
         }
         return new Blob([ia], { type: mimeString });
     },
-    componentDidMount: function componentDidMount() {},
+    componentDidMount: function componentDidMount() {
+    },
     componentWillReceiveProps: function componentWillReceiveProps(next) {
         if (next.config.dataURL) {
             this.copyImageToFixSize(next.config.dataURL);
