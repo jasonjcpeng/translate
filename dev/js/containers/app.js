@@ -40,6 +40,13 @@ class App extends React.Component{
         clearInterval(this.screenHeightListen);
     }
 
+    createReloadShield(){
+        if(this.props.isReload){
+            return <div className="app-reloading"></div>
+        }else{
+            return <div></div>
+        }
+    }
 
     renderInit(){
         if(this.props.error){
@@ -52,7 +59,7 @@ class App extends React.Component{
                     this.props.screenHeightListenner(windowHeight,windowWidth);
                 }
             },100);
-            return (<div className={this.props.useSkin}><Header/><SideBar/><Container/></div>);
+            return (<div className={this.props.useSkin}>{this.createReloadShield()}<Header/><SideBar/><Container/></div>);
         }
 
     }
@@ -66,6 +73,7 @@ class App extends React.Component{
 
 function state(state){
     return ({
+        isReload:state.common.isReload,
         useSkin:state.common.useSkin,
         loaded:state.common.loaded,
         error:state.common.error,

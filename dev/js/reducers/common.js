@@ -2,6 +2,7 @@ import update from 'react-addons-update';
 import * as Constants from '../action/CONSTANTS';
 
 const initState = {
+    isReload:false,
     isLogin:false,
     loaded: false,
     error: undefined,
@@ -26,6 +27,9 @@ export default function (state = initState, action) {
             }else{
                 return update(state, {loaded: {$set: true}, error: {$set: action.error},useSkin: {$set: action.payload.userInfo.useSkin}});
             }
+            break;
+        case Constants.APP_IS_RELOAD:
+            return update(state, {isReload:{$set: action.isReload}});
             break;
         case Constants.HEADER_TOGGLE:
             let newStatus = update(state, {lastToggleStatus: {$set: action.toggleStatus}});

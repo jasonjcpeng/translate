@@ -1,8 +1,9 @@
 import * as Constants from './CONSTANTS';
+import {AppIsReload} from './app';
 import {isOnline} from '../config/config';
 import {normalTableGetData, insertTableItem,apiModifyTableItem,apiDeleteTableItem,apiOnClickToggleOptions} from '../services/api';
 
-
+//标准表格组件初始化
 export const GetMount = (targetID,InitTableArgs)=>{
     return{
             type:Constants.NORMAL_TABLE_INIT,
@@ -10,7 +11,7 @@ export const GetMount = (targetID,InitTableArgs)=>{
             initTableArgs:InitTableArgs
     }
 }
-
+//选中项
 export const checkOnItem = (targetID,item)=>{
     return {
         type:Constants.NORMAL_TABLE_CHECK_ON_ITEM,
@@ -18,6 +19,7 @@ export const checkOnItem = (targetID,item)=>{
         item:item
     }
 }
+//点击按钮状态
 export const onClickButton = (targetID,buttonName)=>{
     if(buttonName){
         return {
@@ -37,12 +39,14 @@ export const onClickButton = (targetID,buttonName)=>{
     }
 }
 
-//btn_delete
+//删除数据
 export const submitDeleteData = (targetID,data,api,tableApi,tableArgs)=>{
     if(isOnline){
         //Todo:表格删除接后台
         return dispatch=>{
+            dispatch(AppIsReload(true));
             apiDeleteTableItem(api,data).then(resData=>{
+                dispatch(AppIsReload(false));
                 dispatch(onClickButton(targetID,undefined));
                 if(Object.prototype.toString.call(data)==='[object Array]'){
                     dispatch(getData(targetID,tableApi,tableArgs));
@@ -53,6 +57,7 @@ export const submitDeleteData = (targetID,data,api,tableApi,tableArgs)=>{
                         error:undefined
                     })
                 }else{
+                    dispatch(AppIsReload(false));
                     return dispatch({
                         type:Constants.NORMAL_TABLE_SUBMIT_DELETE_DATA,
                         targetID:targetID,
@@ -82,15 +87,17 @@ export const submitDeleteData = (targetID,data,api,tableApi,tableArgs)=>{
         }
     }
 }
-//btn_add
+//增加数据
 export const submitAddData = (targetID,allData,data,addApi,item,tableApi,tableArgs)=>{
         if(isOnline){
-            //Todo:表格附加增加接后台
             return dispatch=>{
+                dispatch(AppIsReload(true));
                 insertTableItem(addApi, item, data).then(apiData=> {
+                    dispatch(AppIsReload(false));
                     dispatch(onClickButton(targetID,undefined));
                     return dispatch(getData(targetID,tableApi,tableArgs));
                 }).catch(error=> {
+                    dispatch(AppIsReload(false));
                     console.log(error);
                     return dispatch({
                         type: Constants.NORMAL_TABLE_SUBMIT_ADD_DATA,
@@ -126,11 +133,13 @@ export const submitAddData = (targetID,allData,data,addApi,item,tableApi,tableAr
         }
 }
 
-//btn_modify
+//修改数据
 export const submitModifyData = (targetID,data,api)=>{
     if(isOnline){
         return dispatch=>{
+            dispatch(AppIsReload(true));
             apiModifyTableItem(api,data).then(resData=>{
+                dispatch(AppIsReload(false));
                 dispatch(onClickButton(targetID,undefined));
                 return dispatch({
                     type:Constants.NORMAL_TABLE_SUBMIT_MODIFY_DATA,
@@ -138,6 +147,7 @@ export const submitModifyData = (targetID,data,api)=>{
                     data:data
                 })
             }).catch(rejData=>{
+                dispatch(AppIsReload(false));
                 console.log(rejData)
             });
         }
@@ -152,7 +162,7 @@ export const submitModifyData = (targetID,data,api)=>{
         }
     }
 }
-
+//保存修改遮罩层的数据
 export const saveModifyViewData = (targetID,modifyViewData)=>{
     return {
         type:Constants.NORMAL_TABLE_SAVE_MODIFY_VIEW_DATA,
@@ -160,10 +170,12 @@ export const saveModifyViewData = (targetID,modifyViewData)=>{
         modifyViewData:modifyViewData
     }
 }
-
+//获取当前表格数据
 export const getData = (targetID,api,arg)=>{
     return dispatch=>{
+        dispatch(AppIsReload(true));
         normalTableGetData(api,arg).then((data)=>{
+            dispatch(AppIsReload(false));
             return dispatch({
                 type:Constants.NORMAL_TABLE_GET_DATA,
                 targetID:targetID,
@@ -171,6 +183,7 @@ export const getData = (targetID,api,arg)=>{
                 error:undefined
             })
         }).catch(error=>{
+            dispatch(AppIsReload(false));
             return dispatch({
                 type:Constants.NORMAL_TABLE_GET_DATA,
                 targetID:targetID,
@@ -180,7 +193,7 @@ export const getData = (targetID,api,arg)=>{
         });
     };
 }
-
+//展开收起菜单项
 export const actionToggleItem = (targetID,item)=>{
     return {
         type:Constants.NORMAL_TABLE_TOGGLE_ITEM,
@@ -188,10 +201,12 @@ export const actionToggleItem = (targetID,item)=>{
         item:item
     }
 }
-
+//操作表格中的开关式按钮
 export const actionOnClickToggleOptions = (targetID,api,item,bindField,nowOnState)=>{
     return dispatch=>{
+        dispatch(AppIsReload(true));
         apiOnClickToggleOptions(api,item).then(resData=>{
+                dispatch(AppIsReload(false));
                 return dispatch({
                     type:Constants.NORMAL_TABLE_SUBMIT_TABLE_TOGGLE_OPTION,
                     error:undefined,
@@ -203,6 +218,7 @@ export const actionOnClickToggleOptions = (targetID,api,item,bindField,nowOnStat
         }
         ).catch(
             rejData=>{
+                dispatch(AppIsReload(false));
                 return dispatch({
                     type:Constants.NORMAL_TABLE_SUBMIT_TABLE_TOGGLE_OPTION,
                     targetID:targetID,
@@ -212,7 +228,7 @@ export const actionOnClickToggleOptions = (targetID,api,item,bindField,nowOnStat
         );
     };
 }
-
+//批量选择项
 export const actionBatchSelectItem = (targetID,data)=>{
     if(Object.prototype.toString.apply(data)==='[object Object]'){
         data = [data];

@@ -16,6 +16,16 @@ body {
   margin: 0px;
   font-family: $font;
   font-weight: 600;
+  .app-reloading{
+    z-index: 100000;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    cursor: wait;
+  }
   .file-upload{
     position: relative;
     display: inline-block;
@@ -339,7 +349,7 @@ body {
 @import './components/content/content-container';
 @import './components/content/component-option-bar';
 @import './components/search-group';
-@import 'components/content/header-cut';
+@import './components/content/header-cut';
 
 @import './skin/skin-1';
 @import './skin/skin-2';

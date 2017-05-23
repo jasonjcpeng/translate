@@ -1,15 +1,15 @@
 import * as Constants from './CONSTANTS';
 import {isOnline} from '../config/config';
 import {menuSettingOptionMenuFetchViewPointConfig, insertTableMenu,modifyTableMenu} from '../services/api';
-import {AppDidMount} from './app';
-
+import {AppDidMount,AppIsReload} from './app';
+//根据当前的目标菜单类型初始化选项卡内容
 export const GetMount = (target)=> {
     return ({
         type: Constants.MENU_SETTING_OPTION_MENU_DID_MOUNT,
         target: target
     });
 }
-
+//选择作为根菜单选项
 export const checkIsRootMenu = (targetMenuSort, bol)=> {
     return ({
         type: Constants.MENU_SETTING_OPTION_CHECK_IS_ROOT_MENU,
@@ -17,7 +17,7 @@ export const checkIsRootMenu = (targetMenuSort, bol)=> {
         targetMenuSort: targetMenuSort
     });
 }
-
+//下一步
 export const clickNextStep = (targetMenuSort, order)=> {
     return ({
         type: Constants.MENU_SETTING_OPTION_ONCLICK_NEXT_STEP,
@@ -25,7 +25,7 @@ export const clickNextStep = (targetMenuSort, order)=> {
         targetMenuSort: targetMenuSort
     });
 }
-
+//跳选步骤
 export const clickChangeSetp = (targetMenuSort, order)=> {
     return ({
         type: Constants.MENU_SETTING_OPTION_ONCLICK_CHANGE_STEP,
@@ -33,7 +33,7 @@ export const clickChangeSetp = (targetMenuSort, order)=> {
         targetMenuSort: targetMenuSort
     });
 }
-
+//打开图标设定遮罩层
 export const toggleIconSetting = (targetMenuSort, iconName)=> {
     if (iconName !== undefined) {
         return ({
@@ -48,7 +48,7 @@ export const toggleIconSetting = (targetMenuSort, iconName)=> {
         });
     }
 }
-
+//改变菜单设定数据
 export const changeMenuData = (targetMenuSort, key, val)=> {
     return ({
         type: Constants.MENU_SETTING_CHANGE_MENU_DATA,
@@ -57,7 +57,7 @@ export const changeMenuData = (targetMenuSort, key, val)=> {
         value: val
     });
 }
-
+//关闭菜单设定页
 export const closeMenuSetting = (k, nowOnContent)=> {
     return ({
         type: Constants.CONTAINER_TITTLE_MENU_DELETE_ACTIVE_CONTENT,
@@ -65,13 +65,14 @@ export const closeMenuSetting = (k, nowOnContent)=> {
         payload: nowOnContent
     });
 }
+//选择当前活跃的标签页
 export const selectActiveContent = e => {
     return ({
         type: Constants.CONTAINER_TITTLE_MENU_SELECT_ACTIVE_CONTENT,
         payload: e
     });
 }
-
+//完成
 export const clickFinish = (targetMenuSort, menuData,activeContent, nowOnContentKey, obj,modifyFlag)=> {
     let deleteActiveContent = (k, v,activeContent, dispatch)=> {
         dispatch(closeMenuSetting(k, v));
@@ -143,8 +144,10 @@ export const clickFinish = (targetMenuSort, menuData,activeContent, nowOnContent
             }
         }else{
             return dispatch=> {
+                dispatch(AppIsReload(true));
                 //添加菜单
                 insertTableMenu(menuData).then(data=> {
+                    dispatch(AppIsReload(false));
                     deleteActiveContent(nowOnContentKey, obj, activeContent, dispatch);
                     dispatch(AppDidMount());
                     return dispatch({
@@ -153,6 +156,7 @@ export const clickFinish = (targetMenuSort, menuData,activeContent, nowOnContent
                         error: undefined
                     })
                 }).catch(res=> {
+                    dispatch(AppIsReload(false));
                     return dispatch({
                         type: Constants.MENU_SETTING_ADD_MENU_FINISH,
                         targetMenuSort: targetMenuSort,
@@ -173,11 +177,14 @@ export const clickFinish = (targetMenuSort, menuData,activeContent, nowOnContent
     }
 }
 
+//获取视图层对应的API数据
 //@param callback 本函数then时运行这个回调
 export const getViewPointConfig = (targetMenuSort, ViewPointConfigApi, targetMenu,callback)=> {
     return dispatch=> {
+        dispatch(AppIsReload(true));
         menuSettingOptionMenuFetchViewPointConfig(ViewPointConfigApi).then(
             res=> {
+                dispatch(AppIsReload(false));
                 callback();
                 return dispatch({
                     type: Constants.MENU_SETTING_GET_VIEW_POINT_CONFIG,
@@ -187,6 +194,7 @@ export const getViewPointConfig = (targetMenuSort, ViewPointConfigApi, targetMen
                 });
             }).catch(
             rej=> {
+                dispatch(AppIsReload(false));
                 return dispatch({
                     type: Constants.MENU_SETTING_GET_VIEW_POINT_CONFIG,
                     targetMenuSort: targetMenuSort,
@@ -196,7 +204,7 @@ export const getViewPointConfig = (targetMenuSort, ViewPointConfigApi, targetMen
         );
     }
 }
-
+//改变预览遮罩层打开状态
 export const changePreviewStatus = (targetMenuSort, previewStatus)=> {
     return {
         type: Constants.MENU_SETTING_CHANGE_PREVIEW_STATUS,
@@ -204,7 +212,7 @@ export const changePreviewStatus = (targetMenuSort, previewStatus)=> {
         previewStatus: !previewStatus
     };
 }
-
+//发送错误信息
 export const sendError = (targetMenuSort, message)=> {
     return ({
         type: Constants.MENU_SETTING_SEND_ERROR_MESSAGE,
@@ -212,7 +220,7 @@ export const sendError = (targetMenuSort, message)=> {
         error: message
     });
 }
-
+//改变按钮配置层打开状态，通用搜索栏使用，已废弃
 export const actionChangeButtonConfigPreviewStatus = (targetMenuSort,args)=>{
     return ({
         type: Constants.MENU_SETTING_CHANGE_BUTTON_CONFIG_PREVIEW_STATUS,
