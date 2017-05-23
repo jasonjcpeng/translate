@@ -73,7 +73,7 @@ module.exports = {
             inject: 'body',
             chunks:['logout','app']
         }),
-        /* 压缩*/
+        /* 混淆压缩*/
        /* new webpack.optimize.UglifyJsPlugin({
          compress: {
          warnings: false

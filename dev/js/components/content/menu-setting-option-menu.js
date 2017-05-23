@@ -675,7 +675,48 @@ class MenuSettingOptionAddMenu extends React.Component {
                     }}></Checker>
                 </li> );
         }
+        //选择作为自定义菜单
+        let createIsCustomMenu = ()=>{
+            return (
+                <li><span>自定义菜单:</span>
+                    <Checker key={this.props.isCustomMenu} checkState={this.props.isCustomMenu} funcOnClick={(callBackCheckState)=>{
+                        this.props.checkIsCustomMenu(this.props.targetMenuSort,callBackCheckState);
+                    }}></Checker>
+                </li> );
 
+        }
+        //创造自定义菜单配置页
+        let createSettingCustomMenu = ()=>{
+            return <div className="standard-ul standard-ul-two-column">
+                <ul>
+                    <li><span>上级菜单:</span><span><input type="text" disabled={true}
+                                                       value={(()=>{
+                                                           if(this.props.targetMenuSort==='menuSettingAddMenu'){
+                                                               return this.props.target.obj.targetMenu === '0'?"根级菜单":this.props.target.obj.targetMenu.menuName;
+                                                           }else{
+                                                               return this.props.target.obj.targetMenu.parentCode ==='0'?"根级菜单":this.props.target.obj.targetMenu.parentCode;
+                                                           }
+                                                       })()}/></span>
+                    </li>
+                    {createIsCustomMenu()}
+                    <li><span>菜单名称:</span><span><input
+                    value={this.props.menuData.menuName!==''?this.props.menuData.menuName:''} onChange={
+                    e=>{
+                        this.props.changeMenuData(this.props.targetMenuSort,'menuName',e.target.value);
+                    }
+                } type="text"/></span></li>
+                    <li><span>菜单组件名:</span><span><input
+                        value={this.props.menuData.menuSort!==''?this.props.menuData.menuSort:''} onChange={
+                        e=>{
+                            this.props.changeMenuData(this.props.targetMenuSort,'menuSort',e.target.value);
+                        }
+                    } type="text"/></span></li>
+                    <li><span>菜单图标:</span><span><i style={{fontStyle:'normal'}} onClick={()=> {
+                        this.props.toggleIconSetting(this.props.targetMenuSort);
+                    }} className={iconClassName}>{iContent}</i></span></li>
+                </ul>
+            </div>
+        }
 
         let iconClassName = (()=> {
             if (this.props.menuData.icon !== '') {
@@ -689,85 +730,90 @@ class MenuSettingOptionAddMenu extends React.Component {
                 return '未设置';
             }
         })();
-        return (
-            <div className="standard-ul standard-ul-two-column">
-                <ul>
-                    <li><span>上级菜单:</span><span><input type="text" disabled={true}
-                                                       value={(()=>{
-                                                           if(this.props.targetMenuSort==='menuSettingAddMenu'){
-                                                               return this.props.target.obj.targetMenu === '0'?"根级菜单":this.props.target.obj.targetMenu.menuName;
-                                                           }else{
-                                                               return this.props.target.obj.targetMenu.parentCode ==='0'?"根级菜单":this.props.target.obj.targetMenu.parentCode;
-                                                           }
-                                                       })()}/></span>
-                    </li>
-                    {createIsRootMenuCheckBox()}
-                    <li><span>上级菜单Code:</span><span><input type="text" disabled={true}
+
+        if(this.props.isCustomMenu){
+            return createSettingCustomMenu();
+        }else{
+            return (
+                <div className="standard-ul standard-ul-two-column">
+                    <ul>
+                        <li><span>上级菜单:</span><span><input type="text" disabled={true}
                                                            value={(()=>{
                                                                if(this.props.targetMenuSort==='menuSettingAddMenu'){
-                                                                   return this.props.target.obj.targetMenu === '0'?"0":this.props.target.obj.targetMenu.code
+                                                                   return this.props.target.obj.targetMenu === '0'?"根级菜单":this.props.target.obj.targetMenu.menuName;
                                                                }else{
-                                                                   return this.props.target.obj.targetMenu.parentCode ==='0'?"0":this.props.target.obj.targetMenu.parentCode
+                                                                   return this.props.target.obj.targetMenu.parentCode ==='0'?"根级菜单":this.props.target.obj.targetMenu.parentCode;
                                                                }
-                                                           })()}
-                    /></span>
-                    </li>
-                    <li><span>菜单名称:</span><span><input
-                        value={this.props.menuData.menuName!==''?this.props.menuData.menuName:''} onChange={
-                        e=>{
-                            this.props.changeMenuData(this.props.targetMenuSort,'menuName',e.target.value);
-                        }
-                    } type="text"/></span></li>
-                    {(()=> {
-                        if (!this.props.isRootMenu) {
-                            return (<div>
-                                <li><span>菜单视图项API:</span><span><input
-                                    value={this.props.menuData.viewPointConfigApi} onChange={
-                                    e=>{
-                                        this.props.changeMenuData(this.props.targetMenuSort,'viewPointConfigApi',e.target.value);
-                                    }
-                                } type="text"/></span></li>
-                                <li><span>菜单内容项API:</span><span><input value={this.props.menuData.api} onChange={
-                                    e=>{
-                                        this.props.changeMenuData(this.props.targetMenuSort,'api',e.target.value);
-                                    }
-                                } type="text"/></span></li>
-                                {/* <li><span>视图类型:</span><span><select value={this.props.menuData.menuSort} onChange={e=>{
-                                 this.props.changeMenuData(this.props.targetMenuSort,'menuSort',e.target.value);
-                                 }}>
-                                 {(()=> {
-                                 let allSort = [0, 1, 2, 3];
+                                                           })()}/></span>
+                        </li>
+                        {createIsCustomMenu()}
+                        {createIsRootMenuCheckBox()}
+                        <li><span>上级菜单Code:</span><span><input type="text" disabled={true}
+                                                               value={(()=>{
+                                                                   if(this.props.targetMenuSort==='menuSettingAddMenu'){
+                                                                       return this.props.target.obj.targetMenu === '0'?"0":this.props.target.obj.targetMenu.code
+                                                                   }else{
+                                                                       return this.props.target.obj.targetMenu.parentCode ==='0'?"0":this.props.target.obj.targetMenu.parentCode
+                                                                   }
+                                                               })()}
+                        /></span>
+                        </li>
+                        <li><span>菜单名称:</span><span><input
+                            value={this.props.menuData.menuName!==''?this.props.menuData.menuName:''} onChange={
+                            e=>{
+                                this.props.changeMenuData(this.props.targetMenuSort,'menuName',e.target.value);
+                            }
+                        } type="text"/></span></li>
+                        {(()=> {
+                            if (!this.props.isRootMenu) {
+                                return (<div>
+                                    <li><span>菜单视图项API:</span><span><input
+                                        value={this.props.menuData.viewPointConfigApi} onChange={
+                                        e=>{
+                                            this.props.changeMenuData(this.props.targetMenuSort,'viewPointConfigApi',e.target.value);
+                                        }
+                                    } type="text"/></span></li>
+                                    <li><span>菜单内容项API:</span><span><input value={this.props.menuData.api} onChange={
+                                        e=>{
+                                            this.props.changeMenuData(this.props.targetMenuSort,'api',e.target.value);
+                                        }
+                                    } type="text"/></span></li>
+                                    {/* <li><span>视图类型:</span><span><select value={this.props.menuData.menuSort} onChange={e=>{
+                                     this.props.changeMenuData(this.props.targetMenuSort,'menuSort',e.target.value);
+                                     }}>
+                                     {(()=> {
+                                     let allSort = [0, 1, 2, 3];
 
-                                 function writeContent(sort) {
-                                 switch (sort) {
-                                 case 0:
-                                 return '普通表格';
-                                 break;
-                                 case 1:
-                                 return '一般表格';
-                                 break;
-                                 case 2:
-                                 return '高级表格';
-                                 break;
-                                 case 3:
-                                 return '超级表格';
-                                 break;
-                                 }
-                                 }
-                                 return allSort.map((v, k)=> {
-                                 return (<option key={k} value={v}>{writeContent(v)}</option>);
-                                 });
-                                 }).apply(this)}
-                                 </select></span></li>*/}
-                            </div>);
-                        }
-                    })()}
-                    <li><span>菜单图标:</span><span><i style={{fontStyle:'normal'}} onClick={()=> {
-                        this.props.toggleIconSetting(this.props.targetMenuSort);
-                    }} className={iconClassName}>{iContent}</i></span></li>
-                </ul>
-            </div>);
-
+                                     function writeContent(sort) {
+                                     switch (sort) {
+                                     case 0:
+                                     return '普通表格';
+                                     break;
+                                     case 1:
+                                     return '一般表格';
+                                     break;
+                                     case 2:
+                                     return '高级表格';
+                                     break;
+                                     case 3:
+                                     return '超级表格';
+                                     break;
+                                     }
+                                     }
+                                     return allSort.map((v, k)=> {
+                                     return (<option key={k} value={v}>{writeContent(v)}</option>);
+                                     });
+                                     }).apply(this)}
+                                     </select></span></li>*/}
+                                </div>);
+                            }
+                        })()}
+                        <li><span>菜单图标:</span><span><i style={{fontStyle:'normal'}} onClick={()=> {
+                            this.props.toggleIconSetting(this.props.targetMenuSort);
+                        }} className={iconClassName}>{iContent}</i></span></li>
+                    </ul>
+                </div>);
+        }
     }
 
     //渲染进度状态条
@@ -783,6 +829,14 @@ class MenuSettingOptionAddMenu extends React.Component {
                     <ul>
                         <li style={{width: "100%", cursor: 'default',fontSize:'200%'}}
                             className="active singleProgress">节点菜单功能
+                        </li>
+                    </ul>
+                </div>);
+            } else if(this.props.isCustomMenu){
+                return (<div className="option-menu-progress">
+                    <ul>
+                        <li style={{width: "100%", cursor: 'default',fontSize:'200%'}}
+                            className="active singleProgress">自定义菜单功能
                         </li>
                     </ul>
                 </div>);
@@ -856,7 +910,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                     }
                 }
             }();
-            if (!this.props.isRootMenu && nextStep < 4) {
+            if ((!this.props.isRootMenu&&!this.props.isCustomMenu) && nextStep < 4) {
                 return (<button onClick={()=>{
                 if(nextStep===1){
                     this.props.getViewPointConfig(this.props.targetMenuSort,this.props.menuData.viewPointConfigApi,this.props.target.obj.targetMenu,()=>{
@@ -883,6 +937,9 @@ class MenuSettingOptionAddMenu extends React.Component {
 
             let handleFinishButton = ()=> {
                 let menuData = this.props.menuData;
+                if(this.props.isCustomMenu){
+                    menuData.viewPoint = [{}];
+                }
                 switch (this.props.targetMenuSort) {
                     case 'menuSettingAddMenu':
                         if (!isOnline) {
@@ -926,7 +983,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                 }
             }();
             if (this.props.targetMenuSort !== 'menuSettingDetailMenu') {
-                if (this.props.isRootMenu || Step === '3') {
+                if ((this.props.isRootMenu||this.props.isCustomMenu) || Step === '3') {
                     return (<button onClick={()=>{
                 handleFinishButton();
             }} className="btn btn-finish">完成</button>);
@@ -1046,14 +1103,36 @@ class MenuSettingOptionAddMenu extends React.Component {
 }
 
 const state = state=> {
-    let target, nowOnContentKey, menuData;
+    let target, nowOnContentKey, menuData,isRootMenu,isCustomMenu;
     state.containerTitleMenu.activeContent.map((v, k)=> {
         if (v.obj.id === state.common.nowOnContentTarget.id) {
             target = v;
             nowOnContentKey = k;
         }
     });
+    isRootMenu = (()=>{
+        if(target.status){
+            if(target.obj.id==='menuSettingAddMenu'||target.obj.targetMenu.viewPoint.length>0){
+                return false;
+            }else{
+                return true;
+            }
+        }else{
+            return false;
+        }
+    })();
 
+    isCustomMenu = (()=>{
+        if(target.status){
+            if(target.obj.id==='menuSettingAddMenu'||target.obj.targetMenu.menuSort===0){
+                return false;
+            }else{
+                return true;
+            }
+        }else{
+            return false;
+        }
+    })();
     return ({
         allMenu: state.sideBar.menu,
         activeContent: state.containerTitleMenu.activeContent,
@@ -1067,7 +1146,8 @@ const state = state=> {
         O_buttonConfigPreviewStatus: target.status ? target.status.O_buttonConfigPreviewStatus : '',
         //当前选项卡所在数组的位置，用来关闭本选项卡
         nowOnContentKey: nowOnContentKey,
-        isRootMenu: target.status ? target.status.isRootMenu : '',
+        isRootMenu: isRootMenu,
+        isCustomMenu: isCustomMenu,
         configApi: target.status ? target.status.configApi : '',
         targetMenuSort: target.status ? target.obj.menuSort : '',
         menuData: target.status ? target.status.menuData : '',

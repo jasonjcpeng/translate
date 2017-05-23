@@ -284,6 +284,7 @@ export default function (state = initState, action) {
                 error: undefined,
                 ok:undefined,
                 isRootMenu: undefined,
+                isCustomMenu:false,
                 isToggleIconSetting: false,
                 progress: [{active: true, on: true}, {active: false, on: false}, {
                     active: false,
@@ -329,6 +330,9 @@ export default function (state = initState, action) {
             break;
         case Constants.MENU_SETTING_OPTION_CHECK_IS_ROOT_MENU:
             return setActiveContentStatus(state, action.targetMenuSort, {status: {isRootMenu: {$set: action.payload}}});
+            break;
+        case Constants.MENU_SETTING_OPTION_CHECK_IS_CUSTOM_MENU:
+            return setActiveContentStatus(state, action.targetMenuSort, {status: {isCustomMenu: {$set: action.payload}}});
             break;
         case Constants.MENU_SETTING_OPTION_ONCLICK_NEXT_STEP:
             return setActiveContentStatus(state, action.targetMenuSort, {

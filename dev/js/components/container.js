@@ -6,6 +6,7 @@ import ContainerTittleMenu from './container-title-menu';
 import ContentSetting from './content/content-setting';
 import MenuSettingOptionMenu from './content/menu-setting-option-menu';
 import NormalTable from './content/normal-table';
+import CustomTableDemo from './content/custom-table/custom-table-demo';
 //--------------------
 
 import * as ActionCreators from '../action/side-bar';
@@ -79,6 +80,9 @@ class Container extends Component {
                     break;
                 case 0:
                     return (<NormalTable key={this.props.nowOnContentTarget.id} height={height}></NormalTable>);
+                    break
+                case 1:
+                    return (<CustomTableDemo key={this.props.nowOnContentTarget.id} height={height}></CustomTableDemo>);
                     break
             }
         }

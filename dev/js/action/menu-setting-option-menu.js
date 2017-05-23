@@ -17,6 +17,14 @@ export const checkIsRootMenu = (targetMenuSort, bol)=> {
         targetMenuSort: targetMenuSort
     });
 }
+//选择作为自定义菜单选项
+export const checkIsCustomMenu = (targetMenuSort, bol)=> {
+    return ({
+        type: Constants.MENU_SETTING_OPTION_CHECK_IS_CUSTOM_MENU,
+        payload: bol,
+        targetMenuSort: targetMenuSort
+    });
+}
 //下一步
 export const clickNextStep = (targetMenuSort, order)=> {
     return ({
