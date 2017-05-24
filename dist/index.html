@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>综艺嘉登陆</title>
+    <!--<script src="http://cdn.bootcss.com/react/15.5.4/react-dom.min.js"></script>
+    <script src="http://cdn.bootcss.com/react/15.5.4/react.js"></script>
+    <script src="http://cdn.bootcss.com/redux/3.6.0/redux.min.js"></script>
+    <script src="http://cdn.bootcss.com/react-redux/5.0.5/react-redux.min.js"></script>
+    <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">-->
+    <link href="./font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        body{
+            overflow-y: hidden;
+            height: 100%;
+            padding: 0px;
+            margin: 0px;
+            font-family:'Microsoft YaHei';
+            font-weight: 600;
+        }
+
+        @keyframes flipInY{
+            0% {
+                transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+                transition-timing-function: ease-in;
+                opacity: 0
+            }
+            40% {
+                transform: perspective(400px) rotate3d(0, 1, 0, -20deg);
+                transition-timing-function: ease-in
+            }
+            60% {
+                transform: perspective(400px) rotate3d(0, 1, 0, 10deg);
+                opacity: 1
+            }
+            80% {
+                transform: perspective(400px) rotate3d(0, 1, 0, -5deg)
+            }
+            100% {
+                transform: perspective(400px)
+            }
+        }
+        .animation-flipInY {
+            animation: flipInY 1s;
+            backface-visibility: visible !important;
+        }
+        .canvas-bg {
+            background-image: url("./img/login_bg.jpg");
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 100%;
+            opacity: 0.4;
+            z-index: 10;
+            position: absolute;
+        }
+
+        .login-content {
+            background-color: #fff;
+            z-index: 100;
+            position: absolute;
+            left: calc(50% - 150px);
+            top: calc(40% - 150px);
+            padding:30px 40px;
+            width: 270px;
+            height: 367px;
+            border-radius: 2px;
+        }
+
+        .header-logo {
+            margin: 30px auto 30px auto;
+            height: 71px;
+            width: 200px;
+        }
+
+        img{
+            height: 100%;
+            width: 100%;
+        }
+
+        .active{
+            color: #3399cc;
+            border-color: #3399cc;
+        }
+        .wrong{
+            color:red;
+            border-color: red;
+        }
+
+        .form-username{
+            position: relative;
+            margin-bottom: 15px;
+        }
+        .form-password{
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: calc(100% - 22px);
+            height: 30px;
+            border: none;
+            padding: 5px 7px 5px 15px;
+            color: #666;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            color: initial;
+            text-shadow: none;
+        }
+
+        .message{
+            height: 10px;
+            font-weight: 100;
+            font-size: 12px;
+            color: red;
+        }
+        .fa{
+            position: absolute;
+            bottom:15px;
+            left:250px;
+        }
+
+        .login-content-btn {
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+            height: 50px;
+            color: #fff;
+            border-radius: 3px;
+            border: 1px solid #3399cc;
+            background-color: #3399cc;
+            margin: 65px auto 30px;
+            display: block;
+        }
+
+        input::-webkit-input-placeholder {
+            color:#ddd;
+        }
+
+        input::-moz-placeholder {
+            color:#ddd;
+        }
+
+        input:-ms-input-placeholder {
+            color:#ddd;
+        }
+    </style>
+</head>
+<body>
+<script type="text/javascript" src="js/a2c73512dcf143941477.js"></script><script type="text/javascript" src="js/3d8168b4a3693208ebe2.js"></script></body>
+</html>

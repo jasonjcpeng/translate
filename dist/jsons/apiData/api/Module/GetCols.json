@@ -1,0 +1,18 @@
+{
+  "data": [
+    "AX_Account",
+    "AX_BirthdayTime",
+    "AX_CreatorTime",
+    "AX_OrganizeCategory",
+    "AX_Description",
+    "AX_Email",
+    "AX_EnabledMark",
+    "AX_Id",
+    "AX_MobilePhone",
+    "AX_NickName",
+    "AX_RealName",
+    "AX_WeChat"
+  ],
+  "message":"OK",
+  "state":"1"
+}
