@@ -80,10 +80,14 @@ class Container extends Component {
                     break;
                 case 0:
                     return (<NormalTable key={this.props.nowOnContentTarget.id} height={height}></NormalTable>);
-                    break
+                    break;
+                //todo:要求后台修改menuSort数据类型为string
                 case 1:
                     return (<CustomTableDemo key={this.props.nowOnContentTarget.id} height={height}></CustomTableDemo>);
-                    break
+                    break;
+                case '1':
+                    return (<CustomTableDemo key={this.props.nowOnContentTarget.id} height={height}></CustomTableDemo>);
+                    break;
             }
         }
     }

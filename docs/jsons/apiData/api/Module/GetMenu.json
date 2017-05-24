@@ -22,7 +22,7 @@
       "AX_LastModifyTime": "2016-07-14T16:21:47.247",
       "AX_Layers": 2,
       "AX_ParentId": "462027E0-0848-41DD-BCC3-025DCAE65555",
-      "AX_SortCode": 5,
+      "AX_SortCode": 0,
       "AX_Target": "iframe",
       "AX_UrlAddress": "/SystemManage/Area/Index"
     },
@@ -48,7 +48,7 @@
       "AX_LastModifyTime": "2016-07-14T16:22:41.07",
       "AX_Layers": 2,
       "AX_ParentId": "462027E0-0848-41DD-BCC3-025DCAE65555",
-      "AX_SortCode": 3,
+      "AX_SortCode": 0,
       "AX_Target": "iframe",
       "AX_UrlAddress": "/SystemManage/Duty/Index"
     },
@@ -74,7 +74,7 @@
       "AX_LastModifyTime": "2016-07-14T16:22:47.337",
       "AX_Layers": 2,
       "AX_ParentId": "462027E0-0848-41DD-BCC3-025DCAE65555",
-      "AX_SortCode": 4,
+      "AX_SortCode": 0,
       "AX_Target": "iframe",
       "AX_UrlAddress": "/SystemManage/User/Index"
     },
@@ -100,7 +100,7 @@
       "AX_LastModifyTime": "2016-07-15T22:21:04.66",
       "AX_Layers": 2,
       "AX_ParentId": "462027E0-0848-41DD-BCC3-025DCAE65555",
-      "AX_SortCode": 1,
+      "AX_SortCode": 0,
       "AX_Target": "iframe",
       "AX_UrlAddress": "/SystemManage/Organize/Index"
     },
@@ -126,7 +126,7 @@
       "AX_LastModifyTime": "2016-07-15T22:26:07.15",
       "AX_Layers": 2,
       "AX_ParentId": "462027E0-0848-41DD-BCC3-025DCAE65555",
-      "AX_SortCode": 6,
+      "AX_SortCode": 0,
       "AX_Target": "iframe",
       "AX_UrlAddress": "/SystemManage/ItemsData/Index"
     },
@@ -152,7 +152,7 @@
       "AX_LastModifyTime": "2016-07-27T10:50:09.107",
       "AX_Layers": 2,
       "AX_ParentId": "462027E0-0848-41DD-BCC3-025DCAE65555",
-      "AX_SortCode": 7,
+      "AX_SortCode": 0,
       "AX_Target": "iframe",
       "AX_UrlAddress": "/SystemManage/Module/Index"
     },
@@ -178,7 +178,7 @@
       "AX_LastModifyTime": "2016-07-14T16:22:35.367",
       "AX_Layers": 2,
       "AX_ParentId": "462027E0-0848-41DD-BCC3-025DCAE65555",
-      "AX_SortCode": 2,
+      "AX_SortCode": 0,
       "AX_Target": "iframe",
       "AX_UrlAddress": "/SystemManage/Role/Index"
     },
@@ -204,7 +204,7 @@
       "AX_LastModifyTime": "2016-07-22T15:46:46.367",
       "AX_Layers": 1,
       "AX_ParentId": "0",
-      "AX_SortCode": 2,
+      "AX_SortCode":0,
       "AX_Target": "expand",
       "AX_UrlAddress": "undefined"
     },{

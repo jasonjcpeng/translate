@@ -746,7 +746,6 @@ class MenuSettingOptionAddMenu extends React.Component {
                                                                }
                                                            })()}/></span>
                         </li>
-                        {createIsCustomMenu()}
                         {createIsRootMenuCheckBox()}
                         <li><span>上级菜单Code:</span><span><input type="text" disabled={true}
                                                                value={(()=>{
@@ -767,6 +766,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                         {(()=> {
                             if (!this.props.isRootMenu) {
                                 return (<div>
+                                    {createIsCustomMenu()}
                                     <li><span>菜单视图项API:</span><span><input
                                         value={this.props.menuData.viewPointConfigApi} onChange={
                                         e=>{
@@ -1111,27 +1111,19 @@ const state = state=> {
         }
     });
     isRootMenu = (()=>{
-        if(target.status){
             if(target.obj.id==='menuSettingAddMenu'||target.obj.targetMenu.viewPoint.length>0){
                 return false;
             }else{
                 return true;
             }
-        }else{
-            return false;
-        }
     })();
 
     isCustomMenu = (()=>{
-        if(target.status){
             if(target.obj.id==='menuSettingAddMenu'||target.obj.targetMenu.menuSort===0){
                 return false;
             }else{
                 return true;
             }
-        }else{
-            return false;
-        }
     })();
     return ({
         allMenu: state.sideBar.menu,
@@ -1146,8 +1138,8 @@ const state = state=> {
         O_buttonConfigPreviewStatus: target.status ? target.status.O_buttonConfigPreviewStatus : '',
         //当前选项卡所在数组的位置，用来关闭本选项卡
         nowOnContentKey: nowOnContentKey,
-        isRootMenu: isRootMenu,
-        isCustomMenu: isCustomMenu,
+        isRootMenu: target.status&&target.status.isRootMenu?target.status.isRootMenu:isRootMenu,
+        isCustomMenu: target.status&&target.status.isCustomMenu?target.status.isCustomMenu:isCustomMenu,
         configApi: target.status ? target.status.configApi : '',
         targetMenuSort: target.status ? target.obj.menuSort : '',
         menuData: target.status ? target.status.menuData : '',

@@ -283,7 +283,7 @@ export default function (state = initState, action) {
                 O_buttonConfigPreviewStatus:undefined,
                 error: undefined,
                 ok:undefined,
-                isRootMenu: undefined,
+                isRootMenu: false,
                 isCustomMenu:false,
                 isToggleIconSetting: false,
                 progress: [{active: true, on: true}, {active: false, on: false}, {
@@ -317,7 +317,8 @@ export default function (state = initState, action) {
                 return setActiveContentStatus(state, action.target.menuSort, {status: {$set: initMenuSettingOption}});
             } else {
                 let menuData = action.target.targetMenu;
-                if (menuData.viewPoint.length>0) {
+
+                if (menuData.viewPoint[0]&&menuData.viewPoint[0].name) {
                     let viewPointConfigApi = menuData.api.split('api/')[1];
                     menuData.viewPointConfigApi = 'sys_' + viewPointConfigApi.substring(0, viewPointConfigApi.indexOf('/'));
                 }else{
