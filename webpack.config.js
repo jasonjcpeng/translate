@@ -22,7 +22,7 @@ module.exports = {
         contentBase: './dev',
         port: 3003
     },
-    devtool: 'cheap-module-eval-source-map',
+    //devtool: 'cheap-module-eval-source-map',
     entry: {app:'./dev/js/app.js',
         index:'./dev/js/index.js',
         logout:'./dev/js/logout.js'
@@ -36,12 +36,12 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.scss$/,
-                loader: 'style-loader!css-loader!postcss-loader!sass-loader'
+                test: /\.less/,
+                loader: 'style-loader!css-loader!postcss-loader!less-loader'
             },
             {
                 test: /\.css$/,
-                loader: 'style-loader!css-loader!postcss-loader!sass-loader'
+                loader: 'style-loader!css-loader!postcss-loader!less-loader'
             },
             {
                 test:/\.(ttf|jpg|gif|png)$/,

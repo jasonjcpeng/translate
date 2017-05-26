@@ -7,7 +7,7 @@ import App from './containers/app';
 
 import allReducers from './reducers';
 
-import '../scss/style.scss';
+import '../scss/style.less';
 
 const store = configCreateStore(allReducers);/* 利用中间件附加trunk（异步解决方案）的store生成器*/
 store.subscribe(()=>{

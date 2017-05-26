@@ -1,0 +1,357 @@
+/*
+@font-face {
+  font-family: base;
+  src: url('../src/opensans.ttf');
+}
+*/
+
+@font: 'Microsoft YaHei';
+@import './constants/keyframes';
+@import './constants/animation';
+
+body {
+  overflow-y: hidden;
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
+  font-family: @font;
+  font-weight: 600;
+  .app-reloading{
+    z-index: 100000;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    cursor: wait;
+  }
+  .file-upload{
+    position: relative;
+    display: inline-block;
+    width: 80px;
+    overflow: hidden;
+    input[type=file]{
+      cursor: pointer;
+      height: 41px;
+      width: 50px;
+      position: absolute;
+      left:10px;
+      top:10px;
+      opacity: 0;
+    }
+  }
+
+  li {
+    list-style: none;
+  }
+  .br-line {
+    margin: 0 auto;
+    width: 80%;
+  }
+  .container {
+    height: 100%;
+    z-index: 1000;
+  }
+
+  .btn {
+    cursor: pointer;
+    font-weight: 600;
+    padding: 10px;
+    margin: 10px;
+    border: solid 2px;
+    border-radius: 3px;
+  }
+  .btn:focus {
+    cursor: pointer;
+    font-weight: 600;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 3px;
+  }
+  .standard-table{
+    margin: 0 20px;
+    padding: 0px;
+    border:solid 2px #000;
+    border-spacing: 0px;
+    font-size: 14px;
+    width:calc(100% - 44px) ;
+    tr{
+      .sort{
+        height: 30px;
+        .up{
+          cursor: pointer;
+          position: relative;
+          top:4px;
+          display: block;
+          margin: 0 auto;
+          width: 0;
+          height: 0;
+          border-left:10px solid transparent;
+          border-right: 10px solid transparent;
+          border-bottom: 10px solid;
+        }
+        .up:hover{
+        }
+        .down{
+          cursor: pointer;
+          position: relative;
+          top:8px;
+          display: block;
+          margin: 0 auto;
+          width: 0;
+          height: 0;
+          border-left:10px solid transparent;
+          border-right: 10px solid transparent;
+          border-top: 10px solid;
+        }
+        .down:hover{
+        }
+      }
+      display: table-row;
+      vertical-align: inherit;
+      height: 35px;
+      th:first-child{
+        border-left:0;
+        border-bottom:2px solid #000;
+        text-align: center;
+      }
+      th{
+        border-left: 2px solid #000;
+        border-bottom:2px solid #000;
+        text-align: center;
+      }
+      td{
+        text-align: center;
+        border-bottom:2px solid #000;
+      }
+      input[type=text]{
+        text-align: center;
+        height: 30px;
+        width: 100%;
+        line-height: 30px;
+        border: 0px;
+      }
+      i{
+        line-height: 30px;
+        font-size: 25px;
+      }
+      .delete{
+        cursor: pointer;
+      }
+    }
+    tr:last-child{
+      td{
+        text-align: center;
+        border-bottom:0;
+      }
+    }
+
+  }
+  .standard-ul {
+    padding: 0;
+    li {
+      padding:1% 0;
+      height: 25px;
+      font-weight: 600;
+      line-height: 25px;
+      span{
+        display: inline-block;
+        width: 10%;
+      }
+      input {
+        width: 40%;
+        line-height: 23px;
+        text-align: center;
+        border: solid 1px;
+        border-radius: 2px;
+      }
+      select{
+        line-height: 23px;
+        margin: 0 0 0 10%;
+        text-align: center;
+      }
+      i{
+        cursor: pointer;
+        font-size: 25px;
+      }
+    }
+  }
+
+  .standard-ul-two-column{
+    li{
+      float: left;
+      width: 50%;
+      span{
+        float: left;
+      }
+      span:nth-child(1){
+        display: block;
+        width: 25%;
+      }
+      span:nth-child(2){
+        display: block;
+        width: 75%;
+      }
+    }
+  }
+
+  .shield{
+    background-color:rgba(221,221,221,0.7) ;
+    z-index: 1002;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }
+  .shield-content{
+    position: absolute;
+    z-index: 10003;
+    top:15%;
+    left:15%;
+    border-radius: 2px;
+    opacity: 1 ;
+    background-color: #fff;
+    height: 70%;
+    width: 70%;
+  }
+  .shield-alert{
+    position: absolute;
+    z-index: 10003;
+    top:calc(50% - 100px);
+    left:calc(50% - 200px);
+    border:solid 3px;
+    opacity: 1 ;
+    height: 200px;
+    width: 300px;
+    .alert-header{
+      padding: 10px 0 0 10px;
+      font-weight: 600;
+      height: 30px;
+      border-bottom: solid 3px;
+    }
+    .alert-content{
+      text-align: center;
+      height: 77px;
+      padding: 20px 50px 0px 50px;
+      line-height: 25px;
+    }
+    .alert-footer{
+      float: right;
+    }
+  }
+
+  .shield-ok{
+    position: absolute;
+    z-index: 10003;
+    top:calc(50% - 100px);
+    left:calc(50% - 200px);
+    border:solid 3px;
+    opacity: 1 ;
+    height: 200px;
+    width: 300px;
+    .ok-header{
+      padding: 10px 0 0 10px;
+      font-weight: 600;
+      height: 30px;
+      border-bottom: solid 3px;
+    }
+    .ok-content{
+      text-align: center;
+      height: 77px;
+      padding: 20px 50px 0px 50px;
+      line-height: 25px;
+    }
+    .ok-footer{
+      float: right;
+    }
+  }
+
+  .checkbox{
+    cursor: pointer;
+    vertical-align: text-bottom;
+    text-align: center;
+    height: 18px;
+    width: 18px;
+    border:solid 2px;
+    display: inline-block;
+  }
+
+  .checkbox:hover{
+  }
+  .checkbox-checked{
+    text-align: center;
+    line-height: 17px;
+  }
+  .checkbox-checked::before{
+    position: relative;
+    top:1px;
+    text-align: center;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    content: '√';
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .radio{
+    border-radius: 50px;
+    cursor: pointer;
+    vertical-align: text-bottom;
+    text-align: center;
+    height: 18px;
+    width: 18px;
+    border:solid 2px;
+    display: inline-block;
+  }
+  .radio:hover{
+  }
+  .radio-checked{
+    text-align: center;
+    line-height: 17px;
+  }
+  .radio-checked::before{
+    border-radius: 50px;
+    position: relative;
+    top:1px;
+    text-align: center;
+    display: inline-block;
+    height: 14px;
+    width: 14px;
+    content: '';
+    color: #fff;
+    font-weight: 600;
+  }
+  .loader{
+    .spinner{
+      z-index: 1001 !important;
+    }
+  }
+  .drop-zone{
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+    width: 100px;
+    height: 100px;
+    border:solid 2px #eee;
+  }
+  .edui-editor-messageholder{
+    opacity: 0 !important;
+  }
+}
+
+@import './components/content/normal-table';
+@import './components/shield-modify';
+@import './components/side-bar';
+@import './components/header';
+@import './components/title-menu';
+@import './components/content';
+@import './components/content/content-container';
+@import './components/content/component-option-bar';
+@import './components/search-group';
+@import './components/content/header-cut';
+
+@import './skin/skin-1';
+@import './skin/skin-2';
+@import './skin/skin-3';
+@import './skin/skin-4';
