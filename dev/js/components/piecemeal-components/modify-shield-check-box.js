@@ -1,6 +1,11 @@
 import React from 'react';
 import classnames from 'classnames';
 
+/*
+*
+* 修改遮罩层中的多选组件
+*
+* */
 class ModifyShieldCheckBox extends React.Component{
     constructor(props){
         super();

@@ -6,7 +6,9 @@ import React from 'react';
 import ModifyShield from '../piecemeal-components/modifyShield';
 
 /*
- * @param
+ *
+  * 普通菜单按钮组中的增加操作
+   * @param
  * isShow:boolean 必填 是否显示本遮罩层，与Redux组件桥接
  * fieldData:[] 必填 本组件所包含字段数组
  * initData:{} 必填 来自菜单的某选中项详细数据

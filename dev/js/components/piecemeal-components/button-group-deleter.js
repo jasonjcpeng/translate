@@ -1,5 +1,5 @@
 /**
- *
+ *删除
  * Created by JasonPeng on 2017/4/21.
  */
 import React from 'react';

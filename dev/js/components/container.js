@@ -12,6 +12,7 @@ import CustomTableDemo from './content/custom-table/custom-table-demo';
 import * as ActionCreators from '../action/side-bar';
 
 class Container extends Component {
+    //根据当前相应状态获取外边距
     getContainerMargin() {
         switch (this.props.toggleStatus) {
             case 'full':
@@ -25,7 +26,7 @@ class Container extends Component {
                 break;
         }
     }
-
+    //创造container收起的动画效果
     getContainerToggleAnimation() {
         switch (this.props.lastToggleStatus) {
             case 'full':
@@ -61,7 +62,7 @@ class Container extends Component {
         }
         return '';
     }
-
+    //根据当前菜单类型获取Content中需要渲染的内容
     switchCreateContent(height){
         let boolean = this.props.toggleStatus!=='full'||this.props.defaultToggleStatus==='full';
         if(this.props.nowOnContentTarget&&boolean){

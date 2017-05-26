@@ -2,7 +2,12 @@ import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as Constants from '../../action/CONSTANTS';
-
+/*
+*
+* 设置通用搜索框
+* 暂时废弃
+*
+* */
 class ModifySearchGroupConfig extends React.Component{
     constructor(props){
         super();

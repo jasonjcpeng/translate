@@ -20,6 +20,8 @@ import Upload from './modify-shield-upload-box';
 import ComponentType from '../../../jsons/modify-shield-component-type.json';
 
 /*
+*
+* 修改遮罩层
 * @param
 * targetID:string 必填 当前显示页面的ID
 * isShow:boolean 必填 是否显示本遮罩层，与Redux组件桥接
@@ -48,7 +50,7 @@ class ModifyShield extends React.Component{
         }else{
             this.props.actionDidMount(this.props.targetID,this.props.data);
         }
-
+        //获取特定的组件中的数据
         apiFormatModifyShieldFieldDataFromApi(this.props.fieldData).then(
             res=> {
                 this.setState({
@@ -61,6 +63,7 @@ class ModifyShield extends React.Component{
         });
     }
 
+    //创造数据字头结构
     createFieldStructure(){
         let createItem = ()=>{
             let handleOnChange = (val,e)=>{

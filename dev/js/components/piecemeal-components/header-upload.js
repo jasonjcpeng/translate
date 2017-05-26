@@ -3,7 +3,10 @@
  * Created by DaWi on 2017/5/15.
  */
 import React from 'react';
-
+/*
+* 头像剪切
+*
+* */
 class HeaderUpload extends React.Component {
     constructor(props) {
         super();

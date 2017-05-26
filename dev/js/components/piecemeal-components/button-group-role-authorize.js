@@ -7,6 +7,8 @@ import * as Constants from '../../action/CONSTANTS';
 import {bindActionCreators} from 'redux';
 import {apiSetRoleAuthorize,apiGetModuleByRoleID} from '../../services/api';
 /*
+ *
+ * 权限配置
  * @param
  * onCancel:() 必填 关闭遮罩的回调，如没有则不显示取消按钮
  * */

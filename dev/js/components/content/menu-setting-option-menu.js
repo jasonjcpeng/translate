@@ -108,7 +108,7 @@ class MenuSettingOptionAddMenu extends React.Component {
             this.props.changeMenuData(this.props.targetMenuSort, 'modifyViewPoint', newValue);
 
         }
-
+        //创造多行显示的开关
         let createMultiColumnsOnChecker = (k, v)=> {
             return (<input onChange={
                     e=>{
@@ -125,6 +125,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                     }
                 } value={v.width} min="0" max="100" type="number"/>)
         }
+        //行宽度设定
         let createItemComponentWidthOnChecker = (k, v)=> {
             return (<input onChange={
                 e=>{
@@ -141,7 +142,7 @@ class MenuSettingOptionAddMenu extends React.Component {
                 }
             } value={v.componentWidth} min="0" max="100" type="number"/>)
         }
-
+        //组件类型选择
         let createComponentTypeSelector = (k, v)=> {
             let mapOption = ComponentType.componentType.map((val, k)=> {
                 return (<option key={k} value={val.type}>{val.remark}</option>);
@@ -217,6 +218,8 @@ class MenuSettingOptionAddMenu extends React.Component {
                 </tr>
             });
         }
+
+        //创造可选择组件内容 暂时废弃
         let createFieldList = ()=> {
             let handleOnClick = (viewPointItem)=> {
                 let viewPointGroup = this.props.menuData.modifyViewPoint;

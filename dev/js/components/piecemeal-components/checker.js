@@ -1,5 +1,6 @@
 /**
  * Created by JasonPeng on 2017/4/2.
+ * 开关选择器
  * @param:
  * key:以CheckState作为值，为了在checkState改变后迫使React刷新本组件
  * checkState:boolean 当前选中状态

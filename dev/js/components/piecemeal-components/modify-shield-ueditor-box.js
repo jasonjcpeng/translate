@@ -1,6 +1,11 @@
 import React from 'react';
 import classnames from 'classnames';
 
+/*
+*
+* 修改遮罩层中的富文本编辑器
+*
+* */
 class ModifyShieldUEditorBox extends React.Component {
     constructor(props) {
         super();

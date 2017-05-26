@@ -5,6 +5,11 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 
+/*
+*
+* 修改遮罩层中的时间组件
+*
+* */
 class ModifyShieldTimerBox extends React.Component{
     constructor(props){
         super();

@@ -1,6 +1,10 @@
 import React from 'react';
 import classnames from 'classnames';
-
+/*
+*
+* 修改遮罩层中的单选组件
+*
+* */
 class ModifyShieldRadioBox extends React.Component{
     constructor(props){
         super();

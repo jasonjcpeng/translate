@@ -460,7 +460,7 @@ class ContentSetting extends React.Component {
                     }} className={className}></div>
                 </td> );
             }
-
+            //快速序列化菜单顺序
             let quickSort = (arr, root = {code: '0'}, result = [])=> {
                 let menu = [];
                 if (arr.length > 0) {
@@ -715,6 +715,7 @@ class ContentSetting extends React.Component {
         }
     }
 
+    //创造菜单头按键选项
     createMenuSettingOption() {
         if (this.props.target.status.selectMenuSettingTableItem) {
             return (<div key="option" className="content-setting-header animation-fadeInRight animation-fadeIn">
@@ -790,7 +791,7 @@ class ContentSetting extends React.Component {
             </div>
         </div>);
     }
-
+    //根据当前活跃状态创造设置页面当前活跃内容
     createRightActiveContent(tableHeight) {
         let rightActiveContent = this.props.target.status.rightActiveContent;
         switch (rightActiveContent.key) {
@@ -823,11 +824,14 @@ class ContentSetting extends React.Component {
 
     renderPC() {
         let tableHeight = this.props.height - 30;
+        //设置选项内容
         let contentSettingNavBar = [{key: 'baseInfo', name: '基本信息'}, {key: 'tel', name: '联系方式'}, {
             key: 'headImg',
             name: '我的头像'
         }, {key: 'resetPassWord', name: '修改密码'}, {key: 'skin', name: '设置皮肤'}];
+        //需要超管权限的内容
         let contentSettingPowerNavBar = [{key: 'DataBabel', name: '数据字典'}, {key: 'menuSetting', name: '编辑菜单'}];
+        //快捷菜单
         let contentBesideSettingNavBar = [{key: 'quickButton', name: '快捷菜单'}];
         if (this.props.target.status) {
             return (

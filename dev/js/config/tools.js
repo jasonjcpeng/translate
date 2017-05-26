@@ -50,6 +50,7 @@ export const IsObjEmpty = (obj)=>{
     }
     return true;
 }
+//获取格式化后的时间数据
 export const getNowFormatDate=()=>{
     var date = new Date();
     var seperator1 = "-";
@@ -67,7 +68,7 @@ export const getNowFormatDate=()=>{
         + seperator2 + date.getSeconds();
     return currentdate;
 }
-
+//把要传递出去的Object类型转换成String
 export const stringifyArrWhosChildIsObj = (viewPoint)=>{
     let viewPointArr = [];
     for(let i in viewPoint){
@@ -76,7 +77,7 @@ export const stringifyArrWhosChildIsObj = (viewPoint)=>{
     return viewPointArr.join('@#');
 }
 
-//这里如果来的数据不是JSON的string会报错
+//将从API中获取的String类型转换成Object,这里如果来的数据不是JSON的string会报错
 export const arraifyStringWhosChildIsObj = (viewPointString)=> {
     let viewPointArr = [];
     let result = [];

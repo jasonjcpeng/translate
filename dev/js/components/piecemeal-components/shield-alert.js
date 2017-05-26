@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import * as Constants from '../../action/CONSTANTS';
 import {bindActionCreators} from 'redux';
 /*
+*
+* 警告窗口
 * @param
 * targetType:分类方式 (补漏)
 * onTargetMenuTarget:当前导航页的标识

@@ -4,7 +4,11 @@ import FineUploaderTraditional from 'fine-uploader-wrappers'
 import Gallery from 'react-fine-uploader'
 import 'react-fine-uploader/gallery/gallery.css'
 
-
+/*
+*
+* 修改遮罩层中的文件上传组件
+*
+* */
 class ModifyShieldUploadBox extends React.Component{
     constructor(props){
         super();

@@ -91,6 +91,10 @@ class Pager {
     }
 }
 
+/*
+*
+* 分页工具 引用page类进行数据改变
+* */
 class Pagination extends React.Component {
     constructor(props) {
         super();
