@@ -197,7 +197,7 @@ body {
   }
 
   .shield{
-    background-color:rgba(221,221,221,0.7) ;
+    background-color:rgba(221,221,221,0.6) ;
     z-index: 1002;
     position: absolute;
     height: 100%;
@@ -209,21 +209,21 @@ body {
     top:15%;
     left:15%;
     border-radius: 2px;
-    opacity: 1 ;
     background-color: #fff;
     height: 70%;
     width: 70%;
   }
   .shield-alert{
+    opacity: 0.8;
     position: absolute;
     z-index: 10003;
-    top:calc(50% - 100px);
-    left:calc(50% - 200px);
-    border:solid 3px;
-    opacity: 1 ;
+    top:25%;
+    left:25%;
+    border-radius: 4px;
     height: 200px;
     width: 300px;
     .alert-header{
+      border-radius: 4px;
       padding: 10px 0 0 10px;
       font-weight: 600;
       height: 30px;
@@ -232,6 +232,7 @@ body {
     .alert-content{
       text-align: center;
       height: 77px;
+      font-weight: 600;
       padding: 20px 50px 0px 50px;
       line-height: 25px;
     }
@@ -242,16 +243,16 @@ body {
 
   .shield-ok{
     position: absolute;
-    z-index: 10003;
-    top:calc(50% - 100px);
-    left:calc(50% - 200px);
-    border:solid 3px;
-    opacity: 1 ;
+    z-index: 100003;
+    top:25%;
+    left:25%;
+    border-radius: 4px;
     height: 200px;
     width: 300px;
     .ok-header{
       padding: 10px 0 0 10px;
       font-weight: 600;
+      border-radius: 4px;
       height: 30px;
       border-bottom: solid 3px;
     }

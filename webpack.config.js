@@ -22,7 +22,7 @@ module.exports = {
         contentBase: './dev',
         port: 3003
     },
-    //devtool: 'cheap-module-eval-source-map',
+    devtool: 'cheap-module-eval-source-map',
     entry: {app:'./dev/js/app.js',
         index:'./dev/js/index.js',
         logout:'./dev/js/logout.js'
@@ -73,6 +73,11 @@ module.exports = {
             inject: 'body',
             chunks:['logout','app']
         }),
+       /* new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify('production')
+            }
+        }),*/
         /* 混淆压缩*/
        /* new webpack.optimize.UglifyJsPlugin({
          compress: {

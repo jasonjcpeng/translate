@@ -320,7 +320,7 @@ export default function (state = initState, action) {
 
                 if (menuData.viewPoint[0]&&menuData.viewPoint[0].name) {
                     let viewPointConfigApi = menuData.api.split('api/')[1];
-                    menuData.viewPointConfigApi = 'sys_' + viewPointConfigApi.substring(0, viewPointConfigApi.indexOf('/'));
+                    menuData.viewPointConfigApi = viewPointConfigApi?'sys_' + viewPointConfigApi.substring(0, viewPointConfigApi.indexOf('/')):'';
                 }else{
                     menuData.viewPointConfigApi ='';
                 }

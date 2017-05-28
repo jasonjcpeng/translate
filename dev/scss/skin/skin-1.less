@@ -8,6 +8,7 @@
 @content-background-color:#F5F5F5;
 @spacial-color: #67b94b;
 @alert-color:#c00;
+@alert-color-deep: #a10000;
 @default-option-toggle-color:#ddd;
 @content-font-color:#6f6f6f;
 @default-option-hover-button:rgba(53, 173, 226, 0.64);
@@ -167,30 +168,41 @@
   }
 
   .shield-alert{
-    border-color:@alert-color;
-    background-color: @second-main-color;
+    background-color: @alert-color;
     .alert-header{
-      border-color: @alert-color;
-      color: @alert-color;
+      background-color: @alert-color-deep;
+      border-color: @alert-color-deep;
+      color: @second-main-color;
     }
     .alert-content{
-      color: @alert-color;
+      color: @second-main-color;
     }
     .alert-footer{
+      .btn-finish{
+        color: @alert-color;
+        border-color: @second-main-color;
+        background-color: @second-main-color;
+      }
     }
+
   }
 
   .shield-ok{
-    border-color:@main-color;
-    background-color: @second-main-color;
+    background-color: @shallow-than-main-color;
     .ok-header{
-      border-color: @main-color;
-      color: @main-color;
+      background-color: @shallow-than-main-color;
+      border-color: @shallow-than-main-color;
+      color: @second-main-color;
     }
     .ok-content{
-      color: @main-color;
+      color: @second-main-color;
     }
     .ok-footer{
+      .btn-finish{
+        color: @main-color;
+        border-color: @second-main-color;
+        background-color: @second-main-color;
+      }
     }
   }
 
