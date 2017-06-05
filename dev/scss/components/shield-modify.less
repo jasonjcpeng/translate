@@ -2,14 +2,14 @@ body{
   .shield-modify{
     z-index: 1002;
     position: absolute;
-    left:calc(50% - 45%);
-    top:calc(50% - 45%);
+    left:e('calc(50% - 45%)');
+    top:e('calc(50% - 45%)');
     border-radius: 1px;
     height: 90%;
     width: 90%;
     background-color: #fff;
     .shield-modify-container{
-      height: calc(100% - 60px);
+      height: e('calc(100% - 60px)');
       width: 100%;
       overflow: auto;
       .shield-modify-content{
@@ -66,7 +66,7 @@ body{
               }
               .img{
                 vertical-align: top;
-                width: calc(30% - 40px);
+                width: e('calc(30% - 40px)');
                 display: inline-block;
                 padding: 0px 20px 0px 20px;
                 img{
@@ -137,7 +137,7 @@ body{
 
     .shield-modify-content-search-group{
       overflow: auto;
-      height: calc(100% - 60px);
+      height: e('calc(100% - 60px)');
       .field-list{
         overflow: hidden;
         margin: 10px 0 10px 0;
@@ -155,7 +155,7 @@ body{
             margin: 10px 0px auto 10px;
             border:solid 1px;
             border-radius: 3px;
-            max-width: calc(25% - 32px);
+            max-width: e('calc(25% - 32px)');
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
