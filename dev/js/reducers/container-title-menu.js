@@ -302,7 +302,7 @@ export default function (state = initState, action) {
                     isEnable: true,
                     createtime: '',
                     updatetime: '',
-                    api: isOnline?'':'api/user/getList',
+                    api: isOnline?'':'api/User/GetList',
                     viewPointConfigApi:isOnline?'':'sys_user',
                     viewPoint: [],
                     btnGroup: [],
