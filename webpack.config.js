@@ -2,7 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var autoprefixer = require('autoprefixer');
-var isDev = true;
+var isDev = false;
 var LoginTitle = '综艺嘉登陆';
 var Tittle = '综艺嘉';
 module.exports =isDev?{
@@ -145,7 +145,7 @@ module.exports =isDev?{
     },
     postcss: [ autoprefixer({ browsers: ['last 2 versions'] }) ],
     output: {
-        path: 'docs/',
+        path: 'dist/',
         filename: 'js/[chunkHash:32].js',
     },
     plugins: [
